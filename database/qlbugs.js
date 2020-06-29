@@ -3,14 +3,12 @@ class Bugs {
     constructor() {}
     addBug(arr) {
         return new Promise((resolve, reject) => {
-            let sql = 'insert into bugs (id,title,state,class,auth,start,end,text,changer) VALUES (0,?,?,?,?,?,?,?,?)'
-            query(sql, arr, (err, result) => {
-                if (err) {
-                    console.log(err);
-                    return reject(err)
-                }
-                resolve(result)
-            })
+            let sql = 'INSERT INTO bugs(id,title,state,class,auth,start,end,text,changer) VALUES(0,?,?,?,?,?,?,?,?)'
+            query(sql, arr).then(result=>{
+				resolve(result);
+			},err=>{
+				reject(err)
+			})
         })
 
     }
