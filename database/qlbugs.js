@@ -22,6 +22,16 @@ class Bugs {
             })
         })
     }
+	deleteBug(id){
+		return new Promise((resolve,reject)=>{
+			let sql = `delete from bugs where id=${id}`;
+			query(sql).then(result=>{
+				resolve(result)
+			},err=>{
+				reject(err)
+			})
+		})
+	}
 }
 
 module.exports = new Bugs();

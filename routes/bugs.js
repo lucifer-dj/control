@@ -12,8 +12,20 @@ module.exports = function(app) {
 			res.send({state:1001,msg:"添加失败"})
 		})
     })
-    app.post('bug/queryall', (req, res) => {
-        bugs.queryAll().then(result => {}, err => {})
+    app.post('/bug/querybugs', (req, res) => {
+        bugs.queryAll().then(result => {
+			res.send({state:200,data:result,msg:'查询成功'})
+		}, err => {
+			res.send({state:1001,data:'',msg:'查询失败'})
+		})
     })
+	app.post("/bug/deletebug",(req,res)=>{
+		let data = JSON.parse(Object.keys(req.body)[0]);
+		bugs.deleteBug(data.id).then(result=>{
+			res.send({state:200,data:'',msg:'删除成功'});
+		},err=>{
+			res.send({state:1001,data:'',msg:'删除失败'});
+		})
+	})
 }
 
