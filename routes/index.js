@@ -1,5 +1,6 @@
 let bugs = require('./bugs')
 let user = require('./users')
+let shin = require('./shin.js')
 
 /* GET home page. */
 
@@ -17,5 +18,6 @@ module.exports = function(app) {
         else next();
     });
     bugs(app); //bugscaozuo
-    user(app)
+    user(app);
+	shin(app)
 }

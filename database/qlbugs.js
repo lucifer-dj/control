@@ -4,11 +4,11 @@ class Bugs {
     addBug(arr) {
         return new Promise((resolve, reject) => {
             let sql = 'INSERT INTO bugs(id,title,state,class,auth,start,end,text,changer) VALUES(0,?,?,?,?,?,?,?,?)'
-            query(sql, arr).then(result=>{
-				resolve(result);
-			},err=>{
-				reject(err)
-			})
+            query(sql, arr).then(result => {
+                resolve(result);
+            }, err => {
+                reject(err)
+            })
         })
 
     }
@@ -22,10 +22,41 @@ class Bugs {
             })
         })
     }
-	deleteBug(id){
+    deleteBug(id) {
+        return new Promise((resolve, reject) => {
+            let sql = `delete from bugs where id=${id}`;
+            query(sql).then(result => {
+                resolve(result)
+            }, err => {
+                reject(err)
+            })
+        })
+    }
+    getBug(id) {
+        return new Promise((resolve, reject) => {
+            console.log(id)
+            let sql = 'select * from bugs where id=' + id
+            query(sql).then(res => {
+                resolve(res)
+            }, err => {
+                reject(err)
+            })
+        })
+    }
+    updateBug(arr) {
+        return new Promise((resolve, reject) => {
+            let sql = 'update bugs set title=?,class=?,text=? where id=?'
+            query(sql, arr).then(result => {
+                resolve(result)
+            }, err => {
+                reject(err)
+            })
+        })
+    }
+	repqirBug(arr){
 		return new Promise((resolve,reject)=>{
-			let sql = `delete from bugs where id=${id}`;
-			query(sql).then(result=>{
+			let sql = "update bugs set state=?,end=? where id=?"
+			query(sql,arr).then(result=>{
 				resolve(result)
 			},err=>{
 				reject(err)
