@@ -9,6 +9,7 @@ var router = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
 // view engine setup
