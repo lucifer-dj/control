@@ -1,7 +1,7 @@
 //学习爬取页面
 let request = require('request');
 let cheerio = require('cheerio');
-
+let sql = require('../database/qlshin.js')
 module.exports = function(app) {
     app.post('/shin', (req, res) => {
 		let json = req.body
@@ -28,11 +28,27 @@ module.exports = function(app) {
                     })
                 res.send({
                     state: '200',
-                    data: arr,
+                    data: {arr,origin:json.url},
                     msg: '成功'
                 })
             }
         })
-
     })
+	app.post('/shin/save',(req,res)=>{
+		let json = req.body;
+		console.log(json)
+		sql.save(json.arr,json.origin).then(result=>{
+			res.send({
+			    state: '200',
+			    data: 'ojbk',
+			    msg: '成功'
+			})
+		},err=>{
+			res.send({
+			    state: '1001',
+			    data: 'oh,no',
+			    msg: '成功'
+			})
+		})
+	})
 }
