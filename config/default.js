@@ -1,5 +1,5 @@
-const ISDEV = false
-let ip = '119.45.57.238'
+const ISDEV = true
+let address = '119.45.57.238'
 
 let prod = {
 	DATABASE: 'sysdb',
@@ -20,5 +20,5 @@ module.exports = {
 	isdev:ISDEV,
     port: 3000,
     mysql: ISDEV?dev:prod,
-	ip:ISDEV?'127.0.0.1':ip
+	address:ISDEV?'127.0.0.1':address
 }

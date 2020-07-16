@@ -15,22 +15,28 @@ module.exports = function(app) {
             }
         }, (err, result) => {
             if (err) {
-                res.send({
-                    state: '1001',
+                res.status(1001).send({
                     data: err,
                     msg: '链接失败'
                 })
             } else {
                 let $ = cheerio.load(result.body);
                 let arr = [];
-                $('body').find(json.type).each((index, node) => {
-                        arr.push({ src: $(node).attr('src') })
-                    })
-                res.send({
-                    state: '200',
-                    data: {arr,origin:json.url},
-                    msg: '成功'
-                })
+				if(json.type=="img"){
+					$('body').find(json.type).each((index, node) => {
+					        arr.push({ src: $(node).attr('src') })
+					    })
+					res.status(200).send({
+					    data: {arr,origin:json.url},
+					    msg: '成功'
+					})
+				}else if(json.type=="sound"){
+					res.status(200).send({
+					    data: result,
+					    msg: '成功'
+					})
+				}
+                
             }
         })
     })
@@ -38,14 +44,12 @@ module.exports = function(app) {
 		let json = req.body;
 		console.log(json)
 		sql.save(json.arr,json.origin).then(result=>{
-			res.send({
-			    state: '200',
+			res.status(200).send({
 			    data: 'ojbk',
 			    msg: '成功'
 			})
 		},err=>{
-			res.send({
-			    state: '1001',
+			res.status(1001).send({
 			    data: 'oh,no',
 			    msg: '成功'
 			})

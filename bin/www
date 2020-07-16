@@ -27,7 +27,7 @@ var server = http.createServer(app);
 
 	
 server.listen(port,function(){
-	console.log("服务器正在运行=>http://"+cfg.ip+":"+port)
+	console.log("服务器正在运行=>http://"+cfg.address+":"+port)
 });
 server.on('error', onError);
 server.on('listening', onListening);

@@ -1,5 +1,4 @@
 let bugs = require('./bugs')
-let user = require('./users')
 let shin = require('./shin.js')
 
 /* GET home page. */
@@ -17,10 +16,12 @@ module.exports = function(app) {
         /*让options请求快速返回*/
         else next();
     });
-    app.get("/test",function(req,res){
+    app.get("/t",function(req,res){
         res.send("测试项目状态")
     })
-    bugs(app); //bugscaozuo
-    user(app);
+	app.get("/",function(req,res){
+		res.render("index.html");
+	})
+    bugs(app);
 	shin(app)
 }
