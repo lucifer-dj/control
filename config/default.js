@@ -1,10 +1,24 @@
-module.exports = {
-    port: 3000,
-    mysql: {
+const ISDEV = false
+let ip = '119.45.57.238'
+
+let prod = {
+	DATABASE: 'sysdb',
+	USER: 'sysdb',
+	PASS: '33HLfNCwmCnLjmSi',
+	PORT: '3306',
+	HOST: '127.0.0.1'
+}
+
+let dev = {
         DATABASE: 'js',
         USER: 'root',
         PASS: '123456',
         PORT: '3306',
         HOST: '127.0.0.1'
-    }
+}
+module.exports = {
+	isdev:ISDEV,
+    port: 3000,
+    mysql: ISDEV?dev:prod,
+	ip:ISDEV?'127.0.0.1':ip
 }
