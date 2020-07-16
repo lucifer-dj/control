@@ -17,6 +17,9 @@ module.exports = function(app) {
         /*让options请求快速返回*/
         else next();
     });
+    app.get("/test",function(req,res){
+        res.send("测试项目状态")
+    })
     bugs(app); //bugscaozuo
     user(app);
 	shin(app)
