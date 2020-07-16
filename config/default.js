@@ -18,7 +18,7 @@ let dev = {
 }
 module.exports = {
 	isdev:ISDEV,
-    port: 3000,
+    port: ISDEV?3000:80,
     mysql: ISDEV?dev:prod,
 	address:ISDEV?'127.0.0.1':address
 }
