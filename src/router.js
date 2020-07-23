@@ -22,6 +22,11 @@ export default new Router({
       component: ()=>import('./pages/home.vue'),
       children:[
         {
+          name:'index',
+          path:'/',
+          component:()=>import('./pages/view/index.vue')
+        },
+        {
           name:'project',
           path:'/pro',
           component:()=>import('./pages/view/column.vue')
@@ -50,6 +55,11 @@ export default new Router({
           name:'banner',
           path:'/banner',
           component:()=>import('./pages/view/banner.vue')
+        },
+        {
+          name:'other',
+          path:'/other',
+          component:()=>import('./pages/view/other.vue')
         },
       ]
     },

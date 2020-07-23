@@ -23,7 +23,10 @@ export default {
   width: 100%;
   height: 100vh;
 }
-.v-navigation-drawer__content::-webkit-scrollbar{
+  .v-navigation-drawer__content::-webkit-scrollbar{
     display:none !important;
+  }
+  .v-dialog{
+    box-shadow: none !important;
   }
 </style>

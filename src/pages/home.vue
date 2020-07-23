@@ -40,16 +40,17 @@
           <v-icon class="iconfont iconshezhi"></v-icon>
         </v-btn>
          <v-btn depressed  title="我的信息">
-          <v-icon class="iconfont iconhrstaff"></v-icon>
+          <v-icon class="iconfont iconyonghuming"></v-icon>
         </v-btn>
     </v-app-bar>
 
     <v-main>
       <router-view/>
       <v-footer fixed pedless >
-      <v-spacer></v-spacer>
-      &copy; {{new Date().getFullYear()}}
-      </v-footer>
+        <v-spacer></v-spacer>
+          &copy; {{new Date().getFullYear()}}
+          <v-sheet tag="a" title="gitee" class="ml-5 text-decoration-none" color="rgba(0,0,0,0)" target="_blank" href="https://gitee.com/luciferdj/xzhdx">lucifer-dj</v-sheet>
+        </v-footer>
     </v-main>
     
   </div>
@@ -95,7 +96,7 @@ export default {
       },
       {
         name:'其他设置',
-        path: '',
+        path: '/other',
         icon:'iconfont iconbasepermissionauthShop'
       }
     ],
