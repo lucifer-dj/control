@@ -6,11 +6,10 @@ module.exports = {
   //部署应用包时的基本 URL， 用法和 webpack 本身的 output.publicPath 一致。
   publicPath: IS_PROD ? "./" : "/",
   transpileDependencies: ['vuetify'],
-  runtimeCompiler: true,
   //输出文件目录，当运行 vue-cli-service build 时生成的生产环境构建文件的目录。
   outputDir:"dist",
   // 放置生成的静态资源 (js、css、img、fonts) 的目录。
-  assetsDir:'assets',
+  assetsDir:'public',
   //指定生成的 index.html 的输出路径 (相对于 outputDir)。也可以是一个绝对路径。
   indexPath:'index.html',
   // 默认情况下，生成的静态资源在它们的文件名中包含了 hash 以便更好的控制缓存。然而，这也要求 index 的 HTML 是被 Vue CLI 自动生成的。如果你无法使用 Vue CLI 生成的 index HTML，你可以通过将这个选项设为 false 来关闭文件名哈希。
@@ -31,7 +30,7 @@ module.exports = {
     //是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到 JavaScript 中的 inline 代码)。
     extract: true,
     //默认情况下，只有 *.module.[ext] 结尾的文件才会被视作 CSS Modules 模块。设置为 true 后你就可以去掉文件名中的 .module 并将所有的 *.(css|scss|sass|less|styl(us)?) 文件视为 CSS Modules 模块。
-    modules:false,
+    requireModuleExtension:true,
     //向 CSS 相关的 loader 传递选项。
     // loaderOptions:{}
   },

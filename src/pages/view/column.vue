@@ -20,13 +20,13 @@
       <!-- 操作 -->
       <template v-slot:item.oper={item}>
         <v-btn fab x-small depressed title="添加子项目" class="mx-1" @click="addSonCol(item)">
-          <v-icon class="iconfont iconic_add_line"></v-icon>
+          <v-icon>iconfont-ic_add_line</v-icon>
         </v-btn>
-        <v-btn fab x-small depressed title="删除栏目" class="mx-1">
-          <v-icon class="iconfont iconcustomerarchivesrecycleBin" @click="deleteCol(item.id)"></v-icon>
+        <v-btn fab x-small depressed title="删除" class="mx-1"  @click="deleteCol(item.id)">
+          <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
         </v-btn>
-        <v-btn fab x-small depressed title="编辑栏目" class="mx-1">
-          <v-icon class="iconfont iconbasepermissionapproveApply" @click="editCol(item)"></v-icon>
+        <v-btn fab x-small depressed title="修改" class="mx-1" @click="editCol(item)">
+          <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
         </v-btn>
       </template>
       <!-- <template v-slot:item>

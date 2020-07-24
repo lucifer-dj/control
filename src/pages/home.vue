@@ -6,7 +6,7 @@
         <v-subheader class="justify-center text-uppercase h6" width="100%" >雪中</v-subheader>
       </v-sheet>
       <v-list>
-        <v-list-group v-for="(item,idx) in menu" :key="idx"  no-action @click="replace(item)">
+        <v-list-group v-for="(item,idx) in menu" :key="idx" append-icon="iconfont-expand_more" no-action @click="replace(item)">
           <template v-slot:activator>
             <v-list-item-icon>
               <v-icon :class="item.icon"></v-icon>
@@ -17,7 +17,7 @@
           </template>
           <v-list-item v-for="(n,i) in item.child" :key="i" @click="replace(n)">
             <v-list-item-icon>
-              <v-icon :class="n.icon"></v-icon>
+              <v-icon>{{n.icon}}</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>{{n.name}}</v-list-item-title>
@@ -29,18 +29,18 @@
 
     <v-app-bar app dense text>
         <v-btn  depressed @click="commDrawer();">
-          <v-icon class="iconfont icongoodsppecategory"></v-icon>
+          <v-icon>iconfont-goodsppecategory</v-icon>
         </v-btn> 
         <v-btn text class="ml-3" >浏览首页</v-btn>
         <v-spacer></v-spacer>
         <v-btn depressed title="退出">
-          <v-icon class="iconfont iconzhuxiao"></v-icon>
+          <v-icon>iconfont-zhuxiao</v-icon>
         </v-btn>
         <v-btn depressed title="设置">
-          <v-icon class="iconfont iconshezhi"></v-icon>
+          <v-icon>iconfont-shezhi</v-icon>
         </v-btn>
          <v-btn depressed  title="我的信息">
-          <v-icon class="iconfont iconyonghuming"></v-icon>
+          <v-icon>iconfont-yonghuming</v-icon>
         </v-btn>
     </v-app-bar>
 
@@ -62,42 +62,42 @@ export default {
     menu:[
       {
         name:'项目管理',
-        icon: 'iconfont iconNav07-reports',
+        icon: 'iconfont iconfont-Nav07-reports',
         path:'/pro',
         child:[
           {
             name:'角色管理',
             path:'/role',
-            icon:'iconfont icontuandui'
+            icon:'iconfont-tuandui'
           },
            {
             name:'势力划分',
             path:'/force',
-            icon:'iconfont icondizhi'
+            icon:'iconfont-dizhi'
           },
           {
             name:'内容介绍',
             path:'/xcontent',
-            icon:'iconfont iconguanyu'
+            icon:'iconfont-guanyu'
           }
         ]
       },
       {
         name:'页面设置',
         path: '/xpage',
-        icon:'iconfont iconNav03-base',
+        icon:'iconfont iconfont-Nav03-base',
         child:[
           {
             name:'首页轮播',
             path:'/banner',
-            icon:'iconfont iconhebing'
+            icon:'iconfont-hebing'
           }
         ]
       },
       {
         name:'其他设置',
         path: '/other',
-        icon:'iconfont iconbasepermissionauthShop'
+        icon:'iconfont iconfont-basepermissionauthShop'
       }
     ],
     menuState:false,

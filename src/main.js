@@ -13,9 +13,10 @@ Vue.use(less);
 
 Vue.prototype.pageIndex = "www.luciferdj.cn";
 /* eslint-disable no-new */
-new Vue({
+let vm = new Vue({
   router,
   store,
   vuetify,
   render: h => h(App),
 }).$mount('#app')
+console.log(vm)

@@ -7,28 +7,25 @@
     </v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>
-        <v-btn text @click="dialog=true;">
-          <v-icon class="iconfont iconic_add_line" small></v-icon>
-          添加新角色
-        </v-btn>
+        <v-btn text @click="dialog=true;">+添加新角色</v-btn>
         <v-btn text>
-          <v-icon class="iconfont iconshanchu" small></v-icon>
+          <v-icon small>iconfont-shanchu</v-icon>
           删除选中
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn text>
-          <v-icon class="iconfont iconsousuo mr-2" ></v-icon>
+          <v-icon class="mr-2" >iconfont-sousuo</v-icon>
           搜索
         </v-btn>
       </v-toolbar>
 
       <v-data-table disable-sort :items="items" :headers="headers" show-select>
         <template v-slot:item.oper={item}>
-        <v-btn fab x-small depressed title="删除" class="mx-1">
-          <v-icon class="iconfont iconcustomerarchivesrecycleBin" @click="deleteCol(item.id)"></v-icon>
+        <v-btn fab x-small depressed title="删除" class="mx-1"  @click="deleteCol(item.id)">
+          <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
         </v-btn>
-        <v-btn fab x-small depressed title="修改" class="mx-1">
-          <v-icon class="iconfont iconbasepermissionapproveApply" @click="editCol(item)"></v-icon>
+        <v-btn fab x-small depressed title="修改" class="mx-1" @click="editCol(item)">
+          <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
         </v-btn>
       </template>
       </v-data-table>

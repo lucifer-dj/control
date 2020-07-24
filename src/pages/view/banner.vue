@@ -14,11 +14,11 @@
       :items="items"
       >
         <template v-slot:item.oper={item}>
-          <v-btn fab x-small class="mx-1" depressed @click="editCol(item)">
-            <v-icon class="iconfont iconbasepermissionapproveApply"></v-icon>
+          <v-btn fab x-small depressed title="删除" class="mx-1"  @click="deleteCol(item.id)">
+            <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
-          <v-btn fab x-small class="mx-1" depressed @click="editCol(item)">
-            <v-icon class="iconfont iconcustomerarchivesrecycleBin"></v-icon>
+          <v-btn fab x-small depressed title="修改" class="mx-1" @click="editCol(item)">
+            <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
           </v-btn>
         </template>
       </v-data-table>
