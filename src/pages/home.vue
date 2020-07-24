@@ -1,58 +1,17 @@
 <template>
   <div>
-    <v-navigation-drawer app :mini-variant.sync="menuState" v-model="drawer">
-      <v-sheet height="60" width="100%">
-        <!-- <v-img></v-img> -->
-        <v-subheader class="justify-center text-uppercase h6" width="100%" >雪中</v-subheader>
-      </v-sheet>
-      <v-list>
-        <v-list-group v-for="(item,idx) in menu" :key="idx" append-icon="iconfont-expand_more" no-action @click="replace(item)">
-          <template v-slot:activator>
-            <v-list-item-icon>
-              <v-icon :class="item.icon"></v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{item.name}}</v-list-item-title>
-            </v-list-item-content>
-          </template>
-          <v-list-item v-for="(n,i) in item.child" :key="i" @click="replace(n)">
-            <v-list-item-icon>
-              <v-icon>{{n.icon}}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{n.name}}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-group>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-app-bar app dense text>
-        <v-btn  depressed @click="commDrawer();">
-          <v-icon>iconfont-goodsppecategory</v-icon>
-        </v-btn> 
-        <v-btn text class="ml-3" >浏览首页</v-btn>
-        <v-spacer></v-spacer>
-        <v-btn depressed title="退出">
-          <v-icon>iconfont-zhuxiao</v-icon>
-        </v-btn>
-        <v-btn depressed title="设置">
-          <v-icon>iconfont-shezhi</v-icon>
-        </v-btn>
-         <v-btn depressed  title="我的信息">
-          <v-icon>iconfont-yonghuming</v-icon>
-        </v-btn>
-    </v-app-bar>
-
+    <drawer></drawer>
+    <app-head></app-head>
     <v-main>
+
       <router-view/>
+ 
       <v-footer fixed pedless >
         <v-spacer></v-spacer>
-          &copy; {{new Date().getFullYear()}}
-          <v-sheet tag="a" title="gitee" class="ml-5 text-decoration-none" color="rgba(0,0,0,0)" target="_blank" href="https://gitee.com/luciferdj/xzhdx">lucifer-dj</v-sheet>
-        </v-footer>
+        &copy; {{new Date().getFullYear()}}
+        <v-sheet tag="a" title="gitee" class="ml-5 text-decoration-none" color="rgba(0,0,0,0)" target="_blank" href="https://gitee.com/luciferdj/xzhdx">lucifer-dj</v-sheet>
+      </v-footer>
     </v-main>
-    
   </div>
 </template>
 <script>
@@ -103,36 +62,13 @@ export default {
     menuState:false,
     drawer: true
   }),
-  methods:{
-    commDrawer(){
-      let that = this;
-      if(that.$vuetify.breakpoint.xs){
-        // that.menuState=false;
-        that.drawer = !that.drawer; 
-        return;
-      }
-      that.menuState = !that.menuState;
-    },
-    replace(data){
-      let that = this;
-      let {path} = data;
-      that.$router.replace(path)
-    }
+  components:{
+    drawer:()=>import('./core/drawer'),
+    'app-head':()=>import('./core/appHead')
   },
-  mounted(){
-    //人物 势力 关于雪中 
-    //主页 境界划分 
-    let drawer_content = document.querySelector(
-      ".v-navigation-drawer__content"
-    );
-
-    drawer_content.classList.add("drawer"); //chrome
-    drawer_content.style.scrollbarWidth = "none"; //firefox
-    drawer_content.style.msOverflowStyle = "none"; //edge
-  }
+  methods:{
+  },
 }
 </script>
 <style lang="less" scoped>
-
-   
 </style>

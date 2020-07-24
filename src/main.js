@@ -12,11 +12,11 @@ Vue.config.productionTip = false
 Vue.use(less);
 
 Vue.prototype.pageIndex = "www.luciferdj.cn";
+Vue.prototype.bus = new Vue();
 /* eslint-disable no-new */
-let vm = new Vue({
+new Vue({
   router,
   store,
   vuetify,
   render: h => h(App),
 }).$mount('#app')
-console.log(vm)
