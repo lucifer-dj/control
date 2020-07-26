@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="box">
     <v-navigation-drawer app :mini-variant.sync="menuState" v-model="drawer">
       <v-sheet height="60" width="100%">
         <!-- <v-img></v-img> -->
@@ -36,21 +36,28 @@
         <v-btn depressed title="退出">
           <v-icon>iconfont-zhuxiao</v-icon>
         </v-btn>
-        <v-btn depressed title="设置">
+        <v-btn depressed title="设置" @click="showSide('setting')">
           <v-icon>iconfont-shezhi</v-icon>
         </v-btn>
-         <v-btn depressed  title="我的信息">
+         <v-btn depressed  title="我的信息" @click="showSide('user')">
           <v-icon>iconfont-yonghuming</v-icon>
         </v-btn>
     </v-app-bar>
 
-    <v-main>
-      <router-view/>
-      <v-footer fixed pedless >
+    <v-main class="v-main">
+      <v-row align="stretch" height="100%">
+        <v-col :cols="viewCols" class="v-col9">
+          <router-view/>
+        </v-col>
+        <v-col :cols="sideCols" class="v-col3 pa-0 ma-0">
+          <the-side :type="sideType" @close="closeSide"></the-side>
+        </v-col>
+      </v-row>
+      <!-- <v-footer fixed pedless >
         <v-spacer></v-spacer>
-          &copy; {{new Date().getFullYear()}}
-          <v-sheet tag="a" title="gitee" class="ml-5 text-decoration-none" color="rgba(0,0,0,0)" target="_blank" href="https://gitee.com/luciferdj/xzhdx">lucifer-dj</v-sheet>
-        </v-footer>
+        &copy; {{new Date().getFullYear()}}
+        <v-sheet tag="a" title="gitee" class="ml-5 text-decoration-none" color="rgba(0,0,0,0)" target="_blank" href="https://gitee.com/luciferdj/xzhdx">lucifer-dj</v-sheet>
+      </v-footer> -->
     </v-main>
     
   </div>
@@ -101,11 +108,15 @@ export default {
       }
     ],
     menuState:false,
-    drawer: true
+    drawer: true,
+    sideType: '',
+    sideCols: 0,
+    viewCols: 12
   }),
   methods:{
     commDrawer(){
       let that = this;
+      console.log(that.$vuetify.breakpoint.xs)
       if(that.$vuetify.breakpoint.xs){
         // that.menuState=false;
         that.drawer = !that.drawer; 
@@ -117,22 +128,56 @@ export default {
       let that = this;
       let {path} = data;
       that.$router.replace(path)
+    },
+    closeSide(){
+      let that = this;
+      that.$nextTick(()=>{
+        that.sideCols = 0;
+        that.viewCols = 12;
+      })
+    },
+    showSide(type){
+      let that =this;
+      that.$nextTick(()=>{
+        that.sideCols = 3;
+        that.viewCols = 9;
+        that.sideType = type
+      })
+      
+      
     }
   },
   mounted(){
+    let that = this;
     //人物 势力 关于雪中 
     //主页 境界划分 
-    let drawer_content = document.querySelector(
-      ".v-navigation-drawer__content"
-    );
-
+    let drawer_content = this.$(".v-navigation-drawer__content")
     drawer_content.classList.add("drawer"); //chrome
     drawer_content.style.scrollbarWidth = "none"; //firefox
     drawer_content.style.msOverflowStyle = "none"; //edge
+  },
+  components:{
+    theSide:()=>import('@components/theSide.vue')
   }
 }
 </script>
 <style lang="less" scoped>
-
-   
+  .box{
+    position: relative;
+    width: 100%;
+    height: calc(100% - 48px);
+  }
+  .v-main{
+    height: 100%;
+  }
+  .v-col3{
+    position: relative;
+    height: calc(100vh - 48px);
+  }
+  .v-col9{
+    height: calc(100vh - 48px);
+    overflow: auto;
+    overflow-y: scroll;
+    // padding-bottom: 48px;
+  }
 </style>

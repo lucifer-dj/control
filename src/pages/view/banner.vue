@@ -24,7 +24,7 @@
       </v-data-table>
     </v-card>
 
-    <v-dialog v-model="dialog" persistent >
+    <v-dialog v-model="dialog" persistent class="v-dialog">
         <v-row justify="center">
           <v-col cols="6" class="pa-0 ma-0">
             <v-card class="pa-5">

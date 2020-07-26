@@ -23,10 +23,36 @@ export default {
   width: 100%;
   height: 100vh;
 }
-  .v-navigation-drawer__content::-webkit-scrollbar{
-    display:none !important;
-  }
-  .v-dialog{
-    box-shadow: none !important;
-  }
+.v-navigation-drawer__content::-webkit-scrollbar{
+  display:none !important;
+}
+.v-main>.v-main__wrap{
+  height: 100%;
+}
+html{
+  overflow-y: hidden;
+}
+::-webkit-scrollbar{
+    height: 8px;
+    width: 8px;
+}
+::-webkit-scrollbar-corner{
+  background: #f8f8f8;
+}
+::-webkit-scrollbar-button{
+  // background-color: #222;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 9px;
+    border: solid 6px #C8C6C4;
+    background-clip: content-box;
+    cursor:pointer;
+    &:hover{
+     background-color: #98A3A6;
+    }
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+} 
+
 </style>

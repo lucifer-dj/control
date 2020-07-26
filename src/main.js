@@ -12,6 +12,7 @@ Vue.config.productionTip = false
 Vue.use(less);
 
 Vue.prototype.pageIndex = "www.luciferdj.cn";
+Vue.prototype.$ = (str) => document.querySelector(str)
 /* eslint-disable no-new */
 let vm = new Vue({
   router,

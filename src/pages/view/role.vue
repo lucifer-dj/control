@@ -1,5 +1,5 @@
 <template>
-  <v-container fiuld>
+  <v-container fiuld class="v-container">
     <v-subheader>
         栏目管理
       <v-icon class="iconfont iconxiangyou mx-1" small ></v-icon>
@@ -84,7 +84,22 @@ export default {
     ],
     items:[
       {id:0,name:'徐凤年',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
-      {id:1,name:'徐晓',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''}
+      {id:1,name:'徐晓',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:2,name:'徐凤年',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:3,name:'徐晓',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:4,name:'徐凤年',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:5,name:'徐晓',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:6,name:'徐凤年',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:7,name:'徐晓',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:8,name:'徐凤年',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:9,name:'徐晓',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:10,name:'徐凤年',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:11,name:'徐晓',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:12,name:'徐凤年',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:13,name:'徐晓',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:14,name:'徐凤年',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:15,name:'徐晓',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
+      {id:16,name:'徐凤年',sex:'男',step:'陆地神仙',class:'北凉',date:'2020-07-22',oper:''},
     ],
     roleModel:{
 
@@ -99,6 +114,5 @@ export default {
   }
 }
 </script>
-<style lang="less">
-  
+<style lang="less" scoped>
 </style>
