@@ -59,7 +59,6 @@
         <v-sheet tag="a" title="gitee" class="ml-5 text-decoration-none" color="rgba(0,0,0,0)" target="_blank" href="https://gitee.com/luciferdj/xzhdx">lucifer-dj</v-sheet>
       </v-footer> -->
     </v-main>
-    
   </div>
 </template>
 <script>
@@ -113,6 +112,8 @@ export default {
     sideCols: 0,
     viewCols: 12
   }),
+  components:{
+  },
   methods:{
     commDrawer(){
       let that = this;
