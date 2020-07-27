@@ -7,7 +7,7 @@ class HomeController extends Controller {
     const { ctx } = this;
     ctx.body = "hello"
   }
- 
+
 }
 
 module.exports = HomeController;
