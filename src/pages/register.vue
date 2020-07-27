@@ -7,19 +7,15 @@
         <v-text-field label="密码"></v-text-field>
       </v-card-text>
       <v-card-actions>
-        <v-btn width="100">登录</v-btn>
+        <v-btn width="100">注册</v-btn>
       </v-card-actions>
     </v-card>
   </main>
 </template>
 <script>
-import * as api from '@api'
 export default {
-  name:'login',
-  data:()=>({}),
-  mounted(){
-    api.test({name:'sj'}).then(res=>console.log(res),err=>console.log(err))
-  }
+  name:'register',
+  data:()=>({})
 }
 </script>
 <style lang="less" scoped>

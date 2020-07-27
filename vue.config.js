@@ -40,7 +40,8 @@ module.exports = {
       .set('@assets', resolve('src/assets'))
       .set('@components', resolve('src/components'))
       .set('@views', resolve('src/views'))
-      .set('@store', resolve('src/store'));
+      .set('@store', resolve('src/store'))
+      .set('@api', resolve('src/plugins/api.js'))
   },
   devServer: {
     overlay: { // 让浏览器 overlay 同时显示警告和错误
