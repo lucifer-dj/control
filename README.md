@@ -1,25 +1,33 @@
-# BUGNODE
-
-#### 介绍
-
-#### 软件架构
-软件架构说明
-+ node+express+mysql
+# made-up
 
 
-#### 安装教程
 
-1.   `git clone https://gitee.com/luciferdj/bugnode.git`
-2.  `npm i`
-3.  `npm start`
+## QuickStart
 
-#### 使用说明
+<!-- add docs here for user -->
 
-1.  暂无
+see [egg docs][egg] for more detail.
 
-#### 参与贡献
+### Development
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+```bash
+$ npm i
+$ npm run dev
+$ open http://localhost:7001/
+```
+
+### Deploy
+
+```bash
+$ npm start
+$ npm stop
+```
+
+### npm scripts
+
+- Use `npm run lint` to check code style.
+- Use `npm test` to run unit test.
+- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
+
+
+[egg]: https://eggjs.org
