@@ -2,12 +2,12 @@
 
 const Controller = require('egg').Controller;
 
-class HomeController extends Controller {
+class LoginController extends Controller {
   async index() {
     const { ctx } = this;
-    ctx.body = "hello"
+    ctx.body = "login"
   }
  
 }
 
-module.exports = HomeController;
+module.exports = LoginController;
