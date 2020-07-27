@@ -8,7 +8,7 @@
 export default {
   name: 'App',
   mounted(){
-  
+    //做一个进入时的验证
   }
 }
 </script>
