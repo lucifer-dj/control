@@ -33,7 +33,7 @@
         </v-btn> 
         <v-btn text class="ml-3" >浏览首页</v-btn>
         <v-spacer></v-spacer>
-        <v-btn depressed title="退出">
+        <v-btn depressed title="退出" @click="logout">
           <v-icon>iconfont-zhuxiao</v-icon>
         </v-btn>
         <v-btn depressed title="设置" @click="showSide('setting')">
@@ -53,6 +53,7 @@
           <the-side :type="sideType" @close="closeSide"></the-side>
         </v-col>
       </v-row>
+      <toast></toast>
       <!-- <v-footer fixed pedless >
         <v-spacer></v-spacer>
         &copy; {{new Date().getFullYear()}}
@@ -62,6 +63,7 @@
   </div>
 </template>
 <script>
+
 export default {
   name:'home',
   data:()=>({
@@ -112,8 +114,6 @@ export default {
     sideCols: 0,
     viewCols: 12
   }),
-  components:{
-  },
   methods:{
     commDrawer(){
       let that = this;
@@ -144,8 +144,13 @@ export default {
         that.viewCols = 9;
         that.sideType = type
       })
-      
-      
+    },
+    logout(){
+      let that = this;
+      that.$toast({text:'确认要退出吗？',bool:true})
+      that.bus.$on('toastConfirm',function(){
+        console.log('正在退出请稍后. . .')
+      })
     }
   },
   mounted(){
@@ -156,9 +161,11 @@ export default {
     drawer_content.classList.add("drawer"); //chrome
     drawer_content.style.scrollbarWidth = "none"; //firefox
     drawer_content.style.msOverflowStyle = "none"; //edge
+   
   },
   components:{
-    theSide:()=>import('@components/theSide.vue')
+    theSide:()=>import('@components/theSide.vue'),
+    toast:()=>import('@components/toast.vue')
   }
 }
 </script>
