@@ -32,6 +32,7 @@ export default {
     }
   }),
   mounted() {
+
     //  api.login({name:'dj'}).then(res=>console.log(res),err=>console.log(err))
   },
   methods: {
@@ -66,7 +67,7 @@ export default {
         that.userModel.password = '';
          that.alert = {
             bool:true,
-            msg: result.data.msg,
+            msg: '登陆失败',
             color: '#fef0f0',
             fontColor: 'red--text'
           }

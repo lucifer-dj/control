@@ -8,6 +8,7 @@ import vuetify from './plugins/vuetify'
 import store from './store/index'
 import md5 from 'js-md5'
 import toast from '@components/toast.js'
+import hint from "@components/hint.js"
 
 Vue.config.productionTip = false
 
@@ -16,6 +17,7 @@ Vue.use(less);
 Vue.prototype.pageIndex = "www.luciferdj.cn";
 Vue.prototype.bus = new Vue();
 Vue.prototype.$toast = toast;
+Vue.prototype.$hint = hint;
 Vue.prototype.$ = (str) => document.querySelector(str)
 Vue.prototype.$md5 = md5;
 /* eslint-disable no-new */

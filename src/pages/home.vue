@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box v-application-box">
     <v-navigation-drawer app :mini-variant.sync="menuState" v-model="drawer">
       <v-sheet height="60" width="100%">
         <!-- <v-img></v-img> -->

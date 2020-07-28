@@ -5,10 +5,30 @@
 </template>
 
 <script>
+import * as api from '@api'
 export default {
   name: 'App',
   mounted(){
     //做一个进入时的验证
+    let that = this;
+    that.loginAuto();
+  },
+  methods:{
+    async loginAuto(){
+      let that = this;
+      let token = localStorage.getItem('token')
+      if(token && token.length>0){
+        try{
+          let result = await api.loginAuto({a:'a'})
+          that.$hint({msg:result.data.msg,type:'success'})
+        }catch(e){
+          console.log(e)
+          that.$hint({msg:'验证token失败，跳转到登陆',type:'error'})
+        }
+      }else{
+        that.$hint({msg:'没有token，跳转到登陆',type:'error'})
+      }
+    }
   }
 }
 </script>

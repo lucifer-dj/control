@@ -2,7 +2,7 @@ import axios from 'axios'
 let token = localStorage.getItem('token')
 const Service = axios.create({
   timeout:7000,
-  baseURL: "http://127.0.0.1:7001",
+  baseURL: "http://127.0.0.1",
   method:'post',
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
@@ -13,7 +13,7 @@ Service.interceptors.request.use(config => {
   if(config.method==='post'){
     config.data = JSON.stringify(config.data)
   }
- console.log(config)
+//  console.log(config)
   return config
 })
 // 添加响应拦截器
