@@ -5,8 +5,8 @@
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
-const path = require('path')
-module.exports = appInfo => {
+ const path = require('path')
+ module.exports = appInfo => {
   const config = exports = {};
   // use for cookie sign key, should change to your own and keep security
   config.keys = "208002";
@@ -36,21 +36,22 @@ module.exports = appInfo => {
       '.html': 'nunjucks',
     },
     root: [
-      path.join(appInfo.baseDir, 'app/view'),
+    path.join(appInfo.baseDir, 'app/view'),
     ].join(',')
   };
   config.jwt = {
-    secret: '123123'
+    secret: '123123',
+    expiresIn: 60*60*24*15
   }
   config.mysql = {
     // 单数据库信息配置
     client: {
       // host
-      host: '127.0.0.1',
+      host: '119.45.57.238',
       // 端口号
       port: '3306',
       // 用户名
-      user: 'root',
+      user: 'xzhdx',
       // 密码
       password: '123123',
       // 数据库名
@@ -69,9 +70,9 @@ module.exports = appInfo => {
     // path: '/var/run/egg.sock',
   }
 }
-  return {
-    ...config,
-    ...userConfig,
-  };
+return {
+  ...config,
+  ...userConfig,
+};
 };
 
