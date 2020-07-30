@@ -43,17 +43,37 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12" md="6">
-              <v-text-field label="栏目名称"></v-text-field>
+              <v-text-field 
+              label="栏目名称"
+              v-model="columnModel.name"
+              required
+              @input="$v.columnModel.name.$touch()"
+              @blur="$v.columnModel.name.$touch()"
+              ></v-text-field>
             </v-col>
             <v-col cols="12" md="6" >
-              <v-select label="所属栏目" :items="origin"></v-select>
+              <v-select label="所属栏目" 
+              :items="origin"
+              v-model="columnModel.origin"
+              required
+              @input="$v.columnModel.origin.$touch()"
+              @blur="$v.columnModel.origin.$touch()"
+              ></v-select>
             </v-col>
             <v-col cols="12" md="6" >
-              <v-select label="选择模板" :items="origin"></v-select>
+              <v-select 
+              v-model="columnModel.template"
+              label="选择模板"
+              :items="origin"
+              ></v-select>
             </v-col>
             <v-col cols="12" md="6" class="d-flex flex-row align-center">
               <span>是否隐藏</span>
-              <v-radio-group row class="ml-10">
+              <v-radio-group 
+              row 
+              class="ml-10"
+              v-model="columnModel.show"
+              >
                 <v-radio label="显示" value="true"></v-radio>
                 <v-radio label="隐藏" value="false"></v-radio>
               </v-radio-group>
@@ -62,16 +82,25 @@
               <v-text-field label="栏目英文名称"></v-text-field>
             </v-col> -->
             <v-col cols="12" md="6">
-              <v-text-field label="排序"></v-text-field>
+              <v-text-field 
+              label="排序"
+              v-model="columnModel.sort"
+              ></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
-              <v-text-field label="关键词" ></v-text-field>
+              <v-text-field 
+              label="关键词" 
+              v-model="columnModel.sort"
+              ></v-text-field>
             </v-col>
             <v-col cols="12" md="12">
               <v-file-input prepend-icon="mdi-camera" accept="image/*" label="栏目图片"></v-file-input>
             </v-col>
             <v-col cols="12" md="12">
-              <v-textarea label="栏目描述" solo auto-grow></v-textarea>
+              <v-textarea 
+              label="栏目描述" solo auto-grow
+              v-model="columnModel.description"
+              ></v-textarea>
             </v-col>
           </v-row>
         </v-card-text>
@@ -86,8 +115,17 @@
  </v-container>
 </template>
 <script>
+import * as api from '@api';
+import { required } from 'vuelidate/lib/validators'
 export default {
   name: "column",
+  validations:{
+    columnModel:{
+      name:{
+        required:''
+      }
+    }
+  },
   data: () => ({
     headers: [
       { text: "ID", value: "id", align: "center"},
@@ -122,7 +160,14 @@ export default {
     dialog: false,
     origin:['顶级栏目','角色列表'],
     columnModel:{
-      origin:''
+      origin:'',
+      name:'',
+      show:'',
+      description:'',
+      keywords:'',
+      columnpic:'',
+      sort:'',
+      template:''
     }
   }),
   mounted(){
