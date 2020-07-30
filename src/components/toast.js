@@ -19,7 +19,7 @@ const Toast = (options={})=>{
     return t
   }
   const opts = {
-    // text:'',
+    msg:'',
     ...options
   }
 

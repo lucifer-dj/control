@@ -5,9 +5,11 @@ let HintConstructor = Vue.extend(HintComponent)
 let h = undefined
 
 HintConstructor.prototype.close = function(){
+ 
   if(h){
     h=undefined
   }
+   console.log(h)
   setTimeout(()=>{
     if(this.$el && this.$el.parentNode){
       this.$el.parentNode.removeChild(this.$el)
@@ -15,12 +17,12 @@ HintConstructor.prototype.close = function(){
     this.$destroy();
   },this.time)
 }
-
 const Hint = (options = {})=>{
   if(!options.time) options.time = 3000
   if(h){
     return h
   }
+console.log(options)
   let opts = {
     msg:'',
     ...options
@@ -32,12 +34,13 @@ const Hint = (options = {})=>{
     data: opts
   })
   let parent = instance.$('.v-application')
+  
   parent.appendChild(instance.$el)
   Vue.nextTick(()=>{
     instance.bool = true
   })
- 
   h = instance;
+  instance.close();
   return instance
 }
 export default Hint

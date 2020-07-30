@@ -1,5 +1,5 @@
 <template>
-  <v-snackbar :value="true" top :timeout="time" :color="theme.color" elevation="0">
+  <v-snackbar v-model="bool" top :timeout="time" :color="theme.color" elevation="0">
     <span :class="theme.font">{{msg}}</span>
   </v-snackbar>
 </template>
@@ -7,7 +7,7 @@
 export default {
   name:'hint',
   data:()=>({
-    msg:"ssss",
+    msg:"这是一个3s的提示狂",
     bool: true,
     time:3000,
     type:'success'
@@ -15,9 +15,6 @@ export default {
   methods:{
   },
   mounted(){
-    if(this.time>0){
-      this.close();
-    }
   },
   computed:{
  

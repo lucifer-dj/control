@@ -1,8 +1,10 @@
 import axios from 'axios'
+import cfg from './cfg.js'
+
 let token = localStorage.getItem('token')
 const Service = axios.create({
   timeout:7000,
-  baseURL: "http://127.0.0.1",
+  baseURL: cfg.isdev?'http://119.45.57.238':'http://127.0.0.1:7001',
   method:'post',
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
