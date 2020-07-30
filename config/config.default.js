@@ -64,9 +64,14 @@
     agent: false,
   };
 
-return {
-  ...config,
-  ...userConfig,
-};
+  config.multipart = {
+    mode:'stream',
+
+  }
+
+  return {
+    ...config,
+    ...userConfig,
+  };
 };
 
