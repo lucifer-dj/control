@@ -61,6 +61,11 @@ export default new Router({
           path:'/other',
           component:()=>import('./pages/view/other.vue')
         },
+        {
+          name:'introduce',
+          path:'/t',
+          component:()=>import('./pages/view/introduce.vue')
+        },
       ]
     },
     {

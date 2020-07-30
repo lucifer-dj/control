@@ -4,14 +4,15 @@ import cfg from './cfg.js'
 let token = localStorage.getItem('token')
 const Service = axios.create({
   timeout:7000,
-  baseURL: cfg.isdev?'http://119.45.57.238':'http://127.0.0.1:7001',
+  baseURL: cfg.isdev?'http://127.0.0.1:7001':'http://119.45.57.238',
   method:'post',
   headers: {
-    'Content-Type': 'application/json;charset=UTF-8',
+    'Content-Type': 'application/x-www-form-urlencoded',
     "Authorization" : `Bearer ${token}`
   }
 })
 Service.interceptors.request.use(config => {
+  console.log(config)
   if(config.method==='post'){
     config.data = JSON.stringify(config.data)
   }

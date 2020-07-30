@@ -13,6 +13,11 @@ export default {
     let that = this;
     that.loginAuto();
   },
+  watch:{
+    $route(to,from){
+      console.log(`从  ${from.path}  =>   ${to.path}  `)
+    }
+  },
   methods:{
     async loginAuto(){
       let that = this;
