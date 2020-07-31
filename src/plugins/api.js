@@ -1,5 +1,8 @@
 import service from './axios.js'
 import cfg from './cfg.js'
+import {
+  checkObjectIsEmpty
+} from './util'
 let temp = {
   $loading: () => ({
     close: () => {}
@@ -25,12 +28,24 @@ export function addColumn(data, obj = {}) {
 }
 //查询所有栏目
 export function queryColumns(data = {}, obj = {}) {
-  return fetch('column', data, obj);
+  return fetch('/column', data, obj);
+}
+//查询单个栏目
+export function readColumn(data, obj = {}) {
+  return fetch('/column/read', data, obj)
+}
+//更新栏目
+export function editCol(data, obj = {}) {
+  return fetch('/column/update', data, obj)
+}
+//删除栏目
+export function deleteCol(data, obj = {}) {
+  return fetch('/column/delete', data, obj)
 }
 
 //上传文件
 export function upload(data, obj = {}) {
-  return fetch(cfg.isdev ? 'upload/oss' : '/upload/serve', data, obj, 'put', {
+  return fetch(cfg.isdev ? '/upload/oss' : '/upload/serve', data, obj, 'put', {
     'Content-Type': 'multipart/form-data'
   })
 }
@@ -38,7 +53,7 @@ export function upload(data, obj = {}) {
 function fetch(url, data, obj, method = "post", headers = {
   "Content-Type": 'application/json;charset=UTF-8'
 }) {
-  if (!checkObjectIsNull(obj)) obj = temp
+  if (!checkObjectIsEmpty(obj)) obj = temp
   let o = obj.$loading()
   return new Promise((resolve, reject) => {
     service({
@@ -54,10 +69,4 @@ function fetch(url, data, obj, method = "post", headers = {
       o.close();
     })
   })
-}
-
-function checkObjectIsNull(obj) {
-  let arr = Object.keys(obj)
-  if (arr.length > 0) return true
-  return false
 }

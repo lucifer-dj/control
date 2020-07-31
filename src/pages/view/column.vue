@@ -4,10 +4,10 @@
       <v-toolbar flat>
         <v-card-title>栏目管理</v-card-title>
         <v-spacer></v-spacer>
-        <v-btn class="mr-4" @click="dialog=true;">+添加栏目</v-btn>
+        <v-btn class="mr-4" @click="dialog=true;dialogType='add'">+添加栏目</v-btn>
         <v-btn>更新排序</v-btn>
       </v-toolbar>
-      <v-data-table :headers="headers" :items="items" disable-sort @click:row="cTableRow($event)">
+      <v-data-table :headers="headers" :items="items" disable-sort>
         <!-- 名称 -->
         <template v-slot:item.name="{item}">
           <span>{{item.name}}</span>
@@ -25,20 +25,17 @@
           <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteCol(item.id)">
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
-          <v-btn fab x-small depressed title="修改" class="mx-1" @click="editCol(item)">
+          <v-btn fab x-small depressed title="修改" class="mx-1" @click="readColumn(item.id)">
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
           </v-btn>
         </template>
-        <!-- <template v-slot:item>
-        
-        </template>-->
       </v-data-table>
     </v-card>
 
     <!-- 添加栏目 -->
     <v-dialog v-model="dialog" fullscreen persistent hide-overlay>
-      <v-card class="d-flex align-center flex-column">
-        <v-card-title class="justify-center text-h4">添加栏目</v-card-title>
+      <v-card class="d-flex align-center flex-column" v-if="dialog">
+        <v-card-title class="justify-center text-h4">{{dialogType=='add'?'添加':'修改'}}栏目</v-card-title>
         <v-col md="6">
           <v-card-text>
             <v-row dense>
@@ -71,13 +68,13 @@
                 <v-radio-group row class="ml-10" v-model="columnModel.show">
                   <v-radio
                     label="显示"
-                    value="true"
+                    value="1"
                     off-icon="iconfont-weixuan"
                     on-icon="iconfont-xuanzhong"
                   ></v-radio>
                   <v-radio
                     label="隐藏"
-                    value="false"
+                    value="0"
                     off-icon="iconfont-weixuan"
                     on-icon="iconfont-xuanzhong"
                   ></v-radio>
@@ -87,19 +84,12 @@
               <v-text-field label="栏目英文名称"></v-text-field>
               </v-col>-->
               <v-col cols="12" md="6">
-                <v-text-field label="排序" v-model="columnModel.sort"></v-text-field>
+                <v-text-field label="排序" v-model="columnModel.order"></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field label="关键词" v-model="columnModel.keywords"></v-text-field>
               </v-col>
-              <v-col cols="12" md="12">
-                <v-file-input
-                  prepend-icon="mdi-camera"
-                  v-model="columnModel.columnpic"
-                  accept="image/*"
-                  label="栏目图片"
-                ></v-file-input>
-              </v-col>
+              <upload v-model="imgFile" type="line" :src="'http://'+columnModel.pic" ref="upload"></upload>
               <v-col cols="12" md="12">
                 <v-textarea label="栏目描述" solo auto-grow v-model="columnModel.description"></v-textarea>
               </v-col>
@@ -107,8 +97,12 @@
           </v-card-text>
         </v-col>
         <v-card-actions>
-          <v-btn width="100" class="mx-3" @click="submit">提交</v-btn>
-          <v-btn width="100" class="mx-3" @click="dialog=false;columnModelReset();">关闭</v-btn>
+          <v-btn
+            width="100"
+            class="mx-3"
+            @click="submit(dialogType)"
+          >{{dialogType=='add'?'提交':'确认修改'}}</v-btn>
+          <v-btn width="100" class="mx-3" @click="columnModelReset();">关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -118,6 +112,7 @@
 import * as api from "@api";
 import { required } from "vuelidate/lib/validators";
 export default {
+  inject: ["reload"],
   name: "column",
   validations: {
     columnModel: {
@@ -137,30 +132,9 @@ export default {
       { text: "排序", value: "order", align: "center" },
       { text: "操作", value: "oper", align: "center" },
     ],
-    items: [
-      {
-        id: "1",
-        name: "角色管理",
-        show: true,
-        order: "0",
-        oper: "",
-      },
-      {
-        id: "2",
-        name: "势力划分",
-        show: false,
-        order: "0",
-        oper: "",
-      },
-      {
-        id: "3",
-        name: "内容介绍",
-        show: true,
-        order: "0",
-        oper: "",
-      },
-    ],
+    items: [],
     dialog: false,
+    dialogType: "add",
     origin: ["顶级栏目", "新闻中心", "关于我们", "角色介绍"],
     template: [
       { name: "新闻模板", val: "news" },
@@ -169,43 +143,68 @@ export default {
       { name: "关于模板", val: "about" },
       { name: "地势模板", val: "place" },
     ],
+    imgFile: {},
     columnModel: {
       origin: "顶级栏目",
-      name: "新闻中心",
-      show: true,
+      name: "",
+      show: "1",
       description: "",
       keywords: "",
-      columnpic: [],
-      sort: "",
+      pic: "",
+      order: "",
       template: "",
     },
   }),
-  mounted() {
+  async mounted() {
     let that = this;
-    // that.queryColumns()
-
+    that.items = await that.queryColumns();
   },
   methods: {
-    columnModelReset() {},
-    cTableRow(e) {
-      //点击表格某一行
-      console.log(e);
-    },
-    async submit() {
+    columnModelReset() {
       let that = this;
+      that.userModel = {
+        origin: "顶级栏目",
+        name: "",
+        show: "1",
+        description: "",
+        keywords: "",
+        pic: [],
+        order: "",
+        template: "",
+      };
+      that.imgFile = [];
+      // that.reload();
+      that.dialog = false;
+    },
+    async submit(type) {
+      let that = this;
+      if (type != "add") return that.editCol();
       that.$v.columnModel.$touch();
       // if(that.$v.columnModel.$invalid){
       //   return console.log('请填写必填项')
       // }
-      try {
-        let pic = await that.uploadPic(that.columnModel.columnpic);
-        if (pic) {
+      let pic = "";
+      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+        try {
+          let pic = await that.uploadPic(that.imgFile);
           that.columnModel.pic = pic;
-          delete that.columnModel.columnpic;
-          let result = await api.addColumn(that.columnModel, that);
-          console.log(result);
+        } catch (e) {
+          console.log(e);
+          that.$hint({ msg: "上传图片失败", type: "error" });
         }
-      } catch (e) {}
+      }
+      try {
+        let result = await api.addColumn(that.columnModel, that);
+        if (result.data.code === 200) {
+          that.$hint({ msg: result.data.msg, type: "success" });
+          that.columnModelReset();
+        } else {
+          that.$hint({ msg: result.data.msg, type: "error" });
+        }
+      } catch (e) {
+        console.log(e);
+        that.$hint({ msg: "添加栏目失败", type: "error" });
+      }
     },
     async uploadPic(file) {
       let that = this;
@@ -223,16 +222,105 @@ export default {
         return false;
       }
     },
-    async queryColumns(){
+    async queryColumns() {
       let that = this;
-      try{
+      try {
         let result = await api.queryColumns();
-        console.log(result)
-      }catch(e){
+        if (result.data.code === 200) {
+          return result.data.data;
+        } else {
+          that.$hint({ msg: "查询数据失败", type: "error" });
+          return [
+            {
+              id: "1",
+              name: "角色管理",
+              show: true,
+              order: "0",
+              oper: "",
+            },
+            {
+              id: "2",
+              name: "势力划分",
+              show: false,
+              order: "0",
+              oper: "",
+            },
+            {
+              id: "3",
+              name: "内容介绍",
+              show: true,
+              order: "0",
+              oper: "",
+            },
+          ];
+        }
+      } catch (e) {
         console.log(e);
-        that.$hint('查询数据失败')
+        that.$hint({ msg: "查询数据失败", type: "error" });
       }
-    }
+    },
+    async readColumn(id) {
+      let that = this;
+      try {
+        let result = await api.readColumn({ id }, that);
+        console.log(result);
+        if (result.data.code === 200) {
+          that.dialog = true;
+          that.dialogType = "edit";
+          that.columnModel = result.data.data;
+        }
+      } catch (e) {
+        console.log(e);
+        that.$hint({ msg: "查询失败", type: "error" });
+      }
+    },
+    async editCol(id) {
+      let that = this;
+      // that.$v.columnModel.$touch();
+      // if(that.$v.columnModel.$invalid){
+      //   return console.log('请填写必填项')
+      // }
+      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+        try {
+          let pic = await that.uploadPic(that.imgFile);
+          that.columnModel.pic = pic;
+        } catch (e) {
+          console.log(e);
+          that.$hint({ msg: "上传图片失败", type: "error" });
+        }
+      }
+      try {
+        let result = await api.editCol(that.columnModel, that);
+        console.log(result);
+        that.columnModelReset();
+      } catch (e) {
+        console.log(e);
+        that.$hint({ msg: "编辑失败", type: "error" });
+      }
+    },
+    async deleteCol(id) {
+      let that = this;
+      that.$toast({ text: "确认要删除这个栏目吗？" });
+      that.bus.$on("toastConfirm", async function () {
+        try {
+          let result = await api.deleteCol({ id });
+          console.log(result);
+          if (result.data.code == 200) {
+            that.$hint({ msg: "删除成功", type: "success" });
+          } else {
+            that.$hint({ msg: "删除失败", type: "error" });
+          }
+        } catch (e) {
+          console.log(e);
+          that.$hint({ msg: "删除失败", type: "error" });
+        }
+      });
+    },
+    async addSonCol() {
+      console.log(this);
+      let that = this;
+      that.reload();
+    },
   },
   computed: {
     nameErrors() {
@@ -247,6 +335,9 @@ export default {
       !this.$v.userModel.template.required && errors.push("必填");
       return errors;
     },
+  },
+  components: {
+    upload: () => import("@components/upload.vue"),
   },
 };
 </script>

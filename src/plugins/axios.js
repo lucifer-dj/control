@@ -3,7 +3,7 @@ import cfg from './cfg.js'
 
 let token = localStorage.getItem('token')
 const Service = axios.create({
-  timeout:7000,
+  timeout: 30000,
   baseURL: cfg.isdev?'http://127.0.0.1:7001':'http://119.45.57.238',
   method:'post',
   headers: {
@@ -11,7 +11,6 @@ const Service = axios.create({
   }
 })
 Service.interceptors.request.use(config => {
-  console.log(config)
   if(config.method==='post'){
     config.data = JSON.stringify(config.data)
   }

@@ -2,81 +2,80 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 const originPush = Router.prototype.push
-Router.prototype.push = function(location) {
-    return originPush.call(this, location).catch(err => err)
+Router.prototype.push = function (location) {
+  return originPush.call(this, location).catch(err => err)
 }
 const originReplace = Router.prototype.replace;
-Router.prototype.replace = function(location) {
-    return originReplace.call(this, location).catch(err => err)
+Router.prototype.replace = function (location) {
+  return originReplace.call(this, location).catch(err => err)
 }
 
 Vue.use(Router)
 
 export default new Router({
-  mode:"hash",
+  mode: "hash",
   base: process.env.BASE_URL,
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'home',
-      component: ()=>import('./pages/home.vue'),
-      children:[
-        {
-          name:'index',
-          path:'/',
-          component:()=>import('./pages/view/index.vue')
+      component: () => import('./pages/home.vue'),
+      redirect: '/index',
+      children: [{
+          name: 'index',
+          path: '/index',
+          component: () => import('./pages/view/index.vue')
         },
         {
-          name:'project',
-          path:'/pro',
-          component:()=>import('./pages/view/column.vue')
+          name: 'project',
+          path: '/pro',
+          component: () => import('./pages/view/column.vue')
         },
         {
-          name:'role',
-          path:'/role',
-          component:()=>import('./pages/view/role.vue')
-        }, 
-        {
-          name:'force',
-          path:'/force',
-          component:()=>import('./pages/view/force.vue')
+          name: 'role',
+          path: '/role',
+          component: () => import('./pages/view/role.vue')
         },
         {
-          name:'xcontent',
-          path:'/xcontent',
-          component:()=>import('./pages/view/xcontent.vue')
+          name: 'force',
+          path: '/force',
+          component: () => import('./pages/view/force.vue')
         },
         {
-          name:'xpage',
-          path:'/xpage',
-          component:()=>import('./pages/view/xpage.vue')
+          name: 'xcontent',
+          path: '/xcontent',
+          component: () => import('./pages/view/xcontent.vue')
         },
         {
-          name:'banner',
-          path:'/banner',
-          component:()=>import('./pages/view/banner.vue')
+          name: 'xpage',
+          path: '/xpage',
+          component: () => import('./pages/view/xpage.vue')
         },
         {
-          name:'other',
-          path:'/other',
-          component:()=>import('./pages/view/other.vue')
+          name: 'banner',
+          path: '/banner',
+          component: () => import('./pages/view/banner.vue')
         },
         {
-          name:'introduce',
-          path:'/t',
-          component:()=>import('./pages/view/introduce.vue')
+          name: 'other',
+          path: '/other',
+          component: () => import('./pages/view/other.vue')
+        },
+        {
+          name: 'introduce',
+          path: '/t',
+          component: () => import('./pages/view/introduce.vue')
         },
       ]
     },
     {
       path: '/login',
       name: 'login',
-      component: ()=>import('./pages/login.vue')
+      component: () => import('./pages/login.vue')
     },
     {
       path: '/register',
       name: 'register',
-      component: ()=>import('./pages/register.vue')
+      component: () => import('./pages/register.vue')
     }
   ]
 })

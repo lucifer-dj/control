@@ -11,6 +11,7 @@ import toast from '@components/toast/toast.js'
 import hint from "@components/hint/hint.js"
 import loading from "@components/loading/loading.js"
 import vuelidate from 'vuelidate'
+import * as util from './plugins/util'
 
 Vue.config.productionTip = false
 
@@ -22,6 +23,7 @@ Vue.prototype.bus = new Vue();
 Vue.prototype.$toast = toast;
 Vue.prototype.$hint = hint;
 Vue.prototype.$loading = loading;
+Vue.prototype.$u = util;
 Vue.prototype.$ = (str) => document.querySelector(str)
 Vue.prototype.$md5 = md5;
 /* eslint-disable no-new */
