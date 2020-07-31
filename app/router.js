@@ -12,6 +12,7 @@ module.exports = app => {
   router.post('/column/add', controller.column.add)
   router.post('/column/read', controller.column.read)
   router.post('/column/update', controller.column.update)
+  router.post('/column/delete', controller.column.delete)
   router.put('/upload/oss', controller.upload.oss)
   router.put('/upload/serve', controller.upload.serve)
   // router.get('/upload', controller.upload.index)

@@ -1,42 +1,55 @@
-const { Service } = require('egg');
+const {
+	Service
+} = require("egg");
 
-class ColumnService extends Service{
-	async findColumns(num){
-		let { app } = this;
-		let result = await app.mysql.select('column',{
-			limit:10,
-			offset:num
-		})
-		console.log(result)
-		return result
+class ColumnService extends Service {
+	async query(num) {
+		let {
+			app
+		} = this;
+		let result = await app.mysql.select("column", {
+			limit: 10,
+			offset: num,
+		});
+		if (result.length > 0) return result;
+		return false;
 	}
-	async add(data){
-		let { app } = this;
-		let result = await app.mysql.insert('column',{
-			name: data.name,
-			show: data.show,
-			sort: data.sort,
-			pic: data.pic,
-			description: data.description,
-			keywords: data.keywords,
-			origin: data.origin,
-			template: data.template
-		})
-		if(result && result.affectedRows===1)return true;
-		else return false;
+	async add(data) {
+		let {
+			app
+		} = this;
+		let result = await app.mysql.insert("column", data);
+		if (result && result.affectedRows === 1) return true;
+		return false;
 	}
-	async read(data){
-		let { app } = this;
-		let result = await app.mysql.get('column',{id:data.id})
-		console.log(result)
-		if(result) return result
-		else return false
+	async read(data) {
+		let {
+			app
+		} = this;
+
+		let result = await app.mysql.get("column", {
+			id: data.id
+		});
+		console.log(result);
+		if (result) return result;
+		return false;
 	}
-	async update(data){
-		let { app } = this;
-		// let result = await app.mysql.update(req)
-		return '更新一条数据'
+	async update(data) {
+		let {
+			app
+		} = this;
+		let result = await app.mysql.update("column", data);
+		if (result.affectedRows === 1) return true;
+		return false;
+	}
+	async delete(data) {
+		let {
+			app
+		} = this;
+		let result = await app.mysql.delete('column', data)
+		if(result.affectedRows === 1) return true;
+		return false;
 	}
 }
 
-module.exports = ColumnService
+module.exports = ColumnService;
