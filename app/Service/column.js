@@ -30,7 +30,6 @@ class ColumnService extends Service {
 		let result = await app.mysql.get("column", {
 			id: data.id
 		});
-		console.log(result);
 		if (result) return result;
 		return false;
 	}
