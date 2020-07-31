@@ -25,7 +25,7 @@ class ColumnController extends Controller {
 
   async add(){
   	let { ctx, service} = this;
-  	let req = ctx.request.body;
+		let req = ctx.request.body;
   	let result = await service.column.add(req)
   	if(result){
   		ctx.status = 200;

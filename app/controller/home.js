@@ -7,6 +7,12 @@ class HomeController extends Controller {
     const { ctx } = this;
     ctx.body = "hello"
   }
+   async t() {
+    const { ctx } = this;
+    ctx.body = {
+    	msg:'测试'
+    }
+  }
 
 }
 

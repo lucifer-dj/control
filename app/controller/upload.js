@@ -15,7 +15,6 @@ class UploadController extends Controller {
   async oss() {
     //上传到腾讯对象储存上
     const { ctx } = this;
-    console.log(ctx.headers)
     let stream = await ctx.getFileStream();
     // console.log(stream)
     let filename = Date.now() + path.extname(stream.filename).toLocaleLowerCase();
@@ -42,7 +41,7 @@ class UploadController extends Controller {
       ctx.status = 200
       ctx.body = {
         msg: '上传成功',
-        data: result.Location,
+        path: result.Location,
         code: 200
       }
     }else{
@@ -71,12 +70,21 @@ class UploadController extends Controller {
     let writeStream = fs.createWriteStream(target);
     try{
       await awaitWriteStream(stream.pipe(writeStream))
+	  ctx.body = {
+		path:'public/uploads/' + filename,
+		code: 200,
+		msg:'上传成功'
+	}
     }catch(e){
       console.log(e)
       await sendToWormhole(stream);
       throw e;
+	  ctx.body = {
+		code: 1001,
+		msg:'上传失败'
+	}
     }
-    ctx.body = 'public/uploads/' + filename
+    
 
   }
 

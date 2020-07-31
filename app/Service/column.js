@@ -16,7 +16,7 @@ class ColumnService extends Service{
 			name: data.name,
 			show: data.show,
 			sort: data.sort,
-			columnpic: data.columnpic,
+			pic: data.pic,
 			description: data.description,
 			keywords: data.keywords,
 			origin: data.origin,
