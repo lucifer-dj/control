@@ -5,11 +5,9 @@ let HintConstructor = Vue.extend(HintComponent)
 let h = undefined
 
 HintConstructor.prototype.close = function(){
- 
   if(h){
     h=undefined
   }
-   console.log(h)
   setTimeout(()=>{
     if(this.$el && this.$el.parentNode){
       this.$el.parentNode.removeChild(this.$el)
@@ -22,7 +20,6 @@ const Hint = (options = {})=>{
   if(h){
     return h
   }
-console.log(options)
   let opts = {
     msg:'',
     ...options

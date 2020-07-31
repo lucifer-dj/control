@@ -21,9 +21,11 @@ export default {
   methods:{
     async loginAuto(){
       let that = this;
+      // console.log(await api.t({name:'dj'}))
       let token = localStorage.getItem('token')
       if(token && token.length>0){
         try{
+          
           let result = await api.loginAuto({a:'a'})
           that.$hint({msg:result.data.msg,type:'success'})
         }catch(e){

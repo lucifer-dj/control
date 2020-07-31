@@ -7,7 +7,6 @@ const Service = axios.create({
   baseURL: cfg.isdev?'http://127.0.0.1:7001':'http://119.45.57.238',
   method:'post',
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
     "Authorization" : `Bearer ${token}`
   }
 })

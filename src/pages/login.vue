@@ -76,10 +76,10 @@ export default {
         return console.log("bunengweik");
       }
       that.userModel.pass = this.$md5(that.userModel.password);
-      console.log(that.userModel.pass)
       delete that.userModel.password
       try {
-        let result = await api.login(that.userModel);
+        that.$loading({msg:'登录'})
+        let result = await api.login(that.userModel,that);
         if(result.data.code==200){
           localStorage.setItem('token',result.data.token)
           that.$hint({msg: result.data.msg,type: 'success'})

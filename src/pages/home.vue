@@ -53,7 +53,6 @@
           <the-side :type="sideType" @close="closeSide"></the-side>
         </v-col>
       </v-row>
-      <toast></toast>
       <!-- <v-footer fixed pedless >
         <v-spacer></v-spacer>
         &copy; {{new Date().getFullYear()}}
@@ -165,7 +164,6 @@ export default {
   },
   components:{
     theSide:()=>import('@components/theSide.vue'),
-    toast:()=>import('@components/toast.vue')
   }
 }
 </script>

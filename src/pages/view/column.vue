@@ -44,7 +44,7 @@
           <v-row dense>
             <v-col cols="12" md="6">
               <v-text-field 
-              label="栏目名称"
+              label="*栏目名称"
               v-model="columnModel.name"
               required
               @input="$v.columnModel.name.$touch()"
@@ -55,16 +55,18 @@
               <v-select label="所属栏目" 
               :items="origin"
               v-model="columnModel.origin"
-              required
-              @input="$v.columnModel.origin.$touch()"
-              @blur="$v.columnModel.origin.$touch()"
               ></v-select>
             </v-col>
             <v-col cols="12" md="6" >
               <v-select 
               v-model="columnModel.template"
-              label="选择模板"
-              :items="origin"
+              label="*选择模板"
+              :items="template"
+              item-text="name"
+              item-value="val"
+              required
+              @input="$v.columnModel.template.$touch()"
+              @blur="$v.columnModel.name.$touch()"
               ></v-select>
             </v-col>
             <v-col cols="12" md="6" class="d-flex flex-row align-center">
@@ -74,8 +76,8 @@
               class="ml-10"
               v-model="columnModel.show"
               >
-                <v-radio label="显示" value="true"></v-radio>
-                <v-radio label="隐藏" value="false"></v-radio>
+                <v-radio label="显示" value="true" off-icon="iconfont-weixuan" on-icon="iconfont-xuanzhong"></v-radio>
+                <v-radio label="隐藏" value="false" off-icon="iconfont-weixuan" on-icon="iconfont-xuanzhong"></v-radio>
               </v-radio-group>
             </v-col>
             <!-- <v-col cols="12" md="6">
@@ -90,11 +92,16 @@
             <v-col cols="12" md="6">
               <v-text-field 
               label="关键词" 
-              v-model="columnModel.sort"
+              v-model="columnModel.keywords"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="12">
-              <v-file-input prepend-icon="mdi-camera" accept="image/*" label="栏目图片"></v-file-input>
+              <v-file-input 
+              prepend-icon="mdi-camera"
+              v-model="columnModel.columnpic" 
+              accept="image/*" 
+              label="栏目图片"
+              ></v-file-input>
             </v-col>
             <v-col cols="12" md="12">
               <v-textarea 
@@ -106,7 +113,7 @@
         </v-card-text>
       </v-col>
       <v-card-actions>
-        <v-btn width="100" class="mx-3">提交</v-btn>
+        <v-btn width="100" class="mx-3" @click="submit">提交</v-btn>
         <v-btn width="100" class="mx-3" @click="dialog=false;columnModelReset();">关闭</v-btn>
       </v-card-actions>
     </v-card>
@@ -122,7 +129,10 @@ export default {
   validations:{
     columnModel:{
       name:{
-        required:''
+        required
+      },
+      template:{
+        required
       }
     }
   },
@@ -158,14 +168,21 @@ export default {
       }
     ],
     dialog: false,
-    origin:['顶级栏目','角色列表'],
+    origin:['顶级栏目','新闻中心','关于我们','角色介绍'],
+    template: [
+      {name:'新闻模板',val:'news'},
+      {name:'单页模板',val:'page'},
+      {name:'角色模板',val:'role'},
+      {name:'关于模板',val:'about'},
+      {name:'地势模板',val:'place'}
+    ],
     columnModel:{
-      origin:'',
-      name:'',
-      show:'',
+      origin:'顶级栏目',
+      name:'新闻中心',
+      show:true,
       description:'',
       keywords:'',
-      columnpic:'',
+      columnpic:[],
       sort:'',
       template:''
     }
@@ -181,6 +198,55 @@ export default {
     cTableRow(e){
       //点击表格某一行
       console.log(e)
+    },
+    async submit(){
+      let that = this;
+      that.$v.columnModel.$touch();
+      // if(that.$v.columnModel.$invalid){
+      //   return console.log('请填写必填项')
+      // }
+      try{
+        let pic = await that.uploadPic(that.columnModel.columnpic)
+        if(pic){
+          that.columnModel.pic = pic
+          delete that.columnModel.columnpic
+          let result = await api.addColumn(that.columnModel,that)
+          console.log(result)
+        }
+      }catch(e){
+
+      }
+    },
+    async uploadPic(file){
+
+      let that = this;
+      try{
+        let fm = new FormData();
+        fm.append('file',file)
+        let result = await api.upload(fm,that)
+        if(result.data.code==200){
+          return result.data.path
+        }else{
+          return false
+        }
+      }catch(e){
+        console.log(e)
+        return false
+      }
+    }
+  },
+  computed:{
+    nameErrors(){
+      const errors = [];
+      if (!this.$v.userModel.name.$dirty) return errors;
+      !this.$v.userModel.name.required && errors.push('必填');
+      return errors;
+    },
+    templateErrors(){
+      const errors = [];
+      if (!this.$v.userModel.template.$dirty) return errors;
+      !this.$v.userModel.template.required && errors.push('必填');
+      return errors;
     }
   }
 };
