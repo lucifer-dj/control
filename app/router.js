@@ -3,11 +3,12 @@
 /**
  * @param {Egg.Application} app - egg application
  */
-module.exports = app => {
+ module.exports = app => {
   const { router, controller } = app;
   router.post('/t', controller.home.t);
   router.post('/login', controller.login.index)
-  router.post('/login/auto', app.jwt, controller.login.auto)
+  router.post('/getmenu', controller.home.getMenu)
+  router.post('/auto', controller.login.auto)
   router.post('/column',  controller.column.index)
   router.post('/column/add', controller.column.add)
   router.post('/column/read', controller.column.read)

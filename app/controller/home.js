@@ -7,11 +7,17 @@ class HomeController extends Controller {
     const { ctx } = this;
     ctx.body = "hello"
   }
-   async t() {
+  async t() {
     const { ctx } = this;
     ctx.body = {
     	msg:'测试'
     }
+  }
+  async getMenu(){
+    const { ctx, service } = this;
+    let result = await service.column.queryAll();
+    console.log(result)
+    ctx.success('查询成功')
   }
 
 }

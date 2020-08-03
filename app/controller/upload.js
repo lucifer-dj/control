@@ -38,23 +38,15 @@ class UploadController extends Controller {
         }
       })
       if(result){
-      ctx.status = 200
-      ctx.body = {
-        msg: '上传成功',
-        path: result.Location,
-        code: 200
-      }
-    }else{
-      ctx.status = 200
-      ctx.body = {
-        msg: '上传失败',
-        code: 1001
-      }
-    } 
+        ctx.success('上传成功', result.Location)
+      }else{
+        ctx.err('上传失败',1001)
+      } 
     }catch(err){
       // 必须将上传的文件流消费掉，要不然浏览器响应会卡死
       await sendToWormhole(stream);
       throw err;
+      ctx.err('上传失败',1001)
     }
     
     
@@ -70,19 +62,12 @@ class UploadController extends Controller {
     let writeStream = fs.createWriteStream(target);
     try{
       await awaitWriteStream(stream.pipe(writeStream))
-	  ctx.body = {
-		path:'public/uploads/' + filename,
-		code: 200,
-		msg:'上传成功'
-	}
+      ctx.success('上传成功','public/uploads/' + filename,)
     }catch(e){
       console.log(e)
       await sendToWormhole(stream);
       throw e;
-	  ctx.body = {
-		code: 1001,
-		msg:'上传失败'
-	}
+      ctx.err('上传失败',1001)
     }
     
 

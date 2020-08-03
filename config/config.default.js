@@ -17,15 +17,17 @@
       ignoreJSON: false
     },
     domainWhiteList: ['*']
-  };
+  }
   config.cors = {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
   };
 
   // add your middleware config here
-  config.middleware = [];
-
+  config.middleware = ['checkJwt']
+  config.checkJwt = {
+    ignore:["/t","/login","/register"]
+  }
   // add your user config here
   const userConfig = {
     // myAppName: 'xahax',
