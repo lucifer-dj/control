@@ -14,13 +14,13 @@ export function t(data, obj = {}) {
 }
 
 //登录
-export function login(data, obj = {}) {
+export function login(data = {}, obj = {}) {
   return fetch('/login', data, obj)
 }
 
 //自动登录
-export function loginAuto(data, obj = {}) {
-  return fetch('/login/auto', data, obj)
+export function getMenu(data = {}, obj = {}) {
+  return fetch('/getmenu', data, obj)
 }
 //添加栏目
 export function addColumn(data, obj = {}) {
@@ -42,7 +42,6 @@ export function editCol(data, obj = {}) {
 export function deleteCol(data, obj = {}) {
   return fetch('/column/delete', data, obj)
 }
-
 //上传文件
 export function upload(data, obj = {}) {
   return fetch(cfg.isdev ? '/upload/oss' : '/upload/serve', data, obj, 'put', {

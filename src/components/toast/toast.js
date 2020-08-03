@@ -1,39 +1,41 @@
 import Vue from 'vue'
 import toastComponent from './toast.vue'
+// import vuetify from 'vuetify'
 let ToastConstructor = Vue.extend(toastComponent)
 let t = undefined
-ToastConstructor.prototype.close = function(){
-  if(t){
+ToastConstructor.prototype.close = function () {
+  if (t) {
     t = undefined
   }
-  setTimeout(()=>{
-    if(this.$el && this.$el.parentNode){
+  setTimeout(() => {
+    if (this.$el && this.$el.parentNode) {
       this.$el.parentNode.removeChild(this.$el)
     }
     this.$destroy();
-  },200)
+  }, 200)
 }
 
-const Toast = (options={})=>{
-  if(t){
+const Toast = (options = {}) => {
+  if (t) {
     return t
   }
   const opts = {
-    msg:'',
+    msg: '',
     ...options
   }
 
-  
+
   const instance = new ToastConstructor({
-    el:document.createElement('div'),
-    data:opts
+    el: document.createElement('div'),
+    data: opts,
+    // vuetify: new vuetify()
   })
   const parent = instance.$('.v-application')
   parent.appendChild(instance.$el);
-  Vue.nextTick(()=>{
+  Vue.nextTick(() => {
     instance.bool = true
   })
-  t=instance
+  t = instance
   return instance
 }
 

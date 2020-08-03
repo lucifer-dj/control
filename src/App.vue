@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <router-view v-if="isRouterAlive" />
+  <v-app v-if="isRouterAlive">
+    <router-view />
   </v-app>
 </template>
 
@@ -19,7 +19,6 @@ export default {
   mounted() {
     //做一个进入时的验证
     let that = this;
-    that.loginAuto();
   },
   watch: {
     $route(to, from) {
@@ -27,22 +26,6 @@ export default {
     },
   },
   methods: {
-    async loginAuto() {
-      let that = this;
-      // console.log(await api.t({name:'dj'}))
-      let token = localStorage.getItem("token");
-      if (token && token.length > 0) {
-        try {
-          let result = await api.loginAuto({ a: "a" });
-          that.$hint({ msg: result.data.msg, type: "success" });
-        } catch (e) {
-          console.log(e);
-          that.$hint({ msg: "验证token失败，跳转到登陆", type: "error" });
-        }
-      } else {
-        that.$hint({ msg: "没有token，跳转到登陆", type: "error" });
-      }
-    },
     reload() {
       this.isRouterAlive = false;
       this.$nextTick(() => {

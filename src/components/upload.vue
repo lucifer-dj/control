@@ -43,6 +43,10 @@ export default {
   mounted() {
     this.path = this.src;
   },
+  beforeDestroy(){
+    URL.revokeObjectURL(this.path)
+    this.path = ""
+  },
   computed: {
     size() {
       let obj = {

@@ -4,7 +4,7 @@
     <v-card light class="px-5 py-2">
       <v-card-title v-if="title.length>0">{{title}}</v-card-title>
       <v-card-text class="text-h6">
-        {{text}}
+        {{msg}}
       </v-card-text>
       <v-card-actions class='d-flex'>
         <v-btn @click="confirm" color="#e1f3d8" class="success--text">确认</v-btn>
@@ -20,7 +20,7 @@
 export default {
   name:'toast',
   data:()=>({
-    text:"",
+    msg:"",
     bool: false,
     title: ''
   }),
@@ -29,7 +29,10 @@ export default {
       let that = this;
       that.bus.$emit('toastConfirm')
       that.close();
-    }
+    },
+    // close(){
+    //   this.close();
+    // }
   }
 }
 </script>

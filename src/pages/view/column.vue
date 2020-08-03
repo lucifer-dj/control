@@ -1,13 +1,19 @@
 <template>
   <v-container ref="container">
-    <v-card class="px-6" elevation="1">
+    <v-card class="px-6 pb-3" elevation="1">
       <v-toolbar flat>
         <v-card-title>栏目管理</v-card-title>
         <v-spacer></v-spacer>
-        <v-btn class="mr-4" @click="dialog=true;dialogType='add'">+添加栏目</v-btn>
+        <v-btn class="mr-4" @click="c_addColumn">+添加栏目</v-btn>
         <v-btn>更新排序</v-btn>
       </v-toolbar>
-      <v-data-table :headers="headers" :items="items" disable-sort>
+      <v-data-table
+        :headers="headers"
+        :items="items"
+        disable-sort
+        disable-pagination
+        hide-default-footer
+      >
         <!-- 名称 -->
         <template v-slot:item.name="{item}">
           <span>{{item.name}}</span>
@@ -160,9 +166,15 @@ export default {
     that.items = await that.queryColumns();
   },
   methods: {
+    c_addColumn() {
+      let that = this;
+      that.columnModelReset();
+      that.dialog = true;
+      that.dialogType = "add";
+    },
     columnModelReset() {
       let that = this;
-      that.userModel = {
+      that.columnModel = {
         origin: "顶级栏目",
         name: "",
         show: "1",
@@ -190,7 +202,6 @@ export default {
           that.columnModel.pic = pic;
         } catch (e) {
           console.log(e);
-          that.$hint({ msg: "上传图片失败", type: "error" });
         }
       }
       try {
@@ -203,7 +214,6 @@ export default {
         }
       } catch (e) {
         console.log(e);
-        that.$hint({ msg: "添加栏目失败", type: "error" });
       }
     },
     async uploadPic(file) {
@@ -213,7 +223,7 @@ export default {
         fm.append("file", file);
         let result = await api.upload(fm, that);
         if (result.data.code == 200) {
-          return result.data.path;
+          return result.data.data;
         } else {
           return false;
         }
@@ -256,14 +266,12 @@ export default {
         }
       } catch (e) {
         console.log(e);
-        that.$hint({ msg: "查询数据失败", type: "error" });
       }
     },
     async readColumn(id) {
       let that = this;
       try {
         let result = await api.readColumn({ id }, that);
-        console.log(result);
         if (result.data.code === 200) {
           that.dialog = true;
           that.dialogType = "edit";
@@ -271,7 +279,6 @@ export default {
         }
       } catch (e) {
         console.log(e);
-        that.$hint({ msg: "查询失败", type: "error" });
       }
     },
     async editCol(id) {
@@ -286,7 +293,6 @@ export default {
           that.columnModel.pic = pic;
         } catch (e) {
           console.log(e);
-          that.$hint({ msg: "上传图片失败", type: "error" });
         }
       }
       try {
@@ -295,7 +301,6 @@ export default {
         that.columnModelReset();
       } catch (e) {
         console.log(e);
-        that.$hint({ msg: "编辑失败", type: "error" });
       }
     },
     async deleteCol(id) {
@@ -312,14 +317,13 @@ export default {
           }
         } catch (e) {
           console.log(e);
-          that.$hint({ msg: "删除失败", type: "error" });
         }
       });
     },
     async addSonCol() {
-      console.log(this);
       let that = this;
-      that.reload();
+      // that.reload();
+      that.$toast({ msg: "功能正在研发中。。。" });
     },
   },
   computed: {
