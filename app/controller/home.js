@@ -16,7 +16,7 @@ class HomeController extends Controller {
   async getMenu(){
     const { ctx, service } = this;
     let result = await service.column.queryAll();
-    console.log(result)
+    // console.log(result)
     ctx.success('查询成功')
   }
 
