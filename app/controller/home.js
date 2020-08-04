@@ -13,13 +13,6 @@ class HomeController extends Controller {
     	msg:'测试'
     }
   }
-  async getMenu(){
-    const { ctx, service } = this;
-    let result = await service.column.queryAll();
-    // console.log(result)
-    ctx.success('查询成功')
-  }
-
 }
 
 module.exports = HomeController;

@@ -11,7 +11,7 @@ module.exports = {
 		this.body = obj
 	},
 	err(msg,code=500){
-		this.status = 400;
+		this.status = 200;
 		this.body = {
 			code,
 			msg
