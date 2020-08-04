@@ -44,7 +44,7 @@ export function deleteCol(data, obj = {}) {
 }
 //上传文件
 export function upload(data, obj = {}) {
-  return fetch(cfg.isdev ? '/upload/oss' : '/upload/serve', data, obj, 'put', {
+  return fetch('/upload/serve', data, obj, 'put', {
     'Content-Type': 'multipart/form-data'
   })
 }

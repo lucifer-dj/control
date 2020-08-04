@@ -1,9 +1,8 @@
 <template>
   <v-container>
-     <v-subheader>
-        栏目管理
-      <v-icon class="iconfont iconxiangyou mx-1" small ></v-icon>
-        内容介绍
+    <v-subheader>
+      栏目管理
+      <v-icon class="iconfont iconxiangyou mx-1" small></v-icon>内容介绍
     </v-subheader>
     <v-card flat>
       <v-card-text>
@@ -25,11 +24,9 @@
 </template>
 <script>
 export default {
-  name:'xcontent',
-  data:()=>({
-  })
-}
+  name: "xabout",
+  data: () => ({}),
+};
 </script>
 <style lang="less" scoped>
-  
 </style>

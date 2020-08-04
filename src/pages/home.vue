@@ -85,12 +85,12 @@ export default {
           },
           {
             name: "势力划分",
-            path: "/force",
+            path: "/place",
             icon: "iconfont-dizhi",
           },
           {
             name: "内容介绍",
-            path: "/xcontent",
+            path: "/xabout",
             icon: "iconfont-guanyu",
           },
         ],

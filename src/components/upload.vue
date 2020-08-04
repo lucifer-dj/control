@@ -35,17 +35,21 @@ export default {
       that.$emit("input", file);
     },
   },
+  model: {
+    prop: "value",
+    event: "input",
+  },
   props: {
     type: String,
     value: null,
-    src: String,
+    src: null,
   },
   mounted() {
-    this.path = this.src;
+    if (this.src) this.path = this.src;
   },
-  beforeDestroy(){
-    URL.revokeObjectURL(this.path)
-    this.path = ""
+  beforeDestroy() {
+    URL.revokeObjectURL(this.path);
+    this.path = "";
   },
   computed: {
     size() {

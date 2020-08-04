@@ -36,14 +36,14 @@ export default new Router({
           component: () => import('./pages/view/role.vue')
         },
         {
-          name: 'force',
-          path: '/force',
-          component: () => import('./pages/view/force.vue')
+          name: 'place',
+          path: '/place',
+          component: () => import('./pages/view/place.vue')
         },
         {
-          name: 'xcontent',
-          path: '/xcontent',
-          component: () => import('./pages/view/xcontent.vue')
+          name: 'xabout',
+          path: '/xabout',
+          component: () => import('./pages/view/xabout.vue')
         },
         {
           name: 'xpage',

@@ -95,7 +95,7 @@
               <v-col cols="12" md="6">
                 <v-text-field label="关键词" v-model="columnModel.keywords"></v-text-field>
               </v-col>
-              <upload v-model="imgFile" type="line" :src="'http://'+columnModel.pic" ref="upload"></upload>
+              <upload v-model="imgFile" type="line" :src="columnModel.pic" ref="upload"></upload>
               <v-col cols="12" md="12">
                 <v-textarea label="栏目描述" solo auto-grow v-model="columnModel.description"></v-textarea>
               </v-col>
@@ -166,11 +166,15 @@ export default {
     that.items = await that.queryColumns();
   },
   methods: {
+    // getFile(e) {
+    //   console.log(e);
+    // },
     c_addColumn() {
       let that = this;
       that.columnModelReset();
       that.dialog = true;
       that.dialogType = "add";
+      // console.log(that.$u.checkObjectIsEmpty(that.imgFile));
     },
     columnModelReset() {
       let that = this;
@@ -184,21 +188,20 @@ export default {
         order: "",
         template: "",
       };
-      that.imgFile = [];
+      that.imgFile = {};
       // that.reload();
       that.dialog = false;
     },
     async submit(type) {
       let that = this;
+      that.columnModel.icon = that.getIcon;
       if (type != "add") return that.editCol();
       that.$v.columnModel.$touch();
-      // if(that.$v.columnModel.$invalid){
-      //   return console.log('请填写必填项')
-      // }
       let pic = "";
-      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+      if (that.$u.checkObjectIsEmpty(that.imgFile)) {
+        console.log("没有图片");
         try {
-          let pic = await that.uploadPic(that.imgFile);
+          pic = await that.uploadPic(that.imgFile);
           that.columnModel.pic = pic;
         } catch (e) {
           console.log(e);
@@ -288,6 +291,7 @@ export default {
       //   return console.log('请填写必填项')
       // }
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+        console.log("有图片");
         try {
           let pic = await that.uploadPic(that.imgFile);
           that.columnModel.pic = pic;
@@ -338,6 +342,14 @@ export default {
       if (!this.$v.userModel.template.$dirty) return errors;
       !this.$v.userModel.template.required && errors.push("必填");
       return errors;
+    },
+    getIcon() {
+      let obj = {
+        role: "iconfont-tuandui",
+        place: "iconfont-dizhi",
+        about: "iconfont-guanyu",
+      };
+      return obj[this.columnModel.template];
     },
   },
   components: {
