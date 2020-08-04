@@ -2,7 +2,7 @@
   <v-container>
     <v-subheader>
       栏目管理
-      <v-icon class="iconfont iconxiangyou mx-1" small></v-icon>内容介绍
+      <v-icon class="mx-1" small>iconfont-xiangyou</v-icon>内容介绍
     </v-subheader>
     <v-card flat>
       <v-card-text>
@@ -24,7 +24,7 @@
 </template>
 <script>
 export default {
-  name: "xabout",
+  name: "about",
   data: () => ({}),
 };
 </script>

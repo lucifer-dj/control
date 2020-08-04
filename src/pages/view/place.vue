@@ -2,7 +2,7 @@
   <v-container fiuld>
     <v-subheader>
       栏目管理
-      <v-icon class="iconfont iconxiangyou mx-1" small></v-icon>势力划分
+      <v-icon class="mx-1" small>iconfont-xiangyou</v-icon>势力划分
     </v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>

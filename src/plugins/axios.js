@@ -3,6 +3,7 @@ import cfg from './cfg.js'
 import router from '@/router.js'
 import Vue from 'vue'
 let token = localStorage.getItem('token')
+
 const Service = axios.create({
   timeout: 30000,
   baseURL: cfg.isdev ? 'http://127.0.0.1:7001' : 'http://119.45.57.238',
@@ -15,7 +16,7 @@ Service.interceptors.request.use(config => {
   if (config.method === 'post') {
     config.data = JSON.stringify(config.data)
   }
-  if (config.url !== 'login' || config.url !== 'register') {
+  if (config.url !== '/login' || config.url !== '/register') {
     config.headers.Authorization = `Bearer ${token}`
   }
   // console.log(config)
@@ -24,7 +25,20 @@ Service.interceptors.request.use(config => {
 // 添加响应拦截器
 Service.interceptors.response.use(response => {
   if (response.data.code === 401) {
+    new Vue().bus.$hint({
+      msg: response.data.msg,
+      type: 'error'
+    })
     router.replace('/login')
+  }
+  if (response.data.code === 200) {
+    return response.data
+  } else {
+    console.log(response)
+    new Vue().bus.$hint({
+      msg: response.data.msg,
+      type: 'error'
+    })
   }
   return response
 

@@ -48,6 +48,10 @@ export function upload(data, obj = {}) {
     'Content-Type': 'multipart/form-data'
   })
 }
+//查询所有角色
+export function queryRoles(data, obj = {}) {
+  return fetch('/role', data, obj)
+}
 
 function fetch(url, data, obj, method = "post", headers = {
   "Content-Type": 'application/json;charset=UTF-8'

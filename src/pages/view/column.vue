@@ -141,13 +141,12 @@ export default {
     items: [],
     dialog: false,
     dialogType: "add",
-    origin: ["顶级栏目", "新闻中心", "关于我们", "角色介绍"],
+    origin: ["顶级栏目", "角色管理", "内容价绍", "势力划分"],
     template: [
-      { name: "新闻模板", val: "news" },
-      { name: "单页模板", val: "page" },
+      { name: "单页模板", val: "single" },
       { name: "角色模板", val: "role" },
       { name: "关于模板", val: "about" },
-      { name: "地势模板", val: "place" },
+      { name: "势力模板", val: "place" },
     ],
     imgFile: {},
     columnModel: {
@@ -163,7 +162,7 @@ export default {
   }),
   async mounted() {
     let that = this;
-    that.items = await that.queryColumns();
+    that.queryColumns();
   },
   methods: {
     // getFile(e) {
@@ -209,12 +208,8 @@ export default {
       }
       try {
         let result = await api.addColumn(that.columnModel, that);
-        if (result.data.code === 200) {
-          that.$hint({ msg: result.data.msg, type: "success" });
-          that.columnModelReset();
-        } else {
-          that.$hint({ msg: result.data.msg, type: "error" });
-        }
+        that.$hint({ msg: result.msg, type: "success" });
+        that.columnModelReset();
       } catch (e) {
         console.log(e);
       }
@@ -225,11 +220,7 @@ export default {
         let fm = new FormData();
         fm.append("file", file);
         let result = await api.upload(fm, that);
-        if (result.data.code == 200) {
-          return result.data.data;
-        } else {
-          return false;
-        }
+        return result.data;
       } catch (e) {
         console.log(e);
         return false;
@@ -239,34 +230,7 @@ export default {
       let that = this;
       try {
         let result = await api.queryColumns();
-        if (result.data.code === 200) {
-          return result.data.data;
-        } else {
-          that.$hint({ msg: "查询数据失败", type: "error" });
-          return [
-            {
-              id: "1",
-              name: "角色管理",
-              show: true,
-              order: "0",
-              oper: "",
-            },
-            {
-              id: "2",
-              name: "势力划分",
-              show: false,
-              order: "0",
-              oper: "",
-            },
-            {
-              id: "3",
-              name: "内容介绍",
-              show: true,
-              order: "0",
-              oper: "",
-            },
-          ];
-        }
+        that.items = result.data;
       } catch (e) {
         console.log(e);
       }
@@ -275,11 +239,9 @@ export default {
       let that = this;
       try {
         let result = await api.readColumn({ id }, that);
-        if (result.data.code === 200) {
-          that.dialog = true;
-          that.dialogType = "edit";
-          that.columnModel = result.data.data;
-        }
+        that.dialog = true;
+        that.dialogType = "edit";
+        that.columnModel = result.data;
       } catch (e) {
         console.log(e);
       }
@@ -290,7 +252,7 @@ export default {
       // if(that.$v.columnModel.$invalid){
       //   return console.log('请填写必填项')
       // }
-      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+      if (that.$u.checkObjectIsEmpty(that.imgFile)) {
         console.log("有图片");
         try {
           let pic = await that.uploadPic(that.imgFile);
@@ -301,7 +263,7 @@ export default {
       }
       try {
         let result = await api.editCol(that.columnModel, that);
-        console.log(result);
+        that.$hint({ msg: "修改成功", type: "success" });
         that.columnModelReset();
       } catch (e) {
         console.log(e);
@@ -314,11 +276,7 @@ export default {
         try {
           let result = await api.deleteCol({ id });
           console.log(result);
-          if (result.data.code == 200) {
-            that.$hint({ msg: "删除成功", type: "success" });
-          } else {
-            that.$hint({ msg: "删除失败", type: "error" });
-          }
+          that.$hint({ msg: "删除成功", type: "success" });
         } catch (e) {
           console.log(e);
         }

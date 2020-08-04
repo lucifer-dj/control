@@ -41,9 +41,9 @@ export default new Router({
           component: () => import('./pages/view/place.vue')
         },
         {
-          name: 'xabout',
-          path: '/xabout',
-          component: () => import('./pages/view/xabout.vue')
+          name: 'about',
+          path: '/about',
+          component: () => import('./pages/view/about.vue')
         },
         {
           name: 'xpage',

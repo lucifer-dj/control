@@ -51,6 +51,7 @@
     </v-app-bar>
 
     <v-main class="v-main">
+      <span v-if="temp_temp"></span>
       <v-row align="stretch" height="100%">
         <v-col :cols="viewCols" class="v-col9">
           <router-view />
@@ -72,28 +73,12 @@ import * as api from "@api";
 export default {
   name: "home",
   data: () => ({
+    temp_temp: false,
     menu: [
       {
         name: "项目管理",
         icon: "iconfont iconfont-Nav07-reports",
         path: "/pro",
-        child: [
-          {
-            name: "角色管理",
-            path: "/role",
-            icon: "iconfont-tuandui",
-          },
-          {
-            name: "势力划分",
-            path: "/place",
-            icon: "iconfont-dizhi",
-          },
-          {
-            name: "内容介绍",
-            path: "/xabout",
-            icon: "iconfont-guanyu",
-          },
-        ],
       },
       {
         name: "页面设置",
@@ -160,8 +145,21 @@ export default {
     async getMenu() {
       let that = this;
       try {
-        let result = await api.getMenu();
-        console.log(result);
+        let result = await api.queryColumns();
+        let arr = [];
+        result.data.forEach((item, idx) => {
+          let obj = {
+            name: item.name,
+            path: `/${item.template}`,
+            icon: item.icon,
+          };
+          arr.push(obj);
+        });
+
+        that.$nextTick(() => {
+          that.menu[0].child = arr;
+        });
+        that.temp_temp = !that.temp_temp;
       } catch (e) {
         console.log(e);
       }
