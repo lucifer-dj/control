@@ -13,15 +13,25 @@ class RoleService extends Service{
 	async add(data){
 		let { app } = this;
 		let result = await app.mysql.insert('role',data)
-		// console.log(result)
 		if(result.affectedRows===1) return true
 			return false
 	}
 	async read(data){
 		let { app } = this;
-		console.log(data)
 		let result = await app.mysql.get('role', data)
 		if(result) return result
+			return false
+	}
+	async delete(data){
+		let { app } = this;
+		let result = await app.mysql.delete('role',data)
+		if(result.affectedRows===1) return true
+			return false
+	}
+	async update(data){
+		let { app } = this;
+		let result = await app.mysql.update('role',data)
+		if(result.affectedRows===1) return true
 			return false
 	}
 }

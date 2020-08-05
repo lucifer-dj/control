@@ -31,11 +31,17 @@ class RoleController extends Controller {
 		}
 	async delete() {
 		const { ctx, service } = this;
-		ctx.success('成功',result)
+		let req = ctx.request.body;
+		let result = await service.role.delete(req)
+		if(result) ctx.success('成功删除一条数据')
+		else ctx.err('删除失败')
 	}
 	async update() {
 		const { ctx, service } = this;
-		ctx.success('成功',result)
+		let req = ctx.request.body;
+		let result = await service.role.update(req)
+		if(result) ctx.success('成功更新一条数据')
+		else ctx.err('更新失败')
 	}
 }
 
