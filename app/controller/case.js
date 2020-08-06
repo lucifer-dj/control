@@ -2,47 +2,48 @@
 
 const Controller = require('egg').Controller;
 
-class RoleController extends Controller {
+class CaseController extends Controller {
 	async index() {
 		const { ctx, service } = this;
 		let req = ctx.request.body
-		console.log(req)
-		let result = await service.role.queryAll(req.num);
+		// console.log(req)
+		let result = await service.case.queryAll(req.num);
 		if(result){
 			ctx.success('成功',result)
 		}else{
 			ctx.err('失败或者没查到数据')
 		}
 
+
 	}
 	async add() {
 		const { ctx, service } = this;
 		let req = ctx.request.body
-		let result = await service.role.add(req)
+		let result = await service.case.add(req)
 		if(result)  ctx.success('成功添加一位角色')
 			else	ctx.err('添加角色失败')
 		}
 	async read() {
 		const { ctx, service } = this;
 		let req = ctx.request.body;
-		let result = await service.role.read(req)
+		let result = await service.case.read(req)
 		if(result) ctx.success('查询成功',result)
 			else ctx.err('查询失败')
 		}
 	async delete() {
 		const { ctx, service } = this;
 		let req = ctx.request.body;
-		let result = await service.role.delete(req)
+		let result = await service.case.delete(req)
 		if(result) ctx.success('成功删除一条数据')
 		else ctx.err('删除失败')
 	}
 	async update() {
 		const { ctx, service } = this;
 		let req = ctx.request.body;
-		let result = await service.role.update(req)
+		let result = await service.case.update(req)
 		if(result) ctx.success('成功更新一条数据')
 		else ctx.err('更新失败')
 	}
 }
 
-module.exports = RoleController;
+module.exports = CaseController;

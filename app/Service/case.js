@@ -1,9 +1,9 @@
 const Service = require('egg').Service;
 
-class RoleService extends Service{
+class CaseService extends Service{
 	async queryAll(num){
 		let { app } = this;
-		let result = await app.mysql.select('role',{
+		let result = await app.mysql.select('case',{
 			limit:10,
 			offset: num
 		})
@@ -12,28 +12,28 @@ class RoleService extends Service{
 	}
 	async add(data){
 		let { app } = this;
-		let result = await app.mysql.insert('role',data)
+		let result = await app.mysql.insert('case',data)
 		if(result.affectedRows===1) return true
 			return false
 	}
 	async read(data){
 		let { app } = this;
-		let result = await app.mysql.get('role', data)
+		let result = await app.mysql.get('case', data)
 		if(result) return result
 			return false
 	}
 	async delete(data){
 		let { app } = this;
-		let result = await app.mysql.delete('role',data)
+		let result = await app.mysql.delete('case',data)
 		if(result.affectedRows===1) return true
 			return false
 	}
 	async update(data){
 		let { app } = this;
-		let result = await app.mysql.update('role',data)
+		let result = await app.mysql.update('case',data)
 		if(result.affectedRows===1) return true
 			return false
 	}
 }
 
-module.exports = RoleService
+module.exports = CaseService
