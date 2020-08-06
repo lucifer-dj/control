@@ -63,7 +63,7 @@
                   label="*选择模板"
                   :items="template"
                   item-text="name"
-                  item-value="val"
+                  item-value="en"
                   required
                   @input="$v.columnModel.template.$touch()"
                   @blur="$v.columnModel.name.$touch()"
@@ -117,6 +117,7 @@
 <script>
 import * as api from "@api";
 import { required } from "vuelidate/lib/validators";
+import cfg from "@/plugins/cfg.js";
 export default {
   inject: ["reload"],
   name: "column",
@@ -142,12 +143,6 @@ export default {
     dialog: false,
     dialogType: "add",
     origin: ["顶级栏目", "角色管理", "内容价绍", "势力划分"],
-    template: [
-      { name: "单页模板", val: "single" },
-      { name: "角色模板", val: "role" },
-      { name: "关于模板", val: "about" },
-      { name: "势力模板", val: "place" },
-    ],
     imgFile: {},
     columnModel: {
       origin: "顶级栏目",
@@ -193,7 +188,7 @@ export default {
     },
     async submit(type) {
       let that = this;
-      that.columnModel.icon = that.getIcon;
+      that.columnModel.icon = cfg.tp[that.columnModel.template].icon;
       if (type != "add") return that.editCol();
       that.$v.columnModel.$touch();
       let pic = "";
@@ -301,13 +296,11 @@ export default {
       !this.$v.userModel.template.required && errors.push("必填");
       return errors;
     },
-    getIcon() {
-      let obj = {
-        role: "iconfont-tuandui",
-        place: "iconfont-dizhi",
-        about: "iconfont-guanyu",
-      };
-      return obj[this.columnModel.template];
+    template() {
+      let arr = [];
+      let keys = Object.keys(cfg.tp);
+      keys.forEach((item) => arr.push(cfg.tp[item]));
+      return arr;
     },
   },
   components: {

@@ -70,6 +70,7 @@
 </template>
 <script>
 import * as api from "@api";
+import cfg from "@/plugins/cfg.js";
 export default {
   name: "home",
   data: () => ({
@@ -118,6 +119,7 @@ export default {
     replace(data) {
       let that = this;
       let { path } = data;
+      console.log(path);
       that.$router.replace(path);
     },
     closeSide() {
@@ -147,18 +149,15 @@ export default {
       try {
         let result = await api.queryColumns();
         let arr = [];
-        result.data.forEach((item, idx) => {
-          let obj = {
-            name: item.name,
-            path: `/${item.template}`,
-            icon: item.icon,
-          };
+        result.data.forEach((item) => {
+          let obj = cfg.tp[item.template];
+          obj.name = item.name;
           arr.push(obj);
         });
-
         that.$nextTick(() => {
           that.menu[0].child = arr;
         });
+        that.$hint({ msg: "自动登录成功" });
         that.temp_temp = !that.temp_temp;
       } catch (e) {
         console.log(e);

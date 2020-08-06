@@ -39,7 +39,6 @@ module.exports = {
       .set('@', resolve('src'))
       .set('@assets', resolve('src/assets'))
       .set('@components', resolve('src/components'))
-      .set('@views', resolve('src/views'))
       .set('@store', resolve('src/store'))
       .set('@api', resolve('src/plugins/api.js'))
   },

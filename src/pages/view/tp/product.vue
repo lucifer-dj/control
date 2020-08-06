@@ -57,7 +57,7 @@
 
 <script>
 export default {
-  name: "place",
+  name: "tpProduct",
   data: () => ({
     dialog: false,
     headers: [

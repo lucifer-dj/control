@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import cfg from './plugins/cfg'
 
 const originPush = Router.prototype.push
 Router.prototype.push = function (location) {
@@ -31,19 +32,19 @@ export default new Router({
           component: () => import('./pages/view/column.vue')
         },
         {
-          name: 'role',
-          path: '/role',
-          component: () => import('./pages/view/role.vue')
+          name: 'tpCase',
+          path: '/tp/case',
+          component: () => import('./pages/view/tp/case.vue')
         },
         {
-          name: 'place',
-          path: '/place',
-          component: () => import('./pages/view/place.vue')
+          name: 'tpProduct',
+          path: '/tp/product',
+          component: () => import('./pages/view/tp/product.vue')
         },
         {
-          name: 'about',
-          path: '/about',
-          component: () => import('./pages/view/about.vue')
+          name: 'tpPage',
+          path: '/tp/page',
+          component: () => import('./pages/view/tp/page.vue')
         },
         {
           name: 'xpage',

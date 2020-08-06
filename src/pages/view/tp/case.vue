@@ -38,22 +38,22 @@
                 <v-sheet height="100%" color="red">添加头像</v-sheet>
               </v-col>
               <v-col cols="5" height="100" class="px-10">
-                <v-text-field label="角色名称"></v-text-field>
-                <v-select label="角色性别" :items="['男','女']"></v-select>
+                <v-text-field label="角色名称" v-model="caseModel.name"></v-text-field>
+                <v-select label="角色性别" v-model="caseModel.sex" :items="['男','女']"></v-select>
               </v-col>
               <v-col cols="5" height="100" class="px-10">
-                <v-text-field label="角色境界"></v-text-field>
-                <v-select label="势力划分" :items="['北凉','江南']"></v-select>
+                <v-text-field label="角色境界" v-model="caseModel.realm"></v-text-field>
+                <v-select label="势力划分" v-model="caseModel.place" :items="['北凉','江南']"></v-select>
               </v-col>
               <v-col cols="12">
-                <v-textarea label="人物描述" solo auto-grow></v-textarea>
+                <v-textarea label="人物描述" solo auto-grow v-model="caseModel.introduce"></v-textarea>
               </v-col>
             </v-row>
           </v-card-text>
         </v-col>
         <v-card-actions>
-          <v-btn width="100" class="mx-3">提交</v-btn>
-          <v-btn width="100" class="mx-3" @click="dialog=false;roleModelReset();">关闭</v-btn>
+          <v-btn width="100" class="mx-3" @click="submit">提交</v-btn>
+          <v-btn width="100" class="mx-3" @click="roleModelReset();">关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -63,9 +63,10 @@
 <script>
 import * as api from "@api";
 export default {
-  name: "role",
+  name: "tpCase",
   data: () => ({
     dialog: false,
+    dialogType: "add",
     headers: [
       { text: "ID", value: "id", align: "center" },
       { text: "名称", value: "name", align: "center" },
@@ -230,21 +231,52 @@ export default {
         oper: "",
       },
     ],
-    roleModel: {},
+    caseModel: {
+      avatar: "",
+      name: "",
+      introduce: "",
+      sex: "",
+      place: "",
+      realm: "",
+    },
   }),
   mounted() {
     let that = this;
-    that.queryRoles();
+    that.queryCases();
   },
   methods: {
-    roleModelReset() {
-      this.roleModel = {};
+    caseModelReset() {
+      let that = this;
+      that.caseModel = {
+        avatar: "",
+        name: "",
+        introduce: "",
+        sex: "",
+        place: "",
+        realm: "",
+      };
+      that.dialogType = "add";
+      that.dialog = false;
     },
-    async queryRoles() {
+    async queryCases() {
       let that = this;
       try {
-        let result = await api.queryRoles({ num: 0 });
+        let result = await api.queryCases({ num: 0 });
+        // console.log(result);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async submit() {
+      let that = this;
+      //假设验证通过了
+      that.caseModel.start = new Date().valueOf();
+      that.caseModel.avatar = "ceshi";
+      try {
+        let result = await api.addCase(that.caseModel);
         console.log(result);
+        that.$hint({ msg: "添加成功" });
+        that.caseModelReset();
       } catch (e) {
         console.log(e);
       }

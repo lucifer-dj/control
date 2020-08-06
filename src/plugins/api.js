@@ -49,8 +49,11 @@ export function upload(data, obj = {}) {
   })
 }
 //查询所有角色
-export function queryRoles(data, obj = {}) {
-  return fetch('/role', data, obj)
+export function queryCases(data, obj = {}) {
+  return fetch('/case', data, obj)
+}
+export function addCase(data, obj = {}) {
+  return fetch('/case/add', data, obj)
 }
 
 function fetch(url, data, obj, method = "post", headers = {
