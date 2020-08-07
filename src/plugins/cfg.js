@@ -1,9 +1,9 @@
 export default {
 	isdev: ['development'].includes(process.env.NODE_ENV),
 	tp: {
-		tpPase: {
+		tpPage: {
 			name: "单页模板",
-			en: "tpPase",
+			en: "tpPage",
 			path: "/tp/page",
 			icon: 'iconfont-guanyu',
 		},

@@ -58,7 +58,18 @@ export function readCase(data, obj = {}) {
 export function updateCase(data, obj = {}) {
   return fetch('/panel/case/update', data, obj)
 }
-
+//删除一位角色
+export function deleteCase(date, obj = {}) {
+  return fetch('/panel/case/delete', date, obj)
+}
+//读取一个文章
+export function readPage(data, obj = {}) {
+  return fetch('/panel/page/read', data, obj)
+}
+//添加一篇文章
+export function addPage(data, obj = {}) {
+  return fetch('/panel/page/add', data, obj)
+}
 //上传文件
 export function upload(data, obj = {}) {
   return fetch('/upload/serve', data, obj, 'put', {

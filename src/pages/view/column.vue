@@ -185,6 +185,7 @@ export default {
       that.imgFile = {};
       // that.reload();
       that.dialog = false;
+      that.queryColumns();
     },
     async submit(type) {
       let that = this;
@@ -260,8 +261,8 @@ export default {
       that.bus.$on("toastConfirm", async function () {
         try {
           let result = await api.deleteCol({ id });
-          console.log(result);
           that.$hint({ msg: "删除成功", type: "success" });
+          that.queryColumns();
         } catch (e) {
           console.log(e);
         }

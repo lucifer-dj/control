@@ -119,8 +119,16 @@ export default {
     replace(data) {
       let that = this;
       let { path } = data;
-      console.log(path);
-      that.$router.replace(path);
+      // console.log(path);
+      let obj = {
+        path,
+      };
+      if (data.id) {
+        obj.query = {
+          id: data.id,
+        };
+      }
+      that.$router.push(obj);
     },
     closeSide() {
       let that = this;
@@ -149,9 +157,11 @@ export default {
       try {
         let result = await api.queryColumns();
         let arr = [];
+        // console.log(result);
         result.data.forEach((item) => {
           let obj = cfg.tp[item.template];
           obj.name = item.name;
+          if (item.template == "tpPage") obj.id = item.id;
           arr.push(obj);
         });
         that.$nextTick(() => {

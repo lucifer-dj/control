@@ -107,6 +107,7 @@ export default {
       };
       that.dialogType = "add";
       that.dialog = false;
+      that.queryCases();
     },
     async queryCases() {
       let that = this;
@@ -129,12 +130,12 @@ export default {
       that.caseModel.start = new Date().valueOf();
       try {
         let path = await that.uploadPic();
-        if (!path) return that.$hint({ msg: "上传头像失败", type: "error" });
+        if (!path)
+          return that.$hint({ msg: "上传头像失败", type: "error" }, that);
         that.caseModel.avatar = path;
         let result = await api.addCase(that.caseModel);
         that.$hint({ msg: "添加成功" });
         that.caseModelReset();
-        that.queryCases();
       } catch (e) {
         console.log(e);
       }
@@ -158,10 +159,9 @@ export default {
       }
       try {
         that.caseModel.update = new Date().valueOf();
-        let result = await api.updateCase(that.caseModel);
+        let result = await api.updateCase(that.caseModel, that);
         that.$hint({ msg: "修改成功" });
         that.caseModelReset();
-        that.queryCases();
       } catch (e) {
         console.log(e);
       }
@@ -169,7 +169,7 @@ export default {
     async readCase(id) {
       let that = this;
       try {
-        let result = await api.readCase({ id });
+        let result = await api.readCase({ id }, that);
         that.caseModel = result.data;
       } catch (e) {
         console.log(e);
@@ -184,6 +184,15 @@ export default {
     async deleteCase(id) {
       let that = this;
       that.$toast({ msg: "确认要删除这条数据吗" });
+      that.bus.$on("toastConfirm", async function () {
+        try {
+          let result = await api.deleteCase({ id }, that);
+          that.$hint({ msg: "成功删除一条数据" });
+          that.queryCases();
+        } catch (e) {
+          console.log(e);
+        }
+      });
     },
   },
   components: {
