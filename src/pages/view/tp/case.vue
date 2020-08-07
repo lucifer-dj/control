@@ -20,12 +20,12 @@
         <!-- <template v-slot:item.id="{item}">{{item-key}}</template> -->
         <template
           v-slot:item.start="{item}"
-        >{{$u.format.call(new Date(Number(item.start)), "yyyy-MM-dd")}}</template>
+        >{{$u.format.call(new Date(Number(item.update?item.update:item.start)), "yyyy-MM-dd")}}</template>
         <template v-slot:item.oper="{item}">
-          <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteCol(item.id)">
+          <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteCase(item.id)">
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
-          <v-btn fab x-small depressed title="修改" class="mx-1" @click="editCol(item)">
+          <v-btn fab x-small depressed title="修改" class="mx-1" @click="editCase(item.id)">
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
           </v-btn>
         </template>
@@ -33,12 +33,12 @@
     </v-card>
 
     <v-dialog v-model="dialog" fullscreen persistent hide-overlay>
-      <v-card class="d-flex align-center flex-column">
-        <v-card-title class="justify-center text-h5">添加角色</v-card-title>
+      <v-card class="d-flex align-center flex-column" v-if="dialog">
+        <v-card-title class="justify-center text-h5">{{dialogType==='add'?'添加':'编辑'}}角色</v-card-title>
         <v-col cols="12" md="8">
           <v-card-text>
             <v-row>
-              <upload type="card" v-model="imgFile"></upload>
+              <upload type="card" v-model="imgFile" :src="caseModel.avatar"></upload>
               <v-col cols="4" height="100" class="px-10">
                 <v-text-field label="角色名称" v-model="caseModel.name"></v-text-field>
                 <v-select label="角色性别" v-model="caseModel.sex" :items="['男','女']"></v-select>
@@ -54,8 +54,8 @@
           </v-card-text>
         </v-col>
         <v-card-actions>
-          <v-btn width="100" class="mx-3" @click="submit">提交</v-btn>
-          <v-btn width="100" class="mx-3" @click="roleModelReset();">关闭</v-btn>
+          <v-btn width="100" class="mx-3" @click="submit(dialogType)">{{dialog==='add'?'提交':'确认修改'}}</v-btn>
+          <v-btn width="100" class="mx-3" @click="caseModelReset();">关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -113,22 +113,28 @@ export default {
       try {
         let result = await api.queryCases({ num: 0 });
         that.items = result.data;
+        console.log(result);
       } catch (e) {
         console.log(e);
       }
     },
-    async submit() {
+    async submit(type) {
       let that = this;
+      if (type === "edit") return that.updateCase();
       //假设验证通过了
+      if (that.$u.checkObjectIsEmpty(that.imgFile)) {
+        console.log(9);
+        return that.$hint({ msg: "请选择上传的图片" });
+      }
       that.caseModel.start = new Date().valueOf();
       try {
         let path = await that.uploadPic();
         if (!path) return that.$hint({ msg: "上传头像失败", type: "error" });
         that.caseModel.avatar = path;
         let result = await api.addCase(that.caseModel);
-        console.log(result);
         that.$hint({ msg: "添加成功" });
         that.caseModelReset();
+        that.queryCases();
       } catch (e) {
         console.log(e);
       }
@@ -144,6 +150,40 @@ export default {
         return false;
         console.log(e);
       }
+    },
+    async updateCase() {
+      let that = this;
+      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+        that.caseModel.avatar = await that.uploadPic();
+      }
+      try {
+        that.caseModel.update = new Date().valueOf();
+        let result = await api.updateCase(that.caseModel);
+        that.$hint({ msg: "修改成功" });
+        that.caseModelReset();
+        that.queryCases();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async readCase(id) {
+      let that = this;
+      try {
+        let result = await api.readCase({ id });
+        that.caseModel = result.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async editCase(id) {
+      let that = this;
+      let model = that.readCase(id);
+      that.dialogType = "edit";
+      that.dialog = true;
+    },
+    async deleteCase(id) {
+      let that = this;
+      that.$toast({ msg: "确认要删除这条数据吗" });
     },
   },
   components: {

@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import toastComponent from './toast.vue'
-// import vuetify from 'vuetify'
 let ToastConstructor = Vue.extend(toastComponent)
 let t = undefined
 ToastConstructor.prototype.close = function () {
+  let that = t
   if (t) {
     t = undefined
   }
   setTimeout(() => {
-    if (this.$el && this.$el.parentNode) {
-      this.$el.parentNode.removeChild(this.$el)
+    if (that.$el && that.$el.parentNode) {
+      that.$el.parentNode.removeChild(that.$el)
     }
-    this.$destroy();
+    that.$destroy();
   }, 200)
 }
 
@@ -23,12 +23,9 @@ const Toast = (options = {}) => {
     msg: '',
     ...options
   }
-
-
   const instance = new ToastConstructor({
     el: document.createElement('div'),
     data: opts,
-    // vuetify: new vuetify()
   })
   const parent = instance.$('.v-application')
   parent.appendChild(instance.$el);

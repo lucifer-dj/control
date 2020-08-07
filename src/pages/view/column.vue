@@ -192,16 +192,11 @@ export default {
       if (type != "add") return that.editCol();
       that.$v.columnModel.$touch();
       let pic = "";
-      if (that.$u.checkObjectIsEmpty(that.imgFile)) {
-        console.log("没有图片");
-        try {
-          pic = await that.uploadPic(that.imgFile);
-          that.columnModel.pic = pic;
-        } catch (e) {
-          console.log(e);
-        }
+      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+        that.columnModel.pic = await that.uploadPic();
       }
       try {
+        that.columnModel.pic = pic;
         let result = await api.addColumn(that.columnModel, that);
         that.$hint({ msg: result.msg, type: "success" });
         that.columnModelReset();
@@ -209,11 +204,11 @@ export default {
         console.log(e);
       }
     },
-    async uploadPic(file) {
+    async uploadPic() {
       let that = this;
       try {
         let fm = new FormData();
-        fm.append("file", file);
+        fm.append("file", that.imgFile);
         let result = await api.upload(fm, that);
         return result.data;
       } catch (e) {
@@ -247,14 +242,9 @@ export default {
       // if(that.$v.columnModel.$invalid){
       //   return console.log('请填写必填项')
       // }
-      if (that.$u.checkObjectIsEmpty(that.imgFile)) {
+      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
         console.log("有图片");
-        try {
-          let pic = await that.uploadPic(that.imgFile);
-          that.columnModel.pic = pic;
-        } catch (e) {
-          console.log(e);
-        }
+        that.columnModel.pic = await that.uploadPic();
       }
       try {
         let result = await api.editCol(that.columnModel, that);
@@ -266,7 +256,7 @@ export default {
     },
     async deleteCol(id) {
       let that = this;
-      that.$toast({ text: "确认要删除这个栏目吗？" });
+      that.$toast({ msg: "确认要删除这个栏目吗？" });
       that.bus.$on("toastConfirm", async function () {
         try {
           let result = await api.deleteCol({ id });

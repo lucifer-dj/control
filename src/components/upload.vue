@@ -42,9 +42,10 @@ export default {
   props: {
     type: String,
     value: null,
-    src: null,
+    src: String,
   },
   mounted() {
+    console.log(this.src);
     if (this.src) this.path = this.src;
   },
   beforeDestroy() {

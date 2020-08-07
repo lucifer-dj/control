@@ -42,24 +42,34 @@ export function editCol(data, obj = {}) {
 export function deleteCol(data, obj = {}) {
   return fetch('/panel/column/delete', data, obj)
 }
+//查询所有角色
+export function queryCases(data, obj = {}) {
+  return fetch('/panel/case', data, obj)
+}
+//添加角色
+export function addCase(data, obj = {}) {
+  return fetch('/panel/case/add', data, obj)
+}
+//查询一位绝色
+export function readCase(data, obj = {}) {
+  return fetch('/panel/case/read', data, obj)
+}
+//修改一位角色
+export function updateCase(data, obj = {}) {
+  return fetch('/panel/case/update', data, obj)
+}
+
 //上传文件
 export function upload(data, obj = {}) {
   return fetch('/upload/serve', data, obj, 'put', {
     'Content-Type': 'multipart/form-data'
   })
 }
-//查询所有角色
-export function queryCases(data, obj = {}) {
-  return fetch('/panel/case', data, obj)
-}
-export function addCase(data, obj = {}) {
-  return fetch('/panel/case/add', data, obj)
-}
 
 function fetch(url, data, obj, method = "post", headers = {
   "Content-Type": 'application/json;charset=UTF-8'
 }) {
-  if (!checkObjectIsEmpty(obj)) obj = temp
+  if (checkObjectIsEmpty(obj)) obj = temp
   let o = obj.$loading()
   return new Promise((resolve, reject) => {
     service({
