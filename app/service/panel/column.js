@@ -10,7 +10,7 @@ class ColumnService extends Service {
 	async add(data) {
 		let { app } = this;
 		let result = await app.mysql.insert("column", data);
-		if (result && result.affectedRows === 1) return true;
+		if (result.affectedRows === 1) return true;
 		return false;
 	}
 	async read(data) {

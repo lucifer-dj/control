@@ -22,7 +22,7 @@ class LoginController extends Controller {
         token
       }
     }else{
-      ctx.error('登陆失败',401)
+      ctx.err('登陆失败',401)
     }
 
   }

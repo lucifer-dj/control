@@ -26,7 +26,7 @@
   // add your middleware config here
   config.middleware = ['checkJwt']
   config.checkJwt = {
-    ignore:["/t","/login","/register"]
+    ignore:["/t","/panel/login","/panel/register"]
   }
   // add your user config here
   const userConfig = {

@@ -20,4 +20,6 @@
   router.post('/panel/case/delete',controller.panel.case.delete)
   router.post('/panel/case/read',controller.panel.case.read)
   router.post('/panel/case/update',controller.panel.case.update)
+  router.post('/panel/page/read',controller.panel.page.read)
+  router.post('/panel/page/add',controller.panel.page.add)
 };

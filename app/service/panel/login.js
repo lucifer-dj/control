@@ -3,7 +3,7 @@ const Service = require('egg').Service;
 class LoginService extends Service{
 	async valid(user){
 		let result = await this.getPassByAccount(user.account)
-		if(result && user.pass===result) return true
+		if(result && user.pass.toString()===result.toString())return true
 			else return false
 		}	
 	async getPassByAccount(account){
