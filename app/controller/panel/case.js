@@ -7,7 +7,7 @@ class CaseController extends Controller {
 		const { ctx, service } = this;
 		let req = ctx.request.body
 		// console.log(req)
-		let result = await service.case.queryAll(req.num);
+		let result = await service.panel.case.queryAll(req.num);
 		if(result){
 			ctx.success('成功',result)
 		}else{
@@ -19,28 +19,28 @@ class CaseController extends Controller {
 	async add() {
 		const { ctx, service } = this;
 		let req = ctx.request.body
-		let result = await service.case.add(req)
+		let result = await service.panel.case.add(req)
 		if(result)  ctx.success('成功添加一位角色')
 			else	ctx.err('添加角色失败')
 		}
 	async read() {
 		const { ctx, service } = this;
 		let req = ctx.request.body;
-		let result = await service.case.read(req)
+		let result = await service.panel.case.read(req)
 		if(result) ctx.success('查询成功',result)
 			else ctx.err('查询失败')
 		}
 	async delete() {
 		const { ctx, service } = this;
 		let req = ctx.request.body;
-		let result = await service.case.delete(req)
+		let result = await service.panel.case.delete(req)
 		if(result) ctx.success('成功删除一条数据')
 		else ctx.err('删除失败')
 	}
 	async update() {
 		const { ctx, service } = this;
 		let req = ctx.request.body;
-		let result = await service.case.update(req)
+		let result = await service.panel.case.update(req)
 		if(result) ctx.success('成功更新一条数据')
 		else ctx.err('更新失败')
 	}

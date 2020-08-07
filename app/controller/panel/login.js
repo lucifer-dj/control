@@ -7,7 +7,7 @@ class LoginController extends Controller {
     const { ctx, app, service } = this;
 
     let data = ctx.request.body
-    let result = await service.login.valid(data)
+    let result = await service.panel.login.valid(data)
     if (result) {
       //生辰token
       const token = app.jwt.sign({

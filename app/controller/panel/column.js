@@ -5,7 +5,7 @@ const Controller = require('egg').Controller;
 class ColumnController extends Controller {
 	async index() {
 		let { ctx, service } = this;
-		let result = await service.column.queryAll();
+		let result = await service.panel.column.queryAll();
 		if (result.length > 0) {
 			ctx.success('查询成功',result)
 		} else {
@@ -16,7 +16,7 @@ class ColumnController extends Controller {
 	async add() {
 		let { ctx, service } = this;
 		let req = ctx.request.body;
-		let result = await service.column.add(req)
+		let result = await service.panel.column.add(req)
 		if (result) {
 			ctx.success('成功添加一条数据',result)
 		} else {
@@ -26,7 +26,7 @@ class ColumnController extends Controller {
 	async read() {
 		let { ctx, service } = this;
 		let req = ctx.request.body;
-		let result = await service.column.read(req);
+		let result = await service.panel.column.read(req);
 		if (result) {
 			ctx.success('成功查询到一条数据',result)
 		} else {
@@ -37,7 +37,7 @@ class ColumnController extends Controller {
 	async update(data) {
 		let { ctx, service } = this;
 		let req = ctx.request.body
-		let result = await service.column.update(req)
+		let result = await service.panel.column.update(req)
 		if (result) {
 			ctx.success('成功更新一条数据',result)
 		} else {
@@ -48,7 +48,7 @@ class ColumnController extends Controller {
 	async delete() {
 		let { ctx, service } = this;
 		let req = ctx.request.body;
-		let result = await service.column.delete(req)
+		let result = await service.panel.column.delete(req)
 		if (result) {
 			ctx.success('删除成功',result)
 		} else {
