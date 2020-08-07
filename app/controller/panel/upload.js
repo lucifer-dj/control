@@ -56,22 +56,24 @@ class UploadController extends Controller {
     //保存到本地
     let { ctx, config } = this;
     let stream = await ctx.getFileStream();
-    console.log(stream)
     let filename = md5(Date.now()) + path.extname(stream.filename).toLocaleLowerCase();
     let target = path.join(config.baseDir, 'app/public/uploads', filename)
     let writeStream = fs.createWriteStream(target);
     try{
       await awaitWriteStream(stream.pipe(writeStream))
-      ctx.success('上传成功','public/uploads/' + filename,)
-    }catch(e){
-      console.log(e)
-      await sendToWormhole(stream);
-      throw e;
-      ctx.err('上传失败',1001)
-    }
-    
-
+      let fn = ''
+      if(config.env==='local')       
+       fn = `http://${config.cluster.listen.hostname}:${config.cluster.listen.port}/public/uploads/${filename}`
+     ctx.success('上传成功',fn)
+   }catch(e){
+    console.log(e)
+    await sendToWormhole(stream);
+    throw e;
+    ctx.err('上传失败',1001)
   }
+
+
+}
 
 }
 
