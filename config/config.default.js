@@ -18,6 +18,9 @@
     },
     domainWhiteList: ['*']
   }
+  config.bodyParser = {
+    formLimit: '5mb'
+  }
   config.cors = {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'

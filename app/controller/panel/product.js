@@ -1,11 +1,9 @@
+	const Controller = require('egg').Controller;
 
-
-const Controller = require('egg').Controller;
-
-class CaseController extends Controller {
+class ProductController extends Controller {
 	constructor(ctx){
 		super(ctx);
-		this.table = 'case';
+		this.table = 'product';
 	}
 	async index() {
 		const { ctx, service, table } = this;
@@ -23,8 +21,8 @@ class CaseController extends Controller {
 		const { ctx, service, table } = this;
 		let req = ctx.request.body
 		let result = await service.db.add(table,req)
-		if(result)  ctx.success('成功添加一位角色')
-			else	ctx.err('添加角色失败')
+		if(result)  ctx.success('成功添加一方势力')
+			else	ctx.err('添加势力失败')
 		}
 	async read() {
 		const { ctx, service, table } = this;
@@ -37,7 +35,7 @@ class CaseController extends Controller {
 		const { ctx, service, table } = this;
 		let req = ctx.request.body;
 		let result = await service.db.deleteSingle(table,req)
-		if(result) ctx.success('成功删除一条数据')
+		if(result) ctx.success('成功删除一方势力')
 			else ctx.err('删除失败')
 		}
 	async update() {
@@ -49,4 +47,4 @@ class CaseController extends Controller {
 		}
 }
 
-module.exports = CaseController;
+	module.exports = ProductController;
