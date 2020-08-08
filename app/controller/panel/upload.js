@@ -38,15 +38,15 @@ class UploadController extends Controller {
         }
       })
       if(result){
-        ctx.success('上传成功', result.Location)
+        ctx.success('上传图片成功', result.Location)
       }else{
-        ctx.err('上传失败',1001)
+        ctx.err('上传图片失败',1001)
       } 
     }catch(err){
       // 必须将上传的文件流消费掉，要不然浏览器响应会卡死
       await sendToWormhole(stream);
       throw err;
-      ctx.err('上传失败',1001)
+      ctx.err('上传图片失败',1001)
     }
     
     
@@ -64,12 +64,12 @@ class UploadController extends Controller {
       let fn = ''
       if(config.env==='local')       
        fn = `http://${config.cluster.listen.hostname}:${config.cluster.listen.port}/public/uploads/${filename}`
-     ctx.success('上传成功',fn)
+     ctx.success('上传图片成功',fn)
    }catch(e){
     console.log(e)
     await sendToWormhole(stream);
     throw e;
-    ctx.err('上传失败',1001)
+    ctx.err('上传图片失败',1001)
   }
 
 
