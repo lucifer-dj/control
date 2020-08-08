@@ -13,7 +13,7 @@ class PageController extends Controller{
 		let req = ctx.request.body;
 		let result = await service.panel.page.add(req);
 		if(result) return ctx.success('添加成功')
-			ctx.err('添加单页失败')
+			ctx.err('添加单页失败');
 	}
 }
 
