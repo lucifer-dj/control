@@ -1,5 +1,5 @@
 <template>
-  <v-col :cols="size.cols" class="d-flex">
+  <v-col cols="12" class="d-flex">
     <v-sheet
       width="148"
       height="148"
@@ -58,12 +58,10 @@ export default {
         card: {
           w: "148px",
           h: "148px",
-          cols: 4,
         },
         line: {
           w: "auto",
           h: "148px",
-          cols: 12,
         },
       };
       return obj[this.type];
@@ -108,7 +106,6 @@ export default {
 }
 .img {
   border-radius: 6px;
-  object-fit: cover;
   // max-width: calc(100% - 180px);
 }
 </style>

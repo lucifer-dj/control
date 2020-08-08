@@ -15,40 +15,40 @@ export function t(data, obj = {}) {
 
 //登录
 export function login(data = {}, obj = {}) {
-  return fetch('/panel/login', data, obj)
+  return fetch('/login', data, obj)
 }
 
 //自动登录
 export function getMenu(data = {}, obj = {}) {
-  return fetch('/panel/getmenu', data, obj)
+  return fetch('/getmenu', data, obj)
 }
 //添加栏目
 export function addColumn(data, obj = {}) {
-  return fetch('/panel/column/add', data, obj);
+  return fetch('/column/add', data, obj);
 }
 //查询所有栏目
 export function queryColumns(data = {}, obj = {}) {
-  return fetch('/panel/column', data, obj);
+  return fetch('/column', data, obj);
 }
 //查询单个栏目
 export function readColumn(data, obj = {}) {
-  return fetch('/panel/column/read', data, obj)
+  return fetch('/column/read', data, obj)
 }
 //更新栏目
 export function editCol(data, obj = {}) {
-  return fetch('/panel/column/update', data, obj)
+  return fetch('/column/update', data, obj)
 }
 //删除栏目
 export function deleteCol(data, obj = {}) {
-  return fetch('/panel/column/delete', data, obj)
+  return fetch('/column/delete', data, obj)
 }
 //查询所有角色
 export function queryCases(data, obj = {}) {
-  return fetch('/panel/case', data, obj)
+  return fetch('/case', data, obj)
 }
 //添加角色
 export function addCase(data, obj = {}) {
-  return fetch('/panel/case/add', data, obj)
+  return fetch('/case/add', data, obj)
 }
 //查询一位绝色
 export function readCase(data, obj = {}) {
