@@ -22,4 +22,10 @@
   router.post('/panel/case/update',controller.panel.case.update)
   router.post('/panel/page/read',controller.panel.page.read)
   router.post('/panel/page/add',controller.panel.page.add)
+  router.post('/panel/page/update',controller.panel.page.update)
+  router.post('/panel/product', controller.panel.product.index)
+  router.post('/panel/product/add',controller.panel.product.add)
+  router.post('/panel/product/delete',controller.panel.product.delete)
+  router.post('/panel/product/read',controller.panel.product.read)
+  router.post('/panel/product/update',controller.panel.product.update)
 };

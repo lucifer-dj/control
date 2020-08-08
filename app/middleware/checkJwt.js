@@ -1,5 +1,7 @@
 module.exports = (options,app)=>{
 	return async function checkJwt(ctx,next){
+		if(app.config.env==='local')
+			return await next();
 		let authorization = ctx.request.header.authorization
 		if(!(authorization.length>0)){
 			ctx.err('请重新登录',401)
@@ -8,7 +10,7 @@ module.exports = (options,app)=>{
 		try{
 			// console.log(token)
 			let info = app.jwt.verify(token, app.config.jwt.secret)
-			let result = await ctx.service.panel.login.valid(info)
+			let result = await ctx.service.login.valid(info)
 			if(result){
 				await next();
 			}else{
