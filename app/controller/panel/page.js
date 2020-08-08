@@ -31,7 +31,7 @@ class PageController extends Controller{
 		let req = ctx.request.body;
 		let result = await service.db.deleteSingle(table,req);
 		if(result) return ctx.success('删除成功')
-			ctx.err('删除失败')
+			ctx.err('删除失败');
 	}
 }
 
