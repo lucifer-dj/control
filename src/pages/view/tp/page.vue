@@ -55,7 +55,10 @@ export default {
     async submit(type) {
       let that = this;
       if (that.pageType !== "add") return that.updatePage();
+      if (that.pageModel.content === "")
+        return that.$hint({ msg: "请输入内容" });
       that.pageModel.start = new Date().valueOf();
+      that.pageModel.show = true;
       try {
         let result = await api.addPage(that.pageModel, that);
         that.$hint({ msg: "成功。。。" });
@@ -63,7 +66,18 @@ export default {
         console.log(e);
       }
     },
-    async updatePage() {},
+    async updatePage() {
+      let that = this;
+      if (that.pageModel.content === "")
+        return that.$hint({ msg: "请输入内容" });
+      that.pageModel.update = new Date().valueOf();
+      try {
+        let result = await api.updatePage(that.pageModel, that);
+        that.$hint({ msg: result.msg });
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
   components: {
     editor: () => import("@components/editor.vue"),

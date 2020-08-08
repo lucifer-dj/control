@@ -44,8 +44,8 @@ export default {
     value: null,
     src: String,
   },
-  mounted() {
-    console.log(this.src);
+  mounted() {},
+  created() {
     if (this.src) this.path = this.src;
   },
   beforeDestroy() {

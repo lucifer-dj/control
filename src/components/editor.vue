@@ -23,6 +23,15 @@ export default {
   watch: {
     edval(val, old) {
       let that = this;
+      if (val && val !== that.value) {
+        that.$emit("ed_input", val);
+      }
+    },
+    value(val, old) {
+      if (!this.ed) return;
+      if (val && val !== this.edVal) {
+        this.edVal = this.value;
+      }
       if (val === that.value) return;
       that.$emit("ed_input", val);
     },
@@ -33,10 +42,12 @@ export default {
   methods: {},
   mounted() {
     let that = this;
-    if (that.value.length > 0) that.edVal = that.value;
   },
   components: {
     "ck-editor": CKEditor.component,
+  },
+  created() {
+    that.edVal = that.value;
   },
 };
 </script>

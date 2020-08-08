@@ -18,37 +18,33 @@ export function login(data = {}, obj = {}) {
   return fetch('/login', data, obj)
 }
 
-//自动登录
-export function getMenu(data = {}, obj = {}) {
-  return fetch('/getmenu', data, obj)
-}
 //添加栏目
 export function addColumn(data, obj = {}) {
-  return fetch('/column/add', data, obj);
+  return fetch('/panel/column/add', data, obj);
 }
 //查询所有栏目
 export function queryColumns(data = {}, obj = {}) {
-  return fetch('/column', data, obj);
+  return fetch('/panel/column', data, obj);
 }
 //查询单个栏目
 export function readColumn(data, obj = {}) {
-  return fetch('/column/read', data, obj)
+  return fetch('/panel/column/read', data, obj)
 }
 //更新栏目
 export function editCol(data, obj = {}) {
-  return fetch('/column/update', data, obj)
+  return fetch('/panel/column/update', data, obj)
 }
 //删除栏目
 export function deleteCol(data, obj = {}) {
-  return fetch('/column/delete', data, obj)
+  return fetch('/panelcolumn/delete', data, obj)
 }
 //查询所有角色
 export function queryCases(data, obj = {}) {
-  return fetch('/case', data, obj)
+  return fetch('/panel/case', data, obj)
 }
 //添加角色
 export function addCase(data, obj = {}) {
-  return fetch('/case/add', data, obj)
+  return fetch('/panel/case/add', data, obj)
 }
 //查询一位绝色
 export function readCase(data, obj = {}) {
@@ -70,6 +66,33 @@ export function readPage(data, obj = {}) {
 export function addPage(data, obj = {}) {
   return fetch('/panel/page/add', data, obj)
 }
+//更新文章内容
+export function updatePage(data, obj = {}) {
+  return fetch('/panel/page/update', data, obj)
+}
+//查询所有Product
+export function queryProducts(data, obj = {}) {
+  return fetch('/panel/product', data, obj)
+}
+//添加Product
+export function addProduct(data, obj = {}) {
+  return fetch('/panel/product/add', data, obj)
+}
+//查询一个Product
+export function readProduct(data, obj = {}) {
+  return fetch('/panel/product/read', data, obj)
+}
+//修改一个Product
+export function updateProduct(data, obj = {}) {
+  return fetch('/panel/product/update', data, obj)
+}
+//删除一个Product
+export function deleteProduct(date, obj = {}) {
+  return fetch('/panel/product/delete', date, obj)
+}
+
+
+
 //上传文件
 export function upload(data, obj = {}) {
   return fetch('/upload/serve', data, obj, 'put', {

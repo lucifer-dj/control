@@ -29,26 +29,24 @@
         <v-col cols="12" md="8">
           <v-card-text>
             <v-row>
-              <v-col cols="2" class="px-4">
-                <v-sheet height="100%" color="red">添加头像</v-sheet>
+              <upload type="line" v-model="imgFile" :src="productModel.pic"></upload>
+              <v-col cols="6" height="100" class="px-10">
+                <v-text-field label="势力名称" v-model="productModel.name"></v-text-field>
+                <v-text-field label="年代" v-model="productModel.years"></v-text-field>
               </v-col>
-              <v-col cols="5" height="100" class="px-10">
-                <v-text-field label="角色名称"></v-text-field>
-                <v-select label="角色性别" :items="['男','女']"></v-select>
-              </v-col>
-              <v-col cols="5" height="100" class="px-10">
-                <v-text-field label="角色境界"></v-text-field>
-                <v-select label="势力划分" :items="['北凉','江南']"></v-select>
+              <v-col cols="6" height="100" class="px-10">
+                <v-text-field label="统治者" v-model="productModel.lead"></v-text-field>
+                <v-select label="当前状态" :items="['兴盛','羸弱']" v-model="productModel.state"></v-select>
               </v-col>
               <v-col cols="12">
-                <v-textarea label="人物描述" solo auto-grow></v-textarea>
+                <v-textarea label="大致介绍" solo auto-grow v-model="productModel.introduce"></v-textarea>
               </v-col>
             </v-row>
           </v-card-text>
         </v-col>
         <v-card-actions>
-          <v-btn width="100" class="mx-3">提交</v-btn>
-          <v-btn width="100" class="mx-3" @click="dialog=false;roleModelReset();">关闭</v-btn>
+          <v-btn width="100" class="mx-3" @click="submit(dialogType)">提交</v-btn>
+          <v-btn width="100" class="mx-3" @click="productModelReset();">关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -56,10 +54,10 @@
 </template>
 
 <script>
+import * as api from "@api";
 export default {
   name: "tpProduct",
   data: () => ({
-    dialog: false,
     headers: [
       { text: "ID", value: "id", align: "center" },
       { text: "名称", value: "name", align: "center" },
@@ -68,31 +66,80 @@ export default {
       { text: "年代", value: "years", align: "center" },
       { text: "操作", value: "oper", align: "center" },
     ],
-    items: [
-      {
-        id: 0,
-        name: "北凉",
-        state: "兴盛",
-        lead: "徐凤年",
-        years: "253-？",
-        oper: "",
-      },
-      {
-        id: 1,
-        name: "西蜀",
-        state: "兴盛",
-        lead: "陈芝豹",
-        years: "253-？",
-        oper: "",
-      },
-    ],
-    roleModel: {},
-  }),
-  mounted() {},
-  methods: {
-    roleModelReset() {
-      this.roleModel = {};
+    items: [],
+    productModel: {
+      name: "",
+      state: "",
+      introduce: "",
+      years: "",
+      lead: "",
+      pic: "",
     },
+    dialog: false,
+    imgFile: {},
+    dialogType: "add",
+  }),
+  mounted() {
+    let that = this;
+    that.queryProducts();
+  },
+  methods: {
+    productModelReset() {
+      let that = this;
+      that.productModel = {
+        name: "",
+        state: "",
+        introduce: "",
+        years: "",
+        lead: "",
+      };
+      that.dialog = false;
+      that.dialogType = "add";
+      that.queryProducts();
+    },
+    async queryProducts() {
+      let that = this;
+      try {
+        let result = await api.queryProducts({ num: 0 });
+        that.items = result.data;
+        console.log(result);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async uploadPic() {
+      let that = this;
+      try {
+        let fm = new FormData();
+        fm.append("file", that.imgFile);
+        let result = await api.upload(fm);
+        return result.data;
+      } catch (e) {
+        return false;
+        console.log(e);
+      }
+    },
+    async submit(type) {
+      let that = this;
+      if (that.dialogType !== "add") return that.updateProduct();
+      console.log(that.imgFile);
+      if (that.$u.checkObjectIsEmpty(that.imgFile))
+        return that.$hint({ msg: "请选择上传的图片" });
+      that.productModel.start = new Date().valueOf();
+      try {
+        let path = await that.uploadPic();
+        that.productModel.pic = path;
+        let result = await api.addProduct(that.productModel);
+        that.$hint({ msg: result.msg });
+        that.productModelReset();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async updateProduct() {},
+  },
+  components: {
+    upload: () => import("@components/upload.vue"),
   },
 };
 </script>

@@ -17,13 +17,10 @@
       </v-toolbar>
 
       <v-data-table disable-sort :items="items" :headers="headers" show-select>
-<<<<<<< HEAD
         <!-- <template v-slot:item.id="{item}">{{item-key}}</template> -->
         <template
           v-slot:item.start="{item}"
         >{{$u.format.call(new Date(Number(item.update?item.update:item.start)), "yyyy-MM-dd")}}</template>
-=======
->>>>>>> parent of c7b0ff5... 添加角色头像
         <template v-slot:item.oper="{item}">
           <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteCase(item.id)">
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
@@ -41,15 +38,8 @@
         <v-col cols="12" md="8">
           <v-card-text>
             <v-row>
-<<<<<<< HEAD
               <upload type="card" v-model="imgFile" :src="caseModel.avatar"></upload>
               <v-col cols="4" height="100" class="px-10">
-=======
-              <v-col cols="2" class="px-4">
-                <v-sheet height="100%" color="red">添加头像</v-sheet>
-              </v-col>
-              <v-col cols="5" height="100" class="px-10">
->>>>>>> parent of c7b0ff5... 添加角色头像
                 <v-text-field label="角色名称" v-model="caseModel.name"></v-text-field>
                 <v-select label="角色性别" v-model="caseModel.sex" :items="['男','女']"></v-select>
               </v-col>
@@ -88,161 +78,7 @@ export default {
       { text: "发布日期", value: "date", align: "center" },
       { text: "操作", value: "oper", align: "center" },
     ],
-    items: [
-      {
-        id: 0,
-        name: "徐凤年",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 1,
-        name: "徐晓",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 2,
-        name: "徐凤年",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 3,
-        name: "徐晓",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 4,
-        name: "徐凤年",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 5,
-        name: "徐晓",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 6,
-        name: "徐凤年",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 7,
-        name: "徐晓",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 8,
-        name: "徐凤年",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 9,
-        name: "徐晓",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 10,
-        name: "徐凤年",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 11,
-        name: "徐晓",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 12,
-        name: "徐凤年",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 13,
-        name: "徐晓",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 14,
-        name: "徐凤年",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 15,
-        name: "徐晓",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-      {
-        id: 16,
-        name: "徐凤年",
-        sex: "男",
-        step: "陆地神仙",
-        class: "北凉",
-        date: "2020-07-22",
-        oper: "",
-      },
-    ],
+    items: [],
     caseModel: {
       avatar: "",
       name: "",
@@ -275,12 +111,8 @@ export default {
       let that = this;
       try {
         let result = await api.queryCases({ num: 0 });
-<<<<<<< HEAD
         that.items = result.data;
         console.log(result);
-=======
-        // console.log(result);
->>>>>>> parent of c7b0ff5... 添加角色头像
       } catch (e) {
         console.log(e);
       }
@@ -296,13 +128,10 @@ export default {
       that.caseModel.start = new Date().valueOf();
       that.caseModel.avatar = "ceshi";
       try {
-<<<<<<< HEAD
         let path = await that.uploadPic();
         if (!path)
           return that.$hint({ msg: "上传头像失败", type: "error" }, that);
         that.caseModel.avatar = path;
-=======
->>>>>>> parent of c7b0ff5... 添加角色头像
         let result = await api.addCase(that.caseModel);
         that.$hint({ msg: "添加成功" });
         that.caseModelReset();
@@ -310,7 +139,6 @@ export default {
         console.log(e);
       }
     },
-<<<<<<< HEAD
     async uploadPic() {
       let that = this;
       try {
@@ -368,8 +196,6 @@ export default {
   },
   components: {
     upload: () => import("@components/upload.vue"),
-=======
->>>>>>> parent of c7b0ff5... 添加角色头像
   },
 };
 </script>

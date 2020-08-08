@@ -1,7 +1,8 @@
 export function checkObjectIsEmpty(obj) {
-  let arr = Object.keys(obj);
-  if (arr.length > 0) return false;
-  else return true;
+  for (let i in obj) {
+    return false
+  }
+  return true
 }
 
 // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423   
