@@ -8,15 +8,12 @@ let md5 = require('md5')
 let cos = new COS({
 	SecretId: 'AKIDe38YhaYVYJnz5vaopZ3GCzWprc6qrahZ',
 	SecretKey: 'g5E6h02v8rOdbIisv0pOlrjhPq0cyINl'
-})
-const Controller = require('egg').Controller;
+	})
+const Service = require('egg').Service;
 
-class UploadController extends Controller {
-  async oss() {
-    //上传到腾讯对象储存上
-    const { ctx } = this;
-    let stream = await ctx.getFileStream();
-    // console.log(stream)
+class FileService extends Service{
+	async oss(stream){
+		 // console.log(stream)
     let filename = Date.now() + path.extname(stream.filename).toLocaleLowerCase();
 
     function putFile(obj){
@@ -38,25 +35,20 @@ class UploadController extends Controller {
         }
       })
       if(result){
-        ctx.success('上传图片成功', result.Location)
+      	return result.Location
       }else{
-        ctx.err('上传图片失败',1001)
+      	return false
       } 
     }catch(err){
       // 必须将上传的文件流消费掉，要不然浏览器响应会卡死
       await sendToWormhole(stream);
       throw err;
-      ctx.err('上传图片失败',1001)
-    }
-    
-    
-    
-  }
-  async serve(){
-    //保存到本地
-    let { ctx, config } = this;
-    let stream = await ctx.getFileStream();
-    let filename = md5(Date.now()) + path.extname(stream.filename).toLocaleLowerCase();
+      return false
+    } 
+	}
+	async serve(stream){
+		let { config } = this;
+		let filename = md5(Date.now()) + path.extname(stream.filename).toLocaleLowerCase();
     let target = path.join(config.baseDir, 'app/public/uploads', filename)
     let writeStream = fs.createWriteStream(target);
     try{
@@ -64,17 +56,43 @@ class UploadController extends Controller {
       let fn = ''
       if(config.env==='local')       
        fn = `http://${config.cluster.listen.hostname}:${config.cluster.listen.port}/public/uploads/${filename}`
-     ctx.success('上传图片成功',fn)
-   }catch(e){
-    console.log(e)
-    await sendToWormhole(stream);
-    throw e;
-    ctx.err('上传图片失败',1001)
-  }
-
-
+     return fn
+   	}catch(e){
+    	console.log(e)
+    	await sendToWormhole(stream);
+    	throw e;
+    	return false;
+    }
+	}
+	async delete(data){
+		function unlink(src){
+			return new Promise((resolve,reject)=>{
+				fs.unlink(src,function(err){
+					if(err) return reject(err)
+					resolve(true)
+				})
+			})
+		}
+		let p = path.resolve(__dirname,'../public/uploads')
+		let fn = path.basename(data.path);
+		let src = path.join(p,fn)
+		if(fs.existsSync(src)){
+			let result = await unlink(src);
+			if(result) return {
+				state:true,
+				msg:'删除成功'
+			}
+			else return {
+			state: false,
+			msg:'删除失败'
+		};;
+		}
+		else return {
+			state: false,
+			msg:'文件不存在'
+		};
+		
+	}
 }
 
-}
-
-module.exports = UploadController;
+module.exports = FileService;
