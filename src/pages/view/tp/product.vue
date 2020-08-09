@@ -13,10 +13,10 @@
 
       <v-data-table disable-sort :items="items" :headers="headers">
         <template v-slot:item.oper="{item}">
-          <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteCol(item.id)">
+          <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteProduct(item.id)">
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
-          <v-btn fab x-small depressed title="修改" class="mx-1" @click="editCol(item)">
+          <v-btn fab x-small depressed title="修改" class="mx-1" @click="editProduct(item.id)">
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
           </v-btn>
         </template>
@@ -24,7 +24,7 @@
     </v-card>
 
     <v-dialog v-model="dialog" fullscreen persistent hide-overlay>
-      <v-card class="d-flex align-center flex-column">
+      <v-card class="d-flex align-center flex-column" v-if="dialog">
         <v-card-title class="justify-center text-h5">添加新势力</v-card-title>
         <v-col cols="12" md="8">
           <v-card-text>
@@ -102,20 +102,7 @@ export default {
       try {
         let result = await api.queryProducts({ num: 0 });
         that.items = result.data;
-        console.log(result);
       } catch (e) {
-        console.log(e);
-      }
-    },
-    async uploadPic() {
-      let that = this;
-      try {
-        let fm = new FormData();
-        fm.append("file", that.imgFile);
-        let result = await api.upload(fm);
-        return result.data;
-      } catch (e) {
-        return false;
         console.log(e);
       }
     },
@@ -124,10 +111,11 @@ export default {
       if (that.dialogType !== "add") return that.updateProduct();
       console.log(that.imgFile);
       if (that.$u.checkObjectIsEmpty(that.imgFile))
-        return that.$hint({ msg: "请选择上传的图片" });
+        return that.$hint({ msg: "请选择上传的图片", type: "error" });
       that.productModel.start = new Date().valueOf();
       try {
-        let path = await that.uploadPic();
+        let path = await api.upload(that.imgFile);
+        if (!path) return;
         that.productModel.pic = path;
         let result = await api.addProduct(that.productModel);
         that.$hint({ msg: result.msg });
@@ -136,7 +124,57 @@ export default {
         console.log(e);
       }
     },
-    async updateProduct() {},
+    async updateProduct() {
+      let that = this;
+      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+        that.productModel.pic = await api.upload(that.imgFile);
+        if (!that.productModel.pic) return;
+      }
+      that.productModel.update = new Date().valueOf();
+      try {
+        let result = await api.updateProduct(that.productModel);
+        that.productModelReset();
+        that.$hint({ msg: "更新成功" });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async readProduct(id) {
+      let that = this;
+      try {
+        let result = await api.readProduct({ id });
+        return result.data;
+      } catch (e) {
+        console.log(e);
+        return false;
+      }
+    },
+    async editProduct(id) {
+      let that = this;
+      let model = await that.readProduct(id);
+      if (model) {
+        that.productModel = model;
+        that.dialogType = "edit";
+        that.dialog = true;
+      }
+    },
+    async deleteProduct(id) {
+      let that = this;
+      that.$toast({ msg: "确定要删除这方势力吗？" });
+      that.bus.$on("toastConfirm", async function () {
+        let result = await that.readProduct(id);
+        if (result.pic) {
+          let result0 = await api.deleteFile({ path: result.pic });
+        }
+        try {
+          let result1 = await api.deleteProduct({ id });
+          that.$hint({ msg: "删除成功" });
+          that.queryProducts();
+        } catch (e) {
+          console.log(e);
+        }
+      });
+    },
   },
   components: {
     upload: () => import("@components/upload.vue"),

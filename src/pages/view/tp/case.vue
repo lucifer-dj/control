@@ -87,6 +87,7 @@ export default {
       place: "",
       realm: "",
     },
+    imgFile: {},
   }),
   mounted() {
     let that = this;
@@ -122,15 +123,13 @@ export default {
       if (type === "edit") return that.updateCase();
       //假设验证通过了
       if (that.$u.checkObjectIsEmpty(that.imgFile)) {
-        console.log(9);
-        return that.$hint({ msg: "请选择上传的图片" });
+        return that.$hint({ msg: "请选择上传的图片", type: "error" });
       }
       that.caseModel.start = new Date().valueOf();
       that.caseModel.avatar = "ceshi";
       try {
-        let path = await that.uploadPic();
-        if (!path)
-          return that.$hint({ msg: "上传头像失败", type: "error" }, that);
+        let path = await api.upload(that.imgFile);
+        if (!path) return;
         that.caseModel.avatar = path;
         let result = await api.addCase(that.caseModel);
         that.$hint({ msg: "添加成功" });
@@ -139,22 +138,11 @@ export default {
         console.log(e);
       }
     },
-    async uploadPic() {
-      let that = this;
-      try {
-        let fm = new FormData();
-        fm.append("file", that.imgFile);
-        let result = await api.upload(fm);
-        return result.data;
-      } catch (e) {
-        return false;
-        console.log(e);
-      }
-    },
     async updateCase() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        that.caseModel.avatar = await that.uploadPic();
+        that.caseModel.avatar = await api.upload(that.imgFile);
+        if (!that.caseModel.avatar) return;
       }
       try {
         that.caseModel.update = new Date().valueOf();
@@ -169,23 +157,27 @@ export default {
       let that = this;
       try {
         let result = await api.readCase({ id }, that);
-        that.caseModel = result.data;
+        return result.data;
       } catch (e) {
         console.log(e);
       }
     },
     async editCase(id) {
       let that = this;
-      let model = that.readCase(id);
+      that.caseModel = await that.readCase(id);
       that.dialogType = "edit";
       that.dialog = true;
     },
     async deleteCase(id) {
       let that = this;
-      that.$toast({ msg: "确认要删除这条数据吗" });
+      that.$toast({ msg: "确认要删除这位角色吗？" });
       that.bus.$on("toastConfirm", async function () {
+        let result = await that.readCase(id);
+        if (result.avatar) {
+          let result0 = await api.deleteFile({ path: result.avatar });
+        }
         try {
-          let result = await api.deleteCase({ id }, that);
+          let result1 = await api.deleteCase({ id }, that);
           that.$hint({ msg: "成功删除一条数据" });
           that.queryCases();
         } catch (e) {

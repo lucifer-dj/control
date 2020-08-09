@@ -31,7 +31,7 @@
           <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteCol(item.id)">
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
-          <v-btn fab x-small depressed title="修改" class="mx-1" @click="readColumn(item.id)">
+          <v-btn fab x-small depressed title="修改" class="mx-1" @click="editCol(item.id)">
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
           </v-btn>
         </template>
@@ -190,31 +190,20 @@ export default {
     async submit(type) {
       let that = this;
       that.columnModel.icon = cfg.tp[that.columnModel.template].icon;
-      if (type != "add") return that.editCol();
+      if (type != "add") return that.updateCol();
       that.$v.columnModel.$touch();
-      let pic = "";
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        that.columnModel.pic = await that.uploadPic();
+        that.columnModel.pic = await api.upload(that.imgFile);
+        if (!that.columnModel.pic) return;
+      } else {
+        return that.$hint({ msg: "请选择上传的图片", type: "error" });
       }
       try {
-        that.columnModel.pic = pic;
         let result = await api.addColumn(that.columnModel, that);
-        that.$hint({ msg: result.msg, type: "success" });
-        that.columnModelReset();
+        that.$hint({ msg: result.msg });
+        that.reload();
       } catch (e) {
         console.log(e);
-      }
-    },
-    async uploadPic() {
-      let that = this;
-      try {
-        let fm = new FormData();
-        fm.append("file", that.imgFile);
-        let result = await api.upload(fm, that);
-        return result.data;
-      } catch (e) {
-        console.log(e);
-        return false;
       }
     },
     async queryColumns() {
@@ -230,27 +219,25 @@ export default {
       let that = this;
       try {
         let result = await api.readColumn({ id }, that);
-        that.dialog = true;
-        that.dialogType = "edit";
-        that.columnModel = result.data;
+        return result.data;
       } catch (e) {
         console.log(e);
       }
     },
-    async editCol(id) {
+    async updateCol() {
       let that = this;
       // that.$v.columnModel.$touch();
       // if(that.$v.columnModel.$invalid){
       //   return console.log('请填写必填项')
       // }
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        console.log("有图片");
-        that.columnModel.pic = await that.uploadPic();
+        that.columnModel.pic = await api.upload(that.imgFile);
+        if (!that.columnModel.pic) return;
       }
       try {
-        let result = await api.editCol(that.columnModel, that);
-        that.$hint({ msg: "修改成功", type: "success" });
-        that.columnModelReset();
+        let result = await api.updateCol(that.columnModel, that);
+        that.$hint({ msg: "修改成功" });
+        that.reload();
       } catch (e) {
         console.log(e);
       }
@@ -259,15 +246,27 @@ export default {
       let that = this;
       that.$toast({ msg: "确认要删除这个栏目吗？" });
       that.bus.$on("toastConfirm", async function () {
+        let result = await that.readColumn(id);
+        if (result.pic) {
+          let result0 = await api.deleteFile({ path: result.pic });
+        }
         try {
-          let result = await api.deleteCol({ id });
-          that.$hint({ msg: "删除成功", type: "success" });
-          that.queryColumns();
+          let result1 = await api.deleteCol({ id });
+          that.$hint({ msg: "删除成功" });
+          that.reload();
         } catch (e) {
           console.log(e);
         }
       });
     },
+    async editCol(id) {
+      let that = this;
+      that.columnModel = await that.readColumn(id);
+      console.log(that.columnModel);
+      that.dialogType = "edit";
+      that.dialog = true;
+    },
+
     async addSonCol() {
       let that = this;
       // that.reload();

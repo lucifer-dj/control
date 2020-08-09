@@ -31,12 +31,12 @@ export function readColumn(data, obj = {}) {
   return fetch('/panel/column/read', data, obj)
 }
 //更新栏目
-export function editCol(data, obj = {}) {
+export function updateCol(data, obj = {}) {
   return fetch('/panel/column/update', data, obj)
 }
 //删除栏目
 export function deleteCol(data, obj = {}) {
-  return fetch('/panelcolumn/delete', data, obj)
+  return fetch('/panel/column/delete', data, obj)
 }
 //查询所有角色
 export function queryCases(data, obj = {}) {
@@ -94,10 +94,22 @@ export function deleteProduct(date, obj = {}) {
 
 
 //上传文件
-export function upload(data, obj = {}) {
-  return fetch('/upload/serve', data, obj, 'put', {
-    'Content-Type': 'multipart/form-data'
-  })
+export async function upload(data, obj = {}) {
+  let fm = new FormData();
+  fm.append("file", data);
+  try {
+    let result = await fetch('/file/upload/serve', fm, obj, 'put', {
+      'Content-Type': 'multipart/form-data'
+    })
+    return result.data
+  } catch (e) {
+    console.log(e)
+    return false
+  }
+}
+//删除上传的文件
+export function deleteFile(data, obj = {}) {
+  return fetch('/file/delete', data, obj)
 }
 
 function fetch(url, data, obj, method = "post", headers = {
