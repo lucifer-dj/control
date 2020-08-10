@@ -29,4 +29,6 @@
   router.post('/panel/product/delete',controller.panel.product.delete)
   router.post('/panel/product/read',controller.panel.product.read)
   router.post('/panel/product/update',controller.panel.product.update)
+  router.post('/config/site/read',controller.panel.site.read)
+  router.post('/config/site/update',controller.panel.site.update)
 };
