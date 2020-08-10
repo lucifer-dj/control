@@ -47,9 +47,9 @@ export default new Router({
           component: () => import('./pages/view/tp/page.vue')
         },
         {
-          name: 'xpage',
-          path: '/xpage',
-          component: () => import('./pages/view/xpage.vue')
+          name: 'siteConfig',
+          path: '/siteConfig',
+          component: () => import('./pages/view/siteConfig.vue')
         },
         {
           name: 'banner',

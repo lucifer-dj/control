@@ -38,7 +38,7 @@
         <v-col cols="12" md="8">
           <v-card-text>
             <v-row>
-              <upload type="card" v-model="imgFile" :src="caseModel.avatar"></upload>
+              <upload type="card" v-model="imgFile" cols="3" :src="caseModel.avatar"></upload>
               <v-col cols="4" height="100" class="px-10">
                 <v-text-field label="角色名称" v-model="caseModel.name"></v-text-field>
                 <v-select label="角色性别" v-model="caseModel.sex" :items="['男','女']"></v-select>

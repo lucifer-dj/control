@@ -90,8 +90,13 @@ export function updateProduct(data, obj = {}) {
 export function deleteProduct(date, obj = {}) {
   return fetch('/panel/product/delete', date, obj)
 }
-
-
+//读取站点设置
+export function readSiteConfig(data = {}, obj = {}) {
+  return fetch('/config/site/read', data, obj)
+}
+export function updateSiteConfig(data, obj = {}) {
+  return fetch('/config/site/update', data, obj)
+}
 
 //上传文件
 export async function upload(data, obj = {}) {

@@ -29,7 +29,7 @@
         <v-col cols="12" md="8">
           <v-card-text>
             <v-row>
-              <upload type="line" v-model="imgFile" :src="productModel.pic"></upload>
+              <upload type="line" cols="12" v-model="imgFile" :src="productModel.pic"></upload>
               <v-col cols="6" height="100" class="px-10">
                 <v-text-field label="势力名称" v-model="productModel.name"></v-text-field>
                 <v-text-field label="年代" v-model="productModel.years"></v-text-field>

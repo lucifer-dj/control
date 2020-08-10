@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="12" class="d-flex">
+  <v-col :cols="cols" class="d-flex">
     <v-sheet
       width="148"
       height="148"
@@ -43,6 +43,10 @@ export default {
     type: String,
     value: null,
     src: String,
+    cols: {
+      type: String,
+      default: "6",
+    },
   },
   mounted() {},
   created() {

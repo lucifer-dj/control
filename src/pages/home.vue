@@ -83,7 +83,7 @@ export default {
       },
       {
         name: "页面设置",
-        path: "/xpage",
+        path: "/siteConfig",
         icon: "iconfont iconfont-Nav03-base",
         child: [
           {

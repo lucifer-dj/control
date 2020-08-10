@@ -95,7 +95,7 @@
               <v-col cols="12" md="6">
                 <v-text-field label="关键词" v-model="columnModel.keywords"></v-text-field>
               </v-col>
-              <upload v-model="imgFile" type="line" :src="columnModel.pic" ref="upload"></upload>
+              <upload v-model="imgFile" type="line" cols="12" :src="columnModel.pic" ref="upload"></upload>
               <v-col cols="12" md="12">
                 <v-textarea label="栏目描述" solo auto-grow v-model="columnModel.description"></v-textarea>
               </v-col>
