@@ -127,8 +127,11 @@ export default {
     async updateProduct() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        that.productModel.pic = await api.upload(that.imgFile);
-        if (!that.productModel.pic) return;
+        if (that.productModel.pic) {
+          await api.deleteFile({ path: that.productModel.pic });
+        }
+        let res = await api.upload(that.imgFile);
+        that.productModel.pic = res.code === 200 ? res.data : "";
       }
       that.productModel.update = new Date().valueOf();
       try {

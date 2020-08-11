@@ -106,15 +106,21 @@ export async function upload(data, obj = {}) {
     let result = await fetch('/file/upload/serve', fm, obj, 'put', {
       'Content-Type': 'multipart/form-data'
     })
-    return result.data
+    return result
   } catch (e) {
     console.log(e)
     return false
   }
 }
 //删除上传的文件
-export function deleteFile(data, obj = {}) {
-  return fetch('/file/delete', data, obj)
+export async function deleteFile(data, obj = {}) {
+  try {
+    let result = await fetch('/file/delete', data, obj)
+    return result
+  } catch (e) {
+    console.log(e)
+    return false
+  }
 }
 
 function fetch(url, data, obj, method = "post", headers = {

@@ -39,9 +39,8 @@ Service.interceptors.response.use(response => {
       msg: response.data.msg,
       type: 'error'
     })
+    return response
   }
-  return response
-
 }, error => {
   new Vue().bus.$hint({
     msg: "出现错误啦。。。",

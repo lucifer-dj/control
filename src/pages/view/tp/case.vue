@@ -141,8 +141,11 @@ export default {
     async updateCase() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        that.caseModel.avatar = await api.upload(that.imgFile);
-        if (!that.caseModel.avatar) return;
+        if (that.caseModel.avatar) {
+          await api.deleteFile({ path: that.caseModel.avatar });
+        }
+        let res = await api.upload(that.imgFile);
+        that.caseModel.avatar = res.code === 200 ? res.data : "";
       }
       try {
         that.caseModel.update = new Date().valueOf();

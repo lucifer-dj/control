@@ -231,8 +231,11 @@ export default {
       //   return console.log('请填写必填项')
       // }
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        that.columnModel.pic = await api.upload(that.imgFile);
-        if (!that.columnModel.pic) return;
+        if (that.columnModel.pic) {
+          await api.deleteFile({ path: that.columnModel.pic });
+        }
+        let res = await api.upload(that.imgFile);
+        that.columnModel.pic = res.code === 200 ? res.data : "";
       }
       try {
         let result = await api.updateCol(that.columnModel, that);
