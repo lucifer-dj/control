@@ -34,7 +34,6 @@ Service.interceptors.response.use(response => {
   if (response.data.code === 200) {
     return response.data
   } else {
-    console.log(response)
     new Vue().bus.$hint({
       msg: response.data.msg,
       type: 'error'

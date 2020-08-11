@@ -197,8 +197,9 @@ export default {
       if (type != "add") return that.updateCol();
       that.$v.columnModel.$touch();
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        that.columnModel.pic = await api.upload(that.imgFile);
-        if (!that.columnModel.pic) return;
+        let res = await api.upload(that.imgFile);
+        that.columnModel.pic = res ? res : "";
+        if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       } else {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       }
@@ -214,7 +215,7 @@ export default {
       let that = this;
       try {
         let result = await api.queryColumns();
-        that.items = result.data;
+        that.items = result.code === 200 ? result.date : [];
       } catch (e) {
         console.log(e);
       }
@@ -235,11 +236,9 @@ export default {
       //   return console.log('请填写必填项')
       // }
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        if (that.columnModel.pic) {
-          await api.deleteFile({ path: that.columnModel.pic });
-        }
-        let res = await api.upload(that.imgFile);
-        that.columnModel.pic = res.code === 200 ? res.data : "";
+        let res = await api.upload(that.imgFile, that, that.columnModel.pic);
+        that.columnModel.pic = res ? res.data : "";
+        if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       try {
         let result = await api.updateCol(that.columnModel, that);

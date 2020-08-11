@@ -45,7 +45,7 @@ export default {
       try {
         let result = await api.readPage({ pid: that.pageModel.pid }, that);
         if (!result.data) return;
-        that.pageModel = result.data;
+        that.pageModel = result.code === 200 ? result.data : [];
         console.log(that.pageModel);
         that.pageType = "edit";
       } catch (e) {

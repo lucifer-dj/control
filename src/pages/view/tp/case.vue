@@ -112,7 +112,7 @@ export default {
       let that = this;
       try {
         let result = await api.queryCases({ num: 0 });
-        that.items = result.data;
+        that.items = result.code === 200 ? result.data : [];
         console.log(result);
       } catch (e) {
         console.log(e);
@@ -128,9 +128,9 @@ export default {
       that.caseModel.start = new Date().valueOf();
       that.caseModel.avatar = "ceshi";
       try {
-        let path = await api.upload(that.imgFile);
-        if (!path) return;
-        that.caseModel.avatar = path;
+        let result0 = await api.upload(that.imgFile);
+        that.caseModel.avatar = result0 ? result0 : "";
+        if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await api.addCase(that.caseModel);
         that.$hint({ msg: "添加成功" });
         that.caseModelReset();
@@ -141,11 +141,9 @@ export default {
     async updateCase() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        if (that.caseModel.avatar) {
-          await api.deleteFile({ path: that.caseModel.avatar });
-        }
-        let res = await api.upload(that.imgFile);
-        that.caseModel.avatar = res.code === 200 ? res.data : "";
+        let res = await api.upload(that.imgFile, that, that.caseModel.avatar);
+        that.caseModel.avatar = res ? res : "";
+        if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       try {
         that.caseModel.update = new Date().valueOf();

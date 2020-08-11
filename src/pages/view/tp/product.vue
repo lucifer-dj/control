@@ -101,7 +101,7 @@ export default {
       let that = this;
       try {
         let result = await api.queryProducts({ num: 0 });
-        that.items = result.data;
+        that.items = result.code === 200 ? result.data : [];
       } catch (e) {
         console.log(e);
       }
@@ -114,9 +114,9 @@ export default {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       that.productModel.start = new Date().valueOf();
       try {
-        let path = await api.upload(that.imgFile);
-        if (!path) return;
-        that.productModel.pic = path;
+        let result0 = await api.upload(that.imgFile);
+        that.productModel.pic = result0 ? result0 : "";
+        if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await api.addProduct(that.productModel);
         that.$hint({ msg: result.msg });
         that.productModelReset();
@@ -127,11 +127,9 @@ export default {
     async updateProduct() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        if (that.productModel.pic) {
-          await api.deleteFile({ path: that.productModel.pic });
-        }
-        let res = await api.upload(that.imgFile);
-        that.productModel.pic = res.code === 200 ? res.data : "";
+        let res = await api.upload(that.imgFile, that, that.productModel.pic);
+        that.productModel.pic = res ? res : "";
+        if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       that.productModel.update = new Date().valueOf();
       try {

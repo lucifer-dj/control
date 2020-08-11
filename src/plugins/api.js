@@ -91,7 +91,7 @@ export function deleteProduct(date, obj = {}) {
   return fetch('/panel/product/delete', date, obj)
 }
 //查询所有banner
-export function queryBanners(data, obj = {}) {
+export function queryBanners(data = {}, obj = {}) {
   return fetch('/panel/banner', data, obj)
 }
 //添加banner
@@ -119,16 +119,35 @@ export function updateSiteConfig(data, obj = {}) {
 }
 
 //上传文件
-export async function upload(data, obj = {}) {
+export async function upload(data, obj = {}, deletePath = "") {
   let fm = new FormData();
   fm.append("file", data);
   try {
     let result = await fetch('/file/upload/serve', fm, obj, 'put', {
       'Content-Type': 'multipart/form-data'
     })
-    return result
+    if (result.code === 200) {
+      if (deletePath.length > 0) {
+        try {
+          let result0 = await deleteFile({
+            path: deletePath
+          });
+          if (result0.code === 200) {
+            console.log('删除' + deletePath + '图片成功')
+          } else {
+            console.error(result0.msg, '删除' + deletePath + '失败')
+          }
+        } catch (e) {
+          console.error(e, '删除' + deletePath + '失败')
+        }
+      }
+      return result
+    } else {
+      console.error('上传图片失败')
+      return false
+    }
   } catch (e) {
-    console.log(e)
+    console.error(e)
     return false
   }
 }
