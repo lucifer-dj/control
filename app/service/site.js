@@ -16,7 +16,9 @@ class SiteService extends Service{
 				data+=chunk;
 			});
 			stream.on('end',function(){
-				data = JSON.parse(data.replace(/(\r|\n)/gi,""))
+				if(data.length>0){
+					data = JSON.parse(data)
+				}
 				resolve({data,state:true});
 			})
 			stream.on('error',function(e){

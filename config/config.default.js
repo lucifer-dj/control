@@ -19,7 +19,7 @@
     domainWhiteList: ['*']
   }
   config.bodyParser = {
-    formLimit: '5mb'
+    formLimit: '10mb'
   }
   config.cors = {
     origin: '*',
