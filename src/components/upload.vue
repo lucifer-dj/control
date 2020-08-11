@@ -42,7 +42,10 @@ export default {
   props: {
     type: String,
     value: null,
-    src: String,
+    src: {
+      type: String,
+      default: "",
+    },
     cols: {
       type: String,
       default: "6",
@@ -50,7 +53,7 @@ export default {
   },
   mounted() {},
   created() {
-    if (this.src) this.path = this.src;
+    if (this.src.length > 0) this.path = this.src;
   },
   beforeDestroy() {
     URL.revokeObjectURL(this.path);

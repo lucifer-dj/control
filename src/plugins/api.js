@@ -90,6 +90,26 @@ export function updateProduct(data, obj = {}) {
 export function deleteProduct(date, obj = {}) {
   return fetch('/panel/product/delete', date, obj)
 }
+//查询所有banner
+export function queryBanners(data, obj = {}) {
+  return fetch('/panel/banner', data, obj)
+}
+//添加banner
+export function addBanner(data, obj = {}) {
+  return fetch('/panel/banner/add', data, obj)
+}
+//查询一个banner
+export function readBanner(data, obj = {}) {
+  return fetch('/panel/banner/read', data, obj)
+}
+//修改一个banner
+export function updateBanner(data, obj = {}) {
+  return fetch('/panel/banner/update', data, obj)
+}
+//删除一个banner
+export function deleteBanner(date, obj = {}) {
+  return fetch('/panel/banner/delete', date, obj)
+}
 //读取站点设置
 export function readSiteConfig(data = {}, obj = {}) {
   return fetch('/config/site/read', data, obj)

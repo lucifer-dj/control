@@ -55,6 +55,9 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
+                <v-text-field label="*栏目英文名称" v-model="columnModel.en" required></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
                 <v-select label="所属栏目" :items="origin" v-model="columnModel.origin"></v-select>
               </v-col>
               <v-col cols="12" md="6">
@@ -153,6 +156,7 @@ export default {
       pic: "",
       order: "",
       template: "",
+      en: "",
     },
   }),
   async mounted() {
@@ -178,7 +182,7 @@ export default {
         show: "1",
         description: "",
         keywords: "",
-        pic: [],
+        pic: "",
         order: "",
         template: "",
       };
