@@ -1,16 +1,14 @@
 	const Controller = require('egg').Controller;
 
-class ProductController extends Controller {
+class BannerController extends Controller {
 	constructor(ctx){
 		super(ctx);
-		this.table = 'product';
+		this.table = 'banner';
 	}
 	async queryAll() {
 		const { ctx, service, table } = this;
 		let req = ctx.request.body
-		let result = await service.db.queryAll(table,{
-			offset:req.num
-		});
+		let result = await service.db.queryAll(table);
 		if(result){
 			ctx.success('成功',result)
 		}else{
@@ -47,4 +45,4 @@ class ProductController extends Controller {
 		}
 }
 
-	module.exports = ProductController;
+	module.exports = BannerController;

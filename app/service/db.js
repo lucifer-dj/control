@@ -3,7 +3,9 @@ const Service = require('egg').Service;
 class DbService extends Service{
 	//查询多条数据
 	async queryAll(table,obj){
-		if(!obj.limit) obj.limit = 10
+		if(obj){
+			if(!obj.limit) obj.limit = 10
+		}
 		let { app } = this;
 		let result = await app.mysql.select(table,obj)
 		if(result.length>0) return result

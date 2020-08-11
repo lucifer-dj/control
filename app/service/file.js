@@ -85,7 +85,7 @@ class FileService extends Service{
 			else return {
 			state: false,
 			msg:'删除失败'
-		};;
+		};
 		}
 		else return {
 			state: false,

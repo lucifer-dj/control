@@ -10,6 +10,9 @@ class SiteController extends Controller{
 	async update(){
 		let { ctx, service } = this;
 		let req = ctx.request.body;
+		if(!req){
+			ctx.err('修改失败,路径不存在')
+		}
 		let result = await service.site.update(req);
 		if(result.state) return ctx.success('修改成功')
 			ctx.err('修改失败')

@@ -31,6 +31,7 @@ class UploadController extends Controller {
  async delete(){
   let { ctx, service} = this;
   let req = ctx.request.body;
+  if(!req.path) return ctx.err('路径错误')
   let result = await service.file.delete(req);
   if(result.state) return ctx.success(result.msg)
    ctx.err(result.msg)

@@ -7,7 +7,7 @@ class CaseController extends Controller {
 		super(ctx);
 		this.table = 'case';
 	}
-	async index() {
+	async queryAll() {
 		const { ctx, service, table } = this;
 		let req = ctx.request.body
 		let result = await service.db.queryAll(table,{
