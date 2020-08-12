@@ -1,12 +1,6 @@
 'use strict';
 
 /** @type Egg.EggPlugin */
-<<<<<<< HEAD
-exports.nunjucks = {
-  enable: true,
-  package: 'egg-view-nunjucks'
-};
-=======
 
 
 module.exports = {
@@ -27,4 +21,3 @@ module.exports = {
     package: 'egg-mysql',
   },
 }
->>>>>>> dev
