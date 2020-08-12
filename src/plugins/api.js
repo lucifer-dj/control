@@ -15,7 +15,7 @@ export function t(data, obj = {}) {
 
 //登录
 export function login(data = {}, obj = {}) {
-  return fetch('/login', data, obj)
+  return fetch('/panel/login', data, obj)
 }
 
 //添加栏目

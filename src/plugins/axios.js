@@ -6,7 +6,7 @@ let token = localStorage.getItem('token')
 
 const Service = axios.create({
   timeout: 20000,
-  baseURL: cfg.isdev ? 'http://192.168.1.231:7001' : 'http://119.45.57.238',
+  baseURL: cfg.isdev ? 'http://127.0.0.1:7001' : 'http://119.45.57.238',
   method: 'post',
   // headers: {
   //   "Authorization": `Bearer ${token}`
@@ -19,7 +19,7 @@ Service.interceptors.request.use(config => {
   if (config.url !== '/login' || config.url !== '/register') {
     config.headers.Authorization = `Bearer ${token}`
   }
-  console.log(config)
+  // console.log(config)
   return config
 })
 // 添加响应拦截器

@@ -21,7 +21,7 @@ export default {
     },
   }),
   watch: {
-    edval(val, old) {
+    edVal(val, old) {
       let that = this;
       if (val && val !== that.value) {
         that.$emit("ed_input", val);
