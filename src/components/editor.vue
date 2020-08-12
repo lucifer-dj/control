@@ -28,9 +28,10 @@ export default {
       }
     },
     value(val, old) {
-      if (!this.ed) return;
-      if (val && val !== this.edVal) {
-        this.edVal = this.value;
+      let that = this;
+      if (!that.ed) return;
+      if (val && val !== that.edVal) {
+        that.edVal = that.value;
       }
       if (val === that.value) return;
       that.$emit("ed_input", val);
@@ -47,6 +48,7 @@ export default {
     "ck-editor": CKEditor.component,
   },
   created() {
+    let that = this;
     that.edVal = that.value;
   },
 };

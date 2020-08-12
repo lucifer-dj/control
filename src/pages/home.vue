@@ -147,7 +147,7 @@ export default {
     },
     logout() {
       let that = this;
-      that.$toast({ text: "确认要退出吗？", bool: true });
+      that.$toast({ msg: "确认要退出吗？" });
       that.bus.$on("toastConfirm", function () {
         console.log("正在退出请稍后. . .");
       });
