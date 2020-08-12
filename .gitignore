@@ -12,3 +12,7 @@ run/
 *.un~
 typings/
 .nyc_output/
+<<<<<<< HEAD
+=======
+/app/public/uploads/*
+>>>>>>> dev
