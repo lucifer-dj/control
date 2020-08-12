@@ -5,11 +5,15 @@
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
-const path = require('path')
-module.exports = appInfo => {
-  const config = exports = {};
+ const path = require('path')
+ module.exports = appInfo => {
+   /**
+   * built-in config
+   * @type {Egg.EggAppConfig}
+   **/
+   const config = exports = {};
   // use for cookie sign key, should change to your own and keep security
-  config.keys = "208002";
+  config.keys = appInfo.name + "208002";
   // 关闭post请求拦截
   config.security = {
     csrf: {
@@ -29,7 +33,7 @@ module.exports = appInfo => {
   // add your middleware config here
   config.middleware = ['checkJwt']
   config.checkJwt = {
-    ignore: ["/t", "/panel/login", "/panel/register"]
+    ignore: ["/t", "/panel/login", "/panel/register","/view"]
   }
   // add your user config here
   const userConfig = {
@@ -42,14 +46,15 @@ module.exports = appInfo => {
       '.html': 'nunjucks',
     },
     root: [
-      path.join(appInfo.baseDir, 'app/view'),
+    path.join(appInfo.baseDir, 'app/view'),
     ].join(',')
   };
   config.jwt = {
     secret: '123123',
     expiresIn: 60 * 60 * 24 * 15
   }
-  config.mysql = {
+
+config.mysql = {
     // 单数据库信息配置
     client: {
       // host

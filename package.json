@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "egg": "^2.15.1",
+    "egg-cluster": "^1.26.0",
     "egg-scripts": "^2.11.0"
   },
   "devDependencies": {
@@ -26,7 +27,7 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-control",
+    "start": "egg-scripts start --daemon --title=egg-server-control --port=80",
     "stop": "egg-scripts stop --title=egg-server-control",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
