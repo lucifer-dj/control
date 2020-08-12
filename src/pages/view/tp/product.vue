@@ -46,7 +46,7 @@
         </v-col>
         <v-card-actions>
           <v-btn width="100" class="mx-3" @click="submit(dialogType)">提交</v-btn>
-          <v-btn width="100" class="mx-3" @click="productModelReset();">关闭</v-btn>
+          <v-btn width="100" class="mx-3" @click="productModelReset(1);">关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -84,7 +84,7 @@ export default {
     that.queryProducts();
   },
   methods: {
-    productModelReset() {
+    productModelReset(type=null) {
       let that = this;
       that.productModel = {
         name: "",
@@ -95,7 +95,7 @@ export default {
       };
       that.dialog = false;
       that.dialogType = "add";
-      that.queryProducts();
+      if(!type)that.queryProducts();
     },
     async queryProducts() {
       let that = this;

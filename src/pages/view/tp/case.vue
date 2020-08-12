@@ -55,7 +55,7 @@
         </v-col>
         <v-card-actions>
           <v-btn width="100" class="mx-3" @click="submit(dialogType)">{{dialog==='add'?'提交':'确认修改'}}</v-btn>
-          <v-btn width="100" class="mx-3" @click="caseModelReset();">关闭</v-btn>
+          <v-btn width="100" class="mx-3" @click="caseModelReset(1);">关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -94,7 +94,7 @@ export default {
     that.queryCases();
   },
   methods: {
-    caseModelReset() {
+    caseModelReset(type=null) {
       let that = this;
       that.caseModel = {
         avatar: "",
@@ -106,7 +106,7 @@ export default {
       };
       that.dialogType = "add";
       that.dialog = false;
-      that.queryCases();
+      if(!type)that.queryCases();
     },
     async queryCases() {
       let that = this;

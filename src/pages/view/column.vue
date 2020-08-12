@@ -90,7 +90,7 @@
                 </v-radio-group>
               </v-col>
               <!-- <v-col cols="12" md="6">
-              <v-text-field label="栏目英文名称"></v-text-field>
+              <v-text-field label="栏目英文名称" v-model="columnModel.en"></v-text-field>
               </v-col>-->
               <v-col cols="12" md="6">
                 <v-text-field label="排序" v-model="columnModel.order"></v-text-field>
@@ -111,7 +111,7 @@
             class="mx-3"
             @click="submit(dialogType)"
           >{{dialogType=='add'?'提交':'确认修改'}}</v-btn>
-          <v-btn width="100" class="mx-3" @click="columnModelReset();">关闭</v-btn>
+          <v-btn width="100" class="mx-3" @click="columnModelReset(1);">关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -164,17 +164,13 @@ export default {
     that.queryColumns();
   },
   methods: {
-    // getFile(e) {
-    //   console.log(e);
-    // },
     c_addColumn() {
       let that = this;
       that.columnModelReset();
       that.dialog = true;
       that.dialogType = "add";
-      // console.log(that.$u.checkObjectIsEmpty(that.imgFile));
     },
-    columnModelReset() {
+    columnModelReset(type=null) {
       let that = this;
       that.columnModel = {
         origin: "顶级栏目",
@@ -189,7 +185,7 @@ export default {
       that.imgFile = {};
       // that.reload();
       that.dialog = false;
-      that.queryColumns();
+      if(!type)that.queryColumns();
     },
     async submit(type) {
       let that = this;
@@ -215,7 +211,7 @@ export default {
       let that = this;
       try {
         let result = await api.queryColumns();
-        that.items = result.code === 200 ? result.date : [];
+        that.items = result.code === 200 ? result.data : [];
       } catch (e) {
         console.log(e);
       }
