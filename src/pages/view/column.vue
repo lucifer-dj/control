@@ -89,9 +89,9 @@
                   ></v-radio>
                 </v-radio-group>
               </v-col>
-              <!-- <v-col cols="12" md="6">
-              <v-text-field label="栏目英文名称" v-model="columnModel.en"></v-text-field>
-              </v-col>-->
+              <v-col cols="12" md="6">
+                <v-text-field label="链接地址" v-model="columnModel.link"></v-text-field>
+              </v-col>
               <v-col cols="12" md="6">
                 <v-text-field label="排序" v-model="columnModel.order"></v-text-field>
               </v-col>
@@ -157,6 +157,7 @@ export default {
       order: "",
       template: "",
       en: "",
+      link:"",
     },
   }),
   async mounted() {

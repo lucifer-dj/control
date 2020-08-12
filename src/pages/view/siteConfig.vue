@@ -7,6 +7,9 @@
           <v-col cols="4">
             <v-text-field label="网站名称" v-model="siteModel.name"></v-text-field>
           </v-col>
+          <v-col cols="4">
+            <v-text-field label="网站首页" v-model="siteModel.home"></v-text-field>
+          </v-col>
           <upload v-model="imgFile" :src="siteModel.logo" type="card" cols="4"></upload>
           <v-col cols="4">
             <v-text-field label="联系邮箱" v-model="siteModel.email"></v-text-field>
@@ -58,6 +61,7 @@ export default {
           git: "",
           filesize: "",
           cookiePass: "",
+          home:""
         };
       } catch (e) {
         console.log(e);
