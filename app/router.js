@@ -5,12 +5,6 @@
  */
 module.exports = app => {
   const { router, controller } = app;
-<<<<<<< HEAD
-  router.get('/', controller.home.index);
-  router.get('/control', controller.home.control)
-  // router.resources('/user', controller.user)
-};
-=======
   //后台
   router.post('/t', controller.panel.home.t)
   router.get('/panel', controller.panel.home.index)
@@ -48,4 +42,3 @@ module.exports = app => {
   //前台
   router.get('/view/index', controller.view.index.index)
 };
->>>>>>> dev
