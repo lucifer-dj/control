@@ -3,10 +3,11 @@
 /**
  * @param {Egg.Application} app - egg application
  */
-module.exports = app => {
+ module.exports = app => {
   const { router, controller } = app;
   //后台
-  router.post('/t', controller.panel.home.t)
+  router.post('/t', controller.panel.home.postTest)
+  router.get('/t', controller.panel.home.getTest)
   router.get('/panel', controller.panel.home.index)
   router.post('/panel/login', controller.panel.login.index)
   router.post('/panel/auto', controller.panel.login.auto)
