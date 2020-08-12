@@ -45,8 +45,6 @@ module.exports = appInfo => {
       path.join(appInfo.baseDir, 'app/view'),
     ].join(',')
   };
-<<<<<<< HEAD
-=======
   config.jwt = {
     secret: '123123',
     expiresIn: 60 * 60 * 24 * 15
@@ -77,13 +75,8 @@ module.exports = appInfo => {
 
   }
 
->>>>>>> dev
   return {
     ...config,
     ...userConfig,
   };
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> dev
