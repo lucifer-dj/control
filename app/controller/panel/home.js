@@ -7,11 +7,15 @@ class HomeController extends Controller {
     const { ctx } = this;
     await ctx.render('control/panel') 
   }
-  async t() {
+  async postTest() {
     const { ctx } = this;
     ctx.body = {
     	msg:'测试'
     }
+  }
+  async getTest() {
+    const { ctx } = this;
+    ctx.body = "<h1>hello world!</h1>"
   }
 }
 
