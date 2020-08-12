@@ -11,17 +11,7 @@
     "egg-scripts": "^2.11.0"
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "autod": "^3.0.1",
-    "autod-egg": "^1.1.0",
-    "await-stream-ready": "^1.0.1",
-    "cos-nodejs-sdk-v5": "^2.6.2",
     "egg-bin": "^4.11.0",
-    "egg-ci": "^1.11.0",
-    "egg-mock": "^3.21.0",
-=======
-    "egg-bin": "^4.11.0",
->>>>>>> dev
     "egg-cors": "^2.2.3",
     "egg-jwt": "^3.1.7",
     "egg-mysql": "^3.0.0",
@@ -29,13 +19,8 @@
     "md5": "^2.2.1",
     "stream-to-array": "^2.3.0",
     "stream-wormhole": "^1.1.0",
-<<<<<<< HEAD
-    "eslint": "^5.13.0",
-    "eslint-config-egg": "^7.1.0"
-=======
     "await-stream-ready": "^1.0.1",
     "cos-nodejs-sdk-v5": "^2.6.2"
->>>>>>> dev
   },
   "engines": {
     "node": ">=10.0.0"
