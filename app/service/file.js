@@ -53,10 +53,8 @@ class FileService extends Service{
     let writeStream = fs.createWriteStream(target);
     try{
       await awaitWriteStream(stream.pipe(writeStream))
-      let fn = ''
-      if(config.env==='local')       
-       fn = `http://${config.cluster.listen.hostname}:${config.cluster.listen.port}/public/uploads/${filename}`
-     return fn
+      let fn  = `http://${config.site}/public/uploads/${filename}`
+     	return fn
    	}catch(e){
     	console.log(e)
     	await sendToWormhole(stream);

@@ -41,5 +41,5 @@
   router.post('/panel/banner/update', controller.panel.banner.update)
 
   //前台
-  router.get('/view/index', controller.view.index.index)
+  router.get('/', controller.frame.index.index)
 };

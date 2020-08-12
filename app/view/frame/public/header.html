@@ -1,0 +1,17 @@
+<header>
+  <nav>
+    <a href="" class="logo">
+      <img src="{{static}}images/1499082746958.jpg" alt="">
+    </a>
+    <ul id="nav">
+      <li class="header_li_active">
+        <a href="{{page.home}}" title="{{page.name}}">首页</a>
+      </li>
+      {% for item in header %}
+      <li>
+        <a href="{{item.link}}" title="{{item.name}}">{{item.name}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</header>
