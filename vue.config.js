@@ -9,9 +9,9 @@ module.exports = {
   //输出文件目录，当运行 vue-cli-service build 时生成的生产环境构建文件的目录。
   outputDir: "dist",
   // 放置生成的静态资源 (js、css、img、fonts) 的目录。
-  assetsDir: 'public',
+  assetsDir: 'public/control',
   //指定生成的 index.html 的输出路径 (相对于 outputDir)。也可以是一个绝对路径。
-  indexPath: 'index.html',
+  indexPath: 'panel.html',
   // 默认情况下，生成的静态资源在它们的文件名中包含了 hash 以便更好的控制缓存。然而，这也要求 index 的 HTML 是被 Vue CLI 自动生成的。如果你无法使用 Vue CLI 生成的 index HTML，你可以通过将这个选项设为 false 来关闭文件名哈希。
   filenameHashing: true,
   //是否在保存的时候使用 `eslint-loader` 进行检查。 有效的值：`ture` | `false` | `"error"`  当设置为 `"error"` 时，检查出的错误会触发编译失败。
