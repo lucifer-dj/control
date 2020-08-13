@@ -6,13 +6,16 @@ class IndexController extends Controller{
 	}
 	async index(){
 		let { ctx, service, config } = this;
-		let header = await service.frame.index.header();
+		let columns = await service.frame.columns();
 		let site = await service.site.read();
 		let frame = {
 			static: config.staticPath,
-			header,
+			header: columns.arr,
+			columns: columns.obj,
 			page:site.data,
-			index: true
+			index: true,
+			test:new Date().valueOf(),
+			tempArr: new Array(4).fill(1),
 		}
 		await ctx.render('frame/index/index',frame)
 	}
