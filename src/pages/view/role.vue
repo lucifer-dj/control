@@ -35,24 +35,24 @@
         <v-col cols="12" md="8">
           <v-card-text>
             <v-row>
-              <upload type="card" v-model="imgFile" cols="3" :src="caseModel.avatar"></upload>
+              <upload type="card" v-model="imgFile" cols="3" :src="roleModel.avatar"></upload>
               <v-col cols="4" height="100" class="px-10">
-                <v-text-field label="角色名称" v-model="caseModel.name"></v-text-field>
-                <v-select label="角色性别" v-model="caseModel.sex" :items="['男','女']"></v-select>
+                <v-text-field label="角色名称" v-model="roleModel.name"></v-text-field>
+                <v-select label="角色性别" v-model="roleModel.sex" :items="['男','女']"></v-select>
               </v-col>
               <v-col cols="5" height="100" class="px-10">
-                <v-text-field label="角色境界" v-model="caseModel.realm"></v-text-field>
-                <v-select label="势力划分" v-model="caseModel.place" :items="['北凉','江南']"></v-select>
+                <v-text-field label="角色境界" v-model="roleModel.realm"></v-text-field>
+                <v-select label="势力划分" v-model="roleModel.place" :items="['北凉','江南']"></v-select>
               </v-col>
               <v-col cols="12">
-                <v-textarea label="人物描述" solo auto-grow v-model="caseModel.introduce"></v-textarea>
+                <v-textarea label="人物描述" solo auto-grow v-model="roleModel.introduce"></v-textarea>
               </v-col>
             </v-row>
           </v-card-text>
         </v-col>
         <v-card-actions>
           <v-btn width="100" class="mx-3" @click="submit(dialogType)">{{dialog==='add'?'提交':'确认修改'}}</v-btn>
-          <v-btn width="100" class="mx-3" @click="caseModelReset(1);">关闭</v-btn>
+          <v-btn width="100" class="mx-3" @click="roleModelReset(1);">关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -76,7 +76,7 @@ export default {
       { text: "操作", value: "oper", align: "center" },
     ],
     items: [],
-    caseModel: {
+    roleModel: {
       avatar: "",
       name: "",
       introduce: "",
@@ -91,9 +91,9 @@ export default {
     that.roleQueryAll();
   },
   methods: {
-    caseModelReset(type=null) {
+    roleModelReset(type = null) {
       let that = this;
-      that.caseModel = {
+      that.roleModel = {
         avatar: "",
         name: "",
         introduce: "",
@@ -103,7 +103,7 @@ export default {
       };
       that.dialogType = "add";
       that.dialog = false;
-      that.roleQueryAll();
+      if (type)that.roleQueryAll();
     },
     async roleQueryAll() {
       let that = this;
@@ -122,15 +122,15 @@ export default {
       if (that.$u.checkObjectIsEmpty(that.imgFile)) {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       }
-      that.caseModel.start = new Date().valueOf();
-      that.caseModel.avatar = "ceshi";
+      that.roleModel.start = new Date().valueOf();
+      that.roleModel.avatar = "ceshi";
       try {
         let result0 = await api.upload(that.imgFile);
-        that.caseModel.avatar = result0 ? result0 : "";
+        that.roleModel.avatar = result0 ? result0 : "";
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
-        let result = await api.roleAdd(that.caseModel);
+        let result = await api.roleAdd(that.roleModel);
         that.$hint({ msg: "添加成功" });
-        that.caseModelReset();
+        that.roleModelReset();
       } catch (e) {
         console.log(e);
       }
@@ -138,15 +138,15 @@ export default {
     async roleUpdate() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        let res = await api.upload(that.imgFile, that, that.caseModel.avatar);
-        that.caseModel.avatar = res ? res : "";
+        let res = await api.upload(that.imgFile, that, that.roleModel.avatar);
+        that.roleModel.avatar = res ? res : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       try {
-        that.caseModel.update = new Date().valueOf();
-        let result = await api.roleUpdate(that.caseModel, that);
+        that.roleModel.update = new Date().valueOf();
+        let result = await api.roleUpdate(that.roleModel, that);
         that.$hint({ msg: "修改成功" });
-        that.caseModelReset();
+        that.roleModelReset();
       } catch (e) {
         console.log(e);
       }
@@ -162,7 +162,7 @@ export default {
     },
     async roleEdit(id) {
       let that = this;
-      that.caseModel = await that.roleRead(id);
+      that.roleModel = await that.roleRead(id);
       that.dialogType = "edit";
       that.dialog = true;
     },

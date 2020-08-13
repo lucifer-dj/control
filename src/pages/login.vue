@@ -73,7 +73,7 @@ export default {
       let that = this;
       that.$v.userModel.$touch();
       if (that.$v.userModel.$invalid) {
-        return console.log("bunengweik");
+        return;
       }
       that.userModel.pass = this.$md5(that.userModel.password);
       delete that.userModel.password;
@@ -81,8 +81,10 @@ export default {
         that.$loading({ msg: "登录" });
         let result = await api.login(that.userModel, that);
         localStorage.setItem("token", result.token);
-        that.$hint({ msg: result.msg, type: "success" });
-        that.$router.replace("/");
+        that.$hint({ msg: result.msg });
+        setTimeout(() => {
+          that.$router.replace("/");
+        }, 500);
       } catch (e) {
         console.log(e);
         that.userModel.password = "";

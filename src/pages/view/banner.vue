@@ -35,8 +35,8 @@
                     label="所属分类"
                     :items="columns"
                     item-text="name"
-                    item-value="id"
-                    v-model="bannerModel.cid"
+                    item-value="en"
+                    v-model="bannerModel.origin"
                   ></v-select>
                 </v-col>
                 <v-col cols="6">
@@ -69,7 +69,7 @@ export default {
   data: () => ({
     headers: [
       { text: "ID", value: "id" },
-      { text: "所属栏目", value: "column" },
+      { text: "所属栏目", value: "origin" },
       { text: "排序", value: "order" },
       { text: "发布时间", value: "date" },
       { text: "操作", value: "oper" },
@@ -82,23 +82,11 @@ export default {
       pic: "",
       order: "",
       url: "",
-      cid: "",
+      origin: "",
     },
-    columns: [],
     imgFile: {},
   }),
   methods: {
-    async queryColumns() {
-      let that = this;
-      try {
-        let result = await api.queryColumns();
-        // console.log(result.data);
-        that.columns = result.data;
-      } catch (e) {
-        console.log(e);
-        return [];
-      }
-    },
     bannerModelReset(type = null) {
       let that = this;
       that.bannerModel = {
@@ -171,6 +159,11 @@ export default {
       try {
         let result = await api.bannerQueryAll();
         that.items = result.code === 200 ? result.data : [];
+        if (that.items.length > 0) {
+          that.items.forEach((item, idx) => {
+            item.origin = that.$u.xz[item.origin].name;
+          });
+        }
       } catch (e) {
         console.log(e);
       }
@@ -202,11 +195,20 @@ export default {
   },
   async mounted() {
     let that = this;
-    that.queryColumns();
     that.bannerQueryAll();
   },
   components: {
     upload: () => import("@components/upload.vue"),
+  },
+  computed: {
+    columns() {
+      let that = this;
+      let arr = [];
+      for (let item in that.$u.xz) {
+        arr.push(that.$u.xz[item]);
+      }
+      return arr;
+    },
   },
 };
 </script>

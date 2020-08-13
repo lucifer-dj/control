@@ -12,6 +12,7 @@
           :append-icon="item.child?'iconfont-expand_more':''"
           no-action
           @click="replace(item)"
+          class="px-6"
         >
           <template v-slot:activator>
             <v-list-item-icon>
@@ -126,7 +127,11 @@ export default {
       let that = this;
       that.$toast({ msg: "确认要退出吗？" });
       that.bus.$on("toastConfirm", function () {
-        console.log("正在退出请稍后. . .");
+        localStorage.removeItem("token");
+        that.$hint({ msg: "已完成退出" });
+        setTimeout(() => {
+          that.$router.replace("/login");
+        }, 500);
       });
     },
   },

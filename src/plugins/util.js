@@ -24,3 +24,21 @@ export function format(fmt) {
       fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
   return fmt;
 }
+export const xz = {
+  role: {
+    name: '角色管理',
+    en: "role"
+  },
+  faction: {
+    name: '势力介绍',
+    en: "faction"
+  },
+  realm: {
+    name: '境界划分',
+    en: "realm"
+  },
+  year: {
+    name: '时间线',
+    en: "year"
+  }
+}
