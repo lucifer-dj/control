@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card flat>
-      <v-card-title>页面管理</v-card-title>
+      <v-card-title>其他设置</v-card-title>
       <v-card-text>
         <v-row class="flex-column">
           <v-col cols="4">
@@ -29,7 +29,7 @@
         </v-row>
       </v-card-text>
       <v-card-actions class="justify-center">
-        <v-btn width="120" @click="updateSiteConfig">提交</v-btn>
+        <v-btn width="120" @click="siteUpdate">提交</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -38,20 +38,20 @@
 import * as api from "@api";
 // 站点配置
 export default {
-  name: "siteConfig",
+  name: "config",
   data: () => ({
     siteModel: {},
     imgFile: {},
   }),
   async mounted() {
     let that = this;
-    that.siteModel = await that.readSiteConfig();
+    that.siteModel = await that.siteGet();
   },
   methods: {
-    async readSiteConfig() {
+    async siteGet() {
       let that = this;
       try {
-        let result = await api.readSiteConfig();
+        let result = await api.siteGet();
         if (result.code === 200 && result.data) return result.data;
         return {
           name: "",
@@ -67,7 +67,7 @@ export default {
         console.log(e);
       }
     },
-    async updateSiteConfig() {
+    async siteUpdate() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
         if (that.siteModel.logo !== "") {
@@ -78,7 +78,7 @@ export default {
         that.siteModel.logo = result1.code === 200 ? result1.data : "";
       }
       try {
-        let result = await api.updateSiteConfig(that.siteModel);
+        let result = await api.siteUpdate(that.siteModel);
         that.$hint({ msg: "修改成功" });
       } catch (e) {
         console.log(e);

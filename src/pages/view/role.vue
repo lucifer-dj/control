@@ -1,9 +1,6 @@
 <template>
   <v-container fiuld class="v-container">
-    <v-subheader>
-      栏目管理
-      <v-icon class="mx-1" small>iconfont-xiangyou</v-icon>角色管理
-    </v-subheader>
+    <v-subheader>角色管理</v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>
         <v-btn text @click="dialog=true;">+添加新角色</v-btn>
@@ -25,7 +22,7 @@
           <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteCase(item.id)">
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
-          <v-btn fab x-small depressed title="修改" class="mx-1" @click="editCase(item.id)">
+          <v-btn fab x-small depressed title="修改" class="mx-1" @click="roleEdit(item.id)">
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
           </v-btn>
         </template>
@@ -65,7 +62,7 @@
 <script>
 import * as api from "@api";
 export default {
-  name: "tpCase",
+  name: "role",
   data: () => ({
     dialog: false,
     dialogType: "add",
@@ -91,7 +88,7 @@ export default {
   }),
   mounted() {
     let that = this;
-    that.queryCases();
+    that.roleQueryAll();
   },
   methods: {
     caseModelReset(type=null) {
@@ -106,12 +103,12 @@ export default {
       };
       that.dialogType = "add";
       that.dialog = false;
-      if(!type)that.queryCases();
+      that.roleQueryAll();
     },
-    async queryCases() {
+    async roleQueryAll() {
       let that = this;
       try {
-        let result = await api.queryCases({ num: 0 });
+        let result = await api.roleQueryAll({ num: 0 });
         that.items = result.code === 200 ? result.data : [];
         console.log(result);
       } catch (e) {
@@ -120,7 +117,7 @@ export default {
     },
     async submit(type) {
       let that = this;
-      if (type === "edit") return that.updateCase();
+      if (type === "edit") return that.roleUpdate();
       //假设验证通过了
       if (that.$u.checkObjectIsEmpty(that.imgFile)) {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
@@ -131,14 +128,14 @@ export default {
         let result0 = await api.upload(that.imgFile);
         that.caseModel.avatar = result0 ? result0 : "";
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
-        let result = await api.addCase(that.caseModel);
+        let result = await api.roleAdd(that.caseModel);
         that.$hint({ msg: "添加成功" });
         that.caseModelReset();
       } catch (e) {
         console.log(e);
       }
     },
-    async updateCase() {
+    async roleUpdate() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
         let res = await api.upload(that.imgFile, that, that.caseModel.avatar);
@@ -147,40 +144,40 @@ export default {
       }
       try {
         that.caseModel.update = new Date().valueOf();
-        let result = await api.updateCase(that.caseModel, that);
+        let result = await api.roleUpdate(that.caseModel, that);
         that.$hint({ msg: "修改成功" });
         that.caseModelReset();
       } catch (e) {
         console.log(e);
       }
     },
-    async readCase(id) {
+    async roleRead(id) {
       let that = this;
       try {
-        let result = await api.readCase({ id }, that);
+        let result = await api.roleRead({ id }, that);
         return result.data;
       } catch (e) {
         console.log(e);
       }
     },
-    async editCase(id) {
+    async roleEdit(id) {
       let that = this;
-      that.caseModel = await that.readCase(id);
+      that.caseModel = await that.roleRead(id);
       that.dialogType = "edit";
       that.dialog = true;
     },
-    async deleteCase(id) {
+    async roleDelete(id) {
       let that = this;
       that.$toast({ msg: "确认要删除这位角色吗？" });
       that.bus.$on("toastConfirm", async function () {
-        let result = await that.readCase(id);
+        let result = await that.roleRead(id);
         if (result.avatar) {
           let result0 = await api.deleteFile({ path: result.avatar });
         }
         try {
-          let result1 = await api.deleteCase({ id }, that);
+          let result1 = await api.roleDelete({ id }, that);
           that.$hint({ msg: "成功删除一条数据" });
-          that.queryCases();
+          that.roleQueryAll();
         } catch (e) {
           console.log(e);
         }

@@ -1,9 +1,6 @@
 <template>
   <v-container>
-    <v-subheader>
-      页面设置
-      <v-icon class="iconfont iconxiangyou mx-1" small></v-icon>首页轮播
-    </v-subheader>
+    <v-subheader>首页轮播</v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>
         <v-btn text @click="dialog=true;">+添加</v-btn>
@@ -11,7 +8,7 @@
       </v-toolbar>
       <v-data-table align="center" :headers="headers" disable-sort :items="items">
         <template v-slot:item.oper="{item}">
-          <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteBanner(item.id)">
+          <v-btn fab x-small depressed title="删除" class="mx-1" @click="bannerDelete(item.id)">
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
           <v-btn fab x-small depressed title="修改" class="mx-1" @click="editBanner(item.id)">
@@ -114,11 +111,11 @@ export default {
       that.dialogType = "add";
       that.imgFile = {};
       that.dialog = false;
-      if (!type) that.queryBanners();
+      if (!type) that.bannerQueryAll();
     },
     async submit(type) {
       let that = this;
-      if (type !== "add") return that.updateBanner();
+      if (type !== "add") return that.bannerUpdate();
       if (that.$u.checkObjectIsEmpty(that.imgFile)) {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       }
@@ -128,7 +125,7 @@ export default {
       that.bannerModel.pic = res.data;
       that.bannerModel.date = new Date().valueOf();
       try {
-        let result = await api.addBanner(that.bannerModel, that);
+        let result = await api.bannerAdd(that.bannerModel, that);
         console.log(result);
         that.$hint({ msg: "添加成功" });
         that.bannerModelReset();
@@ -138,22 +135,22 @@ export default {
     },
     async editBanner(id) {
       let that = this;
-      that.bannerModel = await that.readBanner(id);
+      that.bannerModel = await that.bannerRead(id);
       if (!that.bannerModel) return that.bannerModelReset(1);
       that.dialogType = "edit";
       that.dialog = true;
     },
-    async readBanner(id) {
+    async bannerRead(id) {
       let that = this;
       try {
-        let result = await api.readBanner({ id });
+        let result = await api.bannerRead({ id });
         return result.data;
       } catch (e) {
         console.log(e);
         return false;
       }
     },
-    async updateBanner() {
+    async bannerUpdate() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
         let result = await api.upload(that.imgFile, that, that.bannerModel.pic);
@@ -162,23 +159,23 @@ export default {
       }
       that.bannerModel.date = new Date().valueOf();
       try {
-        let result0 = await api.updateBanner(that.bannerModel);
+        let result0 = await api.bannerUpdate(that.bannerModel);
         that.$hint({ msg: "更新成功" });
         that.bannerModelReset();
       } catch (e) {
         console.log(e);
       }
     },
-    async queryBanners() {
+    async bannerQueryAll() {
       let that = this;
       try {
-        let result = await api.queryBanners();
+        let result = await api.bannerQueryAll();
         that.items = result.code === 200 ? result.data : [];
       } catch (e) {
         console.log(e);
       }
     },
-    async deleteBanner(id) {
+    async bannerDelete(id) {
       let that = this;
       that.$toast({ msg: "确认删除吗？" });
       that.bus.$on("toastConfirm", async function () {
@@ -190,10 +187,10 @@ export default {
           }
         }
         try {
-          let result = await api.deleteBanner({ id });
+          let result = await api.bannerDelete({ id });
           if (result.code === 200) {
             return that.$hint({ msg: "删除成功" });
-            that.queryBanners();
+            that.bannerQueryAll();
           }
           that.$hint({ msg: "删除失败" });
         } catch (e) {
@@ -206,7 +203,7 @@ export default {
   async mounted() {
     let that = this;
     that.queryColumns();
-    that.queryBanners();
+    that.bannerQueryAll();
   },
   components: {
     upload: () => import("@components/upload.vue"),

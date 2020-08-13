@@ -25,7 +25,7 @@
 <script>
 import * as api from "@api";
 export default {
-  name: "tpPage",
+  name: "about",
   data: () => ({
     pageType: "add",
     pageModel: {
