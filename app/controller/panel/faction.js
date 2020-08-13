@@ -1,9 +1,10 @@
+	// 势力介绍
 	const Controller = require('egg').Controller;
 
 class ProductController extends Controller {
 	constructor(ctx){
 		super(ctx);
-		this.table = 'product';
+		this.table = 'faction';
 	}
 	async queryAll() {
 		const { ctx, service, table } = this;

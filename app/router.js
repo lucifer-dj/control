@@ -3,8 +3,11 @@
 /**
  * @param {Egg.Application} app - egg application
  */
- module.exports = app => {
-  const { router, controller } = app;
+module.exports = app => {
+  const {
+    router,
+    controller
+  } = app;
   //后台
   router.post('/t', controller.panel.home.postTest)
   router.get('/t', controller.panel.home.getTest)
@@ -19,27 +22,38 @@
   router.put('/file/upload/oss', controller.file.uploadOss)
   router.put('/file/upload/serve', controller.file.uploadServe)
   router.post('/file/delete', controller.file.delete)
-  router.post('/panel/case', controller.panel.case.queryAll)
-  router.post('/panel/case/add', controller.panel.case.add)
-  router.post('/panel/case/delete', controller.panel.case.delete)
-  router.post('/panel/case/read', controller.panel.case.read)
-  router.post('/panel/case/update', controller.panel.case.update)
+  router.post('/panel/role', controller.panel.role.queryAll)
+  router.post('/panel/role/add', controller.panel.role.add)
+  router.post('/panel/role/delete', controller.panel.role.delete)
+  router.post('/panel/role/read', controller.panel.role.read)
+  router.post('/panel/role/update', controller.panel.role.update)
   router.post('/panel/page/read', controller.panel.page.read)
   router.post('/panel/page/add', controller.panel.page.add)
   router.post('/panel/page/update', controller.panel.page.update)
-  router.post('/panel/product', controller.panel.product.queryAll)
-  router.post('/panel/product/add', controller.panel.product.add)
-  router.post('/panel/product/delete', controller.panel.product.delete)
-  router.post('/panel/product/read', controller.panel.product.read)
-  router.post('/panel/product/update', controller.panel.product.update)
-  router.post('/config/site/read', controller.panel.site.read)
-  router.post('/config/site/update', controller.panel.site.update)
+  router.post('/panel/realm', controller.panel.realm.queryAll)
+  router.post('/panel/realm/add', controller.panel.realm.add)
+  router.post('/panel/realm/delete', controller.panel.realm.delete)
+  router.post('/panel/realm/read', controller.panel.realm.read)
+  router.post('/panel/realm/update', controller.panel.realm.update)
+  router.post('/site/read', controller.panel.site.read)
+  router.post('/site/update', controller.panel.site.update)
   router.post('/panel/banner', controller.panel.banner.queryAll)
   router.post('/panel/banner/add', controller.panel.banner.add)
   router.post('/panel/banner/delete', controller.panel.banner.delete)
   router.post('/panel/banner/read', controller.panel.banner.read)
   router.post('/panel/banner/update', controller.panel.banner.update)
+  router.post('/panel/faction', controller.panel.faction.queryAll)
+  router.post('/panel/faction/add', controller.panel.faction.add)
+  router.post('/panel/faction/delete', controller.panel.faction.delete)
+  router.post('/panel/faction/read', controller.panel.faction.read)
+  router.post('/panel/faction/update', controller.panel.faction.update)
+  router.post('/panel/year', controller.panel.year.queryAll)
+  router.post('/panel/year/add', controller.panel.year.add)
+  router.post('/panel/year/delete', controller.panel.year.delete)
+  router.post('/panel/year/read', controller.panel.year.read)
+  router.post('/panel/year/update', controller.panel.year.update)
 
   //前台
   router.get('/', controller.frame.index.index)
 };
+
