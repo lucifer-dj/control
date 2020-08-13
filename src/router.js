@@ -32,24 +32,24 @@ export default new Router({
           component: () => import('./pages/view/column.vue')
         },
         {
-          name: 'tpCase',
-          path: '/tp/case',
-          component: () => import('./pages/view/tp/case.vue')
+          name: 'role',
+          path: '/role',
+          component: () => import('./pages/view/role.vue')
         },
         {
-          name: 'tpProduct',
-          path: '/tp/product',
-          component: () => import('./pages/view/tp/product.vue')
+          name: 'faction',
+          path: '/faction',
+          component: () => import('./pages/view/faction.vue')
         },
         {
-          name: 'tpPage',
-          path: '/tp/page',
-          component: () => import('./pages/view/tp/page.vue')
+          name: 'about',
+          path: '/about',
+          component: () => import('./pages/view/about.vue')
         },
         {
-          name: 'siteConfig',
-          path: '/siteConfig',
-          component: () => import('./pages/view/siteConfig.vue')
+          name: 'config',
+          path: '/config',
+          component: () => import('./pages/view/config.vue')
         },
         {
           name: 'banner',
@@ -57,14 +57,18 @@ export default new Router({
           component: () => import('./pages/view/banner.vue')
         },
         {
-          name: 'other',
-          path: '/other',
-          component: () => import('./pages/view/other.vue')
-        },
-        {
           name: 'introduce',
           path: '/t',
           component: () => import('./pages/view/introduce.vue')
+        }, {
+          name: 'year',
+          path: '/year',
+          component: () => import('./pages/view/year.vue')
+        },
+        {
+          name: 'realm',
+          path: '/realm',
+          component: () => import('./pages/view/realm.vue')
         },
       ]
     },

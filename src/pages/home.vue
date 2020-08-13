@@ -3,13 +3,13 @@
     <v-navigation-drawer app :mini-variant.sync="menuState" v-model="drawer">
       <v-sheet height="60" width="100%">
         <!-- <v-img></v-img> -->
-        <v-subheader class="justify-center text-uppercase h6" width="100%">雪中</v-subheader>
+        <v-subheader class="justify-center text-uppercase" width="100%">雪中</v-subheader>
       </v-sheet>
       <v-list>
         <v-list-group
           v-for="(item,idx) in menu"
           :key="idx"
-          append-icon="iconfont-expand_more"
+          :append-icon="item.child?'iconfont-expand_more':''"
           no-action
           @click="replace(item)"
         >
@@ -75,30 +75,7 @@ export default {
   name: "home",
   data: () => ({
     temp_temp: false,
-    menu: [
-      {
-        name: "项目管理",
-        icon: "iconfont iconfont-Nav07-reports",
-        path: "/pro",
-      },
-      {
-        name: "页面设置",
-        path: "/siteConfig",
-        icon: "iconfont iconfont-Nav03-base",
-        child: [
-          {
-            name: "首页轮播",
-            path: "/banner",
-            icon: "iconfont-hebing",
-          },
-        ],
-      },
-      {
-        name: "其他设置",
-        path: "/other",
-        icon: "iconfont iconfont-basepermissionauthShop",
-      },
-    ],
+    menu: cfg.menu,
     menuState: false,
     drawer: true,
     sideType: "",
@@ -152,33 +129,11 @@ export default {
         console.log("正在退出请稍后. . .");
       });
     },
-    async getMenu() {
-      let that = this;
-      try {
-        let result = await api.queryColumns();
-        let arr = [];
-        // console.log(result);
-        result.data.forEach((item) => {
-          let obj = cfg.tp[item.template];
-          obj.name = item.name;
-          if (item.template == "tpPage") obj.id = item.id;
-          arr.push(obj);
-        });
-        that.$nextTick(() => {
-          that.menu[0].child = arr;
-        });
-        that.$hint({ msg: "自动登录成功" });
-        that.temp_temp = !that.temp_temp;
-      } catch (e) {
-        console.log(e);
-      }
-    },
   },
   mounted() {
     let that = this;
     //人物 势力 关于雪中
     //主页 境界划分
-    that.getMenu();
     let drawer_content = this.$(".v-navigation-drawer__content");
     drawer_content.classList.add("drawer"); //chrome
     drawer_content.style.scrollbarWidth = "none"; //firefox

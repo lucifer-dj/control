@@ -1,9 +1,6 @@
 <template>
   <v-container fiuld>
-    <v-subheader>
-      栏目管理
-      <v-icon class="mx-1" small>iconfont-xiangyou</v-icon>势力划分
-    </v-subheader>
+    <v-subheader>势力划分</v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>
         <v-btn text @click="dialog=true;">+添加新势力</v-btn>
@@ -13,10 +10,10 @@
 
       <v-data-table disable-sort :items="items" :headers="headers">
         <template v-slot:item.oper="{item}">
-          <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteProduct(item.id)">
+          <v-btn fab x-small depressed title="删除" class="mx-1" @click="factionDelete(item.id)">
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
-          <v-btn fab x-small depressed title="修改" class="mx-1" @click="editProduct(item.id)">
+          <v-btn fab x-small depressed title="修改" class="mx-1" @click="factionEdit(item.id)">
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
           </v-btn>
         </template>
@@ -56,7 +53,7 @@
 <script>
 import * as api from "@api";
 export default {
-  name: "tpProduct",
+  name: "faction",
   data: () => ({
     headers: [
       { text: "ID", value: "id", align: "center" },
@@ -81,7 +78,7 @@ export default {
   }),
   mounted() {
     let that = this;
-    that.queryProducts();
+    that.factionQueryAll();
   },
   methods: {
     productModelReset() {
@@ -95,12 +92,12 @@ export default {
       };
       that.dialog = false;
       that.dialogType = "add";
-      that.queryProducts();
+      that.factionQueryAll();
     },
-    async queryProducts() {
+    async factionQueryAll() {
       let that = this;
       try {
-        let result = await api.queryProducts({ num: 0 });
+        let result = await api.factionQueryAll({ num: 0 });
         that.items = result.code === 200 ? result.data : [];
       } catch (e) {
         console.log(e);
@@ -108,7 +105,7 @@ export default {
     },
     async submit(type) {
       let that = this;
-      if (that.dialogType !== "add") return that.updateProduct();
+      if (that.dialogType !== "add") return that.factionUpdate();
       console.log(that.imgFile);
       if (that.$u.checkObjectIsEmpty(that.imgFile))
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
@@ -117,14 +114,14 @@ export default {
         let result0 = await api.upload(that.imgFile);
         that.productModel.pic = result0 ? result0 : "";
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
-        let result = await api.addProduct(that.productModel);
+        let result = await api.factionAdd(that.productModel);
         that.$hint({ msg: result.msg });
         that.productModelReset();
       } catch (e) {
         console.log(e);
       }
     },
-    async updateProduct() {
+    async factionUpdate() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
         let res = await api.upload(that.imgFile, that, that.productModel.pic);
@@ -133,44 +130,44 @@ export default {
       }
       that.productModel.update = new Date().valueOf();
       try {
-        let result = await api.updateProduct(that.productModel);
+        let result = await api.factionUpdate(that.productModel);
         that.productModelReset();
         that.$hint({ msg: "更新成功" });
       } catch (e) {
         console.log(e);
       }
     },
-    async readProduct(id) {
+    async factionRead(id) {
       let that = this;
       try {
-        let result = await api.readProduct({ id });
+        let result = await api.factionRead({ id });
         return result.data;
       } catch (e) {
         console.log(e);
         return false;
       }
     },
-    async editProduct(id) {
+    async factionEdit(id) {
       let that = this;
-      let model = await that.readProduct(id);
+      let model = await that.factionRead(id);
       if (model) {
         that.productModel = model;
         that.dialogType = "edit";
         that.dialog = true;
       }
     },
-    async deleteProduct(id) {
+    async factionDelete(id) {
       let that = this;
       that.$toast({ msg: "确定要删除这方势力吗？" });
       that.bus.$on("toastConfirm", async function () {
-        let result = await that.readProduct(id);
+        let result = await that.factionRead(id);
         if (result.pic) {
           let result0 = await api.deleteFile({ path: result.pic });
         }
         try {
-          let result1 = await api.deleteProduct({ id });
+          let result1 = await api.factionDelete({ id });
           that.$hint({ msg: "删除成功" });
-          that.queryProducts();
+          that.factionQueryAll();
         } catch (e) {
           console.log(e);
         }

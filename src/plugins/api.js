@@ -39,24 +39,44 @@ export function deleteCol(data, obj = {}) {
   return fetch('/panel/column/delete', data, obj)
 }
 //查询所有角色
-export function queryCases(data, obj = {}) {
-  return fetch('/panel/case', data, obj)
+export function roleQueryAll(data = {}, obj = {}) {
+  return fetch('/panel/role', data, obj)
 }
 //添加角色
-export function addCase(data, obj = {}) {
-  return fetch('/panel/case/add', data, obj)
+export function roleAdd(data, obj = {}) {
+  return fetch('/panel/role/add', data, obj)
 }
-//查询一位绝色
-export function readCase(data, obj = {}) {
-  return fetch('/panel/case/read', data, obj)
+//查询一个角色
+export function roleRead(data, obj = {}) {
+  return fetch('/panel/role/read', data, obj)
 }
-//修改一位角色
-export function updateCase(data, obj = {}) {
-  return fetch('/panel/case/update', data, obj)
+//修改一个角色
+export function roleUpdate(data, obj = {}) {
+  return fetch('/panel/role/update', data, obj)
 }
-//删除一位角色
-export function deleteCase(date, obj = {}) {
-  return fetch('/panel/case/delete', date, obj)
+//删除一个角色
+export function roleDelete(date, obj = {}) {
+  return fetch('/panel/role/delete', date, obj)
+}
+//查询所有势力
+export function factionQueryAll(data = {}, obj = {}) {
+  return fetch('/panel/faction', data, obj)
+}
+//添加势力
+export function factionAdd(data, obj = {}) {
+  return fetch('/panel/faction/add', data, obj)
+}
+//查询一个势力
+export function factionRead(data, obj = {}) {
+  return fetch('/panel/faction/read', data, obj)
+}
+//修改一个势力
+export function factionUpdate(data, obj = {}) {
+  return fetch('/panel/faction/update', data, obj)
+}
+//删除一个势力
+export function factionDelete(date, obj = {}) {
+  return fetch('/panel/faction/delete', date, obj)
 }
 //读取一个文章
 export function readPage(data, obj = {}) {
@@ -70,52 +90,72 @@ export function addPage(data, obj = {}) {
 export function updatePage(data, obj = {}) {
   return fetch('/panel/page/update', data, obj)
 }
-//查询所有Product
-export function queryProducts(data, obj = {}) {
-  return fetch('/panel/product', data, obj)
+//查询所有时间线
+export function yearQueryAll(data = {}, obj = {}) {
+  return fetch('/panel/year', data, obj)
 }
-//添加Product
-export function addProduct(data, obj = {}) {
-  return fetch('/panel/product/add', data, obj)
+//添加时间线
+export function yearAdd(data, obj = {}) {
+  return fetch('/panel/year/add', data, obj)
 }
-//查询一个Product
-export function readProduct(data, obj = {}) {
-  return fetch('/panel/product/read', data, obj)
+//查询一个时间线
+export function yearRead(data, obj = {}) {
+  return fetch('/panel/year/read', data, obj)
 }
-//修改一个Product
-export function updateProduct(data, obj = {}) {
-  return fetch('/panel/product/update', data, obj)
+//修改一个时间线
+export function yearUpdate(data, obj = {}) {
+  return fetch('/panel/year/update', data, obj)
 }
-//删除一个Product
-export function deleteProduct(date, obj = {}) {
-  return fetch('/panel/product/delete', date, obj)
+//删除一个时间线
+export function yearDelete(date, obj = {}) {
+  return fetch('/panel/year/delete', date, obj)
 }
-//查询所有banner
-export function queryBanners(data = {}, obj = {}) {
+//查询所有境界
+export function realmQueryAll(data = {}, obj = {}) {
+  return fetch('/panel/realm', data, obj)
+}
+//添加境界
+export function realmAdd(data, obj = {}) {
+  return fetch('/panel/realm/add', data, obj)
+}
+//查询一个境界
+export function realmRead(data, obj = {}) {
+  return fetch('/panel/realm/read', data, obj)
+}
+//修改一个境界
+export function realmUpdate(data, obj = {}) {
+  return fetch('/panel/realm/update', data, obj)
+}
+//删除一个境界
+export function realmDelete(date, obj = {}) {
+  return fetch('/panel/realm/delete', date, obj)
+}
+//查询所有轮播
+export function bannerQueryAll(data = {}, obj = {}) {
   return fetch('/panel/banner', data, obj)
 }
-//添加banner
-export function addBanner(data, obj = {}) {
+//添加轮播
+export function bannerAdd(data, obj = {}) {
   return fetch('/panel/banner/add', data, obj)
 }
-//查询一个banner
-export function readBanner(data, obj = {}) {
+//查询一个轮播
+export function bannerRead(data, obj = {}) {
   return fetch('/panel/banner/read', data, obj)
 }
-//修改一个banner
-export function updateBanner(data, obj = {}) {
+//修改一个轮播
+export function bannerUpdate(data, obj = {}) {
   return fetch('/panel/banner/update', data, obj)
 }
-//删除一个banner
-export function deleteBanner(date, obj = {}) {
+//删除一个轮播
+export function bannerDelete(date, obj = {}) {
   return fetch('/panel/banner/delete', date, obj)
 }
 //读取站点设置
-export function readSiteConfig(data = {}, obj = {}) {
-  return fetch('/config/site/read', data, obj)
+export function siteGet(data = {}, obj = {}) {
+  return fetch('/site/read', data, obj)
 }
-export function updateSiteConfig(data, obj = {}) {
-  return fetch('/config/site/update', data, obj)
+export function siteUpdate(data, obj = {}) {
+  return fetch('/site/update', data, obj)
 }
 
 //上传文件
