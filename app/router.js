@@ -4,10 +4,7 @@
  * @param {Egg.Application} app - egg application
  */
 module.exports = app => {
-  const {
-    router,
-    controller
-  } = app;
+  const { router, controller } = app;
   //后台
   router.post('/t', controller.panel.home.postTest)
   router.get('/t', controller.panel.home.getTest)
@@ -18,10 +15,12 @@ module.exports = app => {
   router.post('/panel/column/add', controller.panel.column.add)
   router.post('/panel/column/read', controller.panel.column.read)
   router.post('/panel/column/update', controller.panel.column.update)
+  // router.post('/panel/column/read', controller.panel.file.readColumn)
+  // router.post('/panel/column/update', controller.panel.file.updateColumn)
   router.post('/panel/column/delete', controller.panel.column.delete)
-  router.put('/file/upload/oss', controller.file.uploadOss)
-  router.put('/file/upload/serve', controller.file.uploadServe)
-  router.post('/file/delete', controller.file.delete)
+  router.put('/file/upload/oss', controller.upload.uploadOss)
+  router.put('/file/upload/serve', controller.upload.uploadServe)
+  router.post('/file/delete', controller.upload.delete)
   router.post('/panel/role', controller.panel.role.queryAll)
   router.post('/panel/role/add', controller.panel.role.add)
   router.post('/panel/role/delete', controller.panel.role.delete)
@@ -35,8 +34,10 @@ module.exports = app => {
   router.post('/panel/realm/delete', controller.panel.realm.delete)
   router.post('/panel/realm/read', controller.panel.realm.read)
   router.post('/panel/realm/update', controller.panel.realm.update)
-  router.post('/site/read', controller.panel.site.read)
-  router.post('/site/update', controller.panel.site.update)
+  router.post('/panel/site/read', controller.panel.file.readSite)
+  router.post('/panel/site/update', controller.panel.file.updateSite)
+  router.post('/panel/about/read', controller.panel.file.readAbout)
+  router.post('/panel/about/update', controller.panel.file.updateAbout)
   router.post('/panel/banner', controller.panel.banner.queryAll)
   router.post('/panel/banner/add', controller.panel.banner.add)
   router.post('/panel/banner/delete', controller.panel.banner.delete)
@@ -55,5 +56,5 @@ module.exports = app => {
 
   //前台
   router.get('/', controller.frame.index.index)
+  router.get('/:column', controller.frame.column.index)
 };
-

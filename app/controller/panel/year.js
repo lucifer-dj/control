@@ -48,4 +48,4 @@ class YearController extends Controller {
 		}
 }
 
-	module.exports = YearController;
+module.exports = YearController;

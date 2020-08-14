@@ -68,8 +68,9 @@ module.exports = appInfo => {
   config.multipart = {
     mode: 'stream',
   }
-  config.staticPath = 'public/frame'
-  config.site = appInfo.env==='local'?"http://127.0.0.1:7001":"http://119.45.57.238"
+  config.publicPath = 'public/frame';
+  config.staticPath = path.resolve(__dirname, "../app/static/");
+  config.site = appInfo.env === 'local' ? "http://127.0.0.1:7001" : "http://119.45.57.238"
 
   return {
     ...config,

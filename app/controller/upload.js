@@ -1,14 +1,4 @@
 'use strict';
-let COS = require('cos-nodejs-sdk-v5');
-let path = require('path')
-let fs = require('fs')
-let awaitWriteStream = require('await-stream-ready').write
-let sendToWormhole = require('stream-wormhole')
-let md5 = require('md5')
-let cos = new COS({
-	SecretId: 'AKIDe38YhaYVYJnz5vaopZ3GCzWprc6qrahZ',
-	SecretKey: 'g5E6h02v8rOdbIisv0pOlrjhPq0cyINl'
-})
 const Controller = require('egg').Controller;
 
 class UploadController extends Controller {
@@ -32,7 +22,7 @@ class UploadController extends Controller {
   let { ctx, service} = this;
   let req = ctx.request.body;
   if(!req.path) return ctx.err('路径错误')
-  let result = await service.file.delete(req);
+    let result = await service.file.delete(req);
   if(result.state) return ctx.success(result.msg)
    ctx.err(result.msg)
 }
