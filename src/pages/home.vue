@@ -12,7 +12,7 @@
           :append-icon="item.child?'iconfont-expand_more':''"
           no-action
           @click="replace(item)"
-          class="px-6"
+          :class="menuState?'':'px-6'"
         >
           <template v-slot:activator>
             <v-list-item-icon>

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <upload type="line" v-model="file"></upload>
-    <editor v-model="data"></editor>
+    <upload type="auto" v-model="file" accept="image"></upload>
     <v-btn @click="test">测试</v-btn>
+    
   </div>
 </template>
 <script>

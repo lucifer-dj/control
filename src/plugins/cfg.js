@@ -21,6 +21,11 @@ export default {
 			path: "/year",
 		},
 		{
+			name: "关于雪中",
+			icon: "iconfont iconfont-dingshi",
+			path: "/about",
+		},
+		{
 			name: "轮播设置",
 			path: "/banner",
 			icon: "iconfont iconfont-hebing",

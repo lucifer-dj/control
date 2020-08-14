@@ -150,10 +150,19 @@ export function bannerUpdate(data, obj = {}) {
 export function bannerDelete(date, obj = {}) {
   return fetch('/panel/banner/delete', date, obj)
 }
+//读取关于设置
+export function aboutGet(data = {}, obj = {}) {
+  return fetch('/about/read', data, obj)
+}
+//修改关于设置
+export function aboutUpdate(data, obj = {}) {
+  return fetch('/about/update', data, obj)
+}
 //读取站点设置
 export function siteGet(data = {}, obj = {}) {
   return fetch('/site/read', data, obj)
 }
+//修改站点设置
 export function siteUpdate(data, obj = {}) {
   return fetch('/site/update', data, obj)
 }

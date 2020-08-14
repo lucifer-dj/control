@@ -27,9 +27,14 @@ export default new Router({
           component: () => import('./pages/view/index.vue')
         },
         {
-          name: 'project',
-          path: '/pro',
-          component: () => import('./pages/view/column.vue')
+          name: 'column',
+          path: '/column',
+          component: () => import('./pages/other/column.vue')
+        },
+        {
+          name: 'page',
+          path: '/page',
+          component: () => import('./pages/other/page.vue')
         },
         {
           name: 'role',

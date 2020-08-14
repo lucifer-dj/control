@@ -22,16 +22,16 @@
 
     <v-dialog v-model="dialog" fullscreen persistent hide-overlay>
       <v-card class="d-flex align-center flex-column" v-if="dialog">
-        <v-card-title class="justify-center text-h5">添加新时间线</v-card-title>
+        <v-card-title class="justify-center text-h5">{{dialogType==="add"?'添加时间线':"更新时间线"}}</v-card-title>
         <v-col cols="12" md="8">
           <v-card-text>
             <v-row>
               <v-col cols="6" height="100">
-                <v-text-field label="时间线名称" v-model="yearModel.name"></v-text-field>
-                <v-text-field label="开始" v-model="yearModel.years"></v-text-field>
+                <v-text-field label="时间线名称" v-model="yearModel.title"></v-text-field>
+                <v-text-field label="结束" v-model="yearModel.yearend"></v-text-field>
               </v-col>
               <v-col cols="6" height="100">
-                <v-text-field label="结束" v-model="yearModel.lead"></v-text-field>
+                <v-text-field label="开始" v-model="yearModel.yearstart"></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-textarea label="大致介绍" solo auto-grow v-model="yearModel.introduce"></v-textarea>
@@ -40,7 +40,11 @@
           </v-card-text>
         </v-col>
         <v-card-actions>
-          <v-btn width="100" class="mx-3" @click="submit(dialogType)">提交</v-btn>
+          <v-btn
+            width="100"
+            class="mx-3"
+            @click="submit(dialogType)"
+          >{{dialogType==="add"?'提交':"更新时间线"}}</v-btn>
           <v-btn width="100" class="mx-3" @click="yearModelReset(1);">关闭</v-btn>
         </v-card-actions>
       </v-card>
@@ -55,14 +59,15 @@ export default {
   data: () => ({
     headers: [
       { text: "ID", value: "id", align: "center" },
-      { text: "名称", value: "name", align: "center" },
-      { text: "介绍", value: "introduce", align: "center" },
+      { text: "标题", value: "title", align: "center" },
       { text: "操作", value: "oper", align: "center" },
     ],
     items: [],
     yearModel: {
-      name: "",
+      title: "",
       introduce: "",
+      yearend: "",
+      yearstart: "",
     },
     dialog: false,
     imgFile: {},
@@ -76,12 +81,14 @@ export default {
     yearModelReset(type = null) {
       let that = this;
       that.yearModel = {
-        name: "",
+        title: "",
         introduce: "",
+        yearend: "",
+        yearstart: "",
       };
       that.dialog = false;
       that.dialogType = "add";
-      if (type) that.yearQueryAll();
+      if (!type) that.yearQueryAll();
     },
     async yearQueryAll() {
       let that = this;
@@ -95,14 +102,14 @@ export default {
     async submit(type) {
       let that = this;
       if (that.dialogType !== "add") return that.yearUpdate();
-      console.log(that.imgFile);
-      if (that.$u.checkObjectIsEmpty(that.imgFile))
-        return that.$hint({ msg: "请选择上传的图片", type: "error" });
+      // console.log(that.imgFile);
+      // if (that.$u.checkObjectIsEmpty(that.imgFile))
+      //   return that.$hint({ msg: "请选择上传的图片", type: "error" });
       that.yearModel.start = new Date().valueOf();
       try {
-        let result0 = await api.upload(that.imgFile);
-        that.yearModel.pic = result0 ? result0 : "";
-        if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
+        // let result0 = await api.upload(that.imgFile);
+        // that.yearModel.pic = result0 ? result0 : "";
+        // if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await api.yearAdd(that.yearModel);
         that.$hint({ msg: result.msg });
         that.yearModelReset();

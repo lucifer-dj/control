@@ -1,18 +1,15 @@
 <template>
   <v-container>
-    <v-subheader>
-      栏目管理
-      <v-icon class="mx-1" small>iconfont-xiangyou</v-icon>内容介绍
-    </v-subheader>
+    <v-subheader>关于雪中</v-subheader>
     <v-card flat>
       <v-card-text>
         <v-row>
           <v-col cols="12">
-            <v-textarea solo label="摘要" auto-grow v-model="pageModel.description"></v-textarea>
+            <v-textarea solo label="摘要" auto-grow v-model="aboutModel.description"></v-textarea>
           </v-col>
           <v-col cols="12">
             <span class="mb-3 d-block">请编辑内容</span>
-            <editor v-model="pageModel.content"></editor>
+            <editor v-model="aboutModel.content"></editor>
           </v-col>
         </v-row>
       </v-card-text>
@@ -28,52 +25,40 @@ export default {
   name: "about",
   data: () => ({
     pageType: "add",
-    pageModel: {
-      pid: "",
-      content: "",
-      description: "",
-    },
+    aboutModel: {},
   }),
   mounted() {
     let that = this;
-    that.pageModel.pid = that.$route.query.id;
-    that.readPage();
+    // that.aboutGet();
   },
   methods: {
-    async readPage() {
+    async aboutGet() {
       let that = this;
       try {
-        let result = await api.readPage({ pid: that.pageModel.pid }, that);
-        if (!result.data) return;
-        that.pageModel = result.code === 200 ? result.data : [];
-        console.log(that.pageModel);
-        that.pageType = "edit";
+        let result = await api.aboutGet();
+        if (result.code === 200 && result.data) return result.data;
+        return {
+          pid: "",
+          content: "",
+          description: "",
+        };
       } catch (e) {
         console.log(e);
       }
     },
-    async submit(type) {
+    async aboutUpdate() {
       let that = this;
-      if (that.pageType !== "add") return that.updatePage();
-      if (that.pageModel.content === "")
-        return that.$hint({ msg: "请输入内容" });
-      that.pageModel.start = new Date().valueOf();
-      that.pageModel.show = true;
+      // if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+      //   if (that.aboutModel.logo !== "") {
+      //     let result0 = await api.deleteFile({ path: that.aboutModel.logo });
+      //     console.log(result0);
+      //   }
+      //   let result1 = await api.upload(that.imgFile);
+      //   that.aboutModel.logo = result1.code === 200 ? result1.data : "";
+      // }
       try {
-        let result = await api.addPage(that.pageModel, that);
-        that.$hint({ msg: "成功。。。" });
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    async updatePage() {
-      let that = this;
-      if (that.pageModel.content === "")
-        return that.$hint({ msg: "请输入内容" });
-      that.pageModel.update = new Date().valueOf();
-      try {
-        let result = await api.updatePage(that.pageModel, that);
-        that.$hint({ msg: result.msg });
+        let result = await api.aboutUpdate(that.aboutModel);
+        that.$hint({ msg: "修改成功" });
       } catch (e) {
         console.log(e);
       }

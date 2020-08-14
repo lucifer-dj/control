@@ -22,11 +22,11 @@
 
     <v-dialog v-model="dialog" fullscreen persistent hide-overlay>
       <v-card class="d-flex align-center flex-column" v-if="dialog">
-        <v-card-title class="justify-center text-h5">添加新境界</v-card-title>
+        <v-card-title class="justify-center text-h5">{{dialogType==="add"?'添加新境界':"更新境界"}}</v-card-title>
         <v-col cols="12" md="8">
           <v-card-text>
             <v-row>
-              <upload type="line" cols="6" v-model="imgFile" :src="realmModel.pic"></upload>
+              <upload type="auto" cols="6" v-model="imgFile" :src="realmModel.pic"></upload>
               <v-col cols="6" height="100">
                 <v-text-field label="境界名称" v-model="realmModel.name"></v-text-field>
               </v-col>
@@ -37,7 +37,11 @@
           </v-card-text>
         </v-col>
         <v-card-actions>
-          <v-btn width="100" class="mx-3" @click="submit(dialogType)">提交</v-btn>
+          <v-btn
+            width="100"
+            class="mx-3"
+            @click="submit(dialogType)"
+          >{{dialogType==="add"?'添加新境界':"更新境界"}}</v-btn>
           <v-btn width="100" class="mx-3" @click="realmModelReset(1);">关闭</v-btn>
         </v-card-actions>
       </v-card>
@@ -79,7 +83,7 @@ export default {
       };
       that.dialog = false;
       that.dialogType = "add";
-      if (type) that.realmQueryAll();
+      if (!type) that.realmQueryAll();
     },
     async realmQueryAll() {
       let that = this;

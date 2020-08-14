@@ -31,7 +31,7 @@
 
     <v-dialog v-model="dialog" fullscreen persistent hide-overlay>
       <v-card class="d-flex align-center flex-column" v-if="dialog">
-        <v-card-title class="justify-center text-h5">{{dialogType==='add'?'添加':'编辑'}}角色</v-card-title>
+        <v-card-title class="justify-center text-h5">{{dialogType==='add'?'添加':'编辑'}}角色信息</v-card-title>
         <v-col cols="12" md="8">
           <v-card-text>
             <v-row>
@@ -103,7 +103,7 @@ export default {
       };
       that.dialogType = "add";
       that.dialog = false;
-      if (type)that.roleQueryAll();
+      if (!type) that.roleQueryAll();
     },
     async roleQueryAll() {
       let that = this;
