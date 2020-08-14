@@ -26,7 +26,7 @@
         <!-- 操作 -->
         <template v-slot:item.oper="{item}">
           <v-btn fab x-small depressed title="添加子项目" class="mx-1" @click="addSonCol(item)">
-            <v-icon>iconfont-ic_add_auto</v-icon>
+            <v-icon>iconfont-ic_add_line</v-icon>
           </v-btn>
           <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteColumn(item.id)">
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
@@ -65,11 +65,11 @@
                   v-model="columnModel.template"
                   label="*选择模板"
                   :items="template"
-                  item-text="name"
-                  item-value="en"
                   required
                   @input="$v.columnModel.template.$touch()"
                   @blur="$v.columnModel.name.$touch()"
+                  item-text="name"
+                  item-value="tp"
                 ></v-select>
               </v-col>
               <v-col cols="12" md="6" class="d-flex flex-row align-center">
@@ -167,9 +167,9 @@ export default {
   methods: {
     c_addColumn() {
       let that = this;
-      that.columnModelReset();
+      that.columnModelReset(1);
       that.dialog = true;
-      that.dialogType = "add";
+      // that.dialogType = "add";
     },
     columnModelReset(type = null) {
       let that = this;
@@ -182,6 +182,8 @@ export default {
         pic: "",
         order: "",
         template: "",
+        en: "",
+        link: "",
       };
       that.imgFile = {};
       // that.reload();
@@ -213,6 +215,7 @@ export default {
       try {
         let result = await api.columnQueryAll();
         that.items = result.code === 200 ? result.data : [];
+        // console.log(that.items);
       } catch (e) {
         console.log(e);
       }
@@ -290,9 +293,12 @@ export default {
       return errors;
     },
     template() {
+      let that = this;
       let arr = [];
-      let keys = Object.keys(cfg.tp);
-      keys.forEach((item) => arr.push(cfg.tp[item]));
+      let obj = cfg.tp;
+      for (let item in obj) {
+        arr.push(obj[item]);
+      }
       return arr;
     },
   },

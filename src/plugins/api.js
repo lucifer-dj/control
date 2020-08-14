@@ -23,7 +23,7 @@ export function addColumn(data, obj = {}) {
   return fetch('/panel/column/add', data, obj);
 }
 //查询所有栏目
-export function queryColumns(data = {}, obj = {}) {
+export function columnQueryAll(data = {}, obj = {}) {
   return fetch('/panel/column', data, obj);
 }
 //查询单个栏目
@@ -31,11 +31,11 @@ export function readColumn(data, obj = {}) {
   return fetch('/panel/column/read', data, obj)
 }
 //更新栏目
-export function updateCol(data, obj = {}) {
+export function updateColumn(data, obj = {}) {
   return fetch('/panel/column/update', data, obj)
 }
 //删除栏目
-export function deleteCol(data, obj = {}) {
+export function deleteColumn(data, obj = {}) {
   return fetch('/panel/column/delete', data, obj)
 }
 //查询所有角色
@@ -152,19 +152,19 @@ export function bannerDelete(date, obj = {}) {
 }
 //读取关于设置
 export function aboutGet(data = {}, obj = {}) {
-  return fetch('/about/read', data, obj)
+  return fetch('/panel/about/read', data, obj)
 }
 //修改关于设置
 export function aboutUpdate(data, obj = {}) {
-  return fetch('/about/update', data, obj)
+  return fetch('/panel/about/update', data, obj)
 }
 //读取站点设置
 export function siteGet(data = {}, obj = {}) {
-  return fetch('/site/read', data, obj)
+  return fetch('/panel/site/read', data, obj)
 }
 //修改站点设置
 export function siteUpdate(data, obj = {}) {
-  return fetch('/site/update', data, obj)
+  return fetch('/panel/site/update', data, obj)
 }
 
 //上传文件

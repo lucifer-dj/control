@@ -14,7 +14,7 @@
         </v-row>
       </v-card-text>
       <v-card-actions class="justify-center">
-        <v-btn width="100" class="mx-3" @click="submit(pageType)">{{pageType==='add'?'提交':'确认修改'}}</v-btn>
+        <v-btn width="100" class="mx-3" @click="aboutUpdate">确认修改</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -24,24 +24,24 @@ import * as api from "@api";
 export default {
   name: "about",
   data: () => ({
-    pageType: "add",
     aboutModel: {},
   }),
   mounted() {
     let that = this;
-    // that.aboutGet();
+    that.aboutGet();
   },
   methods: {
     async aboutGet() {
       let that = this;
       try {
         let result = await api.aboutGet();
-        if (result.code === 200 && result.data) return result.data;
-        return {
-          pid: "",
-          content: "",
-          description: "",
-        };
+        that.aboutModel =
+          result.code === 200 && result.data
+            ? result.data
+            : {
+                content: "",
+                description: "",
+              };
       } catch (e) {
         console.log(e);
       }

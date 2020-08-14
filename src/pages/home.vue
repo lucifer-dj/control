@@ -12,7 +12,6 @@
           :append-icon="item.child?'iconfont-expand_more':''"
           no-action
           @click="replace(item)"
-          :class="menuState?'':'px-6'"
         >
           <template v-slot:activator>
             <v-list-item-icon>
@@ -76,7 +75,24 @@ export default {
   name: "home",
   data: () => ({
     temp_temp: false,
-    menu: cfg.menu,
+    menu: [
+      {
+        name: "栏目管理",
+        icon: "iconfont iconfont-shebeileixingdangan",
+        path: "/column",
+        child: {},
+      },
+      {
+        name: "轮播设置",
+        path: "/banner",
+        icon: "iconfont iconfont-hebing",
+      },
+      {
+        name: "其他设置",
+        path: "/config",
+        icon: "iconfont iconfont-baobiao",
+      },
+    ],
     menuState: false,
     drawer: true,
     sideType: "",
@@ -86,27 +102,23 @@ export default {
   methods: {
     commDrawer() {
       let that = this;
-      console.log(that.$vuetify.breakpoint.xs);
-      if (that.$vuetify.breakpoint.xs) {
-        // that.menuState=false;
+      //挡在md以上的时候that.menuState一直为true
+      //在md一下的时候that.menuState为false
+      if (that.$vuetify.breakpoint.smAndDown) {
         that.drawer = !that.drawer;
         return;
       }
+      that.drawer = true;
       that.menuState = !that.menuState;
     },
     replace(data) {
       let that = this;
       let { path } = data;
       // console.log(path);
-      let obj = {
+      that.$router.push({
         path,
-      };
-      if (data.id) {
-        obj.query = {
-          id: data.id,
-        };
-      }
-      that.$router.push(obj);
+        id: data.id,
+      });
     },
     closeSide() {
       let that = this;
@@ -134,11 +146,29 @@ export default {
         }, 500);
       });
     },
+    async getColumn() {
+      let that = this;
+      try {
+        let result = await api.columnQueryAll();
+        result.data.forEach((item, idx) => {
+          Object.assign(item, cfg.tp[item.template]);
+        });
+        that.menu[0].child = result.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
   mounted() {
     let that = this;
     //人物 势力 关于雪中
     //主页 境界划分
+    that.getColumn();
+    if (that.$vuetify.breakpoint.smAndDown) {
+      that.$nextTick(() => {
+        that.drawer = false;
+      });
+    }
     let drawer_content = this.$(".v-navigation-drawer__content");
     drawer_content.classList.add("drawer"); //chrome
     drawer_content.style.scrollbarWidth = "none"; //firefox

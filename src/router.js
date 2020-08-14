@@ -29,7 +29,7 @@ export default new Router({
         {
           name: 'column',
           path: '/column',
-          component: () => import('./pages/other/column.vue')
+          component: () => import('./pages/view/column.vue')
         },
         {
           name: 'page',
@@ -39,17 +39,17 @@ export default new Router({
         {
           name: 'role',
           path: '/role',
-          component: () => import('./pages/view/role.vue')
+          component: () => import('./pages/view/tp/role.vue')
         },
         {
           name: 'faction',
           path: '/faction',
-          component: () => import('./pages/view/faction.vue')
+          component: () => import('./pages/view/tp/faction.vue')
         },
         {
           name: 'about',
           path: '/about',
-          component: () => import('./pages/view/about.vue')
+          component: () => import('./pages/view/tp/about.vue')
         },
         {
           name: 'config',
@@ -68,12 +68,12 @@ export default new Router({
         }, {
           name: 'year',
           path: '/year',
-          component: () => import('./pages/view/year.vue')
+          component: () => import('./pages/view/tp/year.vue')
         },
         {
           name: 'realm',
           path: '/realm',
-          component: () => import('./pages/view/realm.vue')
+          component: () => import('./pages/view/tp/realm.vue')
         },
       ]
     },
