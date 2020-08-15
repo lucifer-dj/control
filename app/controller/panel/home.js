@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const Controller = require('egg').Controller;
+const Controller = require("egg").Controller;
 
 class HomeController extends Controller {
   async index() {
@@ -9,14 +9,14 @@ class HomeController extends Controller {
     // ctx.body = "<h1>hello world!</h1>"
   }
   async postTest() {
-    const { ctx } = this;
+    const { ctx, app } = this;
     ctx.body = {
-      msg: '测试'
-    }
+      msg: "测试",
+    };
   }
   async getTest() {
-    const { ctx } = this;
-    ctx.body = "<h1>hello world!</h1>"
+    const { ctx, app, config } = this;
+    ctx.body = `<h1>hello world!+${config.site}</h1>`;
   }
 }
 

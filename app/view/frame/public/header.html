@@ -1,17 +1,17 @@
 <header>
-  <nav>
-    <a href="" class="logo">
-      <h1>{{page.name}}</h1>
-    </a>
-    <ul id="nav">
-      <li class="header_li_active">
-        <a href="{{page.home}}" title="{{page.name}}">首页</a>
-      </li>
-      {% for item in header %}
-      <li>
-        <a href="{{item.link}}" title="{{item.name}}">{{item.name}}</a>
-      </li>
-      {% endfor %}
-    </ul>
-  </nav>
+    <nav>
+        <a href="" class="logo">
+            <h1>{{site.name}}</h1>
+        </a>
+        <ul id="nav">
+            <li class="header_li_active">
+                <a href="{{page.home}}" title="{{page.name}}">首页</a>
+            </li>
+            {% for item in headers %}
+            <li>
+                <a href="{{item.link}}" title="{{item.name}}">{{item.name}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
 </header>

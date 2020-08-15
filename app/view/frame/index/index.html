@@ -2,16 +2,13 @@
 <main class="main">
   <section class="banner banner-container">
     <ul class="swiper-wrapper">
+      {% for item in tempArr %}
       <li class="swiper-slide">
         <a href="">
           <img src="{{static}}/images/1498375879733.jpg" alt="" />
         </a>
       </li>
-      <li class="swiper-slide">
-        <a href="">
-          <img src="{{static}}/images/1498375879733.jpg" alt="" />
-        </a>
-      </li>
+      {% endfor %}
     </ul>
     <div class="left swiper-banner-left">
       <i class="iconfont iconfont-zuo-5"></i>
@@ -30,8 +27,8 @@
     <article>
       <div class="head">
         <div class="head_l">
-          <h2>{{columns.tpCase.name}}</h2>
-          <span>{{columns.tpCase.en}}</span>
+          <h2>{{columns.role.name}}</h2>
+          <span>{{columns.role.en}}</span>
         </div>
         <div class="space"></div>
         <div class="head_r">
@@ -42,7 +39,7 @@
       </div>
       <div class="case_swiper case-container">
         <ul class="swiper-wrapper">
-          {% for item in columns.tpCase.array %}
+          {% for item in roles %}
           <li class="swiper-slide">
             <a href="">
               <div class="img">
@@ -76,15 +73,15 @@
     <article>
       <div class="head">
         <div class="head_l">
-          <h2 style="color: #233876;">{{columns.tpPage.name}}</h2>
-          <span>{{columns.tpPage.en}}</span>
+          <h2 style="color: #233876;">{{columns.about.name}}</h2>
+          <span>{{columns.about.en}}</span>
         </div>
       </div>
       <div class="about_content">
         <div class="a_left">
-          <h2>{{page.name}}</h2>
+          <h2>{{site.name}}</h2>
           <div class="text">
-            {{columns.tpPage.array[0].description}}
+            {{about.description}}
           </div>
           <a href="" class="more">more</a>
         </div>
@@ -120,8 +117,8 @@
     <article>
       <div class="head">
         <div class="head_l">
-          <h2 style="color: #233876;">{{columns.tpProduct.name}}</h2>
-          <span>{{columns.tpProduct.en}}</span>
+          <h2 style="color: #233876;">{{columns.faction.name}}</h2>
+          <span>{{columns.faction.en}}</span>
         </div>
         <div class="space"></div>
         <div class="head_r">
@@ -136,11 +133,11 @@
         <a href="" class="news_l">
           <div class="date">07-02</div>
           <p class="title">
-            {{columns.tpProduct.array[columns.tpProduct.array.length-1].name}} -
-            {{columns.tpProduct.array[columns.tpProduct.array.length-1].lead}}
+            {{factions[factions.length-1].name}} -
+            {{factions[factions.length-1].lead}}
           </p>
           <p class="text">
-            {{columns.tpProduct.array[columns.tpProduct.array.length-1].introduce}}
+            {{factions[factions.length-1].introduce}}
           </p>
           <div class="image">
             <img src="{{ static }}/images/1498476780341.jpg" alt="" />
@@ -148,7 +145,7 @@
           <div class="more"></div>
         </a>
         <ul class="news_r">
-          {% for item in columns.tpProduct.array %}
+          {% for item in factions.slice(0,3) %}
           <li>
             <a href="">
               <div class="li_l">
@@ -224,7 +221,7 @@
     <article>
       <div class="content">
         <div class="first">
-          <h2>特殊板块演示</h2>
+          <h2>{{columns.realm.name}}</h2>
         </div>
         <a href="" class="detail">
           <h2>荣获欧特克（Autodesk）工程全球奖</h2>
@@ -281,12 +278,12 @@
   <section class="event">
     <article>
       <ul>
-        {% for item in tempArr %}
+        {% for item in years %}
         <li>
           <a href="">
-            <div class="date">2006</div>
+            <div class="date">{{item.yearstart}}-{{item.yearend}}</div>
             <div class="text">
-              荣入2007年度中国广告公司综合 实力50强排名第6位
+              {{item.title}}
             </div>
           </a>
         </li>
@@ -319,16 +316,16 @@
         <h3>关注</h3>
       </div>
       <div class="third">
-        <h3>至成科技</h3>
-        <p>地址：北京市建外SOHO东区2号楼</p>
-        <p>电话：010-69557550</p>
-        <p>手机：13521043455 / 13811334772</p>
+        <h3>联系方式</h3>
+        <p>地址：{{site.git}}</p>
+        <p>座机：{{site.tel}}</p>
+        <p>手机：{{site.phone}}</p>
       </div>
       <div class="fourth">
         <h3></h3>
-        <p>邮编：100000</p>
-        <p>传真：000-66668888</p>
-        <p>邮箱：0008008@qq.com</p>
+        <p>微信：{{site.wx}}</p>
+        <p>QQ：{{site.qq}}</p>
+        <p>邮箱：{{site.email}}</p>
       </div>
     </div>
   </section>
@@ -336,8 +333,8 @@
 
 <footer>
   <div>
-    COPYRIGHT (©) 2020 mo005_21507- 蔬菜水果种植培育出售网站.
-    <span>技术支持：</span><a href="">至成科技</a>
+    COPYRIGHT (©) lucifer-dj@outlook.com - 雪中悍刀行网站个人学习爱好.
+    <span>技术支持：</span><a href="https://gitee.com/luciferdj" target="_blank">lucifer-DJ</a>
   </div>
 </footer>
 <script>

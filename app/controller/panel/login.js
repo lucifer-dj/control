@@ -1,36 +1,37 @@
-'use strict';
+"use strict";
 
-const Controller = require('egg').Controller;
+const Controller = require("egg").Controller;
 
 class LoginController extends Controller {
   async index() {
     const { ctx, app, service } = this;
 
-    let data = ctx.request.body
-    let result = await service.login.valid(data)
+    let data = ctx.request.body;
+    let result = await service.login.valid(data);
     if (result) {
       //生辰token
-      const token = app.jwt.sign({
-       account: data.account,
-       pass: data.pass 
-     }, app.config.jwt.secret)
-      ctx.set({'authorization':token})
+      const token = app.jwt.sign(
+        {
+          account: data.account,
+          pass: data.pass,
+        },
+        app.config.jwt.secret
+      );
+      ctx.set({ authorization: token });
       ctx.status = 200;
       ctx.body = {
         code: 200,
-        msg: '登陆成功',
-        token
-      }
-    }else{
-      ctx.err('登陆失败',401)
+        msg: "登陆成功",
+        token,
+      };
+    } else {
+      ctx.err("登陆失败", 401);
     }
-
   }
-  async auto(){
+  async auto() {
     const { ctx } = this;
-    ctx.success('自动登陆成功');
+    ctx.success("自动登陆成功");
   }
-
 }
 
 module.exports = LoginController;
