@@ -37,7 +37,7 @@
       <v-btn depressed @click="commDrawer();">
         <v-icon>iconfont-goodsppecategory</v-icon>
       </v-btn>
-      <v-btn text class="ml-3">浏览首页</v-btn>
+      <v-btn text class="ml-3" :href="indexPath" target="_blank">浏览首页</v-btn>
       <v-spacer></v-spacer>
       <v-btn depressed title="退出" @click="logout">
         <v-icon>iconfont-zhuxiao</v-icon>
@@ -116,15 +116,10 @@ export default {
       let { path } = data;
       let obj = {};
       if (data.origin) {
-        obj = {
-          id: -1,
-        };
+        obj = { id: -1 };
         if (Number(data.origin) !== -1) obj.id = data.origin;
       }
-      that.$router.push({
-        path,
-        query: obj,
-      });
+      that.$router.push({ path, query: obj });
     },
     closeSide() {
       let that = this;

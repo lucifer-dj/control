@@ -128,7 +128,7 @@ export default {
       that.roleModel.avatar = "ceshi";
       try {
         let result0 = await api.upload(that.imgFile);
-        that.roleModel.avatar = result0 ? result0 : "";
+        that.roleModel.avatar = result0.code === 200 ? result0.data : "";
         that.roleModel.cid = that.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await api.roleAdd(that.roleModel, that);
@@ -142,7 +142,7 @@ export default {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
         let res = await api.upload(that.imgFile, that, that.roleModel.avatar);
-        that.roleModel.avatar = res ? res : "";
+        that.roleModel.avatar = res.code === 200 ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       try {

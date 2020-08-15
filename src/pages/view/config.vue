@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card flat>
-      <v-card-title>其他设置</v-card-title>
+      <v-card-title>其他dd设置</v-card-title>
       <v-card-text>
         <v-row class="flex-column">
           <v-col cols="4">
@@ -10,12 +10,22 @@
           <v-col cols="4">
             <v-text-field label="网站首页" v-model="siteModel.home"></v-text-field>
           </v-col>
+          <v-subheader>网站LOGO</v-subheader>
           <upload v-model="imgFile" :src="siteModel.logo" type="card" cols="4"></upload>
           <v-col cols="4">
             <v-text-field label="联系邮箱" v-model="siteModel.email"></v-text-field>
           </v-col>
           <v-col cols="4">
             <v-text-field label="联系QQ" v-model="siteModel.qq"></v-text-field>
+          </v-col>
+          <v-col cols="4">
+            <v-text-field label="微信" v-model="siteModel.wx"></v-text-field>
+          </v-col>
+          <v-col cols="4">
+            <v-text-field label="座机" v-model="siteModel.tel"></v-text-field>
+          </v-col>
+          <v-col cols="4">
+            <v-text-field label="手机" v-model="siteModel.phone"></v-text-field>
           </v-col>
           <v-col cols="4">
             <v-text-field label="GIT" v-model="siteModel.git"></v-text-field>
@@ -62,6 +72,9 @@ export default {
           filesize: "",
           cookiePass: "",
           home: "",
+          wx: "",
+          phone: "",
+          tel: "",
         };
       } catch (e) {
         console.log(e);

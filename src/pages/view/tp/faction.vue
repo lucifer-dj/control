@@ -127,7 +127,7 @@ export default {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
         let res = await api.upload(that.imgFile, that, that.factionModel.pic);
-        that.factionModel.pic = res ? res : "";
+        that.factionModel.pic = res ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       that.factionModel.update = new Date().valueOf();
@@ -151,12 +151,9 @@ export default {
     },
     async factionEdit(id) {
       let that = this;
-      let model = await that.factionRead(id);
-      if (model) {
-        that.factionModel = model;
-        that.dialogType = "edit";
-        that.dialog = true;
-      }
+      that.factionModel = await that.factionRead(id);
+      that.dialogType = "edit";
+      that.dialog = true;
     },
     async factionDelete(id) {
       let that = this;

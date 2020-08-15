@@ -6,7 +6,13 @@
         <v-btn text @click="dialog=true;">+添加</v-btn>
         <v-btn text>更新</v-btn>
       </v-toolbar>
-      <v-data-table align="center" :headers="headers" disable-sort :items="items">
+      <v-data-table
+        align="center"
+        :headers="headers"
+        disable-sort
+        :items="items"
+        v-if="!$u.checkObjectIsEmpty(columnByCid)"
+      >
         <template v-slot:item.cid="{item}">{{columnByCid[item.cid].name}}</template>
         <template v-slot:item.oper="{item}">
           <v-btn fab x-small depressed title="删除" class="mx-1" @click="bannerDelete(item.id)">
@@ -144,7 +150,8 @@ export default {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
         let result = await api.upload(that.imgFile, that, that.bannerModel.pic);
-        that.bannerModel.pic = result ? result.data : that.bannerModel.pic;
+        that.bannerModel.pic =
+          result.code === 200 ? result.data : that.bannerModel.pic;
         if (!result) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       that.bannerModel.date = new Date().valueOf();
@@ -161,11 +168,6 @@ export default {
       try {
         let result = await api.bannerQueryAll();
         that.items = result.code === 200 ? result.data : [];
-        if (that.items.length > 0) {
-          that.items.forEach((item, idx) => {
-            item.origin = that.$u.xz[item.origin].name;
-          });
-        }
       } catch (e) {
         console.log(e);
       }
@@ -199,19 +201,10 @@ export default {
       try {
         let result = await api.columnQueryAll({}, that);
         that.columns = result.code === 200 ? result.data : [];
-        // console.log(that.columns);
       } catch (e) {
         console.log(e);
       }
     },
-  },
-  async mounted() {
-    let that = this;
-    that.columnQueryAll();
-    that.bannerQueryAll();
-  },
-  components: {
-    upload: () => import("@components/upload.vue"),
   },
   computed: {
     columnByCid() {
@@ -222,6 +215,14 @@ export default {
       });
       return obj;
     },
+  },
+  async mounted() {
+    let that = this;
+    that.columnQueryAll();
+    that.bannerQueryAll();
+  },
+  components: {
+    upload: () => import("@components/upload.vue"),
   },
 };
 </script>
