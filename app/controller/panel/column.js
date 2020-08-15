@@ -10,9 +10,7 @@ class ColumnController extends Controller {
   async queryAll() {
     let { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.db.queryAll(table, {
-      offset: req.num
-    });
+    let result = await service.db.queryAll(table);
     if (result.length > 0) {
       ctx.success('查询成功', result)
     } else {

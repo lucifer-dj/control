@@ -11,7 +11,9 @@ class CaseController extends Controller {
 		const { ctx, service, table } = this;
 		let req = ctx.request.body
 		let result = await service.db.queryAll(table,{
-			offset:req.num
+			where:{cid:req.cid},
+      limit:10,
+      offset: req.num
 		});
 		if(result){
 			ctx.success('成功',result)

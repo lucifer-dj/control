@@ -97,7 +97,7 @@ class FileService extends Service {
     let writeStream = fs.createWriteStream(target);
     try {
       await awaitWriteStream(stream.pipe(writeStream));
-      let fn = `http://${config.site}/public/uploads/${filename}`;
+      let fn = `${config.site}/public/uploads/${filename}`;
       return fn;
     } catch (e) {
       console.log(e);
@@ -112,18 +112,8 @@ class FileService extends Service {
     let src = path.join(p, fn);
     if (fs.existsSync(src)) {
       let result = await this.unlink(src);
-      if (result) return {
-        state: true,
-        msg: '删除成功'
-      }
-      else return {
-        state: false,
-        msg: '删除失败'
-      };
-    } else return {
-      state: false,
-      msg: '文件不存在'
-    };
+      return `成功删除文件${data}`
+    } else return `文件${data}不存在`
   }
   async read(src) {
     let that = this;
