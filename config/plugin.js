@@ -1,23 +1,22 @@
-'use strict';
+"use strict";
 
 /** @type Egg.EggPlugin */
-
 
 module.exports = {
   jwt: {
     enable: true,
-    package: 'egg-jwt',
+    package: "egg-jwt",
   },
   cors: {
     enable: true,
-    package: 'egg-cors',
+    package: "egg-cors",
   },
   nunjucks: {
     enable: true,
-    package: 'egg-view-nunjucks'
-  }, 
+    package: "egg-view-nunjucks",
+  },
   mysql: {
     enable: true,
-    package: 'egg-mysql',
+    package: "egg-mysql",
   },
-}
+};

@@ -1,24 +1,29 @@
-let Service = require('egg').Service;
+let Service = require("egg").Service;
 
 class FrameService extends Service {
-	async columns(){
-		let { app, service, config } = this;
-		let result = await service.db.queryAll('column');
-		let arr = [];
-		let obj = {};
-		result.forEach((item,idx)=>{
-			item.link = config.site+'/'+item.link;
-			arr.push(item);
-			obj[item.template] = item;
-		});
-		for(let item in obj){
-			let table = obj[item].template.toLocaleLowerCase().substr(2);
-			obj[item].array = await service.db.queryAll(table,{limit:8});
-		}
-		return {
-			arr,obj
-		}
-	}
+  async index() {
+    let that = this;
+    let { app, service, config } = that;
+    let columnsModel = await service.db.queryAll("column");
+    let roles = await service.db.queryAll("role", { cid: -1, limit: 10 });
+    let factions = await service.db.queryAll("faction", { cid: -1, limit: 4 });
+    let years = await service.db.queryAll("year", { cid: -1, limit: 5 });
+    let site = await service.file.read("site.config.json");
+    let about = await service.file.read("about.config.json");
+    let columns = {};
+    columnsModel.forEach((item, idx) => {
+      columns[item.template] = item;
+    });
+    return {
+      headers: columnsModel,
+      columns,
+      roles,
+      site: site.data,
+      about: about.data,
+      factions,
+      years,
+    };
+  }
 }
 
 module.exports = FrameService;

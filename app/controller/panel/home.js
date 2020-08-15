@@ -1,22 +1,22 @@
-'use strict';
+"use strict";
 
-const Controller = require('egg').Controller;
+const Controller = require("egg").Controller;
 
 class HomeController extends Controller {
   async index() {
     const { ctx } = this;
-    // await ctx.render('control/panel') 
-    ctx.body = "<h1>hello world!</h1>"
+    // await ctx.render('control/panel')
+    ctx.body = "<h1>hello world!</h1>";
   }
   async postTest() {
     const { ctx } = this;
     ctx.body = {
-      msg: '测试'
-    }
+      msg: "测试",
+    };
   }
   async getTest() {
     const { ctx } = this;
-    ctx.body = "<h1>hello world!</h1>"
+    ctx.body = "<h1>hello world!</h1>";
   }
 }
 

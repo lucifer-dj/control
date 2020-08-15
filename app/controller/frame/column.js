@@ -1,4 +1,4 @@
-const Controller = require('egg').Controller;
+const Controller = require("egg").Controller;
 // const path = require("path");
 // const column = require('../../static/column.js');
 class ColumnController extends Controller {
@@ -10,7 +10,7 @@ class ColumnController extends Controller {
     let { ctx, service, config } = that;
     let params = ctx.params.column;
     console.log(params);
-    ctx.success("llll")
+    ctx.success("llll");
   }
 }
 
