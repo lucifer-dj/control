@@ -35,14 +35,14 @@
         <v-col cols="12" md="8">
           <v-card-text>
             <v-row>
-              <upload type="card" v-model="imgFile" cols="3" :src="roleModel.avatar"></upload>
-              <v-col cols="4" height="100" class="px-10">
+              <upload type="card" v-model="imgFile" cols="6" :src="roleModel.avatar"></upload>
+              <v-col cols="6" height="100" class="px-10">
                 <v-text-field label="角色名称" v-model="roleModel.name"></v-text-field>
                 <v-select label="角色性别" v-model="roleModel.sex" :items="['男','女']"></v-select>
               </v-col>
-              <v-col cols="5" height="100" class="px-10">
+              <v-col cols="6" height="100" class="px-10">
                 <v-text-field label="角色境界" v-model="roleModel.realm"></v-text-field>
-                <v-select label="势力划分" v-model="roleModel.place" :items="['北凉','江南']"></v-select>
+                <v-select label="势力划分" v-model="roleModel.faction" :items="['北凉','江南']"></v-select>
               </v-col>
               <v-col cols="12">
                 <v-textarea label="人物描述" solo auto-grow v-model="roleModel.introduce"></v-textarea>
@@ -70,8 +70,8 @@ export default {
       { text: "ID", value: "id", align: "center" },
       { text: "名称", value: "name", align: "center" },
       { text: "性别", value: "sex", align: "center" },
-      { text: "境界", value: "step", align: "center" },
-      { text: "分类", value: "class", align: "center" },
+      { text: "境界", value: "realm", align: "center" },
+      { text: "所属势力", value: "faction", align: "center" },
       { text: "发布日期", value: "date", align: "center" },
       { text: "操作", value: "oper", align: "center" },
     ],
@@ -81,13 +81,15 @@ export default {
       name: "",
       introduce: "",
       sex: "",
-      place: "",
+      faction: "",
       realm: "",
     },
     imgFile: {},
+    cid: -1,
   }),
   mounted() {
     let that = this;
+    if (Number(that.$route.query.id) !== -1) that.cid = that.$route.query.id;
     that.roleQueryAll();
   },
   methods: {
@@ -108,7 +110,7 @@ export default {
     async roleQueryAll() {
       let that = this;
       try {
-        let result = await api.roleQueryAll({ num: 0 });
+        let result = await api.roleQueryAll({ cid: that.cid, num: 0 }, that);
         that.items = result.code === 200 ? result.data : [];
         console.log(result);
       } catch (e) {
@@ -127,8 +129,9 @@ export default {
       try {
         let result0 = await api.upload(that.imgFile);
         that.roleModel.avatar = result0 ? result0 : "";
+        that.roleModel.cid = that.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
-        let result = await api.roleAdd(that.roleModel);
+        let result = await api.roleAdd(that.roleModel, that);
         that.$hint({ msg: "添加成功" });
         that.roleModelReset();
       } catch (e) {

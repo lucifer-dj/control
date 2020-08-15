@@ -25,16 +25,18 @@ export default {
   name: "about",
   data: () => ({
     aboutModel: {},
+    cid: -1,
   }),
   mounted() {
     let that = this;
+    if (Number(that.$route.query.id) !== -1) that.cid = that.$route.query.id;
     that.aboutGet();
   },
   methods: {
     async aboutGet() {
       let that = this;
       try {
-        let result = await api.aboutGet();
+        let result = await api.aboutGet({}, that);
         that.aboutModel =
           result.code === 200 && result.data
             ? result.data
@@ -57,7 +59,7 @@ export default {
       //   that.aboutModel.logo = result1.code === 200 ? result1.data : "";
       // }
       try {
-        let result = await api.aboutUpdate(that.aboutModel);
+        let result = await api.aboutUpdate(that.aboutModel, that);
         that.$hint({ msg: "修改成功" });
       } catch (e) {
         console.log(e);

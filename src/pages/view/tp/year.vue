@@ -72,9 +72,11 @@ export default {
     dialog: false,
     imgFile: {},
     dialogType: "add",
+    cid: -1,
   }),
   mounted() {
     let that = this;
+    if (Number(that.$route.query.id) !== -1) that.cid = that.$route.query.id;
     that.yearQueryAll();
   },
   methods: {
@@ -93,7 +95,7 @@ export default {
     async yearQueryAll() {
       let that = this;
       try {
-        let result = await api.yearQueryAll({ num: 0 });
+        let result = await api.yearQueryAll({ cid: that.cid, num: 0 }, that);
         that.items = result.code === 200 ? result.data : [];
       } catch (e) {
         console.log(e);
@@ -110,7 +112,7 @@ export default {
         // let result0 = await api.upload(that.imgFile);
         // that.yearModel.pic = result0 ? result0 : "";
         // if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
-        let result = await api.yearAdd(that.yearModel);
+        let result = await api.yearAdd(that.yearModel, that);
         that.$hint({ msg: result.msg });
         that.yearModelReset();
       } catch (e) {
@@ -126,7 +128,7 @@ export default {
       }
       that.yearModel.update = new Date().valueOf();
       try {
-        let result = await api.yearUpdate(that.yearModel);
+        let result = await api.yearUpdate(that.yearModel, that);
         that.yearModelReset();
         that.$hint({ msg: "更新成功" });
       } catch (e) {
@@ -136,7 +138,7 @@ export default {
     async yearRead(id) {
       let that = this;
       try {
-        let result = await api.yearRead({ id });
+        let result = await api.yearRead({ id }, that);
         return result.data;
       } catch (e) {
         console.log(e);
@@ -158,10 +160,10 @@ export default {
       that.bus.$on("toastConfirm", async function () {
         let result = await that.yearRead(id);
         if (result.pic) {
-          let result0 = await api.deleteFile({ path: result.pic });
+          let result0 = await api.deleteFile({ path: result.pic }, that);
         }
         try {
-          let result1 = await api.yearDelete({ id });
+          let result1 = await api.yearDelete({ id }, that);
           that.$hint({ msg: "删除成功" });
           that.yearQueryAll();
         } catch (e) {

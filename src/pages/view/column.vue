@@ -58,7 +58,13 @@
                 <v-text-field label="*栏目英文名称" v-model="columnModel.en" required></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
-                <v-select label="所属栏目" :items="origin" v-model="columnModel.origin"></v-select>
+                <v-select
+                  label="所属栏目"
+                  :items="origin"
+                  item-text="name"
+                  item-value="id"
+                  v-model="columnModel.origin"
+                ></v-select>
               </v-col>
               <v-col cols="12" md="6">
                 <v-select
@@ -77,13 +83,13 @@
                 <v-radio-group row class="ml-10" v-model="columnModel.show">
                   <v-radio
                     label="显示"
-                    value="1"
+                    :value="1"
                     off-icon="iconfont-weixuan"
                     on-icon="iconfont-xuanzhong"
                   ></v-radio>
                   <v-radio
                     label="隐藏"
-                    value="0"
+                    :value="0"
                     off-icon="iconfont-weixuan"
                     on-icon="iconfont-xuanzhong"
                   ></v-radio>
@@ -98,6 +104,21 @@
               <v-col cols="12" md="6">
                 <v-text-field label="关键词" v-model="columnModel.keywords"></v-text-field>
               </v-col>
+              <v-col cols="6">
+                <v-subheader class="px-0">选择栏目图标</v-subheader>
+                <v-sheet>
+                  <v-btn
+                    icon
+                    v-for="(icon,idx) in icons"
+                    :key="idx"
+                    class="mx-1"
+                    :color="columnModel.icon===icon?'success':''"
+                    @click="columnModel.icon=icon"
+                  >
+                    <v-icon>{{icon}}</v-icon>
+                  </v-btn>
+                </v-sheet>
+              </v-col>
               <upload v-model="imgFile" type="auto" cols="12" :src="columnModel.pic" ref="upload"></upload>
               <v-col cols="12" md="12">
                 <v-textarea label="栏目描述" solo auto-grow v-model="columnModel.description"></v-textarea>
@@ -111,7 +132,7 @@
             class="mx-3"
             @click="submit(dialogType)"
           >{{dialogType=='add'?'提交':'确认修改'}}</v-btn>
-          <v-btn width="100" class="mx-3" @click="columnModelReset(1);">关闭</v-btn>
+          <v-btn width="100" class="mx-3" @click="columnModelReset();">关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -145,7 +166,6 @@ export default {
     items: [],
     dialog: false,
     dialogType: "add",
-    origin: ["顶级栏目", "角色管理", "内容价绍", "势力划分"],
     imgFile: {},
     columnModel: {
       origin: "顶级栏目",
@@ -158,7 +178,9 @@ export default {
       template: "",
       en: "",
       link: "",
+      icon: "",
     },
+    icons: cfg.icons,
   }),
   async mounted() {
     let that = this;
@@ -167,9 +189,7 @@ export default {
   methods: {
     c_addColumn() {
       let that = this;
-      that.columnModelReset(1);
       that.dialog = true;
-      // that.dialogType = "add";
     },
     columnModelReset(type = null) {
       let that = this;
@@ -184,20 +204,20 @@ export default {
         template: "",
         en: "",
         link: "",
+        icon: "",
       };
       that.imgFile = {};
       // that.reload();
       that.dialog = false;
-      if (!type) that.columnQueryAll();
+      that.dialogType = "add";
     },
     async submit(type) {
       let that = this;
-      that.columnModel.icon = cfg.tp[that.columnModel.template].icon;
       if (type != "add") return that.updateColumn();
       that.$v.columnModel.$touch();
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
         let res = await api.upload(that.imgFile);
-        that.columnModel.pic = res ? res : "";
+        that.columnModel.pic = res ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       } else {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
@@ -213,7 +233,7 @@ export default {
     async columnQueryAll() {
       let that = this;
       try {
-        let result = await api.columnQueryAll();
+        let result = await api.columnQueryAll({}, that);
         that.items = result.code === 200 ? result.data : [];
         // console.log(that.items);
       } catch (e) {
@@ -224,6 +244,7 @@ export default {
       let that = this;
       try {
         let result = await api.readColumn({ id }, that);
+        console.log(result.data);
         return result.data;
       } catch (e) {
         console.log(e);
@@ -241,6 +262,7 @@ export default {
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       try {
+        console.log(that.columnModel.pic);
         let result = await api.updateColumn(that.columnModel, that);
         that.$hint({ msg: "修改成功" });
         that.reload();
@@ -272,7 +294,6 @@ export default {
       that.dialogType = "edit";
       that.dialog = true;
     },
-
     async addSonCol() {
       let that = this;
       // that.reload();
@@ -299,6 +320,17 @@ export default {
       for (let item in obj) {
         arr.push(obj[item]);
       }
+      return arr;
+    },
+    origin() {
+      let that = this;
+      let arr = [];
+      arr.push({ name: "顶级栏目", id: -1 });
+      that.items.forEach((item, idx) => {
+        if (item.origin === -1) {
+          arr.push(item);
+        }
+      });
       return arr;
     },
   },

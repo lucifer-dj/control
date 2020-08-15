@@ -6,11 +6,13 @@ import zhHans from 'vuetify/es5/locale/zh-Hans';
 Vue.use(Vuetify);
 
 export default new Vuetify({
-  lang:{
-    locales:{zhHans},
-    current:'zhHans'
+  lang: {
+    locales: {
+      zhHans
+    },
+    current: 'zhHans'
   },
-  icons:{
-  	iconfont:'fa'
+  icons: {
+    iconfont: 'mdi'
   }
 })

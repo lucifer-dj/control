@@ -114,10 +114,16 @@ export default {
     replace(data) {
       let that = this;
       let { path } = data;
-      // console.log(path);
+      let obj = {};
+      if (data.origin) {
+        obj = {
+          id: -1,
+        };
+        if (Number(data.origin) !== -1) obj.id = data.origin;
+      }
       that.$router.push({
         path,
-        id: data.id,
+        query: obj,
       });
     },
     closeSide() {
@@ -149,11 +155,16 @@ export default {
     async getColumn() {
       let that = this;
       try {
-        let result = await api.columnQueryAll();
+        let result = await api.columnQueryAll({}, that);
+        if (result.code !== 200) {
+          that.$hint({ msg: "自动登录失败", type: "error" });
+          that.$router.replace("/");
+        }
         result.data.forEach((item, idx) => {
           Object.assign(item, cfg.tp[item.template]);
         });
         that.menu[0].child = result.data;
+        that.$hint({ msg: "自动登录成功" });
       } catch (e) {
         console.log(e);
       }

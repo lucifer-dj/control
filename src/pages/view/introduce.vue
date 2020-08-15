@@ -2,7 +2,6 @@
   <div>
     <upload type="auto" v-model="file" accept="image"></upload>
     <v-btn @click="test">测试</v-btn>
-    
   </div>
 </template>
 <script>
@@ -27,6 +26,10 @@ export default {
   components: {
     upload: () => import("@components/upload.vue"),
     editor: () => import("@components/editor.vue"),
+  },
+  mounted() {
+    let that = this;
+    // that.$loading();
   },
 };
 </script>

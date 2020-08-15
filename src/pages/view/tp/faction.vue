@@ -75,9 +75,11 @@ export default {
     dialog: false,
     imgFile: {},
     dialogType: "add",
+    cid: -1,
   }),
   mounted() {
     let that = this;
+    if (Number(that.$route.query.id) !== -1) that.cid = that.$route.query.id;
     that.factionQueryAll();
   },
   methods: {
@@ -92,12 +94,12 @@ export default {
       };
       that.dialog = false;
       that.dialogType = "add";
-      if (!type)that.factionQueryAll();
+      if (!type) that.factionQueryAll();
     },
     async factionQueryAll() {
       let that = this;
       try {
-        let result = await api.factionQueryAll({ num: 0 });
+        let result = await api.factionQueryAll({ cid: that.cid, num: 0 }, that);
         that.items = result.code === 200 ? result.data : [];
       } catch (e) {
         console.log(e);
@@ -106,15 +108,15 @@ export default {
     async submit(type) {
       let that = this;
       if (that.dialogType !== "add") return that.factionUpdate();
-      console.log(that.imgFile);
       if (that.$u.checkObjectIsEmpty(that.imgFile))
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
-      that.factionModel.start = new Date().valueOf();
       try {
-        let result0 = await api.upload(that.imgFile);
+        let result0 = await api.upload(that.imgFile, that);
+        that.factionModel.start = new Date().valueOf();
         that.factionModel.pic = result0 ? result0 : "";
+        that.factionModel.cid = that.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
-        let result = await api.factionAdd(that.factionModel);
+        let result = await api.factionAdd(that.factionModel, that);
         that.$hint({ msg: result.msg });
         that.factionModelReset();
       } catch (e) {
@@ -130,7 +132,7 @@ export default {
       }
       that.factionModel.update = new Date().valueOf();
       try {
-        let result = await api.factionUpdate(that.factionModel);
+        let result = await api.factionUpdate(that.factionModel, that);
         that.factionModelReset();
         that.$hint({ msg: "更新成功" });
       } catch (e) {
@@ -140,7 +142,7 @@ export default {
     async factionRead(id) {
       let that = this;
       try {
-        let result = await api.factionRead({ id });
+        let result = await api.factionRead({ id }, that);
         return result.data;
       } catch (e) {
         console.log(e);
@@ -165,7 +167,7 @@ export default {
           let result0 = await api.deleteFile({ path: result.pic });
         }
         try {
-          let result1 = await api.factionDelete({ id });
+          let result1 = await api.factionDelete({ id }, that);
           that.$hint({ msg: "删除成功" });
           that.factionQueryAll();
         } catch (e) {

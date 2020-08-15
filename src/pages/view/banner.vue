@@ -7,6 +7,7 @@
         <v-btn text>更新</v-btn>
       </v-toolbar>
       <v-data-table align="center" :headers="headers" disable-sort :items="items">
+        <template v-slot:item.cid="{item}">{{columnByCid[item.cid].name}}</template>
         <template v-slot:item.oper="{item}">
           <v-btn fab x-small depressed title="删除" class="mx-1" @click="bannerDelete(item.id)">
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
@@ -35,8 +36,8 @@
                     label="所属分类"
                     :items="columns"
                     item-text="name"
-                    item-value="en"
-                    v-model="bannerModel.origin"
+                    item-value="id"
+                    v-model="bannerModel.cid"
                   ></v-select>
                 </v-col>
                 <v-col cols="6">
@@ -69,7 +70,7 @@ export default {
   data: () => ({
     headers: [
       { text: "ID", value: "id" },
-      { text: "所属栏目", value: "origin" },
+      { text: "所属栏目", value: "cid" },
       { text: "排序", value: "order" },
       { text: "发布时间", value: "date" },
       { text: "操作", value: "oper" },
@@ -82,8 +83,9 @@ export default {
       pic: "",
       order: "",
       url: "",
-      origin: "",
+      cid: "",
     },
+    columns: [],
     imgFile: {},
   }),
   methods: {
@@ -192,22 +194,33 @@ export default {
         }
       });
     },
+    async columnQueryAll() {
+      let that = this;
+      try {
+        let result = await api.columnQueryAll({}, that);
+        that.columns = result.code === 200 ? result.data : [];
+        // console.log(that.columns);
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
   async mounted() {
     let that = this;
+    that.columnQueryAll();
     that.bannerQueryAll();
   },
   components: {
     upload: () => import("@components/upload.vue"),
   },
   computed: {
-    columns() {
+    columnByCid() {
       let that = this;
-      let arr = [];
-      for (let item in that.$u.xz) {
-        arr.push(that.$u.xz[item]);
-      }
-      return arr;
+      let obj = {};
+      that.columns.forEach((item, idx) => {
+        obj[item.id] = item;
+      });
+      return obj;
     },
   },
 };

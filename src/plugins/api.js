@@ -181,11 +181,10 @@ export async function upload(data, obj = {}, deletePath = "") {
           let result0 = await deleteFile({
             path: deletePath
           });
-          if (result0.code === 200) {
-            console.log('删除' + deletePath + '图片成功')
-          } else {
-            console.error(result0.msg, '删除' + deletePath + '失败')
-          }
+          obj.$hint({
+            msg: result0.msg,
+            type: "error"
+          })
         } catch (e) {
           console.error(e, '删除' + deletePath + '失败')
         }

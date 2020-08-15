@@ -51,7 +51,7 @@ export default {
     async siteGet() {
       let that = this;
       try {
-        let result = await api.siteGet();
+        let result = await api.siteGet({}, that);
         if (result.code === 200 && result.data) return result.data;
         return {
           name: "",
@@ -61,7 +61,7 @@ export default {
           git: "",
           filesize: "",
           cookiePass: "",
-          home:""
+          home: "",
         };
       } catch (e) {
         console.log(e);
@@ -78,7 +78,7 @@ export default {
         that.siteModel.logo = result1.code === 200 ? result1.data : "";
       }
       try {
-        let result = await api.siteUpdate(that.siteModel);
+        let result = await api.siteUpdate(that.siteModel, that);
         that.$hint({ msg: "修改成功" });
       } catch (e) {
         console.log(e);
