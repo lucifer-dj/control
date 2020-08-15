@@ -1,15 +1,19 @@
-	const Controller = require('egg').Controller;
+// 角色管理
 
-class ProductController extends Controller {
+const Controller = require('egg').Controller;
+
+class CaseController extends Controller {
 	constructor(ctx){
 		super(ctx);
-		this.table = 'product';
+		this.table = 'role';
 	}
 	async queryAll() {
 		const { ctx, service, table } = this;
 		let req = ctx.request.body
 		let result = await service.db.queryAll(table,{
-			offset:req.num
+			where:{cid:req.cid},
+      limit:10,
+      offset: req.num
 		});
 		if(result){
 			ctx.success('成功',result)
@@ -21,8 +25,8 @@ class ProductController extends Controller {
 		const { ctx, service, table } = this;
 		let req = ctx.request.body
 		let result = await service.db.add(table,req)
-		if(result)  ctx.success('成功添加一方势力')
-			else	ctx.err('添加势力失败')
+		if(result)  ctx.success('成功添加一位角色')
+			else	ctx.err('添加角色失败')
 		}
 	async read() {
 		const { ctx, service, table } = this;
@@ -35,7 +39,7 @@ class ProductController extends Controller {
 		const { ctx, service, table } = this;
 		let req = ctx.request.body;
 		let result = await service.db.deleteSingle(table,req)
-		if(result) ctx.success('成功删除一方势力')
+		if(result) ctx.success('成功删除一条数据')
 			else ctx.err('删除失败')
 		}
 	async update() {
@@ -47,4 +51,4 @@ class ProductController extends Controller {
 		}
 }
 
-	module.exports = ProductController;
+module.exports = CaseController;
