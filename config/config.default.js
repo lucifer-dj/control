@@ -70,7 +70,6 @@ module.exports = (appInfo) => {
   config.staticPath = path.resolve(__dirname, "../app/static/");
   config.site =
     appInfo.env === "prod" ? "http://119.45.57.238" : "http://127.0.0.1:7001";
-
   return {
     ...config,
     ...userConfig,
