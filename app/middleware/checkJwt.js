@@ -1,6 +1,7 @@
-module.exports = (options,app)=>{
-	return async function checkJwt(ctx,next){
-		if(app.config.env==='local') return await next();
+module.exports = (options, app) => {
+	return async function checkJwt(ctx, next) {
+		if (app.config.env === 'local') return await next();
+		if (ctx.request.method === "GET") return await next();
 		let authorization = ctx.request.header.authorization
 		if (!(authorization.length > 0)) {
 			ctx.err('请重新登录', 401)
