@@ -7,7 +7,6 @@
         <v-spacer></v-spacer>
         <v-btn text>搜索</v-btn>
       </v-toolbar>
-
       <v-data-table disable-sort :items="items" :headers="headers">
         <template v-slot:item.oper="{item}">
           <v-btn fab x-small depressed title="删除" class="mx-1" @click="realmDelete(item.id)">
@@ -19,7 +18,6 @@
         </template>
       </v-data-table>
     </v-card>
-
     <v-dialog v-model="dialog" fullscreen persistent hide-overlay>
       <v-card class="d-flex align-center flex-column" v-if="dialog">
         <v-card-title class="justify-center text-h5">{{dialogType==="add"?'添加新境界':"更新境界"}}</v-card-title>
@@ -37,18 +35,13 @@
           </v-card-text>
         </v-col>
         <v-card-actions>
-          <v-btn
-            width="100"
-            class="mx-3"
-            @click="submit(dialogType)"
-          >{{dialogType==="add"?'添加新境界':"更新境界"}}</v-btn>
+          <v-btn width="100" class="mx-3" @click="submit(dialogType)">{{dialogType==="add"?'添加新境界':"更新境界"}}</v-btn>
           <v-btn width="100" class="mx-3" @click="realmModelReset(1);">关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
   </v-container>
 </template>
-
 <script>
 import * as api from "@api";
 export default {
@@ -105,7 +98,7 @@ export default {
       try {
         let result0 = await api.upload(that.imgFile, that);
         that.realmModel.start = new Date().valueOf();
-        that.realmModel.pic = result0 ? result0 : "";
+        that.realmModel.pic = result0.code === 200 ? result0.data : "";
         that.realmModel.cid = that.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await api.realmAdd(that.realmModel, that);
@@ -119,7 +112,7 @@ export default {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
         let res = await api.upload(that.imgFile, that, that.realmModel.pic);
-        that.realmModel.pic = res ? res : "";
+        that.realmModel.pic = res.code === 200 ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       that.realmModel.update = new Date().valueOf();
@@ -153,7 +146,7 @@ export default {
     async realmDelete(id) {
       let that = this;
       that.$toast({ msg: "确定要删除这方境界吗？" });
-      that.bus.$on("toastConfirm", async function () {
+      that.bus.$on("toastConfirm", async function() {
         let result = await that.realmRead(id);
         if (result.pic) {
           let result0 = await api.deleteFile({ path: result.pic }, that);

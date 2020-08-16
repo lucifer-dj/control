@@ -5,9 +5,9 @@
         <v-card-title v-if="title.length>0">{{title}}</v-card-title>
         <v-card-text class="text-h6">{{msg}}</v-card-text>
         <v-card-actions class="d-flex">
-          <v-btn @click="confirm" color="#e1f3d8" class="success--text">确认</v-btn>
+          <v-btn @click="confirm" class="confirm" text>确认</v-btn>
           <v-spacer></v-spacer>
-          <v-btn @click="close" color="#fef0f0" class="red--text">取消</v-btn>
+          <v-btn @click="close" text class="close">取消</v-btn>
         </v-card-actions>
       </v-card>
     </v-overlay>
@@ -21,8 +21,7 @@ export default {
     bool: false,
     title: "",
   }),
-  mounted() {
-  },
+  mounted() {},
   methods: {
     confirm() {
       let that = this;
@@ -33,4 +32,26 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.confirm {
+  border: 1px solid #0094ff;
+  color: #fff;
+  background-color: #0094ff;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #fff;
+    border-color: #0094ff;
+    color: #0094ff;
+  }
+}
+.close {
+  border: 1px solid #dcdfe6;
+  color: #606266;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #ecf5ff;
+    border-color: #c6e2ff;
+    color: #0094ff;
+  }
+}
 </style>

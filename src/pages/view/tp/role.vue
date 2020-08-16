@@ -16,8 +16,8 @@
       <v-data-table disable-sort :items="items" :headers="headers" show-select>
         <!-- <template v-slot:item.id="{item}">{{item-key}}</template> -->
         <template
-          v-slot:item.start="{item}"
-        >{{$u.format.call(new Date(Number(item.update?item.update:item.start)), "yyyy-MM-dd")}}</template>
+          v-slot:item.date="{item}"
+        >{{$u.format.call(new Date(Number(item.date)), "yyyy-MM-dd")}}</template>
         <template v-slot:item.oper="{item}">
           <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteCase(item.id)">
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
@@ -72,7 +72,7 @@ export default {
       { text: "性别", value: "sex", align: "center" },
       { text: "境界", value: "realm", align: "center" },
       { text: "所属势力", value: "faction", align: "center" },
-      { text: "发布日期", value: "date", align: "center" },
+      { text: "日期", value: "date", align: "center" },
       { text: "操作", value: "oper", align: "center" },
     ],
     items: [],
@@ -112,6 +112,9 @@ export default {
       try {
         let result = await api.roleQueryAll({ cid: that.cid, num: 0 }, that);
         that.items = result.code === 200 ? result.data : [];
+        that.items.forEach((item, idx) => {
+          item.date = item.update ? item.update : item.start;
+        });
         console.log(result);
       } catch (e) {
         console.log(e);

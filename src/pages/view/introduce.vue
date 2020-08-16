@@ -30,6 +30,7 @@ export default {
   mounted() {
     let that = this;
     // that.$loading();
+    that.$toast({msg:'确定要这么做吗？'})
   },
 };
 </script>

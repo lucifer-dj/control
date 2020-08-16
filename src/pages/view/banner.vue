@@ -6,13 +6,7 @@
         <v-btn text @click="dialog=true;">+添加</v-btn>
         <v-btn text>更新</v-btn>
       </v-toolbar>
-      <v-data-table
-        align="center"
-        :headers="headers"
-        disable-sort
-        :items="items"
-        v-if="!$u.checkObjectIsEmpty(columnByCid)"
-      >
+      <v-data-table align="center" :headers="headers" disable-sort :items="items" v-if="!$u.checkObjectIsEmpty(columnByCid)">
         <template v-slot:item.cid="{item}">{{columnByCid[item.cid].name}}</template>
         <template v-slot:item.oper="{item}">
           <v-btn fab x-small depressed title="删除" class="mx-1" @click="bannerDelete(item.id)">
@@ -24,27 +18,18 @@
         </template>
       </v-data-table>
     </v-card>
-
     <v-dialog v-model="dialog" persistent class="v-dialog">
       <v-row justify="center" v-if="dialog">
         <v-col cols="6" class="pa-0 ma-0">
           <v-card class="pa-5">
-            <v-card-title
-              class="justify-center text-uppercase text-h5"
-            >{{dialogType=='add'?'添加':'更新'}}banner</v-card-title>
+            <v-card-title class="justify-center text-uppercase text-h5">{{dialogType=='add'?'添加':'更新'}}banner</v-card-title>
             <v-card-text>
               <v-row>
                 <v-col cols="6">
                   <v-text-field label="标题" v-model="bannerModel.title"></v-text-field>
                 </v-col>
                 <v-col cols="6">
-                  <v-select
-                    label="所属分类"
-                    :items="columns"
-                    item-text="name"
-                    item-value="id"
-                    v-model="bannerModel.cid"
-                  ></v-select>
+                  <v-select label="所属分类" :items="columns" item-text="name" item-value="id" v-model="bannerModel.cid"></v-select>
                 </v-col>
                 <v-col cols="6">
                   <v-text-field label="跳转网址" v-model="bannerModel.url"></v-text-field>
@@ -56,11 +41,7 @@
               </v-row>
             </v-card-text>
             <v-card-actions class="justify-center">
-              <v-btn
-                width="120"
-                class="mx-2"
-                @click="submit(dialogType)"
-              >{{dialogType=='add'?'提交':'更新BANNER'}}</v-btn>
+              <v-btn width="120" class="mx-2" @click="submit(dialogType)">{{dialogType=='add'?'提交':'更新BANNER'}}</v-btn>
               <v-btn width="120" class="mx-2" @click="bannerModelReset(1)">关闭</v-btn>
             </v-card-actions>
           </v-card>
@@ -175,7 +156,7 @@ export default {
     async bannerDelete(id) {
       let that = this;
       that.$toast({ msg: "确认删除吗？" });
-      that.bus.$on("toastConfirm", async function () {
+      that.bus.$on("toastConfirm", async function() {
         if (that.bannerModel.pic.length > 0) {
           try {
             let result = await api.deleteFile({ path: that.bannerModel.pic });
@@ -200,7 +181,9 @@ export default {
       let that = this;
       try {
         let result = await api.columnQueryAll({}, that);
-        that.columns = result.code === 200 ? result.data : [];
+        that.columns.push({ name: '首页', id: '-1' });
+        let arr = result.code === 200 ? result.data : [];
+        that.columns = that.columns.concat(arr);
       } catch (e) {
         console.log(e);
       }
@@ -213,6 +196,7 @@ export default {
       that.columns.forEach((item, idx) => {
         obj[item.id] = item;
       });
+      obj['-1'] = { name: '首页', id: '-1' }
       return obj;
     },
   },
