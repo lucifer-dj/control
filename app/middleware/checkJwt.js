@@ -1,7 +1,14 @@
 module.exports = (options, app) => {
   return async function checkJwt(ctx, next) {
-    if (app.config.env === "local") return await next();
-    if (ctx.request.method === "GET") return await next();
+    for (let i of options.methods) {
+      if (ctx.request.method === i.toUpperCase()) return await next();
+    }
+    let whiteList = options.whiteList || [];
+    let whiteUrl = whiteList.some((item) => ctx.url.startsWith(item));
+    if (whiteUrl) {
+      // console.log("再白名单");
+      return await next();
+    }
     let authorization = ctx.request.header.authorization;
     if (!(authorization.length > 0)) {
       ctx.err("请重新登录", 401);

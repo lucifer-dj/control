@@ -2,10 +2,10 @@
 <main class="main">
   <section class="banner banner-container">
     <ul class="swiper-wrapper">
-      {% for item in tempArr %}
+      {% for item in banners %}
       <li class="swiper-slide">
-        <a href="">
-          <img src="{{static}}/images/1498375879733.jpg" alt="" />
+        <a href="{{item.url}}" title="{{item.title}}">
+          <img src="{{item.pic}}" alt="" />
         </a>
       </li>
       {% endfor %}
@@ -23,6 +23,7 @@
     </div>
   </section>
   <div class="white_temp_space"></div>
+  <!-- 角色展示 -->
   <section class="case">
     <article>
       <div class="head">
@@ -43,7 +44,7 @@
           <li class="swiper-slide">
             <a href="">
               <div class="img">
-                <img src="{{ static }}/images/1499083067928.jpg" alt="" />
+                <img src="{{item.avatar}}" alt="" />
               </div>
               <div class="detail">
                 <h2>{{item.name}}</h2>
@@ -69,6 +70,7 @@
       </div>
     </article>
   </section>
+  <!-- 关于雪中 -->
   <section class="about">
     <article>
       <div class="head">
@@ -112,7 +114,8 @@
       </div>
     </div>
   </section>
-  <section class="news">
+  <!-- 势力介绍 -->
+  <section class="faction">
     <div class="top_space"></div>
     <article>
       <div class="head">
@@ -166,6 +169,7 @@
       </div>
     </article>
   </section>
+  <!-- 暂无 -->
   <section class="scope">
     <article>
       <div class="head">
@@ -217,65 +221,66 @@
       </div>
     </article>
   </section>
-  <section class="story">
+  <!-- 境界划分 -->
+  <section class="realm">
     <article>
       <div class="content">
         <div class="first">
           <h2>{{columns.realm.name}}</h2>
         </div>
         <a href="" class="detail">
-          <h2>荣获欧特克（Autodesk）工程全球奖</h2>
+          <h2>{{realms[0].name}}</h2>
           <div class="text">
-            客户对于市场需求变得越来越复杂北京结合数字技术的发展与市场的综合特性，通过与集团相关
+            {{realms[0].introduce}}
           </div>
           <div class="more">
             more
           </div>
         </a>
         <div class="second_img">
-          <img src="{{ static }}/images/1498546516300.jpg" alt="" />
+          <img src="{{realms[0].pic}}" alt="" />
         </div>
         <a href="" class="detail">
-          <h2>我们的价值观</h2>
+          <h2>{{realms[1].title}}</h2>
           <div class="text">
-            许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+            {{realms[1].indtoduce}}
           </div>
           <div class="more">
             more
           </div>
         </a>
         <div class="img">
-          <img src="{{ static }}/images/1498546555710.jpg" alt="" />
+          <img src="{{realms[1].pic}}" alt="" />
         </div>
         <a href="" class="detail">
-          <h2>客户专区-由此进入</h2>
+          <h2>{{realms[2].title}}</h2>
           <div class="text">
-            我们追求的是以更周到、更快捷的服务，不断为客户创造价值
+            {{realms[2].introduce}}
           </div>
           <div class="more">
             more
           </div>
         </a>
         <div class="img">
-          <img src="{{ static }}/images/1498546531471.jpg" alt="" />
+          <img src="{{realms[2].pic}}" alt="" />
         </div>
         <a href="" class="detail">
-          <h2>我司荣获十二五广东省环境保护产业 ...</h2>
+          <h2>{{realms[3].title}}</h2>
           <div class="text">
-            消费者接触点的多样化，增加了企业向目标消费者传达想法的难度通过传播设计可以准确地识别消费者的喜好、流行趋势
-            ...
+            {{realms[3].introduce}}
           </div>
           <div class="more">
             more
           </div>
         </a>
         <div class="img">
-          <img src="{{ static }}/images/1498546567710.jpg" alt="" />
+          <img src="{{realms[3].pic}}" alt="" />
         </div>
       </div>
     </article>
   </section>
-  <section class="event">
+  <!-- 时间线 -->
+  <section class="year">
     <article>
       <ul>
         {% for item in years %}
@@ -306,6 +311,7 @@
       </ul>
     </article>
   </section>
+  <!-- 其他 -->
   <section class="foot">
     <div class="wrap">
       <div class="first">

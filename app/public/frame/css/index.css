@@ -54,23 +54,27 @@ header > nav > ul {
 header > nav > ul > li {
   height: 82px;
   float: left;
-  text-align: center;
   line-height: 82px;
-  box-sizing: border-box;
+  transition: box-shadow 0.3s ease 0.1s;
 }
 header > nav > ul > li > a {
   color: #666666;
   font-size: 16px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 82px;
   padding: 0 26px;
 }
 header > nav > ul > li:hover {
-  border-bottom: 2px solid #233876;
   color: #233876 !important;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
 }
-.header_li_active {
-  border-bottom: 2px solid #233876;
-  color: #233876 !important;
+header > nav > ul > li:hover > a {
+  color: #233876;
+}
+header > nav > ul .nav_line {
+  background-color: #222;
 }
 .head {
   width: 100%;
@@ -215,6 +219,7 @@ header > nav > ul > li:hover {
   display: block;
   width: calc(100% - 20px);
   box-sizing: border-box;
+  transition: box-shadow 0.3s ease;
 }
 .main .case > article .case_swiper .swiper-slide > a .img {
   width: 380px;
@@ -224,6 +229,7 @@ header > nav > ul > li:hover {
 .main .case > article .case_swiper .swiper-slide > a .img > img {
   width: 100%;
   height: 100%;
+  transition: transform 0.3s ease 0.1s;
 }
 .main .case > article .case_swiper .swiper-slide > a .detail {
   width: 100%;
@@ -240,6 +246,7 @@ header > nav > ul > li:hover {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  transition: font 0.3s;
 }
 .main .case > article .case_swiper .swiper-slide > a .detail .text {
   font-size: 14px;
@@ -293,10 +300,17 @@ header > nav > ul > li:hover {
   transition: transform 0.3s;
 }
 .main .case > article .case_swiper .swiper-slide > a:hover {
-  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.2);
+}
+.main .case > article .case_swiper .swiper-slide > a:hover .img > img {
+  transform: scale(1.1, 1.1);
 }
 .main .case > article .case_swiper .swiper-slide > a:hover .detail {
   transform: translateX(10px);
+}
+.main .case > article .case_swiper .swiper-slide > a:hover .detail > h2 {
+  color: #233876;
+  font-size: 18px;
 }
 .main .case > article .case_swiper .swiper-slide > a:hover::after {
   transform: scaleX(1);
@@ -439,13 +453,13 @@ header > nav > ul > li:hover {
   height: 40px;
   background-color: rgba(0, 0, 0, 0.2);
 }
-.main .news {
+.main .faction {
   width: 100%;
   height: 720px;
   background-color: #fff;
   padding-top: 215px;
 }
-.main .news > article .news_content .news_l {
+.main .faction > article .news_content .news_l {
   padding: 44px 60px;
   display: block;
   width: 400px;
@@ -453,10 +467,10 @@ header > nav > ul > li:hover {
   float: left;
   background-color: #f8f8f8;
 }
-.main .news > article .news_content .news_l .date {
+.main .faction > article .news_content .news_l .date {
   font-size: 24px;
 }
-.main .news > article .news_content .news_l .title {
+.main .faction > article .news_content .news_l .title {
   margin-top: 20px;
   font-size: 18px;
   overflow: hidden;
@@ -464,7 +478,7 @@ header > nav > ul > li:hover {
   text-overflow: ellipsis;
   color: #444;
 }
-.main .news > article .news_content .news_l .text {
+.main .faction > article .news_content .news_l .text {
   margin-top: 20px;
   line-height: 24px;
   display: -webkit-box;
@@ -474,7 +488,7 @@ header > nav > ul > li:hover {
   position: relative;
   transition: padding 0.3s;
 }
-.main .news > article .news_content .news_l .text::after {
+.main .faction > article .news_content .news_l .text::after {
   content: "";
   position: absolute;
   top: 0;
@@ -484,16 +498,16 @@ header > nav > ul > li:hover {
   background-color: gray;
   opacity: 0;
 }
-.main .news > article .news_content .news_l .image {
+.main .faction > article .news_content .news_l .image {
   margin-top: 30px;
   width: 520px;
   height: 160px;
   overflow: hidden;
 }
-.main .news > article .news_content .news_l .image > img {
+.main .faction > article .news_content .news_l .image > img {
   transition: transform 0.3s;
 }
-.main .news > article .news_content .news_l .more {
+.main .faction > article .news_content .news_l .more {
   width: 150px;
   margin-top: 40px;
   height: 40px;
@@ -501,7 +515,7 @@ header > nav > ul > li:hover {
   position: relative;
   transition: background-color 0.3s;
 }
-.main .news > article .news_content .news_l .more::before {
+.main .faction > article .news_content .news_l .more::before {
   content: "";
   position: absolute;
   top: 50%;
@@ -513,7 +527,7 @@ header > nav > ul > li:hover {
   transition: all 0.3s;
   opacity: 0;
 }
-.main .news > article .news_content .news_l .more::after {
+.main .faction > article .news_content .news_l .more::after {
   content: "";
   position: absolute;
   top: 20%;
@@ -525,50 +539,50 @@ header > nav > ul > li:hover {
   transition: all 0.3s;
   opacity: 0;
 }
-.main .news > article .news_content .news_l:hover .text {
+.main .faction > article .news_content .news_l:hover .text {
   padding-left: 20px;
 }
-.main .news > article .news_content .news_l:hover .text::after {
+.main .faction > article .news_content .news_l:hover .text::after {
   opacity: 1;
 }
-.main .news > article .news_content .news_l:hover .image > img {
+.main .faction > article .news_content .news_l:hover .image > img {
   transform: scale(1.1, 1.1);
 }
-.main .news > article .news_content .news_l:hover .more {
+.main .faction > article .news_content .news_l:hover .more {
   background-color: #233876;
 }
-.main .news > article .news_content .news_l:hover .more::after {
+.main .faction > article .news_content .news_l:hover .more::after {
   top: 50%;
   opacity: 1;
 }
-.main .news > article .news_content .news_l:hover .more::before {
+.main .faction > article .news_content .news_l:hover .more::before {
   left: 50%;
   opacity: 1;
 }
-.main .news > article .news_content .news_r {
+.main .faction > article .news_content .news_r {
   width: 550px;
   height: 510px;
   float: right;
 }
-.main .news > article .news_content .news_r > li {
+.main .faction > article .news_content .news_r > li {
   width: 550px;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.5s;
 }
-.main .news > article .news_content .news_r > li > a {
+.main .faction > article .news_content .news_r > li > a {
   display: block;
   width: 550px;
   height: 170px;
   box-sizing: border-box;
   padding: 40px 20px 36px;
 }
-.main .news > article .news_content .news_r > li > a .li_l {
+.main .faction > article .news_content .news_r > li > a .li_l {
   width: 380px;
   float: left;
   position: relative;
   transition: transform 0.5s;
 }
-.main .news > article .news_content .news_r > li > a .li_l .title {
+.main .faction > article .news_content .news_r > li > a .li_l .title {
   width: 380px;
   height: 40px;
   color: #444;
@@ -577,14 +591,14 @@ header > nav > ul > li:hover {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.main .news > article .news_content .news_r > li > a .li_l .text {
+.main .faction > article .news_content .news_r > li > a .li_l .text {
   line-height: 24px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
-.main .news > article .news_content .news_r > li > a .li_l::before {
+.main .faction > article .news_content .news_r > li > a .li_l::before {
   content: "";
   position: absolute;
   top: 8px;
@@ -595,15 +609,15 @@ header > nav > ul > li:hover {
   border-radius: 50%;
   z-index: 10;
 }
-.main .news > article .news_content .news_r > li > a .li_r {
+.main .faction > article .news_content .news_r > li > a .li_r {
   width: 60px;
   float: right;
 }
-.main .news > article .news_content .news_r > li > a .li_r .date {
+.main .faction > article .news_content .news_r > li > a .li_r .date {
   font-size: 22px;
   font-weight: 100;
 }
-.main .news > article .news_content .news_r > li > a .li_r .arrow {
+.main .faction > article .news_content .news_r > li > a .li_r .arrow {
   margin-top: 40px;
   width: 50px;
   height: 20px;
@@ -611,20 +625,20 @@ header > nav > ul > li:hover {
   display: grid;
   place-items: center;
 }
-.main .news > article .news_content .news_r > li > a .li_r .arrow > svg {
+.main .faction > article .news_content .news_r > li > a .li_r .arrow > svg {
   transform: translateX(-5px);
   width: 50px;
   height: 20px;
   fill: #233876;
   transition: transform 0.3s;
 }
-.main .news > article .news_content .news_r > li:hover {
+.main .faction > article .news_content .news_r > li:hover {
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
 }
-.main .news > article .news_content .news_r > li:hover > a .li_l {
+.main .faction > article .news_content .news_r > li:hover > a .li_l {
   transform: translateX(20px);
 }
-.main .news > article .news_content .news_r > li:hover > a .li_r .arrow > svg {
+.main .faction > article .news_content .news_r > li:hover > a .li_r .arrow > svg {
   transform: translateX(5px);
 }
 .main .scope {
@@ -783,46 +797,46 @@ header > nav > ul > li:hover {
   border: 2px solid #bbb;
   box-sizing: border-box;
 }
-.main .story {
+.main .realm {
   height: 1050px;
   background: url(../images/1498546781654.jpg) no-repeat;
   background-size: initial;
   background-position: center center;
 }
-.main .story > article {
+.main .realm > article {
   padding: 20px;
   padding-top: 207px;
 }
-.main .story > article .content {
+.main .realm > article .content {
   width: 1170px;
   height: 720px;
   display: grid;
   grid-template-columns: 340px 490px 340px;
   grid-template-rows: repeat(3, 1fr);
 }
-.main .story > article .content > a {
+.main .realm > article .content > a {
   display: block;
 }
-.main .story > article .content .first {
+.main .realm > article .content .first {
   padding-top: 120px;
   box-sizing: border-box;
   padding-left: 60px;
 }
-.main .story > article .content .first > h2 {
+.main .realm > article .content .first > h2 {
   font-weight: 300;
   color: #fff;
   font-size: 18px;
 }
-.main .story > article .content .detail {
+.main .realm > article .content .detail {
   padding: 45px 45px 0;
   transition: all 0.3s;
 }
-.main .story > article .content .detail > h2 {
+.main .realm > article .content .detail > h2 {
   font-weight: 300;
   color: #fff;
   height: 50px;
 }
-.main .story > article .content .detail .text {
+.main .realm > article .content .detail .text {
   color: #b4b9ca;
   line-height: 24px;
   font-size: 13px;
@@ -831,7 +845,7 @@ header > nav > ul > li:hover {
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
-.main .story > article .content .detail .more {
+.main .realm > article .content .detail .more {
   margin-top: 30px;
   width: 60px;
   height: 20px;
@@ -841,42 +855,42 @@ header > nav > ul > li:hover {
   line-height: 20px;
   position: relative;
 }
-.main .story > article .content .detail:hover {
+.main .realm > article .content .detail:hover {
   background-color: rgba(30, 51, 111, 0.5);
 }
-.main .story > article .content .detail:hover .second_img > img {
+.main .realm > article .content .detail:hover .second_img > img {
   transform: scale(1.1, 1.1);
 }
-.main .story > article .content .img > img {
+.main .realm > article .content .img > img {
   width: 100%;
   height: 100%;
 }
-.main .event {
+.main .year {
   background: #fff url(../images/1499245706604.png) no-repeat;
   background-position: bottom;
   height: 571px;
   position: relative;
   padding-top: 120px;
 }
-.main .event > article {
+.main .year > article {
   height: 240px;
 }
-.main .event > article > ul {
+.main .year > article > ul {
   width: 1200px;
   height: 100%;
 }
-.main .event > article > ul > li {
+.main .year > article > ul > li {
   width: 300px;
   height: 100%;
   float: left;
 }
-.main .event > article > ul > li > a {
+.main .year > article > ul > li > a {
   display: block;
   width: 100%;
   height: 100%;
   transition: box-shadow 0.3s;
 }
-.main .event > article > ul > li > a .date {
+.main .year > article > ul > li > a .date {
   height: 110px;
   box-sizing: border-box;
   padding-top: 60px;
@@ -886,7 +900,7 @@ header > nav > ul > li:hover {
   position: relative;
   font-weight: 100;
 }
-.main .event > article > ul > li > a .date::after {
+.main .year > article > ul > li > a .date::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -901,7 +915,7 @@ header > nav > ul > li:hover {
   border: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 0.3s;
 }
-.main .event > article > ul > li > a .date::before {
+.main .year > article > ul > li > a .date::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -913,7 +927,7 @@ header > nav > ul > li:hover {
   transform: translate(-50%, 50%);
   z-index: 19;
 }
-.main .event > article > ul > li > a .text {
+.main .year > article > ul > li > a .text {
   box-sizing: border-box;
   padding: 40px 50px 0;
   text-align: center;
@@ -925,7 +939,7 @@ header > nav > ul > li:hover {
   line-height: 24px;
   position: relative;
 }
-.main .event > article > ul > li > a .text::after {
+.main .year > article > ul > li > a .text::after {
   position: absolute;
   content: "";
   top: 10px;
@@ -934,26 +948,26 @@ header > nav > ul > li:hover {
   height: 0;
   background-color: rgba(0, 0, 0, 0.1);
 }
-.main .event > article > ul > li > a:hover {
+.main .year > article > ul > li > a:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.12);
 }
-.main .event > article > ul > li > a:hover .date {
+.main .year > article > ul > li > a:hover .date {
   padding-top: 50px;
 }
-.main .event > article > ul > li > a:hover .date::after {
+.main .year > article > ul > li > a:hover .date::after {
   background-color: #fff;
   border-color: #222;
   border-width: 2px;
   width: 12px;
   height: 12px;
 }
-.main .event > article > ul > li > a:hover .text {
+.main .year > article > ul > li > a:hover .text {
   padding-top: 50px;
 }
-.main .event > article > ul > li > a:hover .text::after {
+.main .year > article > ul > li > a:hover .text::after {
   height: 20px;
 }
-.main .event::after {
+.main .year::after {
   content: "";
   position: absolute;
   top: 230px;

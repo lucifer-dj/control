@@ -57,4 +57,5 @@ module.exports = (app) => {
   //前台
   router.get("/", controller.frame.index.index);
   router.get("/:column", controller.frame.column.index);
+  router.get("/:column/:id", controller.frame.part.index);
 };
