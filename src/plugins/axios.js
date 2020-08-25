@@ -16,10 +16,9 @@ Service.interceptors.request.use((config) => {
   if (config.method === "post") {
     config.data = JSON.stringify(config.data);
   }
-  if (config.url !== "/login" || config.url !== "/register") {
+  if (config.url !== "panel/login" || config.url !== "panel/register") {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  // console.log(config)
   return config;
 });
 // 添加响应拦截器

@@ -19,6 +19,8 @@ export default {
   mounted() {
     //做一个进入时的验证
     let that = this;
+    let temp_loading = document.querySelector("#temp_loading");
+    temp_loading.style.display = "none";
   },
   watch: {
     $route(to, from) {

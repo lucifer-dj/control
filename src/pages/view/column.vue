@@ -104,7 +104,7 @@
               <v-col cols="12" md="6">
                 <v-text-field label="关键词" v-model="columnModel.keywords"></v-text-field>
               </v-col>
-              <v-col cols="6">
+              <v-col cols="12">
                 <v-subheader class="px-0">选择栏目图标</v-subheader>
                 <v-sheet>
                   <v-btn
@@ -213,6 +213,8 @@ export default {
     },
     async submit(type) {
       let that = this;
+      if (that.checkLink(that.columnModel))
+        return that.$hint({ msg: "link重复", type: "error" });
       if (type != "add") return that.updateColumn();
       that.$v.columnModel.$touch();
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
@@ -235,10 +237,16 @@ export default {
       try {
         let result = await api.columnQueryAll({}, that);
         that.items = result.code === 200 ? result.data : [];
-        // console.log(that.items);
+        console.log(that.items);
       } catch (e) {
         console.log(e);
       }
+    },
+    checkLink(params) {
+      let that = this;
+      let { link } = params;
+      if (that.columnModel.link === link) return false;
+      return Boolean(that.items.find((ele) => ele.link === link));
     },
     async readColumn(id) {
       let that = this;

@@ -40,7 +40,7 @@ export default {
 
 .k-square3a {
   transform: translate(0, -25px);
-  margin-right: 5px;
+  margin-right: 3px;
   background-color: #0094ff;
 }
 .k-square3b {
@@ -50,7 +50,7 @@ export default {
 .k-square3c {
   transform: translate(-25px, 0);
   background-color: #ee6362;
-  margin-right: 5px;
+  margin-right: 3px;
 }
 .k-square3d {
   transform: translate(0, 25px);
