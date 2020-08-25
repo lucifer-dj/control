@@ -1,5 +1,5 @@
 {% extends "../public/layout.html" %} {% block main %}
-<main class="main">
+<main class="main_list">
   <section class="banner banner-container">
     <ul class="swiper-wrapper">
       {% for item in banners %}
@@ -23,51 +23,50 @@
     </div>
   </section>
   <div class="white_temp_space"></div>
-  <!-- 角色展示 -->
-  <section class="case">
+  <section class="role">
     <article>
-      <div class="head">
-        <div class="head_l">
-          <h2>{{columns.role.name}}</h2>
-          <span>{{columns.role.en}}</span>
+      <div class="peo_left">
+        <div class="peo_head">
+          <p class="en">{{columns.role.en}}</p>
+          <span>{{columns.role.name}}</span>
         </div>
-        <div class="space"></div>
-        <div class="head_r">
-          <a href="" class="head_a_active">全部</a>
-          <a href="">全产业链业务</a>
-          <a href="">新资源开发</a>
-        </div>
-      </div>
-      <div class="case_swiper case-container">
-        <ul class="swiper-wrapper">
-          {% for item in roles %}
-          <li class="swiper-slide">
-            <a href="">
-              <div class="img">
-                <img src="{{item.avatar}}" alt="" />
-              </div>
-              <div class="detail">
-                <h2>{{item.name}}</h2>
-                <div class="text">{{item.introduce}}</div>
-              </div>
-              <div class="circle"></div>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-        <div class="swiper-pagination case_pagination"></div>
-        <div class="left case_swiper_left">
-          <i class="iconfont iconfont-zuo-5"></i>
-        </div>
-        <div class="right case_swiper_right">
-          <i class="iconfont iconfont-you-5"></i>
+        <p class="text">
+          公司践行追求卓越造福人类的宗旨，始终秉承执行力与人性化的管理理念遵循员工与企业
+        </p>
+        <div class="btns">
+          <div class="left_btn"></div>
+          <div class="space"></div>
+          <div class="right_btn"></div>
         </div>
       </div>
+      <div class="peo_right">
+        <div class="peo_swiper peo-container">
+          <ul class="peo_ul swiper-wrapper">
+            {% for item in roles %}
+            <li class="swiper-slide">
+              <a href="" class="">
+                <div class="img">
+                  <img src="{{ static }}/images/1499169822486.png" alt="" />
+                </div>
+                <div class="detail">
+                  <div class="peo_head">
+                    <div class="peo_head_left">
+                      <p class="name">{{item.name}}</p>
+                      <p class="zhiwei">抚远大将军</p>
+                    </div>
+                    <div class="more"></div>
+                  </div>
+                  <p class="text">
+                    {{item.introduce}}
+                  </p>
+                </div>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
-      <div class="dots">
-        <div class="dot industry_dot_active"></div>
-        <div class="dot"></div>
-      </div>
+      <div class="clear"></div>
     </article>
   </section>
   <!-- 关于雪中 -->
@@ -226,56 +225,62 @@
     <article>
       <div class="content">
         <div class="first">
-          <h2>{{columns.realm.name}}</h2>
+          <h2>特殊板块演示</h2>
         </div>
-        <a href="" class="detail">
-          <h2>{{realms[0].name}}</h2>
-          <div class="text">
-            {{realms[0].introduce}}
-          </div>
-          <div class="more">
-            more
-          </div>
-        </a>
-        <div class="second_img">
-          <img src="{{realms[0].pic}}" alt="" />
-        </div>
-        <a href="" class="detail">
-          <h2>{{realms[1].title}}</h2>
-          <div class="text">
-            {{realms[1].indtoduce}}
-          </div>
-          <div class="more">
-            more
-          </div>
-        </a>
-        <div class="img">
-          <img src="{{realms[1].pic}}" alt="" />
-        </div>
-        <a href="" class="detail">
-          <h2>{{realms[2].title}}</h2>
-          <div class="text">
-            {{realms[2].introduce}}
-          </div>
-          <div class="more">
-            more
-          </div>
-        </a>
-        <div class="img">
-          <img src="{{realms[2].pic}}" alt="" />
-        </div>
-        <a href="" class="detail">
-          <h2>{{realms[3].title}}</h2>
-          <div class="text">
-            {{realms[3].introduce}}
-          </div>
-          <div class="more">
-            more
-          </div>
-        </a>
-        <div class="img">
-          <img src="{{realms[3].pic}}" alt="" />
-        </div>
+        <ul class="story_ul">
+          <li>
+            <a href="">
+              <p class="title">我们的价值观</p>
+              <p class="text">
+                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+                ...
+              </p>
+              <div class="more">more</div>
+            </a>
+            <div class="img">
+              <img src="{{static}}/images/1498546516300.jpg" alt="" />
+            </div>
+          </li>
+          <li>
+            <a href="">
+              <p class="title">我们的价值观</p>
+              <p class="text">
+                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+                ...
+              </p>
+              <div class="more">more</div>
+            </a>
+            <div class="img">
+              <img src="{{static}}/images/1498546516300.jpg" alt="" />
+            </div>
+          </li>
+          <li>
+            <a href="">
+              <p class="title">我们的价值观</p>
+              <p class="text">
+                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+                ...
+              </p>
+              <div class="more"></div>
+            </a>
+            <div class="img">
+              <img src="{{static}}/images/1498546516300.jpg" alt="" />
+            </div>
+          </li>
+          <li>
+            <a href="">
+              <p class="title">我们的价值观</p>
+              <p class="text">
+                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+                ...
+              </p>
+              <div class="more"></div>
+            </a>
+            <div class="img">
+              <img src="{{static}}/images/1498546516300.jpg" alt="" />
+            </div>
+          </li>
+        </ul>
       </div>
     </article>
   </section>
@@ -376,7 +381,10 @@
         clickable: true,
       },
     });
+    new Swiper(".peo-container", {
+      direction: "horizontal",
+      slidesPerView: 2,
+    });
   })();
 </script>
-
 {% endblock %}
