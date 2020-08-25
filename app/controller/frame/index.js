@@ -9,7 +9,6 @@ class IndexController extends Controller {
     let indexObj = await service.frame.index();
     let frame = {
       static: config.publicPath,
-      index: true,
       test: new Date().valueOf(),
       tempArr: new Array(4).fill(1),
     };

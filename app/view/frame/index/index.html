@@ -1,5 +1,5 @@
 {% extends "../public/layout.html" %} {% block main %}
-<main class="main">
+<main class="main_list">
   <section class="banner banner-container">
     <ul class="swiper-wrapper">
       {% for item in tempArr %}
@@ -23,50 +23,50 @@
     </div>
   </section>
   <div class="white_temp_space"></div>
-  <section class="case">
+  <section class="people">
     <article>
-      <div class="head">
-        <div class="head_l">
-          <h2>{{columns.role.name}}</h2>
-          <span>{{columns.role.en}}</span>
+      <div class="peo_left">
+        <div class="peo_head">
+          <p class="en">{{columns.role.en}}</p>
+          <span>{{columns.role.name}}</span>
         </div>
-        <div class="space"></div>
-        <div class="head_r">
-          <a href="" class="head_a_active">全部</a>
-          <a href="">全产业链业务</a>
-          <a href="">新资源开发</a>
-        </div>
-      </div>
-      <div class="case_swiper case-container">
-        <ul class="swiper-wrapper">
-          {% for item in roles %}
-          <li class="swiper-slide">
-            <a href="">
-              <div class="img">
-                <img src="{{ static }}/images/1499083067928.jpg" alt="" />
-              </div>
-              <div class="detail">
-                <h2>{{item.name}}</h2>
-                <div class="text">{{item.introduce}}</div>
-              </div>
-              <div class="circle"></div>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-        <div class="swiper-pagination case_pagination"></div>
-        <div class="left case_swiper_left">
-          <i class="iconfont iconfont-zuo-5"></i>
-        </div>
-        <div class="right case_swiper_right">
-          <i class="iconfont iconfont-you-5"></i>
+        <p class="text">
+          公司践行追求卓越造福人类的宗旨，始终秉承执行力与人性化的管理理念遵循员工与企业
+        </p>
+        <div class="btns">
+          <div class="left_btn"></div>
+          <div class="space"></div>
+          <div class="right_btn"></div>
         </div>
       </div>
+      <div class="peo_right">
+        <div class="peo_swiper peo-container">
+          <ul class="peo_ul swiper-wrapper">
+            {% for item in roles %}
+            <li class="swiper-slide">
+              <a href="" class="">
+                <div class="img">
+                  <img src="{{ static }}/images/1499169822486.png" alt="" />
+                </div>
+                <div class="detail">
+                  <div class="peo_head">
+                    <div class="peo_head_left">
+                      <p class="name">{{item.name}}</p>
+                      <p class="zhiwei">抚远大将军</p>
+                    </div>
+                    <div class="more"></div>
+                  </div>
+                  <p class="text">
+                    {{item.introduce}}
+                  </p>
+                </div>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
-      <div class="dots">
-        <div class="dot industry_dot_active"></div>
-        <div class="dot"></div>
-      </div>
+      <div class="clear"></div>
     </article>
   </section>
   <section class="about">
@@ -221,57 +221,62 @@
     <article>
       <div class="content">
         <div class="first">
-          <h2>{{columns.realm.name}}</h2>
+          <h2>特殊板块演示</h2>
         </div>
-        <a href="" class="detail">
-          <h2>荣获欧特克（Autodesk）工程全球奖</h2>
-          <div class="text">
-            客户对于市场需求变得越来越复杂北京结合数字技术的发展与市场的综合特性，通过与集团相关
-          </div>
-          <div class="more">
-            more
-          </div>
-        </a>
-        <div class="second_img">
-          <img src="{{ static }}/images/1498546516300.jpg" alt="" />
-        </div>
-        <a href="" class="detail">
-          <h2>我们的价值观</h2>
-          <div class="text">
-            许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
-          </div>
-          <div class="more">
-            more
-          </div>
-        </a>
-        <div class="img">
-          <img src="{{ static }}/images/1498546555710.jpg" alt="" />
-        </div>
-        <a href="" class="detail">
-          <h2>客户专区-由此进入</h2>
-          <div class="text">
-            我们追求的是以更周到、更快捷的服务，不断为客户创造价值
-          </div>
-          <div class="more">
-            more
-          </div>
-        </a>
-        <div class="img">
-          <img src="{{ static }}/images/1498546531471.jpg" alt="" />
-        </div>
-        <a href="" class="detail">
-          <h2>我司荣获十二五广东省环境保护产业 ...</h2>
-          <div class="text">
-            消费者接触点的多样化，增加了企业向目标消费者传达想法的难度通过传播设计可以准确地识别消费者的喜好、流行趋势
-            ...
-          </div>
-          <div class="more">
-            more
-          </div>
-        </a>
-        <div class="img">
-          <img src="{{ static }}/images/1498546567710.jpg" alt="" />
-        </div>
+        <ul class="story_ul">
+          <li>
+            <a href="">
+              <p class="title">我们的价值观</p>
+              <p class="text">
+                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+                ...
+              </p>
+              <div class="more">more</div>
+            </a>
+            <div class="img">
+              <img src="{{ static }}/images/1498546516300.jpg" alt="" />
+            </div>
+          </li>
+          <li>
+            <a href="">
+              <p class="title">我们的价值观</p>
+              <p class="text">
+                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+                ...
+              </p>
+              <div class="more">more</div>
+            </a>
+            <div class="img">
+              <img src="{{ static }}/images/1498546516300.jpg" alt="" />
+            </div>
+          </li>
+          <li>
+            <a href="">
+              <p class="title">我们的价值观</p>
+              <p class="text">
+                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+                ...
+              </p>
+              <div class="more"></div>
+            </a>
+            <div class="img">
+              <img src="{{ static }}/images/1498546516300.jpg" alt="" />
+            </div>
+          </li>
+          <li>
+            <a href="">
+              <p class="title">我们的价值观</p>
+              <p class="text">
+                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+                ...
+              </p>
+              <div class="more"></div>
+            </a>
+            <div class="img">
+              <img src="{{ static }}/images/1498546516300.jpg" alt="" />
+            </div>
+          </li>
+        </ul>
       </div>
     </article>
   </section>
@@ -370,7 +375,10 @@
         clickable: true,
       },
     });
+    new Swiper(".peo-container", {
+      direction: "horizontal",
+      slidesPerView: 2,
+    });
   })();
 </script>
-
 {% endblock %}
