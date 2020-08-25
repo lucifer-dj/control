@@ -8,27 +8,51 @@ class IndexController extends Controller {
     let that = this;
     let { ctx, service, config } = that;
     let columns = await service.db.queryAll("column");
-    console.log(ctx.url);
     let isLink = columns.some((item) => ctx.url.startsWith("/" + item.link));
     if (!isLink) return (ctx.body = "<h1>没有找到当前页面</h1>");
     let params = ctx.params.column;
-    console.log(params)
-    that.role();
+
+    let p = columns.find((ele) => ele.link === params); //如果有子栏目需要修改成递归
+    await that[p.template](p);
   }
-  async role() {
+  async role(params) {
     let that = this;
-    let { ctx } = that;
-    ctx.body = ctx;
+    let { ctx, service, config } = that;
+    let data = await service.frame.role(params.origin);
+    let tempData = {
+      static: config.publicPath,
+      test: new Date().valueOf(),
+      tempArr: new Array(4).fill(1),
+      column: params,
+    };
+    Object.assign(data, tempData);
+    await ctx.render("frame/list/role", data);
   }
-  async faction() {
+  async faction(params) {
     let that = this;
-    let { ctx } = that;
-    ctx.body = ctx;
+    let { ctx, service, config } = that;
+    let data = await service.frame.faction(params.origin);
+    let tempData = {
+      static: config.publicPath,
+      test: new Date().valueOf(),
+      tempArr: new Array(4).fill(1),
+      column: params,
+    };
+    Object.assign(data, tempData);
+    await ctx.render("frame/list/faction", data);
   }
-  async realm() {
+  async realm(params) {
     let that = this;
-    let { ctx } = that;
-    ctx.body = ctx;
+    let { ctx, service, config } = that;
+    let data = await service.frame.realm(params.origin);
+    let tempData = {
+      static: config.publicPath,
+      test: new Date().valueOf(),
+      tempArr: new Array(4).fill(1),
+      column: params,
+    };
+    Object.assign(data, tempData);
+    await ctx.render("frame/list/realm", data);
   }
   async year() {
     let that = this;

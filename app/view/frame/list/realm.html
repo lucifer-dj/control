@@ -3,7 +3,7 @@
   <div class="banner">
     <img src="{{static}}/images/1499147946347.jpg" alt="" />
   </div>
-  <section class="scope">
+  <section class="project">
     <article>
       <div class="head">
         <div class="content">
@@ -19,25 +19,22 @@
         </div>
       </div>
 
-      <div class="sco">
+      <div class="pro">
         <ul>
-          {%for item in roles %}
+          {% for item in realms %}
           <li>
             <a href="">
               <div class="img">
-                <img src="{{static}}/images/1499154353589.jpg" alt="" />
+                <img src="{{static}}/images/1499083067928.jpg" alt="" />
               </div>
               <div class="detail">
-                <h2>{{item.name}}</h2>
-                <div class="text">
-                  {{item.introduce}}
-                </div>
-                <div class="more"></div>
+                <h2>能源产业优化链条进展</h2>
+                <div class="text">HARVEST STATES</div>
               </div>
+              <div class="circle"></div>
             </a>
           </li>
           {% endfor %}
-
           <div class="clear"></div>
         </ul>
       </div>
