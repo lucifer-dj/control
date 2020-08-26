@@ -58,7 +58,7 @@ export default {
   height: 100%;
 }
 html {
-  overflow-y: hidden;
+  overflow-x: hidden;
 }
 ::-webkit-scrollbar {
   height: 8px;

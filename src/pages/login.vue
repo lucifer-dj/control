@@ -1,11 +1,17 @@
 <template>
   <v-container fluid class="pa-0">
-    <v-sheet color="#fff" height="70" elevation="2" class="d-flex align-center justify-center">
+    <v-sheet
+      style="position: relative;z-index:10;"
+      color="#fff"
+      height="70"
+      elevation="2"
+      class="d-flex align-center justify-center"
+    >
       <v-card flat class="d-inline">
         <span class="text-h5">雪中悍刀行</span>
       </v-card>
     </v-sheet>
-    <v-sheet height="100vh" color="#eee">
+    <v-sheet color="#eee" style="position: relative;z-index:9;">
       <v-row>
         <v-col>
           <v-sheet class="d-flex justify-center" color="#eee" style="margin-top: 100px;">
@@ -18,8 +24,29 @@
                   <span class="text-uppercase text-h4">welcome</span>
                 </v-card-title>
                 <v-card-text>
-                  <v-text-field label="账号" v-model="userModel.account"></v-text-field>
-                  <v-text-field label="密码" v-model="userModel.password"></v-text-field>
+                  <v-text-field
+                    label="账号"
+                    v-model="userModel.account"
+                    :error-messages="accountErrors"
+                    required
+                    @input="$v.userModel.account.$touch()"
+                    @blur="$v.userModel.account.$touch()"
+                  ></v-text-field>
+                  <v-text-field
+                    label="密码"
+                    v-model="userModel.password"
+                    :type="passState?'text':'password'"
+                    :error-messages="passwordErrors"
+                    required
+                    @input="$v.userModel.password.$touch()"
+                    @blur="$v.userModel.password.$touch()"
+                    :append-icon="passState?'iconfont-kejian':'iconfont-bukejian'"
+                    @click:append="passState=!passState"
+                  ></v-text-field>
+                  <div class="d-flex">
+                    <v-text-field label="请输入验证码"></v-text-field>
+                    <canvas id="canvas" width="120" height="30"></canvas>
+                  </div>
                 </v-card-text>
                 <v-card-actions class="justify-center">
                   <v-btn
@@ -111,5 +138,11 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: #222;
+}
+#canvas {
+  border: 1px solid #222;
+  margin-left: 15px;
+  width: 120px;
+  height: 50px;
 }
 </style>

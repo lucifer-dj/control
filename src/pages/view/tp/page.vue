@@ -26,21 +26,21 @@ export default {
   data: () => ({
     pageType: "add",
     pageModel: {
-      pid: "",
+      cid: null,
       content: "",
       description: "",
     },
   }),
   mounted() {
     let that = this;
-    that.pageModel.pid = that.$route.query.id;
+    that.pageModel.cid = that.$route.query.id;
     that.readPage();
   },
   methods: {
     async readPage() {
       let that = this;
       try {
-        let result = await api.readPage({ pid: that.pageModel.pid }, that);
+        let result = await api.readPage({ cid: that.pageModel.cid }, that);
         if (!result.data) return;
         that.pageModel = result.code === 200 ? result.data : [];
         console.log(that.pageModel);

@@ -2,29 +2,29 @@ export default {
   isdev: ["development"].includes(process.env.NODE_ENV),
   tp: {
     role: {
-      name: "角色管理",
       path: "/role",
-      tp: "role",
+      tp: "角色模板",
+      en: "role",
     },
     faction: {
-      name: "势力介绍",
       path: "/faction",
-      tp: "faction",
+      tp: "势力模板",
+      en: "faction",
     },
     realm: {
-      name: "境界划分",
       path: "/realm",
-      tp: "realm",
+      tp: "境界模板",
+      en: "realm",
     },
     year: {
-      name: "时间线",
       path: "/year",
-      tp: "year",
+      tp: "时间线模板",
+      en: "year",
     },
-    about: {
-      name: "关于雪中",
-      path: "/about",
-      tp: "about",
+    page: {
+      path: "/page",
+      tp: "单页模板",
+      en: "page",
     },
   },
   icons: [

@@ -3,7 +3,9 @@ import cfg from "./cfg.js";
 import router from "@/router.js";
 import Vue from "vue";
 let token = localStorage.getItem("token");
-
+/**
+ * code为402没有查到数据
+ */
 const Service = axios.create({
   timeout: 20000,
   baseURL: cfg.isdev ? "http://127.0.0.1:7001" : "http://119.45.57.238",
@@ -24,7 +26,7 @@ Service.interceptors.request.use((config) => {
 // 添加响应拦截器
 Service.interceptors.response.use(
   (response) => {
-    if (response.data.code === 401) {
+    if (Number(response.data.code) > 350) {
       new Vue().bus.$hint({
         msg: response.data.msg,
         type: "error",

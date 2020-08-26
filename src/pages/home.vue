@@ -115,9 +115,10 @@ export default {
       let that = this;
       let { path } = data;
       let obj = {};
-      if (data.origin) {
+      if (data.cid) {
         obj = { id: -1 };
-        if (Number(data.origin) !== -1) obj.id = data.origin;
+        if (Number(data.cid) !== -1) obj.id = data.cid;
+        if (data.template === "page") obj.id = data.id;
       }
       that.$router.push({ path, query: obj });
     },
