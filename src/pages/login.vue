@@ -1,33 +1,43 @@
 <template>
-  <main class="main">
-    <v-card width="600" class="d-flex align-center flex-column pa-5">
-      <v-card-title>welcome</v-card-title>
-      <v-card-text class="px-12">
-        <v-text-field
-          label="邮箱"
-          v-model="userModel.account"
-          :error-messages="accountErrors"
-          required
-          @input="$v.userModel.account.$touch()"
-          @blur="$v.userModel.account.$touch()"
-        ></v-text-field>
-        <v-text-field
-          :type="passState?'text':'password'"
-          label="密码"
-          v-model="userModel.password"
-          :error-messages="passwordErrors"
-          required
-          @input="$v.userModel.password.$touch()"
-          @blur="$v.userModel.password.$touch()"
-          :append-icon="passState?'iconfont-kejian':'iconfont-bukejian'"
-          @click:append="passState=!passState"
-        ></v-text-field>
-      </v-card-text>
-      <v-card-actions>
-        <v-btn width="100" @click="login">登录</v-btn>
-      </v-card-actions>
-    </v-card>
-  </main>
+  <v-container fluid class="pa-0">
+    <v-sheet color="#fff" height="70" elevation="2" class="d-flex align-center justify-center">
+      <v-card flat class="d-inline">
+        <span class="text-h5">雪中悍刀行</span>
+      </v-card>
+    </v-sheet>
+    <v-sheet height="100vh" color="#eee">
+      <v-row>
+        <v-col>
+          <v-sheet class="d-flex justify-center" color="#eee" style="margin-top: 100px;">
+            <v-sheet>
+              <v-img src="@assets/images/AIMBCAAQBBgAIMOZx-MFKJPy0_oFMKYDONgE.png"></v-img>
+            </v-sheet>
+            <v-sheet color="#fff" width="600" style="display:grid;place-items: center;">
+              <v-card flat min-width="350">
+                <v-card-title class="justify-center">
+                  <span class="text-uppercase text-h4">welcome</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-text-field label="账号" v-model="userModel.account"></v-text-field>
+                  <v-text-field label="密码" v-model="userModel.password"></v-text-field>
+                </v-card-text>
+                <v-card-actions class="justify-center">
+                  <v-btn
+                    width="350"
+                    height="50"
+                    rounded
+                    color="#0094ff"
+                    class="text-h6 white--text"
+                    @click="login"
+                  >登录</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-sheet>
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </v-sheet>
+  </v-container>
 </template>
 <script>
 import * as api from "@api";
