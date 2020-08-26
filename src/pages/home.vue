@@ -54,7 +54,7 @@
       <span v-if="temp_temp"></span>
       <v-row align="stretch" height="100%">
         <v-col :cols="viewCols" class="v-col9">
-          <router-view />
+          <router-view :key="viewKey" />
         </v-col>
         <v-col :cols="sideCols" class="v-col3 pa-0 ma-0">
           <the-side :type="sideType" @close="closeSide"></the-side>
@@ -98,6 +98,7 @@ export default {
     sideType: "",
     sideCols: 0,
     viewCols: 12,
+    viewKey: 0,
   }),
   methods: {
     commDrawer() {
@@ -115,11 +116,12 @@ export default {
       let that = this;
       let { path } = data;
       let obj = {};
-      if (data.cid) {
+      if (data.origin) {
         obj = { id: -1 };
-        if (Number(data.cid) !== -1) obj.id = data.cid;
+        if (Number(data.origin) !== -1) obj.id = data.origin;
         if (data.template === "page") obj.id = data.id;
       }
+      that.viewKey++;
       that.$router.push({ path, query: obj });
     },
     closeSide() {

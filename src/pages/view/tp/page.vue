@@ -43,7 +43,7 @@ export default {
         let result = await api.readPage({ cid: that.pageModel.cid }, that);
         if (!result.data) return;
         that.pageModel = result.code === 200 ? result.data : [];
-        console.log(that.pageModel);
+        // console.log(that.pageModel);
         that.pageType = "edit";
       } catch (e) {
         console.log(e);
@@ -79,6 +79,14 @@ export default {
   components: {
     editor: () => import("@components/editor.vue"),
   },
+  // wtach: {
+  //   "pageModel.cid"(val, old) {
+  //     console.log(val, old);
+  //     if (val !== old) {
+  //       this.$forceUpdate();
+  //     }
+  //   },
+  // },
 };
 </script>
 <style lang="less" scoped>
