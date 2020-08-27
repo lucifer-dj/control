@@ -1,6 +1,6 @@
 <template>
   <div class="box v-application-box">
-    <v-navigation-drawer app :mini-variant.sync="menuState" v-model="drawer">
+    <v-navigation-drawer app :mini-variant.sync="menuState" v-model="drawer" color="menu">
       <v-sheet height="60" width="100%">
         <!-- <v-img></v-img> -->
         <v-subheader class="justify-center text-uppercase" width="100%">雪中</v-subheader>
@@ -71,6 +71,7 @@
 <script>
 import * as api from "@api";
 import cfg from "@/plugins/cfg.js";
+import _theme from "@/plugins/theme";
 export default {
   name: "home",
   data: () => ({
@@ -123,6 +124,11 @@ export default {
       }
       that.viewKey++;
       that.$router.push({ path, query: obj });
+      let choosedTheme = localStorage.getItem("theme")
+        ? localStorage.getItem("theme")
+        : "light";
+      console.log(choosedTheme);
+      that.$vuetify.theme.themes.light = _theme[choosedTheme];
     },
     closeSide() {
       let that = this;

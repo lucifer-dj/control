@@ -12,18 +12,18 @@
         <v-card-text>
           <v-subheader>修改主题</v-subheader>
           <v-sheet color="#f8f8f8" class="px-2">
-            <v-chip class="ma-1">清淡</v-chip>
-            <v-chip class="ma-1">护眼</v-chip>
-            <v-chip class="ma-1">盛夏</v-chip>
-            <v-chip class="ma-1">淡蓝</v-chip>
+            <v-chip
+              class="ma-1"
+              v-for="(item,idx) in themeArr"
+              :key="idx"
+              @click="changeTheme(item)"
+            >{{item}}</v-chip>
           </v-sheet>
         </v-card-text>
       </v-card>
-      
     </v-card>
 
     <v-card v-if="type==='user'" flat color="#f8f8f8" class="v-card">
-
       <v-card flat color="#f8f8f8">
         <v-card-title>
           <span>我的信息</span>
@@ -35,7 +35,7 @@
         <v-card-text>
           <v-card class="d-flex">
             <v-card-title>
-              <v-avatar >
+              <v-avatar>
                 <v-img src="../assets/images/avater.png"></v-img>
               </v-avatar>
             </v-card-title>
@@ -49,41 +49,52 @@
           <v-btn text class="mr-5">修改信息</v-btn>
         </v-card-actions>
       </v-card>
-     
     </v-card>
   </div>
 </template>
 <script>
+import _theme from "../plugins/theme";
 export default {
-  name:'theSide',
-  data:()=>({
-    dialog: false
+  name: "theSide",
+  data: () => ({
+    dialog: false,
   }),
   props: {
-    type:String,
+    type: String,
   },
-  mounted(){
+  mounted() {
     // console.log(this.$vuetify.application)
   },
-  methods:{
-    close(){
+  methods: {
+    close() {
       let that = this;
-      that.$emit('close')
-    }
-  }
-}
+      that.$emit("close");
+    },
+    changeTheme(theme) {
+      let that = this;
+      console.log(that.$vuetify);
+      localStorage.setItem("theme", theme);
+      that.$vuetify.theme.themes.light = _theme[theme];
+    },
+  },
+  computed: {
+    themeArr() {
+      return Object.keys(_theme);
+    },
+  },
+};
 </script>
 <style lang="less" scoped>
-  .box{
-    position: absolute;
+.box {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  // padding-bottom: 48px;
+  & > .v-card {
+    height: 100%;
     width: 100%;
-    top: 0;
-    left: 0;
-    height:100%;
-    // padding-bottom: 48px;
-    &>.v-card{
-      height: 100%;
-      width: 100%;
-    }
   }
+}
 </style>

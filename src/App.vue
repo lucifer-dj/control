@@ -6,6 +6,7 @@
 
 <script>
 import * as api from "@api";
+
 export default {
   name: "App",
   provide() {
@@ -19,6 +20,7 @@ export default {
   mounted() {
     //做一个进入时的验证
     let that = this;
+    console.log(that.$vuetify)
     let temp_loading = document.querySelector("#temp_loading");
     temp_loading.style.display = "none";
   },
