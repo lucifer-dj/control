@@ -1,49 +1,45 @@
 {% extends "../public/layout.html" %} {% block main %}
 <main class="main_list">
-  <div class="banner">
+  <div class="banner_list">
     <img src="{{static}}/images/1499147946347.jpg" alt="" />
   </div>
-  <section class="scope">
+  <section class="role">
     <article>
-      <div class="head">
+      <div class="head_list">
         <div class="content">
-          <div class="left">
-            <a href="" class="head_active">全部</a>
-            <a href="">全产业链业务</a>
-            <a href="">新资源开发</a>
-          </div>
           <div class="right">
-            您的位置：<a href="">首页</a> <span>></span> <a href="">产品中心</a>
+            您的位置：<a href="">首页</a> <span>></span>
+            <a href="">视频展示</a>
           </div>
           <div class="clear"></div>
         </div>
       </div>
-
-      <div class="sco">
-        <ul>
-          {%for item in roles %}
-          <li>
-            <a href="">
-              <div class="img">
-                <img src="{{static}}/images/1499154353589.jpg" alt="" />
+      <ul class="role_ul">
+        {% for item in tempArr %}
+        <li>
+          <a href="">
+            <div class="img">
+              <img src="{{static}}/images/1499169822486.png" alt="" />
+            </div>
+            <div class="detail">
+              <span class="name">徐凤年</span>
+              <p class="title">内阁大总统</p>
+              <p class="line"></p>
+              <p class="text">
+                核心能力集中在医药保健和农业领域/为创新产品和解决方案研发新分子
+              </p>
+              <div class="more">
+                查看更多
               </div>
-              <div class="detail">
-                <h2>{{item.name}}</h2>
-                <div class="text">
-                  {{item.introduce}}
-                </div>
-                <div class="more"></div>
-              </div>
-            </a>
-          </li>
-          {% endfor %}
-
-          <div class="clear"></div>
-        </ul>
-      </div>
+            </div>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
       <div class="srrot">
-        <a href="" class="left"><</a>
-        <a href="" class="num">1</a>
+        <a href="" class="left">
+          <</a> <a href="" class="num srrot_active">1
+        </a>
         <a href="" class="num">2</a>
         <a href="" class="right">></a>
       </div>

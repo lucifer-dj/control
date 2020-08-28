@@ -1,35 +1,29 @@
 {% extends "../public/layout.html" %} {% block main %}
 <main class="main_list">
   <div class="banner_list">
-    <img src="{{static}}/images/1499147946347.jpg" alt="" />
+    <img src="{{static}}/images/1499147946347.jpg" alt="">
   </div>
-  <section class="project">
+  <section class="video">
     <article>
-      <div class="head">
+      <div class="head_list">
         <div class="content">
-          <div class="left">
-            <a href="" class="head_active">全部</a>
-            <a href="">全产业链业务</a>
-            <a href="">新资源开发</a>
-          </div>
           <div class="right">
-            您的位置：<a href="">首页</a> <span>></span> <a href="">产品中心</a>
+            您的位置：<a href="">首页</a> <span>></span> <a href="">视频展示</a>
           </div>
           <div class="clear"></div>
         </div>
       </div>
-
-      <div class="pro">
+      <div class="vid">
         <ul>
-          {% for item in realms %}
+          {% for item in tempArr %}
           <li>
             <a href="">
               <div class="img">
-                <img src="{{static}}/images/1499083067928.jpg" alt="" />
+                <img src="{{static}}/images/1562656007638.jpg" alt="">
               </div>
               <div class="detail">
-                <h2>能源产业优化链条进展</h2>
-                <div class="text">HARVEST STATES</div>
+                <h2>梦想启动未来-公司企业宣传片</h2>
+                <div class="text">形象篇</div>
               </div>
               <div class="circle"></div>
             </a>
@@ -39,8 +33,9 @@
         </ul>
       </div>
       <div class="srrot">
-        <a href="" class="left"><</a>
-        <a href="" class="num">1</a>
+        <a href="" class="left">
+          <</a> <a href="" class="num srrot_active">1
+        </a>
         <a href="" class="num">2</a>
         <a href="" class="right">></a>
       </div>

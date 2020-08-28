@@ -1,11 +1,11 @@
 {% extends "../public/layout.html" %} {% block main %}
 <main class="main_list">
   <div class="banner_list">
-    <img src="{{static}}/images/1499147946347.jpg" alt="" />
+    <img src="{{static}}/images/1499138259666.jpg" alt="">
   </div>
   <section class="project">
     <article>
-      <div class="head">
+      <div class="head_list">
         <div class="content">
           <div class="left">
             <a href="" class="head_active">全部</a>
@@ -18,14 +18,13 @@
           <div class="clear"></div>
         </div>
       </div>
-
       <div class="pro">
         <ul>
-          {% for item in realms %}
+          {% for item in tempArr %}
           <li>
             <a href="">
               <div class="img">
-                <img src="{{static}}/images/1499083067928.jpg" alt="" />
+                <img src="{{static}}images/1499083067928.jpg" alt="">
               </div>
               <div class="detail">
                 <h2>能源产业优化链条进展</h2>
@@ -39,8 +38,9 @@
         </ul>
       </div>
       <div class="srrot">
-        <a href="" class="left"><</a>
-        <a href="" class="num">1</a>
+        <a href="" class="left">
+          <</a> <a href="" class="num">1
+        </a>
         <a href="" class="num">2</a>
         <a href="" class="right">></a>
       </div>

@@ -1,0 +1,49 @@
+{% extends "../public/layout.html" %} {% block main %}
+<main class="main_list">
+  <div class="banner_list">
+    <img src="{{static}}/images/1499138259666.jpg" alt="" />
+  </div>
+  <section class="project1">
+    <article>
+      <div class="head_list">
+        <div class="content">
+          <div class="left">
+            <a href="" class="head_active">全部</a>
+            <a href="">全产业链业务</a>
+            <a href="">新资源开发</a>
+          </div>
+          <div class="right">
+            您的位置：<a href="">首页</a> <span>></span>
+            <a href="">产品中心</a>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <ul class="project1_ul">
+        {%for item in tempArr%}
+        <li>
+          <a href="" class="item">
+            <div class="img_box">
+              <img src="{{static}}/images/1590570384609.jpg" alt="" />
+            </div>
+            <div class="serve_info">
+              <p class="title">品质保障</p>
+              <p class="subtitle">
+                果实颗颗饱满，精选自然品像完好无损，没有过多农药切达标，让您吃的放心安心
+              </p>
+            </div>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="srrot">
+        <a href="" class="left">
+          <</a> <a href="" class="num">1
+        </a>
+        <a href="" class="num">2</a>
+        <a href="" class="right">></a>
+      </div>
+    </article>
+  </section>
+</main>
+{% endblock %}
