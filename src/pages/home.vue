@@ -21,7 +21,7 @@
               <v-list-item-title>{{item.name}}</v-list-item-title>
             </v-list-item-content>
           </template>
-          <v-list-item v-for="(n,i) in item.child" :key="i" @click="replace(n)">
+          <v-list-item v-for="(n,i) in item.child" :key="i" @click="replace(n)" class="pl-10">
             <v-list-item-icon>
               <v-icon>{{n.icon}}</v-icon>
             </v-list-item-icon>
@@ -93,6 +93,11 @@ export default {
         path: "/config",
         icon: "iconfont iconfont-baobiao",
       },
+      {
+        name: "模板设置",
+        path: "/tpconfig",
+        icon: "iconfont iconfont-baobiao",
+      },
     ],
     menuState: false,
     drawer: true,
@@ -118,17 +123,12 @@ export default {
       let { path } = data;
       let obj = {};
       if (data.origin) {
-        obj = { id: -1 };
-        if (Number(data.origin) !== -1) obj.id = data.origin;
-        if (data.template === "page") obj.id = data.id;
+        obj = { cid: -1, id: data.id };
+        if (Number(data.origin) !== -1) obj.cid = data.origin;
+        if (data.template === "page") obj.cid = data.id;
       }
       that.viewKey++;
       that.$router.push({ path, query: obj });
-      let choosedTheme = localStorage.getItem("theme")
-        ? localStorage.getItem("theme")
-        : "light";
-      console.log(choosedTheme);
-      that.$vuetify.theme.themes.light = _theme[choosedTheme];
     },
     closeSide() {
       let that = this;
@@ -164,11 +164,9 @@ export default {
           that.$hint({ msg: "自动登录失败", type: "error" });
           that.$router.replace("/");
         }
-        result.data.forEach((item, idx) => {
-          Object.assign(item, cfg.tp[item.template]);
-        });
+        // console.log(result.data);
         that.menu[0].child = result.data;
-        that.$hint({ msg: "自动登录成功" });
+        that.menu[0].child = that.disposeMenu;
       } catch (e) {
         console.log(e);
       }
@@ -188,6 +186,23 @@ export default {
     drawer_content.classList.add("drawer"); //chrome
     drawer_content.style.scrollbarWidth = "none"; //firefox
     drawer_content.style.msOverflowStyle = "none"; //edge
+  },
+  computed: {
+    disposeMenu() {
+      let that = this;
+      let arr = that.menu[0].child.filter((a) => a.origin == -1);
+      arr.forEach((item, idx) => {
+        Object.assign(item, cfg.tp[item.template]);
+        // if (item.origin == -1) {
+        //   item._order = Number(item.id);
+        // } else {
+        //   item._order = Number(item.origin) + 0.1;
+        // }
+      });
+      // arr.sort((a, b) => a._order - b._order);
+      that.menu[0].child = arr;
+      return arr;
+    },
   },
   components: {
     theSide: () => import("@components/theSide.vue"),
@@ -212,5 +227,8 @@ export default {
   overflow: auto;
   overflow-y: scroll;
   // padding-bottom: 48px;
+}
+.f12 {
+  font-size: 12px;
 }
 </style>

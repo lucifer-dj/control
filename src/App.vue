@@ -12,6 +12,7 @@ export default {
   provide() {
     return {
       reload: this.reload,
+      getSonColumn: this.getSonColumn,
     };
   },
   data: () => ({
@@ -20,7 +21,7 @@ export default {
   mounted() {
     //做一个进入时的验证
     let that = this;
-    console.log(that.$vuetify)
+    console.log(that.$vuetify);
     let temp_loading = document.querySelector("#temp_loading");
     temp_loading.style.display = "none";
   },
@@ -35,6 +36,18 @@ export default {
       this.$nextTick(() => {
         this.isRouterAlive = true;
       });
+    },
+    async getSonColumn(origin) {
+      let that = this;
+      try {
+        let result = await api.columnQueryAll({
+          where: { origin },
+        });
+        result = result.code === 200 ? result.data : [];
+        return result;
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

@@ -16,7 +16,7 @@
       >
         <!-- 名称 -->
         <template v-slot:item.name="{item}">
-          <span>{{item.name}}</span>
+          <span>{{item.origin===-1?item.name:'|—'+item.name}}</span>
         </template>
         <!-- 是否显示 -->
         <template v-slot:item.show="{item}">
@@ -55,7 +55,7 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
-                <v-text-field label="*栏目英文名称" v-model="columnModel.en" required></v-text-field>
+                <v-text-field label="*栏目英文名称" v-model="columnModel.ename" required></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
                 <v-select
@@ -73,7 +73,7 @@
                   :items="template"
                   required
                   @input="$v.columnModel.template.$touch()"
-                  @blur="$v.columnModel.name.$touch()"
+                  @blur="$v.columnModel.template.$touch()"
                   item-text="tp"
                   item-value="en"
                 ></v-select>
@@ -158,7 +158,7 @@ export default {
   data: () => ({
     headers: [
       { text: "ID", value: "id", align: "center" },
-      { text: "名称", value: "name", align: "center" },
+      { text: "名称", value: "name", align: "left" },
       { text: "显示", value: "show", align: "center" },
       { text: "排序", value: "order", align: "center" },
       { text: "操作", value: "oper", align: "center" },
@@ -176,7 +176,7 @@ export default {
       pic: "",
       order: "",
       template: "",
-      en: "",
+      ename: "",
       link: "",
       icon: "",
     },
@@ -237,7 +237,7 @@ export default {
       try {
         let result = await api.columnQueryAll({}, that);
         that.items = result.code === 200 ? result.data : [];
-        console.log(that.items);
+        that.items = that.disposeItem;
       } catch (e) {
         console.log(e);
       }
@@ -302,10 +302,12 @@ export default {
       that.dialogType = "edit";
       that.dialog = true;
     },
-    async addSonCol() {
+    async addSonCol(column) {
       let that = this;
-      // that.reload();
-      that.$toast({ msg: "功能正在研发中。。。" });
+      if (column.origin !== -1)
+        return that.$hint({ msg: "不支持对子栏目添加栏目", type: "error" });
+      that.columnModel.origin = column.id;
+      that.dialog = true;
     },
   },
   computed: {
@@ -339,6 +341,19 @@ export default {
           arr.push(item);
         }
       });
+      return arr;
+    },
+    disposeItem() {
+      let that = this;
+      let arr = that.items;
+      arr.forEach((item, idx) => {
+        if (item.origin == -1) {
+          item._order = Number(item.id);
+        } else {
+          item._order = Number(item.origin) + 0.1;
+        }
+      });
+      arr.sort((a, b) => a._order - b._order);
       return arr;
     },
   },

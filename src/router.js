@@ -44,6 +44,11 @@ export default new Router({
           component: () => import("./pages/view/tp/role.vue"),
         },
         {
+          name: "tpconfig",
+          path: "/tpconfig",
+          component: () => import("./pages/view/tpconfig.vue"),
+        },
+        {
           name: "faction",
           path: "/faction",
           component: () => import("./pages/view/tp/faction.vue"),

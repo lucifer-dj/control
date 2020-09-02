@@ -53,7 +53,6 @@
   </div>
 </template>
 <script>
-import _theme from "../plugins/theme";
 export default {
   name: "theSide",
   data: () => ({
@@ -73,13 +72,11 @@ export default {
     changeTheme(theme) {
       let that = this;
       console.log(that.$vuetify);
-      localStorage.setItem("theme", theme);
-      that.$vuetify.theme.themes.light = _theme[theme];
     },
   },
   computed: {
     themeArr() {
-      return Object.keys(_theme);
+      return Array(7).fill("blue");
     },
   },
 };

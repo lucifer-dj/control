@@ -1,6 +1,10 @@
 <template>
   <v-container fiuld class="v-container">
     <v-subheader>角色管理</v-subheader>
+    <v-subheader v-if="sonColumn.length>0">
+      <span>子栏目:</span>
+      <v-btn small class="mx-2" text v-for="(item,idx) in sonColumn" :key="idx">{{item.name}}</v-btn>
+    </v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>
         <v-btn text @click="dialog=true;">+添加新角色</v-btn>
@@ -63,6 +67,7 @@
 import * as api from "@api";
 export default {
   name: "role",
+  inject: ["getSonColumn"],
   data: () => ({
     dialog: false,
     dialogType: "add",
@@ -85,12 +90,15 @@ export default {
       realm: "",
     },
     imgFile: {},
-    cid: -1,
+    columnData: { cid: -1 },
+    sonColumn: [],
   }),
-  mounted() {
+  async mounted() {
     let that = this;
-    if (Number(that.$route.query.id) !== -1) that.cid = that.$route.query.id;
+    if (Number(that.$route.query) !== -1) that.columnData = that.$route.query;
     that.roleQueryAll();
+    that.sonColumn = await that.getSonColumn(that.columnData.id);
+    console.log(that.sonColumn);
   },
   methods: {
     roleModelReset(type = null) {
@@ -110,7 +118,10 @@ export default {
     async roleQueryAll() {
       let that = this;
       try {
-        let result = await api.roleQueryAll({ cid: that.cid, num: 0 }, that);
+        let result = await api.roleQueryAll(
+          { where: { cid: that.columnData.cid }, offset: 0 },
+          that
+        );
         that.items = result.code === 200 ? result.data : [];
         that.items.forEach((item, idx) => {
           item.date = item.update ? item.update : item.start;
@@ -132,7 +143,7 @@ export default {
       try {
         let result0 = await api.upload(that.imgFile);
         that.roleModel.avatar = result0.code === 200 ? result0.data : "";
-        that.roleModel.cid = that.cid;
+        that.roleModel.cid = that.columnData.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await api.roleAdd(that.roleModel, that);
         that.$hint({ msg: "添加成功" });

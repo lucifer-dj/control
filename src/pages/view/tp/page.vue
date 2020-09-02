@@ -1,6 +1,10 @@
 <template>
   <v-container>
-    <v-subheader>关于雪中</v-subheader>
+    <!-- <v-subheader>关于雪中</v-subheader> -->
+    <v-subheader>
+      <span>子栏目:</span>
+      <v-btn small class="mx-2" text v-for="(item,idx) in sonColumn" :key="idx">{{item.name}}</v-btn>
+    </v-subheader>
     <v-card flat>
       <v-card-text>
         <v-row>
@@ -22,6 +26,7 @@
 <script>
 import * as api from "@api";
 export default {
+  inject: ["getSonColumn"],
   name: "about",
   data: () => ({
     pageType: "add",
@@ -30,17 +35,22 @@ export default {
       content: "",
       description: "",
     },
+    sonColumn: [],
   }),
-  mounted() {
+  async mounted() {
     let that = this;
-    that.pageModel.cid = that.$route.query.id;
+    that.pageModel.cid = that.$route.query.cid;
     that.readPage();
+    that.sonColumn = await that.getSonColumn(that.pageModel.cid);
   },
   methods: {
     async readPage() {
       let that = this;
       try {
-        let result = await api.readPage({ cid: that.pageModel.cid }, that);
+        let result = await api.readPage(
+          { where: { cid: that.pageModel.cid } },
+          that
+        );
         if (!result.data) return;
         that.pageModel = result.code === 200 ? result.data : [];
         // console.log(that.pageModel);

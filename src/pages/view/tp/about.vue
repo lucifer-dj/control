@@ -1,6 +1,10 @@
 <template>
   <v-container>
     <v-subheader>关于雪中</v-subheader>
+    <v-subheader v-if="sonColumn.length>0">
+      <span>子栏目:</span>
+      <v-btn small class="mx-2" text v-for="(item,idx) in sonColumn" :key="idx">{{item.name}}</v-btn>
+    </v-subheader>
     <v-card flat>
       <v-card-text>
         <v-row>
@@ -23,14 +27,18 @@
 import * as api from "@api";
 export default {
   name: "about",
+  inject: ["getSonColumn"],
   data: () => ({
     aboutModel: {},
     cid: -1,
+    columnData: {},
+    sonColumn: [],
   }),
-  mounted() {
+  async mounted() {
     let that = this;
-    if (Number(that.$route.query.id) !== -1) that.cid = that.$route.query.id;
+    if (Number(that.$route.query) !== -1) that.columnData = that.$route.query;
     that.aboutGet();
+    that.sonColumn = await that.getSonColumn(that.columnData.id);
   },
   methods: {
     async aboutGet() {

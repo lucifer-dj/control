@@ -1,6 +1,10 @@
 <template>
   <v-container fiuld>
-    <v-subheader>境界介绍</v-subheader>
+    <!-- <v-subheader>境界介绍</v-subheader> -->
+    <v-subheader>
+      <span>子栏目:</span>
+      <v-btn small class="mx-2" text v-for="(item,idx) in sonColumn" :key="idx">{{item.name}}</v-btn>
+    </v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>
         <v-btn text @click="dialog=true;">+添加新境界</v-btn>
@@ -35,7 +39,11 @@
           </v-card-text>
         </v-col>
         <v-card-actions>
-          <v-btn width="100" class="mx-3" @click="submit(dialogType)">{{dialogType==="add"?'添加新境界':"更新境界"}}</v-btn>
+          <v-btn
+            width="100"
+            class="mx-3"
+            @click="submit(dialogType)"
+          >{{dialogType==="add"?'添加新境界':"更新境界"}}</v-btn>
           <v-btn width="100" class="mx-3" @click="realmModelReset(1);">关闭</v-btn>
         </v-card-actions>
       </v-card>
@@ -45,6 +53,7 @@
 <script>
 import * as api from "@api";
 export default {
+  inject: ["getSonColumn"],
   name: "faction",
   data: () => ({
     headers: [
@@ -61,12 +70,14 @@ export default {
     dialog: false,
     imgFile: {},
     dialogType: "add",
-    cid: -1,
+    columnData: { cid: -1 },
+    sonColumn:[]
   }),
-  mounted() {
+  async mounted() {
     let that = this;
-    if (Number(that.$route.query.id) !== -1) that.cid = that.$route.query.id;
+    if (Number(that.$route.query) !== -1) that.columnData = that.$route.query;
     that.realmQueryAll();
+    that.sonColumn = await that.getSonColumn(that.columnData.id);
   },
   methods: {
     realmModelReset(type = null) {
@@ -83,7 +94,10 @@ export default {
     async realmQueryAll() {
       let that = this;
       try {
-        let result = await api.realmQueryAll({ cid: that.cid, num: 0 }, that);
+        let result = await api.realmQueryAll(
+          { where: { cid: that.columnData.cid }, offset: 0 },
+          that
+        );
         that.items = result.code === 200 ? result.data : [];
       } catch (e) {
         console.log(e);
@@ -99,7 +113,7 @@ export default {
         let result0 = await api.upload(that.imgFile, that);
         that.realmModel.start = new Date().valueOf();
         that.realmModel.pic = result0.code === 200 ? result0.data : "";
-        that.realmModel.cid = that.cid;
+        that.realmModel.cid = that.columnData.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await api.realmAdd(that.realmModel, that);
         that.$hint({ msg: result.msg });
@@ -146,7 +160,7 @@ export default {
     async realmDelete(id) {
       let that = this;
       that.$toast({ msg: "确定要删除这方境界吗？" });
-      that.bus.$on("toastConfirm", async function() {
+      that.bus.$on("toastConfirm", async function () {
         let result = await that.realmRead(id);
         if (result.pic) {
           let result0 = await api.deleteFile({ path: result.pic }, that);

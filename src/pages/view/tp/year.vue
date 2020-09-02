@@ -1,6 +1,10 @@
 <template>
   <v-container fiuld>
-    <v-subheader>时间线</v-subheader>
+    <!-- <v-subheader>时间线</v-subheader> -->
+    <v-subheader>
+      <span>子栏目:</span>
+      <v-btn small class="mx-2" text v-for="(item,idx) in sonColumn" :key="idx">{{item.name}}</v-btn>
+    </v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>
         <v-btn text @click="dialog=true;">+添加新时间线</v-btn>
@@ -55,6 +59,7 @@
 <script>
 import * as api from "@api";
 export default {
+  inject: ["getSonColumn"],
   name: "faction",
   data: () => ({
     headers: [
@@ -72,12 +77,16 @@ export default {
     dialog: false,
     imgFile: {},
     dialogType: "add",
-    cid: -1,
+    columnData: {
+      cid: -1,
+    },
+    sonColumn: [],
   }),
-  mounted() {
+  async mounted() {
     let that = this;
-    if (Number(that.$route.query.id) !== -1) that.cid = that.$route.query.id;
+    if (Number(that.$route.query) !== -1) that.columnData = that.$route.query;
     that.yearQueryAll();
+    that.sonColumn = await that.getSonColumn(that.columnData.id);
   },
   methods: {
     yearModelReset(type = null) {
@@ -95,7 +104,10 @@ export default {
     async yearQueryAll() {
       let that = this;
       try {
-        let result = await api.yearQueryAll({ cid: that.cid, num: 0 }, that);
+        let result = await api.yearQueryAll(
+          { where: { cid: that.columnData.cid }, offset: 0 },
+          that
+        );
         that.items = result.code === 200 ? result.data : [];
       } catch (e) {
         console.log(e);

@@ -1,6 +1,10 @@
 <template>
   <v-container fiuld>
     <v-subheader>势力划分</v-subheader>
+    <v-subheader v-if="sonColumn.length>0">
+      <span>子栏目:</span>
+      <v-btn small class="mx-2" text v-for="(item,idx) in sonColumn" :key="idx">{{item.name}}</v-btn>
+    </v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>
         <v-btn text @click="dialog=true;">+添加新势力</v-btn>
@@ -54,6 +58,7 @@
 import * as api from "@api";
 export default {
   name: "faction",
+  inject: ["getSonColumn"],
   data: () => ({
     headers: [
       { text: "ID", value: "id", align: "center" },
@@ -75,12 +80,16 @@ export default {
     dialog: false,
     imgFile: {},
     dialogType: "add",
-    cid: -1,
+    columnData: {
+      cid: -1,
+    },
+    sonColumn: [],
   }),
-  mounted() {
+  async mounted() {
     let that = this;
-    if (Number(that.$route.query.id) !== -1) that.cid = that.$route.query.id;
+    if (Number(that.$route.query) !== -1) that.columnData = that.$route.query;
     that.factionQueryAll();
+    that.sonColumn = await that.getSonColumn(that.columnData.id);
   },
   methods: {
     factionModelReset(type = null) {
@@ -99,7 +108,10 @@ export default {
     async factionQueryAll() {
       let that = this;
       try {
-        let result = await api.factionQueryAll({ cid: that.cid, num: 0 }, that);
+        let result = await api.factionQueryAll(
+          { where: { cid: that.columnData.cid }, offset: 0 },
+          that
+        );
         that.items = result.code === 200 ? result.data : [];
       } catch (e) {
         console.log(e);
@@ -114,7 +126,7 @@ export default {
         let result0 = await api.upload(that.imgFile, that);
         that.factionModel.start = new Date().valueOf();
         that.factionModel.pic = result0 ? result0 : "";
-        that.factionModel.cid = that.cid;
+        that.factionModel.cid = that.columnData.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await api.factionAdd(that.factionModel, that);
         that.$hint({ msg: result.msg });
