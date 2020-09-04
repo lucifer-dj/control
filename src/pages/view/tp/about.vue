@@ -18,7 +18,7 @@
         </v-row>
       </v-card-text>
       <v-card-actions class="justify-center">
-        <v-btn width="100" class="mx-3" @click="aboutUpdate">确认修改</v-btn>
+        <v-btn width="100" class="mx-3" @click="aboutUpdate" :style="[theme.bg_p,theme.co]">确认修改</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -76,6 +76,11 @@ export default {
   },
   components: {
     editor: () => import("@components/editor.vue"),
+  },
+  computed: {
+    theme() {
+      return this.$store.getters.getTheme;
+    },
   },
 };
 </script>

@@ -7,16 +7,32 @@
     </v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>
-        <v-btn text @click="dialog=true;">+添加新境界</v-btn>
+        <v-btn text @click="dialog=true;" :style="[theme.bg_p,theme.co]">+添加新境界</v-btn>
         <v-spacer></v-spacer>
-        <v-btn text>搜索</v-btn>
+        <v-btn text :style="[theme.bg_p,theme.co]">搜索</v-btn>
       </v-toolbar>
       <v-data-table disable-sort :items="items" :headers="headers">
         <template v-slot:item.oper="{item}">
-          <v-btn fab x-small depressed title="删除" class="mx-1" @click="realmDelete(item.id)">
+          <v-btn
+            fab
+            x-small
+            depressed
+            title="删除"
+            class="mx-1"
+            @click="realmDelete(item.id)"
+            :style="[theme.bg_a,theme.co_p]"
+          >
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
-          <v-btn fab x-small depressed title="修改" class="mx-1" @click="realmEdit(item.id)">
+          <v-btn
+            fab
+            x-small
+            depressed
+            title="修改"
+            class="mx-1"
+            @click="realmEdit(item.id)"
+            :style="[theme.bg_a,theme.co_p]"
+          >
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
           </v-btn>
         </template>
@@ -43,8 +59,14 @@
             width="100"
             class="mx-3"
             @click="submit(dialogType)"
+            :style="[theme.bg_p,theme.co]"
           >{{dialogType==="add"?'添加新境界':"更新境界"}}</v-btn>
-          <v-btn width="100" class="mx-3" @click="realmModelReset(1);">关闭</v-btn>
+          <v-btn
+            width="100"
+            class="mx-3"
+            @click="realmModelReset(1);"
+            :style="[theme.bg_p,theme.co]"
+          >关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -71,7 +93,7 @@ export default {
     imgFile: {},
     dialogType: "add",
     columnData: { cid: -1 },
-    sonColumn:[]
+    sonColumn: [],
   }),
   async mounted() {
     let that = this;
@@ -177,6 +199,11 @@ export default {
   },
   components: {
     upload: () => import("@components/upload.vue"),
+  },
+  computed: {
+    theme() {
+      return this.$store.getters.getTheme;
+    },
   },
 };
 </script>

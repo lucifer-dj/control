@@ -7,12 +7,12 @@
     </v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>
-        <v-btn text @click="dialog=true;">+添加新角色</v-btn>
-        <v-btn text>
+        <v-btn text @click="dialog=true;" :style="[theme.bg_p,theme.co]" class="mr-2">+添加新角色</v-btn>
+        <v-btn text :style="[theme.bg_p,theme.co]">
           <v-icon small>iconfont-shanchu</v-icon>删除选中
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn text>
+        <v-btn text :style="[theme.bg_p,theme.co]">
           <v-icon class="mr-2">iconfont-sousuo</v-icon>搜索
         </v-btn>
       </v-toolbar>
@@ -23,10 +23,26 @@
           v-slot:item.date="{item}"
         >{{$u.format.call(new Date(Number(item.date)), "yyyy-MM-dd")}}</template>
         <template v-slot:item.oper="{item}">
-          <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteCase(item.id)">
+          <v-btn
+            fab
+            x-small
+            depressed
+            title="删除"
+            class="mx-1"
+            @click="deleteCase(item.id)"
+            :style="[theme.bg_a,theme.co_p]"
+          >
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
-          <v-btn fab x-small depressed title="修改" class="mx-1" @click="roleEdit(item.id)">
+          <v-btn
+            fab
+            x-small
+            depressed
+            title="修改"
+            class="mx-1"
+            @click="roleEdit(item.id)"
+            :style="[theme.bg_a,theme.co_p]"
+          >
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
           </v-btn>
         </template>
@@ -55,8 +71,18 @@
           </v-card-text>
         </v-col>
         <v-card-actions>
-          <v-btn width="100" class="mx-3" @click="submit(dialogType)">{{dialog==='add'?'提交':'确认修改'}}</v-btn>
-          <v-btn width="100" class="mx-3" @click="roleModelReset(1);">关闭</v-btn>
+          <v-btn
+            width="100"
+            class="mx-3"
+            @click="submit(dialogType)"
+            :style="[theme.bg_p,theme.co]"
+          >{{dialog==='add'?'提交':'确认修改'}}</v-btn>
+          <v-btn
+            width="100"
+            class="mx-3"
+            @click="roleModelReset(1);"
+            :style="[theme.bg_p,theme.co]"
+          >关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -203,6 +229,11 @@ export default {
   },
   components: {
     upload: () => import("@components/upload.vue"),
+  },
+  computed: {
+    theme() {
+      return this.$store.getters.getTheme;
+    },
   },
 };
 </script>

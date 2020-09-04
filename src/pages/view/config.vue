@@ -39,7 +39,7 @@
         </v-row>
       </v-card-text>
       <v-card-actions class="justify-center">
-        <v-btn width="120" @click="siteUpdate">提交</v-btn>
+        <v-btn width="120" @click="siteUpdate" :style="[theme.bg_p,theme.co]">提交</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -100,6 +100,11 @@ export default {
   },
   components: {
     upload: () => import("@components/upload.vue"),
+  },
+  computed: {
+    theme() {
+      return this.$store.getters.getTheme;
+    },
   },
 };
 </script>

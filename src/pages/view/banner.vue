@@ -4,8 +4,8 @@
 
     <v-card class="px-6">
       <v-toolbar flat>
-        <v-btn text @click="dialog=true;">+添加</v-btn>
-        <v-btn text>更新</v-btn>
+        <v-btn text @click="dialog=true;" :style="[theme.bg_p,theme.co]" class="mr-2">+添加</v-btn>
+        <v-btn text :style="[theme.bg_p,theme.co]">更新</v-btn>
       </v-toolbar>
       <v-data-table
         align="center"
@@ -16,10 +16,26 @@
       >
         <template v-slot:item.cid="{item}">{{columnByCid[item.cid].name}}</template>
         <template v-slot:item.oper="{item}">
-          <v-btn fab x-small depressed title="删除" class="mx-1" @click="bannerDelete(item.id)">
+          <v-btn
+            fab
+            x-small
+            depressed
+            title="删除"
+            class="mx-1"
+            @click="bannerDelete(item.id)"
+            :style="[theme.bg_a,theme.co_p]"
+          >
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
-          <v-btn fab x-small depressed title="修改" class="mx-1" @click="editBanner(item.id)">
+          <v-btn
+            fab
+            x-small
+            depressed
+            title="修改"
+            class="mx-1"
+            @click="editBanner(item.id)"
+            :style="[theme.bg_a,theme.co_p]"
+          >
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
           </v-btn>
         </template>
@@ -60,8 +76,14 @@
                 width="120"
                 class="mx-2"
                 @click="submit(dialogType)"
+                :style="[theme.bg_p,theme.co]"
               >{{dialogType=='add'?'提交':'更新BANNER'}}</v-btn>
-              <v-btn width="120" class="mx-2" @click="bannerModelReset(1)">关闭</v-btn>
+              <v-btn
+                width="120"
+                class="mx-2"
+                @click="bannerModelReset(1)"
+                :style="[theme.bg_p,theme.co]"
+              >关闭</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -216,6 +238,9 @@ export default {
         obj[item.id] = item;
       });
       return obj;
+    },
+    theme() {
+      return this.$store.getters.getTheme;
     },
   },
   async mounted() {

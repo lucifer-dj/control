@@ -3,8 +3,8 @@
     <v-subheader>首页轮播</v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>
-        <v-btn text @click="dialog=true;">+添加</v-btn>
-        <v-btn text>更新</v-btn>
+        <v-btn text @click="dialog=true;" :style="[theme.bg_p,theme.co]" class="mr-2">+添加</v-btn>
+        <v-btn text :style="[theme.bg_p,theme.co]">更新</v-btn>
       </v-toolbar>
       <v-data-table align="center" :headers="headers" disable-sort :items="items"></v-data-table>
     </v-card>
@@ -51,8 +51,14 @@
                 width="120"
                 class="mx-2"
                 @click="submit(dialogType)"
+                :style="[theme.bg_p,theme.co]"
               >{{dialogType=='add'?'提交':'更新BANNER'}}</v-btn>
-              <v-btn width="120" class="mx-2" @click="tpModelReset(1)">关闭</v-btn>
+              <v-btn
+                width="120"
+                class="mx-2"
+                @click="tpModelReset(1)"
+                :style="[theme.bg_p,theme.co]"
+              >关闭</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -111,6 +117,11 @@ export default {
   mounted() {
     let that = this;
     that.getTps();
+  },
+  computed: {
+    theme() {
+      return this.$store.getters.getTheme;
+    },
   },
 };
 </script>

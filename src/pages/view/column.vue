@@ -4,8 +4,8 @@
       <v-toolbar flat>
         <v-card-title>栏目管理</v-card-title>
         <v-spacer></v-spacer>
-        <v-btn class="mr-4" @click="c_addColumn">+添加栏目</v-btn>
-        <v-btn>更新排序</v-btn>
+        <v-btn class="mr-4" @click="c_addColumn" :style="[theme.bg_p,theme.co]">+添加栏目</v-btn>
+        <v-btn :style="[theme.bg_p,theme.co]">更新排序</v-btn>
       </v-toolbar>
       <v-data-table
         :headers="headers"
@@ -25,13 +25,37 @@
 
         <!-- 操作 -->
         <template v-slot:item.oper="{item}">
-          <v-btn fab x-small depressed title="添加子项目" class="mx-1" @click="addSonCol(item)">
+          <v-btn
+            fab
+            x-small
+            depressed
+            title="添加子项目"
+            class="mx-1"
+            @click="addSonCol(item)"
+            :style="[theme.bg_a,theme.co_p]"
+          >
             <v-icon>iconfont-ic_add_line</v-icon>
           </v-btn>
-          <v-btn fab x-small depressed title="删除" class="mx-1" @click="deleteColumn(item.id)">
+          <v-btn
+            fab
+            x-small
+            depressed
+            title="删除"
+            class="mx-1"
+            @click="deleteColumn(item.id)"
+            :style="[theme.bg_a,theme.co_p]"
+          >
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
-          <v-btn fab x-small depressed title="修改" class="mx-1" @click="editCol(item.id)">
+          <v-btn
+            fab
+            x-small
+            depressed
+            title="修改"
+            class="mx-1"
+            @click="editCol(item.id)"
+            :style="[theme.bg_a,theme.co_p]"
+          >
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
           </v-btn>
         </template>
@@ -112,7 +136,7 @@
                     v-for="(icon,idx) in icons"
                     :key="idx"
                     class="mx-1"
-                    :color="columnModel.icon===icon?'success':''"
+                    :color="columnModel.icon===icon?theme.bg_p.background:''"
                     @click="columnModel.icon=icon"
                   >
                     <v-icon>{{icon}}</v-icon>
@@ -131,8 +155,14 @@
             width="100"
             class="mx-3"
             @click="submit(dialogType)"
+            :style="[theme.bg_p,theme.co]"
           >{{dialogType=='add'?'提交':'确认修改'}}</v-btn>
-          <v-btn width="100" class="mx-3" @click="columnModelReset();">关闭</v-btn>
+          <v-btn
+            width="100"
+            class="mx-3"
+            @click="columnModelReset();"
+            :style="[theme.bg_p,theme.co]"
+          >关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -355,6 +385,9 @@ export default {
       });
       arr.sort((a, b) => a._order - b._order);
       return arr;
+    },
+    theme() {
+      return this.$store.getters.getTheme;
     },
   },
   components: {

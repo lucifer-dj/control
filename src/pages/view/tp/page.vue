@@ -18,7 +18,12 @@
         </v-row>
       </v-card-text>
       <v-card-actions class="justify-center">
-        <v-btn width="100" class="mx-3" @click="submit(pageType)">{{pageType==='add'?'提交':'确认修改'}}</v-btn>
+        <v-btn
+          width="100"
+          class="mx-3"
+          @click="submit(pageType)"
+          :style="[theme.bg_p,theme.co]"
+        >{{pageType==='add'?'提交':'确认修改'}}</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -88,6 +93,11 @@ export default {
   },
   components: {
     editor: () => import("@components/editor.vue"),
+  },
+  computed: {
+    theme() {
+      return this.$store.getters.getTheme;
+    },
   },
   // wtach: {
   //   "pageModel.cid"(val, old) {

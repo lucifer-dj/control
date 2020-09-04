@@ -1,90 +1,91 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>雪中控制台</title>
-  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1956946_jhbqrt4xfc.css">
-  <style>
-    #temp_loading {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      width: 200px;
-      height: 20px;
-      transform: translate(-50%, -50%);
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>雪中控制台</title>
+    <link
+      rel="stylesheet"
+      href="http://at.alicdn.com/t/font_1956946_jhbqrt4xfc.css"
+    />
+    <style>
+      #temp_loading {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        width: 200px;
+        height: 20px;
+        transform: translate(-50%, -50%);
         /* background-color: #333; */
-    }
-
-    .k-square-holder2 {
-      margin: 0 auto;
-      width: 40px;
-      margin-top: 20px;
-    }
-
-    .k-square3 {
-      display: inline-block;
-      width: 15px;
-      height: 15px;
-      opacity: 0.2;
-      animation: k-loadingQ 2s infinite;
-      opacity: 0.5;
-    }
-
-    .k-square3a {
-      transform: translate(0, -25px);
-      margin-right: 3px;
-      background-color: #0094ff;
-    }
-
-    .k-square3b {
-      transform: translate(25px, 0);
-      background-color: #ffc107;
-    }
-
-    .k-square3c {
-      transform: translate(-25px, 0);
-      background-color: #ee6362;
-      margin-right: 3px;
-    }
-
-    .k-square3d {
-      transform: translate(0, 25px);
-      background-color: #2cb0b2;
-    }
-
-    @keyframes k-loadingQ {
-      33% {
-        transform: translate(0, 0);
-        opacity: 0.7;
       }
 
-      66% {
-        transform: translate(0, 0);
-        opacity: 0.7;
+      .k-square-holder2 {
+        margin: 0 auto;
+        width: 40px;
+        margin-top: 20px;
       }
-    }
-    .temp_loading_p{
-      width:200px;
-      text-align: center;
-      margin-top: 30px;
-    }
-  </style>
-</head>
 
-<body>
-  <div class="temp_loading" id="temp_loading">
-    <div class="k-square-holder2">
-      <div class="k-square3 k-square3a"></div>
-      <div class="k-square3 k-square3b"></div>
-      <div class="k-square3 k-square3c"></div>
-      <div class="k-square3 k-square3d"></div>
+      .k-square3 {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        opacity: 0.2;
+        animation: k-loadingQ 2s infinite;
+        opacity: 0.5;
+      }
+
+      .k-square3a {
+        transform: translate(0, -25px);
+        margin-right: 3px;
+        background-color: #0094ff;
+      }
+
+      .k-square3b {
+        transform: translate(25px, 0);
+        background-color: #ffc107;
+      }
+
+      .k-square3c {
+        transform: translate(-25px, 0);
+        background-color: #ee6362;
+        margin-right: 3px;
+      }
+
+      .k-square3d {
+        transform: translate(0, 25px);
+        background-color: #2cb0b2;
+      }
+
+      @keyframes k-loadingQ {
+        33% {
+          transform: translate(0, 0);
+          opacity: 0.7;
+        }
+
+        66% {
+          transform: translate(0, 0);
+          opacity: 0.7;
+        }
+      }
+      .temp_loading_p {
+        width: 200px;
+        text-align: center;
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="temp_loading" id="temp_loading">
+      <div class="k-square-holder2">
+        <div class="k-square3 k-square3a"></div>
+        <div class="k-square3 k-square3b"></div>
+        <div class="k-square3 k-square3c"></div>
+        <div class="k-square3 k-square3d"></div>
+      </div>
+      <p class="temp_loading_p">正在加载。。。</p>
     </div>
-    <p class="temp_loading_p">正在加载。。。</p>
-  </div>
-  <div id="app"></div>
-  <!-- built files will be auto injected -->
-</body>
-
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
 </html>

@@ -17,7 +17,6 @@ Vue.config.productionTip = false;
 
 Vue.use(less);
 Vue.use(vuelidate);
-
 Vue.prototype.indexPath = cfg.isdev
   ? "http://127.0.0.1:7001"
   : "http://119.45.57.238";
@@ -28,7 +27,9 @@ Vue.prototype.$loading = loading;
 Vue.prototype.$u = util;
 Vue.prototype.$ = (str) => document.querySelector(str);
 Vue.prototype.$md5 = md5;
+// Vue.prototype.$app = App;
 /* eslint-disable no-new */
+
 new Vue({
   router,
   store,

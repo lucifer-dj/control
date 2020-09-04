@@ -1,7 +1,12 @@
 <template>
   <div class="box">
-    <v-card v-if="type==='setting'" flat color="#f8f8f8" class="v-card">
-      <v-card flat color="#f8f8f8">
+    <v-card
+      v-if="type==='setting'"
+      flat
+      :color="$vuetify.theme.dark?'#1E1E1E':'#f8f8f8'"
+      class="v-card"
+    >
+      <v-card flat :color="$vuetify.theme.dark?'#1E1E1E':'#f8f8f8'">
         <v-card-title>
           <span>设置</span>
           <v-spacer></v-spacer>
@@ -10,14 +15,22 @@
           </v-btn>
         </v-card-title>
         <v-card-text>
-          <v-subheader>修改主题</v-subheader>
-          <v-sheet color="#f8f8f8" class="px-2">
+          <span class="text-h6">修改主题</span>
+          <v-sheet :color="$vuetify.theme.dark?'#1E1E1E':'#f8f8f8'" class="px-2">
             <v-chip
-              class="ma-1"
-              v-for="(item,idx) in themeArr"
+              class="ma-2"
+              v-for="(item,idx) in themes"
               :key="idx"
               @click="changeTheme(item)"
-            >{{item}}</v-chip>
+              :color="active_theme==item?theme.bg_p.background:''"
+            >
+              <span :style="`color:${active_theme===item?theme.co.color:''};`">{{item}}</span>
+            </v-chip>
+            <v-card-text class="d-flex align-center">
+              <v-subheader>深色模式</v-subheader>
+              <v-spacer></v-spacer>
+              <v-switch v-model="darkState"></v-switch>
+            </v-card-text>
           </v-sheet>
         </v-card-text>
       </v-card>
@@ -46,23 +59,44 @@
           </v-card>
         </v-card-text>
         <v-card-actions class="justify-end">
-          <v-btn text class="mr-5">修改信息</v-btn>
+          <v-btn text class="mr-5" :style="[theme.bg_p,theme.co]">修改信息</v-btn>
         </v-card-actions>
       </v-card>
     </v-card>
   </div>
 </template>
 <script>
+import _theme from "@/plugins/theme.js";
 export default {
   name: "theSide",
   data: () => ({
     dialog: false,
+    active_theme: "",
+    darkState: false,
   }),
   props: {
     type: String,
   },
   mounted() {
-    // console.log(this.$vuetify.application)
+    let that = this;
+    if (localStorage.getItem("theme"))
+      that.active_theme = localStorage.getItem("theme");
+  },
+  watch: {
+    darkState(val) {
+      if (val) {
+        this.$store.commit("changeTheme", {
+          primary: "#121212",
+          assist: "#fff",
+          color: "#fff",
+        });
+        localStorage.setItem("theme", "dark");
+      } else {
+        this.$store.commit("changeTheme", "light");
+        localStorage.setItem("theme", "light");
+      }
+      this.$vuetify.theme.dark = val;
+    },
   },
   methods: {
     close() {
@@ -71,12 +105,18 @@ export default {
     },
     changeTheme(theme) {
       let that = this;
-      console.log(that.$vuetify);
+      if (this.$vuetify.theme.dark) this.$vuetify.theme.dark = false;
+      that.active_theme = theme;
+      localStorage.setItem("theme", theme);
+      that.$store.commit("changeTheme", theme);
     },
   },
   computed: {
-    themeArr() {
-      return Array(7).fill("blue");
+    themes() {
+      return Object.keys(_theme);
+    },
+    theme() {
+      return this.$store.getters.getTheme;
     },
   },
 };
@@ -93,5 +133,8 @@ export default {
     height: 100%;
     width: 100%;
   }
+}
+.chip_active {
+  background-color: #222 !important;
 }
 </style>

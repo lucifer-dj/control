@@ -18,10 +18,22 @@ export default {
   data: () => ({
     isRouterAlive: true,
   }),
+  created() {},
   mounted() {
+    // this.$vue._theme.primary = "#222";
     //做一个进入时的验证
     let that = this;
-    console.log(that.$vuetify);
+    let default_theme = localStorage.getItem("theme")
+      ? localStorage.getItem("theme")
+      : "light";
+    if (default_theme === "dark") {
+      that.$store.commit("changeTheme", {
+        primary: "#121212",
+        assist: "#fff",
+        color: "#fff",
+      });
+      that.$vuetify.theme.dark = true;
+    } else that.$store.commit("changeTheme", default_theme);
     let temp_loading = document.querySelector("#temp_loading");
     temp_loading.style.display = "none";
   },
@@ -96,5 +108,9 @@ html {
 }
 ::-webkit-scrollbar-track {
   background-color: transparent;
+}
+.my-blue {
+  background-color: #0094ff !important;
+  color: #fff !important;
 }
 </style>
