@@ -9,7 +9,6 @@ class PageController extends Controller {
     let { ctx, service, table } = this;
     let req = ctx.request.body;
     let result = await service.db.readSingle(table, { cid: req.where.cid });
-    console.log(result)
     if (result) return ctx.success("成功查询到一条数据", result);
     ctx.err("未查询到数据");
   }
