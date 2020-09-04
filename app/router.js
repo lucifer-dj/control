@@ -53,7 +53,7 @@ module.exports = (app) => {
   router.post("/panel/year/delete", controller.panel.year.delete);
   router.post("/panel/year/read", controller.panel.year.read);
   router.post("/panel/year/update", controller.panel.year.update);
-
+  router.post("/panel/file/gettps", controller.panel.file.getTps);
   //前台
   router.get("/", controller.frame.index.index);
   router.get("/:column", controller.frame.column.index);

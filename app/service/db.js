@@ -6,7 +6,7 @@ class DbService extends Service {
     let { app } = this;
     let result = await app.mysql.select(table, obj);
     if (result.length > 0) return result;
-    return false;
+    return [];
   }
   //添加一条数据
   async add(table, data) {

@@ -159,7 +159,6 @@ class FileService extends Service {
     return new Promise((resolve, reject) => {
       fs.readdir(src, 'utf8', function(err, files) {
         if (err) return reject(err);
-        files = files.map(a => a.split('.')[0])
         resolve(files);
       })
     })

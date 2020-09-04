@@ -10,11 +10,11 @@ class ColumnController extends Controller {
   async queryAll() {
     let { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.db.queryAll(table);
+    let result = await service.db.queryAll(table, { where: req.where });
     if (result.length > 0) {
       ctx.success("查询成功", result);
     } else {
-      ctx.error("查询失败");
+      ctx.err("没有查询到数据"); //表里没有数据
     }
   }
 
@@ -25,7 +25,7 @@ class ColumnController extends Controller {
     if (result) {
       ctx.success("成功添加一条数据", result);
     } else {
-      ctx.error("添加失败");
+      ctx.err("添加失败");
     }
   }
   async read() {
@@ -35,7 +35,7 @@ class ColumnController extends Controller {
     if (result) {
       ctx.success("成功查询到一条数据", result);
     } else {
-      ctx.error("添加失败");
+      ctx.err("添加失败");
     }
   }
 
@@ -46,7 +46,7 @@ class ColumnController extends Controller {
     if (result) {
       ctx.success("成功更新一条数据", result);
     } else {
-      ctx.error("添加失败");
+      ctx.err("添加失败");
     }
   }
 
@@ -57,7 +57,7 @@ class ColumnController extends Controller {
     if (result) {
       ctx.success("删除成功", result);
     } else {
-      ctx.error("添加失败");
+      ctx.err("添加失败");
     }
   }
 }
