@@ -1,11 +1,11 @@
 {% extends "../public/layout.html" %} {% block main %}
 <main class="main_list">
-  <div class="banner">
+  <div class="banner_list">
     <img src="{{static}}/images/1499147946347.jpg" alt="" />
   </div>
   <section class="news">
     <article>
-      <div class="head">
+      <div class="head_list">
         <div class="content">
           <div class="left">
             <a href="" class="head_active">全部</a>
@@ -19,7 +19,7 @@
         </div>
       </div>
       <ul class="news_content">
-        {% for item in factions %}
+        {% for item in tempArr %}
         <li>
           <a href="">
             <div class="img">

@@ -5,7 +5,7 @@ module.exports = {
     if (data === "") delete obj.data;
     this.body = obj;
   },
-  err(msg, code = 500) {
+  err(msg, code = 311) {
     this.status = 200;
     this.body = { code, msg };
   },

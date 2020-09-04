@@ -10,9 +10,9 @@ class YearController extends Controller {
     const { ctx, service, table } = this;
     let req = ctx.request.body;
     let result = await service.db.queryAll(table, {
-      where: { cid: req.cid },
+      where: req.where,
       limit: 10,
-      offset: req.num,
+      offset: req.offset,
     });
     if (result) {
       ctx.success("成功", result);

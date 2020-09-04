@@ -8,9 +8,10 @@ class PageController extends Controller {
   async read() {
     let { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.db.readSingle(table, req);
+    let result = await service.db.readSingle(table, { cid: req.where.cid });
+    console.log(result)
     if (result) return ctx.success("成功查询到一条数据", result);
-    ctx.success("未查询到数据");
+    ctx.err("未查询到数据");
   }
   async add() {
     let { ctx, service, table } = this;

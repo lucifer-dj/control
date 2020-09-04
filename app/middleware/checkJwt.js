@@ -28,7 +28,7 @@ module.exports = (options, app) => {
         ctx.err("token 已过期! 请重新获取令牌", 401);
       } else {
         console.log(e);
-        ctx.err("其他错误");
+        ctx.err("其他错误",401);
       }
     }
   };
