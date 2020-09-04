@@ -36,8 +36,6 @@ module.exports = (app) => {
   router.post("/panel/realm/update", controller.panel.realm.update);
   router.post("/panel/site/read", controller.panel.file.readSite);
   router.post("/panel/site/update", controller.panel.file.updateSite);
-  router.post("/panel/about/read", controller.panel.file.readAbout);
-  router.post("/panel/about/update", controller.panel.file.updateAbout);
   router.post("/panel/banner", controller.panel.banner.queryAll);
   router.post("/panel/banner/add", controller.panel.banner.add);
   router.post("/panel/banner/delete", controller.panel.banner.delete);
