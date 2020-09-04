@@ -8,24 +8,15 @@
       </v-toolbar>
       <v-data-table align="center" :headers="headers" disable-sort :items="items"></v-data-table>
     </v-card>
-    <v-dialog class="my-v-dialog" v-model="dialog">
-      <v-row justify="center" v-if="dialog">
+    <v-dialog v-model="dialog">
+      <v-row justify="center" v-if="dialog" class="dialog_row">
         <v-col cols="6" class="pa-0 ma-0">
           <v-card class="pa-5">
-            <v-card-title
-              class="justify-center text-uppercase text-h5"
-            >{{dialogType=='add'?'添加':'更新'}}banner</v-card-title>
+            <v-card-title class="justify-center text-uppercase text-h5">{{dialogType=='add'?'添加':'更新'}}banner</v-card-title>
             <v-card-text>
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-select
-                    v-model="tpModel.template"
-                    label="*选择模板"
-                    :items="templates"
-                    required
-                    @input="$v.tpModel.template.$touch()"
-                    @blur="$v.tpModel.template.$touch()"
-                  ></v-select>
+                  <v-select v-model="tpModel.template" label="*选择模板" :items="htmls" required @input="$v.tpModel.template.$touch()" @blur="$v.tpModel.template.$touch()"></v-select>
                 </v-col>
                 <v-col cols="6">
                   <v-text-field label="前台路径" v-model="tpModel.front"></v-text-field>
@@ -36,7 +27,6 @@
                 <v-col cols="6">
                   <v-text-field label="英文名称" v-model="tpModel.ename"></v-text-field>
                 </v-col>
-
                 <v-col cols="6">
                   <v-text-field label="后台路径" v-model="tpModel.panel"></v-text-field>
                 </v-col>
@@ -47,18 +37,8 @@
               <p>1.前台路径与模板的名称相同</p>
             </v-card-subtitle>
             <v-card-actions class="justify-center">
-              <v-btn
-                width="120"
-                class="mx-2"
-                @click="submit(dialogType)"
-                :style="[theme.bg_p,theme.co]"
-              >{{dialogType=='add'?'提交':'更新BANNER'}}</v-btn>
-              <v-btn
-                width="120"
-                class="mx-2"
-                @click="tpModelReset(1)"
-                :style="[theme.bg_p,theme.co]"
-              >关闭</v-btn>
+              <v-btn width="120" class="mx-2" @click="submit(dialogType)" :style="[theme.bg_p,theme.co]">{{dialogType=='add'?'提交':'更新BANNER'}}</v-btn>
+              <v-btn width="120" class="mx-2" @click="tpModelReset(1)" :style="[theme.bg_p,theme.co]">关闭</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -88,14 +68,14 @@ export default {
     },
     dialog: false,
     dialogType: "add",
-    templates: [],
+    htmls: [],
   }),
   methods: {
-    async getTps() {
+    async getHtmlList() {
       let that = this;
       try {
-        let result = await api.getTps({}, that);
-        that.templates = result.code == 200 ? result.data : [];
+        let result = await api.getHtmlList({}, that);
+        that.htmls = result.code == 200 ? result.data : [];
       } catch (e) {
         console.log(e);
       }
@@ -116,7 +96,7 @@ export default {
   },
   mounted() {
     let that = this;
-    that.getTps();
+    that.getHtmlList();
   },
   computed: {
     theme() {
@@ -125,8 +105,8 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped>
-.my-v-dialog {
+<style lang="less">
+.v-dialog--active {
   box-shadow: none !important;
 }
 </style>

@@ -148,14 +148,6 @@ export function bannerUpdate(data, obj = {}) {
 export function bannerDelete(date, obj = {}) {
   return fetch("/panel/banner/delete", date, obj);
 }
-//读取关于设置
-export function aboutGet(data = {}, obj = {}) {
-  return fetch("/panel/about/read", data, obj);
-}
-//修改关于设置
-export function aboutUpdate(data, obj = {}) {
-  return fetch("/panel/about/update", data, obj);
-}
 //读取站点设置
 export function siteGet(data = {}, obj = {}) {
   return fetch("/panel/site/read", data, obj);
@@ -164,8 +156,36 @@ export function siteGet(data = {}, obj = {}) {
 export function siteUpdate(data, obj = {}) {
   return fetch("/panel/site/update", data, obj);
 }
-export function getTps(data, obj = {}) {
-  return fetch("/panel/file/gettps", data, obj);
+export function aboutGet(data = {}, obj = {}) {
+  return fetch("/panel/site/read", data, obj);
+}
+//修改站点设置
+export function aboutUpdate(data, obj = {}) {
+  return fetch("/panel/site/update", data, obj);
+}
+//查询所有的html
+export function getHtmlList(data, obj = {}) {
+  return fetch("/panel/file/getHtmlList", data, obj);
+}
+//查询所有轮播
+export function tpQueryAll(data = {}, obj = {}) {
+  return fetch("/panel/tps", data, obj);
+}
+//添加轮播
+export function tpAdd(data, obj = {}) {
+  return fetch("/panel/tp/add", data, obj);
+}
+//查询一个轮播
+export function tpRead(data, obj = {}) {
+  return fetch("/panel/tp/read", data, obj);
+}
+//修改一个轮播
+export function tpUpdate(data, obj = {}) {
+  return fetch("/panel/tp/update", data, obj);
+}
+//删除一个轮播
+export function tpDelete(date, obj = {}) {
+  return fetch("/panel/tp/delete", date, obj);
 }
 
 //上传文件

@@ -16,14 +16,12 @@ Vue.use(Router);
 export default new Router({
   mode: "hash",
   base: process.env.BASE_URL,
-  routes: [
-    {
+  routes: [{
       path: "/",
       name: "home",
       component: () => import("./pages/home.vue"),
       redirect: "/index",
-      children: [
-        {
+      children: [{
           name: "index",
           path: "/index",
           component: () => import("./pages/view/index.vue"),
@@ -34,19 +32,19 @@ export default new Router({
           component: () => import("./pages/view/column.vue"),
         },
         {
-          name: "page",
-          path: "/page",
-          component: () => import("./pages/view/tp/page.vue"),
-        },
-        {
-          name: "role",
-          path: "/role",
-          component: () => import("./pages/view/tp/role.vue"),
-        },
-        {
           name: "tpconfig",
           path: "/tpconfig",
           component: () => import("./pages/view/tpconfig.vue"),
+        },
+        {
+          name: "banner",
+          path: "/banner",
+          component: () => import("./pages/view/banner.vue"),
+        },
+        {
+          name: "introduce",
+          path: "/t",
+          component: () => import("./pages/view/introduce.vue"),
         },
         {
           name: "faction",
@@ -62,16 +60,6 @@ export default new Router({
           name: "config",
           path: "/config",
           component: () => import("./pages/view/config.vue"),
-        },
-        {
-          name: "banner",
-          path: "/banner",
-          component: () => import("./pages/view/banner.vue"),
-        },
-        {
-          name: "introduce",
-          path: "/t",
-          component: () => import("./pages/view/introduce.vue"),
         },
         {
           name: "year",

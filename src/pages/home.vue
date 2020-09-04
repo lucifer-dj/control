@@ -95,7 +95,7 @@ export default {
         name: "栏目管理",
         icon: "iconfont iconfont-shebeileixingdangan",
         path: "/column",
-        child: {},
+        child: [],
       },
       {
         name: "轮播设置",
@@ -142,6 +142,7 @@ export default {
       } else {
         that.listModel = type;
       }
+      console.log(9)
       let obj = {};
       if (data.origin) {
         obj = { cid: -1, id: data.id };
