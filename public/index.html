@@ -14,76 +14,83 @@
         top: 40%;
         left: 50%;
         width: 200px;
-        height: 20px;
+        height: 60px;
         transform: translate(-50%, -50%);
         /* background-color: #333; */
       }
-
-      .k-square-holder2 {
-        margin: 0 auto;
-        width: 40px;
-        margin-top: 20px;
+      /* load1 */
+      #temp_loading > .load1 {
+        margin: auto;
+        width: 50px;
+        height: 60px;
+        text-align: center;
+        font-size: 10px;
       }
-
-      .k-square3 {
+      .load1 > div {
+        background-color: #67cf22;
+        height: 100%;
+        width: 6px;
         display: inline-block;
-        width: 15px;
-        height: 15px;
-        opacity: 0.2;
-        animation: k-loadingQ 2s infinite;
-        opacity: 0.5;
+        -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+        animation: stretchdelay 1.2s infinite ease-in-out;
       }
-
-      .k-square3a {
-        transform: translate(0, -25px);
-        margin-right: 3px;
-        background-color: #0094ff;
+      .load1 .rect2 {
+        -webkit-animation-delay: -1.1s;
+        animation-delay: -1.1s;
       }
-
-      .k-square3b {
-        transform: translate(25px, 0);
-        background-color: #ffc107;
+      .load1 .rect3 {
+        -webkit-animation-delay: -1s;
+        animation-delay: -1s;
       }
-
-      .k-square3c {
-        transform: translate(-25px, 0);
-        background-color: #ee6362;
-        margin-right: 3px;
+      .load1 .rect4 {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
       }
-
-      .k-square3d {
-        transform: translate(0, 25px);
-        background-color: #2cb0b2;
+      .load1 .rect5 {
+        -webkit-animation-delay: -0.8s;
+        animation-delay: -0.8s;
       }
-
-      @keyframes k-loadingQ {
-        33% {
-          transform: translate(0, 0);
-          opacity: 0.7;
+      @-webkit-keyframes stretchdelay {
+        0%,
+        40%,
+        100% {
+          -webkit-transform: scaleY(0.4);
         }
-
-        66% {
-          transform: translate(0, 0);
-          opacity: 0.7;
+        20% {
+          -webkit-transform: scaleY(1);
+        }
+      }
+      @keyframes stretchdelay {
+        0%,
+        40%,
+        100% {
+          transform: scaleY(0.4);
+          -webkit-transform: scaleY(0.4);
+        }
+        20% {
+          transform: scaleY(1);
+          -webkit-transform: scaleY(1);
         }
       }
       .temp_loading_p {
-        width: 200px;
+        width: 100%;
         text-align: center;
-        margin-top: 30px;
+        font-size: 14px;
+        font-weight: 600;
       }
     </style>
   </head>
 
   <body>
     <div class="temp_loading" id="temp_loading">
-      <div class="k-square-holder2">
-        <div class="k-square3 k-square3a"></div>
-        <div class="k-square3 k-square3b"></div>
-        <div class="k-square3 k-square3c"></div>
-        <div class="k-square3 k-square3d"></div>
+      <div class="load1">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
       </div>
-      <p class="temp_loading_p">正在加载。。。</p>
+      <p class="temp_loading_p">正在加载...</p>
     </div>
     <div id="app"></div>
     <!-- built files will be auto injected -->

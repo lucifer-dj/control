@@ -15,7 +15,7 @@ export default {
   }),
   methods: {
     test() {
-      console.log(this.file);
+      this.$loading();
     },
   },
   watch: {
@@ -29,8 +29,8 @@ export default {
   },
   mounted() {
     let that = this;
-    // that.$loading();
-    that.$toast({msg:'确定要这么做吗？'})
+    
+    // that.$toast({msg:'确定要这么做吗？'})
   },
 };
 </script>
