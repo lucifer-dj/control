@@ -54,6 +54,7 @@ module.exports = (app) => {
   router.post("/panel/year/read", controller.panel.year.read);
   router.post("/panel/year/update", controller.panel.year.update);
   router.post("/panel/file/gettps", controller.panel.file.getTps);
+  router.post("/panel/node/getRouter", controller.panel.node.getRouter);
   //前台
   router.get("/", controller.frame.index.index);
   router.get("/:column", controller.frame.column.index);
