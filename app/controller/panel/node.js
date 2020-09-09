@@ -22,42 +22,44 @@ class NodeController extends Controller {
     if (routes.length < 2) return routes;
 
     let deep = [];
-    for (var i = 0; i < routes.length; i++) {
+    for (let i = 0; i < routes.length; i++) {
       deep.push(routes[i].deep);
     };
     deep = [...new Set(deep)].sort((a, b) => a - b);
-    let layout = deep.shift();
-    layout = routes.filter(r => r.cid === layout);
-    routes = routes.filter(r => r.cid !== layout);
-    let obj = {};
-    for (var i = 0; i < deep.length; i++) {
-      obj[i] = routes.filter(r => r.cid === deep[i]);
-    }
-    let un = deep.pop();
-    console.log(un)
-    while (un) {
-      for (var i = 0; i < obj[un].length; i++) {
-        let r = obj[un][i];
-        routes.forEach(item => {
-          if (item.id === r.cid) {
-            if (!('children' in item)) {
-              item.children = [];
-            }
-            item.children.push(r)
-          }
-        })
-      }
-    }
-    routes = routes.filter(r => r.cid === 1);
-    layout.children = routes;
+    deep.shift();
+    deep.shift();
+    let layout = [];
     let temp = [];
-    temp.push(layout);
-    layout = this.disposeRouter(temp)
+    routes.forEach(route => {
+      if (route.cid === 0) layout.push(route);
+      else temp.push(route);
+    })
+    routes = temp;
+    let obj = {};
+    for (let i = 0; i < deep.length; i++) {
+      obj[deep[i]] = routes.filter(r => r.deep === deep[i]);
+    }
+    routes.forEach(route => {
+      deep.forEach(item => {
+        let r = obj[item];
+        for (let i = 0; i < r.length; i++) {
+          if (route.id === r[i].cid) {
+            if (!("children" in route)) {
+              route.children = [];
+            }
+            route.children.push(r[i]);
+          }
+        }
+      })
+    })
+    routes = routes.filter(r => r.cid === 1);
+    layout[0].children = routes;
+    layout = this.disposeRouter(layout)
     return layout;
   }
   disposeRouter(routes) {
     let arr = [];
-    for (var i = 0; i < routes.length; i++) {
+    for (let i = 0; i < routes.length; i++) {
       let route = routes[i]
       let obj = {
         path: route.v_path,
