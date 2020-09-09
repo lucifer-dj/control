@@ -3,7 +3,7 @@ import router from "./router";
 import layout from "@/pages/layout.vue";
 const whiteList = ["/login", "/home", "/register"];
 let getRouter;
-api.getRouter({ token: getItem("token") })
+api.getRouter({ token: getItem("token") });
 router.beforeEach(async (to, from, next) => {
   let inWhiteList = (s) => whiteList.some((w) => w === s);
   if (inWhiteList(to.path)) {
@@ -14,8 +14,8 @@ router.beforeEach(async (to, from, next) => {
     } else {
       if (!getRouter) {
         if (!getItemObj("router")) {
-          api.getRouter({ token: getItem("token") }).then((res) => {
-            console.log(res.data)
+          api.getRouter({ auth: "admin" }).then((res) => {
+            console.log(res.data);
             if (res.code > 350) {
               next({ path: "/login" });
             } else {
