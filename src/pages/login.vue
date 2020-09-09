@@ -88,8 +88,13 @@ export default {
     },
     passState: false,
   }),
-  mounted() {
+  async mounted() {
     // console.log( this.$hint)
+    let res = await api.getRouter();
+    console.log(res);
+    // const whiteList = ["/login", "/home", "/register"];
+    // let inWhiteList = (s) => whiteList.some((w) => w === s);
+    // console.log(inWhiteList("/home"))
   },
   computed: {
     accountErrors() {

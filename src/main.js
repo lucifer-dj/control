@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
 import App from "./App";
-import router from "./router.js";
+import router from "./router/router.js";
 import less from "less";
 import vuetify from "./plugins/vuetify";
 import store from "./store/index";
@@ -14,6 +14,7 @@ import vuelidate from "vuelidate";
 import * as util from "./plugins/util";
 import cfg from "./plugins/cfg";
 Vue.config.productionTip = false;
+import "./router/permission";
 
 Vue.use(less);
 Vue.use(vuelidate);
@@ -29,7 +30,6 @@ Vue.prototype.$ = (str) => document.querySelector(str);
 Vue.prototype.$md5 = md5;
 // Vue.prototype.$app = App;
 /* eslint-disable no-new */
-
 new Vue({
   router,
   store,

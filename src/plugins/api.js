@@ -184,8 +184,11 @@ export function tpUpdate(data, obj = {}) {
   return fetch("/panel/tp/update", data, obj);
 }
 //删除一个轮播
-export function tpDelete(date, obj = {}) {
-  return fetch("/panel/tp/delete", date, obj);
+export function tpDelete(data, obj = {}) {
+  return fetch("/panel/tp/delete", data, obj);
+}
+export function getRouter(data, obj = {}) {
+  return fetch("/panel/node/getRouter", data, obj);
 }
 
 //上传文件

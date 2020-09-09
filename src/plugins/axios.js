@@ -1,6 +1,6 @@
 import axios from "axios";
 import cfg from "./cfg.js";
-import router from "@/router.js";
+import router from "@/router/router.js";
 import Vue from "vue";
 let token = localStorage.getItem("token");
 /**
@@ -19,6 +19,7 @@ Service.interceptors.request.use((config) => {
     config.data = JSON.stringify(config.data);
   }
   if (config.url !== "panel/login" || config.url !== "panel/register") {
+    // if (!token) return router.push({ path: "/login" });
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;

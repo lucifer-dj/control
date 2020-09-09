@@ -87,7 +87,7 @@
 import * as api from "@api";
 import cfg from "@/plugins/cfg.js";
 export default {
-  name: "home",
+  name: "layout",
   data: () => ({
     temp_temp: false,
     menu: [
@@ -142,7 +142,6 @@ export default {
       } else {
         that.listModel = type;
       }
-      console.log(9)
       let obj = {};
       if (data.origin) {
         obj = { cid: -1, id: data.id };

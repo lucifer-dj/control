@@ -1,6 +1,6 @@
 export default {
-  isdev: ["development"].includes(process.env.NODE_ENV),
-  // isdev: true,
+  // isdev: ["development"].includes(process.env.NODE_ENV),
+  isdev: true,
   tps: ["/page", "/role", "/faction", "/year", "/realm"],
   tp: {
     role: {

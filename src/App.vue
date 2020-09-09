@@ -19,7 +19,7 @@ export default {
     isRouterAlive: true,
   }),
   created() {},
-  mounted() {
+  async mounted() {
     // this.$vue._theme.primary = "#222";
     //做一个进入时的验证
     let that = this;
