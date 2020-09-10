@@ -15,7 +15,9 @@ router.beforeEach(async (to, from, next) => {
     } else {
       if (!getRouter) {
         if (!getItemObj("router")) {
-          fetchRouter({ auth: "admin" }).then((res) => {
+          let _user = getItemObj("user");
+          if (!_user) return next({ path: "/login" });
+          fetchRouter({ auth: _user.auth }).then((res) => {
             if (res.code > 350) {
               next({ path: "/login" });
             } else {

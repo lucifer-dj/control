@@ -32,7 +32,7 @@
 import { Api } from "@api";
 export default {
   inject: ["getSonColumn"],
-  name: "about",
+  name: "page",
   data: () => ({
     pageType: "add",
     pageModel: {

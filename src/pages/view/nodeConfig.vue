@@ -156,6 +156,11 @@ export default {
     icons: cfg.icons,
     api: new Api("node"),
   }),
+  async mounted() {
+    let that = this;
+    that.nodeQueryAll();
+    that.nodeModel.cid = that.parentNode[0].self;
+  },
   methods: {
     nodeModelReset(type = null) {
       let that = this;
@@ -178,7 +183,7 @@ export default {
       let that = this;
       let _node = JSON.parse(that.nodeModel.cid);
       if (_node.deep > 3) return that.$hint({ msg: "节点过深", type: "error" });
-      that.nodeModel.cid = _node.cid;
+      that.nodeModel.cid = _node.id;
       that.nodeModel.deep = Number(_node.deep) + 1;
       if (type !== "add") return that.nodeUpdate();
       try {
@@ -232,7 +237,15 @@ export default {
       try {
         let result = await that.api.queryAll();
         that.items = result.code === 200 ? result.data : [];
-        // console.log(that.items);
+        that.items.map((n) => {
+          n.order = n.id;
+          if (n.deep !== 1) {
+            n.call = " |—" + n.call;
+            n.order = Number(n.cid) + 0.1;
+          }
+        });
+        that.items.sort((a, b) => a.order - b.order);
+        console.log(that.items);
       } catch (e) {
         console.log(e);
       }
@@ -244,6 +257,7 @@ export default {
         try {
           let result = await that.api.delete({ id });
           if (result.code === 200) {
+            that.$store.dispatch("getRouter");
             that.nodeQueryAll();
             return that.$hint({ msg: "删除成功" });
           }
@@ -269,11 +283,6 @@ export default {
       _items.map((a) => (a.self = JSON.stringify(a)));
       return _items;
     },
-  },
-  async mounted() {
-    let that = this;
-    that.nodeQueryAll();
-    that.nodeModel.cid = that.parentNode[0].self;
   },
   components: {
     upload: () => import("@components/upload.vue"),

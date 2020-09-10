@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { getItemForStorage } from "@/plugins/util.js";
+import { getItemForStorage, saveItemObj } from "@/plugins/util.js";
 import { getUserInfo } from "@api";
 export default {
   name: "App",
@@ -60,12 +60,8 @@ export default {
         let token = getItemForStorage("token");
         let result = await getUserInfo({ token });
         if (result.code === 200) {
+          saveItemObj("user", result.data);
           that.$hint({ msg: "自动登录成功" });
-          that.$store.commit("setUser", result.data);
-          setTimeout(() => {
-            that.$router.replace("/");
-          }, 500);
-          // that.$router.replace("/");
         } else {
           that.$hint({ msg: "tokan验证失败", type: "error" });
           that.$router.replace("/login");

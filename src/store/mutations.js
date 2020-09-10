@@ -13,9 +13,6 @@ const mutations = {
     state.router = router;
     saveItemObj("router", router);
   },
-  setUser(state, user) {
-    state.user = user;
-  },
 };
 
 export default mutations;

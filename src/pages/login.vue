@@ -126,7 +126,6 @@ export default {
           localStorage.setItem("token", result.data.token);
           that.userModelReset();
           that.$hint({ msg: result.msg });
-          return;
           setTimeout(() => {
             that.$router.replace("/");
           }, 500);
