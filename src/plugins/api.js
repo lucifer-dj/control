@@ -37,6 +37,10 @@ export function getHtmlList(data, obj = {}) {
 export function fetchRouter(data, obj = {}) {
   return fetch("/panel/node/getRouter", data, obj);
 }
+export function getUserInfo(data, obj = {}) {
+  return fetch("/panel/user/getInfo", data, obj);
+}
+
 export class Api {
   constructor(url) {
     this.url = `/panel/${url}/`;

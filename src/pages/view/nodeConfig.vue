@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <v-subheader>节点设置</v-subheader>
-
     <v-card class="px-6">
       <v-toolbar flat>
         <v-btn text @click="dialog=true;" :style="[theme.bg_p,theme.co]" class="mr-2">+添加</v-btn>
@@ -15,7 +14,7 @@
             depressed
             title="删除"
             class="mx-1"
-            @click="bannerDelete(item.id)"
+            @click="nodeDelete(item.id)"
             :style="[theme.bg_a,theme.co_p]"
           >
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
@@ -26,7 +25,7 @@
             depressed
             title="修改"
             class="mx-1"
-            @click="editBanner(item.id)"
+            @click="editnode(item.id)"
             :style="[theme.bg_a,theme.co_p]"
           >
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
@@ -36,41 +35,83 @@
     </v-card>
     <v-dialog v-model="dialog" persistent class="v-dialog">
       <v-row justify="center" v-if="dialog">
-        <v-col cols="6" class="pa-0 ma-0">
+        <v-col cols="8" class="pa-0 ma-0">
           <v-card class="pa-5">
             <v-card-title
-              class="justify-center text-uppercase text-h5"
-            >{{dialogType=='add'?'添加':'更新'}}banner</v-card-title>
+              class="justify-center text-uppercase text-h5 py-2"
+            >{{dialogType=='add'?'添加':'更新'}}节点</v-card-title>
             <v-card-text>
               <v-row>
                 <v-col cols="6">
-                  <v-text-field label="标题" v-model="nodeModel.title"></v-text-field>
+                  <v-text-field label="节点名" v-model="nodeModel.call"></v-text-field>
+                </v-col>
+                <v-col cols="6">
+                  <v-text-field label="文档TIETLE" v-model="nodeModel.title"></v-text-field>
+                </v-col>
+                <v-col cols="6">
+                  <v-text-field label="组件路径" v-model="nodeModel.component"></v-text-field>
                 </v-col>
                 <v-col cols="6">
                   <v-select
-                    label="所属分类"
-                    :items="columns"
-                    item-text="name"
-                    item-value="id"
+                    label="父节点"
                     v-model="nodeModel.cid"
+                    :items="parentNode"
+                    item-text="call"
+                    item-value="self"
                   ></v-select>
                 </v-col>
-                <v-col cols="6">
-                  <v-text-field label="跳转网址" v-model="nodeModel.url"></v-text-field>
+                <v-col cols="4">
+                  <v-text-field label="Vue路径" v-model="nodeModel.v_path"></v-text-field>
                 </v-col>
-                <v-col cols="6">
-                  <v-text-field label="排序" v-model="nodeModel.order"></v-text-field>
+                <v-col cols="4">
+                  <v-text-field label="Vue组件名称" v-model="nodeModel.name"></v-text-field>
                 </v-col>
-                <upload type="auto" :src="nodeModel.pic" v-model="imgFile" cols="6"></upload>
+                <v-col cols="4" class="d-flex flex-row align-center">
+                  <span>节点权限</span>
+                  <v-radio-group row class="ml-10" v-model="nodeModel.auth">
+                    <v-radio
+                      label="用户"
+                      value="user"
+                      off-icon="iconfont-weixuan"
+                      on-icon="iconfont-xuanzhong"
+                    ></v-radio>
+                    <v-radio
+                      label="管理员"
+                      value="admin"
+                      off-icon="iconfont-weixuan"
+                      on-icon="iconfont-xuanzhong"
+                    ></v-radio>
+                  </v-radio-group>
+                </v-col>
+
+                <v-col cols="12" class="pt-0">
+                  <v-subheader class="px-0">选择节点图标</v-subheader>
+                  <v-sheet>
+                    <v-btn
+                      icon
+                      v-for="(icon,idx) in icons"
+                      :key="idx"
+                      class="mx-1"
+                      :color="nodeModel.icon===icon?theme.bg_p.background:''"
+                      @click="nodeModel.icon=icon"
+                    >
+                      <v-icon>{{icon}}</v-icon>
+                    </v-btn>
+                  </v-sheet>
+                </v-col>
               </v-row>
             </v-card-text>
+            <v-card-subtitle class="pa-0">
+              <p class="red--text">*注意</p>
+              <p>1.侧边栏路由更新可能需要刷新页面</p>
+            </v-card-subtitle>
             <v-card-actions class="justify-center">
               <v-btn
                 width="120"
                 class="mx-2"
                 @click="submit(dialogType)"
                 :style="[theme.bg_p,theme.co]"
-              >{{dialogType=='add'?'提交':'更新BANNER'}}</v-btn>
+              >{{dialogType=='add'?'提交':'更新节点'}}</v-btn>
               <v-btn
                 width="120"
                 class="mx-2"
@@ -85,7 +126,8 @@
   </v-container>
 </template>
 <script>
-import { Api } from "@api";
+import { Api, upload, deleteFile } from "@api";
+import cfg from "@/plugins/cfg.js";
 export default {
   name: "nodeConfig",
   data: () => ({
@@ -108,9 +150,10 @@ export default {
       cid: "",
       component: "",
       v_path: "",
+      auth: "user",
     },
     columns: [],
-    imgFile: {},
+    icons: cfg.icons,
     api: new Api("node"),
   }),
   methods: {
@@ -121,94 +164,88 @@ export default {
         call: "",
         name: "",
         icon: "",
-        cid: "",
+        cid: that.parentNode[0].self,
         component: "",
         v_path: "",
+        auth: "user",
       };
       that.dialogType = "add";
       that.imgFile = {};
       that.dialog = false;
-      if (!type) that.bannerQueryAll();
+      if (!type) that.nodeQueryAll();
     },
     async submit(type) {
       let that = this;
-      if (type !== "add") return that.bannerUpdate();
-      if (that.$u.checkObjectIsEmpty(that.imgFile)) {
-        return that.$hint({ msg: "请选择上传的图片", type: "error" });
-      }
-      let res = await api.upload(that.imgFile, that);
-      if (res.code !== 200)
-        return that.$hint({ msg: "上传图片失败", type: "error" });
-      that.nodeModel.pic = res.data;
-      that.nodeModel.date = new Date().valueOf();
+      let _node = JSON.parse(that.nodeModel.cid);
+      if (_node.deep > 3) return that.$hint({ msg: "节点过深", type: "error" });
+      that.nodeModel.cid = _node.cid;
+      that.nodeModel.deep = Number(_node.deep) + 1;
+      if (type !== "add") return that.nodeUpdate();
       try {
-        let result = await api.bannerAdd(that.nodeModel, that);
-        console.log(result);
+        let result = await that.api.add(that.nodeModel, that);
+        // console.log(result);
+        that.$store.dispatch("getRouter");
         that.$hint({ msg: "添加成功" });
         that.nodeModelReset();
       } catch (e) {
         console.log(e);
       }
     },
-    async editBanner(id) {
+    async editnode(id) {
       let that = this;
-      that.nodeModel = await that.bannerRead(id);
+      that.nodeModel = await that.nodeRead(id);
+      that.nodeModel.cid = that.parentNode.find(
+        (n) => n.id == that.nodeModel.cid
+      );
+      that.nodeModel.cid = that.nodeModel.cid.self;
       if (!that.nodeModel) return that.nodeModelReset(1);
       that.dialogType = "edit";
       that.dialog = true;
     },
-    async bannerRead(id) {
+    async nodeRead(id) {
       let that = this;
       try {
-        let result = await api.bannerRead({ id });
+        let result = await that.api.read({ id });
         return result.data;
       } catch (e) {
         console.log(e);
         return false;
       }
     },
-    async bannerUpdate() {
+    async nodeUpdate() {
       let that = this;
-      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        let result = await api.upload(that.imgFile, that, that.nodeModel.pic);
-        that.nodeModel.pic =
-          result.code === 200 ? result.data : that.nodeModel.pic;
-        if (!result) return that.$hint({ msg: "上传图片失败", type: "error" });
-      }
-      that.nodeModel.date = new Date().valueOf();
       try {
-        let result0 = await api.bannerUpdate(that.nodeModel);
-        that.$hint({ msg: "更新成功" });
+        let result = await that.api.update(that.nodeModel);
+        if (result.code === 200) {
+          that.$store.dispatch("getRouter");
+          that.$hint({ msg: "更新成功" });
+        } else {
+          that.$hint({ msg: "更新失败", type: "error" });
+        }
         that.nodeModelReset();
       } catch (e) {
         console.log(e);
       }
     },
-    async bannerQueryAll() {
+    async nodeQueryAll() {
       let that = this;
       try {
-        let result = await api.bannerQueryAll();
+        let result = await that.api.queryAll();
         that.items = result.code === 200 ? result.data : [];
+        // console.log(that.items);
       } catch (e) {
         console.log(e);
       }
     },
-    async bannerDelete(id) {
+    async nodeDelete(id) {
       let that = this;
       that.$toast({ msg: "确认删除吗？" });
       that.bus.$on("toastConfirm", async function () {
-        if (that.nodeModel.pic.length > 0) {
-          try {
-            let result = await api.deleteFile({ path: that.nodeModel.pic });
-          } catch (e) {
-            console.error(e);
-          }
-        }
         try {
-          let result = await api.bannerDelete({ id });
+          let result = await that.api.delete({ id });
           if (result.code === 200) {
+            that.nodeQueryAll();
             return that.$hint({ msg: "删除成功" });
-            that.bannerQueryAll();
           }
           that.$hint({ msg: "删除失败" });
         } catch (e) {
@@ -217,35 +254,26 @@ export default {
         }
       });
     },
-    async columnQueryAll() {
-      let that = this;
-      try {
-        let result = await api.columnQueryAll({}, that);
-        that.columns.push({ name: "首页", id: "-1" });
-        let arr = result.code === 200 ? result.data : [];
-        that.columns = that.columns.concat(arr);
-      } catch (e) {
-        console.log(e);
-      }
-    },
   },
   computed: {
-    columnByCid() {
-      let that = this;
-      let obj = {};
-      that.columns.forEach((item, idx) => {
-        obj[item.id] = item;
-      });
-      return obj;
-    },
     theme() {
       return this.$store.getters.getTheme;
+    },
+    parentNode() {
+      let that = this;
+      let _items = [];
+      that.items.forEach((n) => {
+        _items.push(n);
+      });
+      _items.unshift({ call: "顶级节点", cid: "1", deep: 0, id: 1 });
+      _items.map((a) => (a.self = JSON.stringify(a)));
+      return _items;
     },
   },
   async mounted() {
     let that = this;
-    let res = await that.api.queryAll();
-    console.log(res);
+    that.nodeQueryAll();
+    that.nodeModel.cid = that.parentNode[0].self;
   },
   components: {
     upload: () => import("@components/upload.vue"),

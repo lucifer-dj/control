@@ -148,6 +148,7 @@ export default {
       that.bus.$on("toastConfirm", function () {
         localStorage.removeItem("token");
         localStorage.removeItem("router");
+        that.$store.commit("setUser", {});
         that.$hint({ msg: "已完成退出" });
         setTimeout(() => {
           that.$router.replace("/login");

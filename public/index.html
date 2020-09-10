@@ -78,6 +78,22 @@
         font-size: 14px;
         font-weight: 600;
       }
+      #temp_hint_panel {
+        display: none;
+        padding: 10px 50px;
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: red;
+        color: #fff;
+        border-radius: 4px;
+        z-index: 10000;
+        text-align: center;
+        text-transform: uppercase;
+        max-width: 500px;
+        text-align: justify;
+      }
     </style>
   </head>
 
@@ -92,6 +108,7 @@
       </div>
       <p class="temp_loading_p">正在加载...</p>
     </div>
+    <div id="temp_hint_panel"></div>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

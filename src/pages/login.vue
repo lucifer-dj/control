@@ -122,15 +122,29 @@ export default {
       try {
         that.$loading({ msg: "登录" });
         let result = await api.login(that.userModel, that);
-        localStorage.setItem("token", result.token);
-        that.$hint({ msg: result.msg });
-        setTimeout(() => {
-          that.$router.replace("/");
-        }, 500);
+        if (result.code === 200) {
+          localStorage.setItem("token", result.data.token);
+          that.userModelReset();
+          that.$hint({ msg: result.msg });
+          return;
+          setTimeout(() => {
+            that.$router.replace("/");
+          }, 500);
+        } else {
+          that.$hint({ msg: "登录失败请检查账号密码", type: "error" });
+          that.userModelReset();
+        }
       } catch (e) {
         console.log(e);
-        that.userModel.password = "";
+        that.userModelReset();
       }
+    },
+    userModelReset() {
+      let that = this;
+      that.userModel = {
+        account: "",
+        password: "",
+      };
     },
   },
 };

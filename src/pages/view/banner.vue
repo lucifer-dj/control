@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <v-subheader>首页轮播</v-subheader>
-
     <v-card class="px-6">
       <v-toolbar flat>
         <v-btn text @click="dialog=true;" :style="[theme.bg_p,theme.co]" class="mr-2">+添加</v-btn>
@@ -211,8 +210,8 @@ export default {
         try {
           let result = await that.api.delete({ id });
           if (result.code === 200) {
-            return that.$hint({ msg: "删除成功" });
             that.bannerQueryAll();
+            return that.$hint({ msg: "删除成功" });
           }
           that.$hint({ msg: "删除失败" });
         } catch (e) {

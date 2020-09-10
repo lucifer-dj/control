@@ -9,6 +9,7 @@ const store = new Vuex.Store({
   state: {
     theme: {},
     routes: [],
+    user: {},
   },
   mutations,
   getters,

@@ -128,21 +128,6 @@
               <v-col cols="12" md="6">
                 <v-text-field label="关键词" v-model="columnModel.keywords"></v-text-field>
               </v-col>
-              <v-col cols="12">
-                <v-subheader class="px-0">选择栏目图标</v-subheader>
-                <v-sheet>
-                  <v-btn
-                    icon
-                    v-for="(icon,idx) in icons"
-                    :key="idx"
-                    class="mx-1"
-                    :color="columnModel.icon===icon?theme.bg_p.background:''"
-                    @click="columnModel.icon=icon"
-                  >
-                    <v-icon>{{icon}}</v-icon>
-                  </v-btn>
-                </v-sheet>
-              </v-col>
               <upload v-model="imgFile" type="auto" cols="12" :src="columnModel.pic" ref="upload"></upload>
               <v-col cols="12" md="12">
                 <v-textarea label="栏目描述" solo auto-grow v-model="columnModel.description"></v-textarea>
@@ -210,7 +195,6 @@ export default {
       link: "",
       icon: "",
     },
-    icons: cfg.icons,
     api: new Api("column"),
   }),
   async mounted() {

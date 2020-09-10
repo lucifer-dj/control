@@ -1,5 +1,6 @@
 //同步修改state的状态
 import _theme from "@/plugins/theme.js";
+import { saveItemObj } from "@/plugins/util.js";
 const mutations = {
   changeTheme(state, theme) {
     if (typeof theme === "object") {
@@ -10,6 +11,10 @@ const mutations = {
   },
   getRouter(state, router) {
     state.router = router;
+    saveItemObj("router", router);
+  },
+  setUser(state, user) {
+    state.user = user;
   },
 };
 

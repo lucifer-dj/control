@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import * as api from "@api";
-
+import { getItemForStorage } from "@/plugins/util.js";
+import { getUserInfo } from "@api";
 export default {
   name: "App",
   provide() {
@@ -36,6 +36,7 @@ export default {
     } else that.$store.commit("changeTheme", default_theme);
     let temp_loading = document.querySelector("#temp_loading");
     temp_loading.style.display = "none";
+    that.getInfo();
   },
   watch: {
     $route(to, from) {
@@ -51,14 +52,27 @@ export default {
     },
     async getSonColumn(origin) {
       let that = this;
+      console.log(this);
+    },
+    async getInfo() {
+      let that = this;
       try {
-        // let result = await api.columnQueryAll({
-        //   where: { origin },
-        // });
-        result = result.code === 200 ? result.data : [];
-        return result;
+        let token = getItemForStorage("token");
+        let result = await getUserInfo({ token });
+        if (result.code === 200) {
+          that.$hint({ msg: "自动登录成功" });
+          that.$store.commit("setUser", result.data);
+          setTimeout(() => {
+            that.$router.replace("/");
+          }, 500);
+          // that.$router.replace("/");
+        } else {
+          that.$hint({ msg: "tokan验证失败", type: "error" });
+          that.$router.replace("/login");
+        }
       } catch (e) {
         console.log(e);
+        that.$hint({ msg: "错误->" + e, type: "error" });
       }
     },
   },
