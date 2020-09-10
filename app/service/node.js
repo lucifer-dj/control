@@ -71,6 +71,14 @@ class NodeService extends Service {
     };
     return arr;
   }
+  async getNodes() {
+    let { app, service } = this;
+    let nodes = await service.db.queryAll("node");
+    if (!(nodes.length > 1)) return false;
+    nodes = nodes.filter(n => n.deep !== 0);
+    nodes = nodes.filter(n => n.call !== "节点管理");
+    return nodes;
+  }
 }
 
 module.exports = NodeService;

@@ -10,13 +10,11 @@ module.exports = (app) => {
   router.get("/t", controller.panel.home.getTest);
   router.get("/panel", controller.panel.home.index);
   router.post("/panel/login", controller.panel.login.index);
-  router.post("/panel/auto", controller.panel.login.auto);
+  router.post("/panel/user/getInfo", controller.panel.login.getInfo);
   router.post("/panel/column/queryAll", controller.panel.column.queryAll);
   router.post("/panel/column/add", controller.panel.column.add);
   router.post("/panel/column/read", controller.panel.column.read);
   router.post("/panel/column/update", controller.panel.column.update);
-  // router.post('/panel/column/read', controller.panel.file.readColumn)
-  // router.post('/panel/column/update', controller.panel.file.updateColumn)
   router.post("/panel/column/delete", controller.panel.column.delete);
   router.put("/file/upload/oss", controller.upload.uploadOss);
   router.put("/file/upload/serve", controller.upload.uploadServe);

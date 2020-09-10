@@ -29,6 +29,12 @@ class DbService extends Service {
     if (result.affectedRows === 1) return true;
     return false;
   }
+  async select(table, data) {
+    let { app } = this;
+    let result = await app.mysql.select(table, data);
+    if (result) return result;
+    return false;
+  }
   //更新一条数据
   async update(table, data, opts = {}) {
     let { app } = this;

@@ -5,10 +5,9 @@ const Controller = require("egg").Controller;
 class LoginController extends Controller {
   async index() {
     const { ctx, app, service } = this;
-
     let data = ctx.request.body;
-    let result = await service.login.valid(data);
-    if (result) {
+    let _info = await service.login.valid(data);
+    if (_info) {
       //生辰token
       const token = app.jwt.sign({
           account: data.account,
@@ -17,83 +16,29 @@ class LoginController extends Controller {
         app.config.jwt.secret
       );
       ctx.set({ authorization: token });
+      _info.token = token;
       ctx.status = 200;
       ctx.body = {
         code: 200,
         msg: "登陆成功",
-        token,
+        data: _info
       };
     } else {
       ctx.err("登陆失败", 401);
     }
   }
-  async auto() {
-    const { ctx } = this;
-    ctx.success("自动登陆成功", );
-  }
-  async getRouter() {
-    const { ctx } = this;
-    ctx.success('ok', [{
-        "path": "",
-        "component": "Layout",
-        "redirect": "dashboard",
-        "children": [{
-          "path": "dashboard",
-          "component": "dashboard/index",
-          "meta": {
-            "title": "首页",
-            "icon": "dashboard"
-          }
-        }]
-      },
-      {
-        "path": "/example",
-        "component": "Layout",
-        "redirect": "/example/table",
-        "name": "Example",
-        "meta": {
-          "title": "案例",
-          "icon": "example"
-        },
-        "children": [{
-            "path": "table",
-            "name": "Table",
-            "component": "table/index",
-            "meta": {
-              "title": "表格",
-              "icon": "table"
-            }
-          },
-          {
-            "path": "tree",
-            "name": "Tree",
-            "component": "tree/index",
-            "meta": {
-              "title": "树形菜单",
-              "icon": "tree"
-            }
-          }
-        ]
-      },
-      {
-        "path": "/form",
-        "component": "Layout",
-        "children": [{
-          "path": "index",
-          "name": "Form",
-          "component": "form/index",
-          "meta": {
-            "title": "表单",
-            "icon": "form"
-          }
-        }]
-      },
-      {
-        "path": "*",
-        "redirect": "/404",
-        "hidden": true
-      }
-    ])
+  async getInfo() {
+    const { ctx, service, app } = this;
+    let token = ctx.request.body.token;
+    try {
+      let info = app.jwt.verify(token, app.config.jwt.secret);
+      let _info = await service.login.valid(info);
+      _info.token = token;
+      ctx.success("自动登录成功", _info)
+    } catch (e) {
+      console.log(e);
+      ctx.err("验证token失败请重新登录", 500)
+    }
   }
 }
 
