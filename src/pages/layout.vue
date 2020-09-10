@@ -23,14 +23,14 @@
         >
           <template v-slot:activator>
             <v-list-item-icon>
-              <v-icon :class="item.icon"></v-icon>
+              <v-icon :class="item.meta.icon"></v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>{{item.name}}</v-list-item-title>
+              <v-list-item-title>{{item.meta.call}}</v-list-item-title>
             </v-list-item-content>
           </template>
           <v-list-item
-            v-for="(n,i) in item.child"
+            v-for="(n,i) in item.children"
             :key="i"
             @click="replace(n,'n')"
             class="pl-10"
@@ -38,10 +38,10 @@
             :class="listModel===n.id?'list_menu_active':''"
           >
             <v-list-item-icon>
-              <v-icon>{{n.icon}}</v-icon>
+              <v-icon>{{n.meta.icon}}</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>{{n.name}}</v-list-item-title>
+              <v-list-item-title>{{n.meta.call}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -84,36 +84,12 @@
   </div>
 </template>
 <script>
-import * as api from "@api";
 import cfg from "@/plugins/cfg.js";
+import { getItemObj } from "@/plugins/util.js";
 export default {
   name: "layout",
   data: () => ({
     temp_temp: false,
-    menu: [
-      {
-        name: "栏目管理",
-        icon: "iconfont iconfont-shebeileixingdangan",
-        path: "/column",
-        child: [],
-      },
-      {
-        name: "轮播设置",
-        path: "/banner",
-        icon: "iconfont iconfont-hebing",
-      },
-      {
-        name: "其他设置",
-        path: "/config",
-        icon: "iconfont iconfont-baobiao",
-      },
-      {
-        name: "模板设置",
-        path: "/tpconfig",
-        icon: "iconfont iconfont-baobiao",
-      },
-    ],
-
     menuState: false,
     drawer: true,
     sideType: "",
@@ -171,26 +147,12 @@ export default {
       that.$toast({ msg: "确认要退出吗？" });
       that.bus.$on("toastConfirm", function () {
         localStorage.removeItem("token");
+        localStorage.removeItem("router");
         that.$hint({ msg: "已完成退出" });
         setTimeout(() => {
           that.$router.replace("/login");
         }, 500);
       });
-    },
-    async getColumn() {
-      let that = this;
-      try {
-        let result = await api.columnQueryAll({}, that);
-        if (result.code !== 200) {
-          that.$hint({ msg: "自动登录失败", type: "error" });
-          that.$router.replace("/");
-        }
-        // console.log(result.data);
-        that.menu[0].child = result.data;
-        that.menu[0].child = that.disposeMenu;
-      } catch (e) {
-        console.log(e);
-      }
     },
   },
   mounted() {
@@ -198,32 +160,17 @@ export default {
     //人物 势力 关于雪中
     //主页 境界划分
     // :style="`{backgroundColor:${_theme.primary}}`"
-    that.getColumn();
-    if (that.$vuetify.breakpoint.smAndDown) {
-      that.$nextTick(() => {
-        that.drawer = false;
-      });
-    }
     let drawer_content = this.$(".v-navigation-drawer__content");
     drawer_content.classList.add("drawer"); //chrome
     drawer_content.style.scrollbarWidth = "none"; //firefox
     drawer_content.style.msOverflowStyle = "none"; //edge
+    console.log(that.menu);
   },
   computed: {
-    disposeMenu() {
-      let that = this;
-      let arr = that.menu[0].child.filter((a) => a.origin == -1);
-      arr.forEach((item, idx) => {
-        Object.assign(item, cfg.tp[item.template]);
-        // if (item.origin == -1) {
-        //   item._order = Number(item.id);
-        // } else {
-        //   item._order = Number(item.origin) + 0.1;
-        // }
-      });
-      // arr.sort((a, b) => a._order - b._order);
-      that.menu[0].child = arr;
-      return arr;
+    menu() {
+      let _menu = getItemObj("router")[0].children;
+
+      return _menu;
     },
     theme() {
       return this.$store.getters.getTheme;

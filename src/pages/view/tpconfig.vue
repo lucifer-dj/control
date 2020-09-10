@@ -12,11 +12,20 @@
       <v-row justify="center" v-if="dialog" class="dialog_row">
         <v-col cols="6" class="pa-0 ma-0">
           <v-card class="pa-5">
-            <v-card-title class="justify-center text-uppercase text-h5">{{dialogType=='add'?'添加':'更新'}}banner</v-card-title>
+            <v-card-title
+              class="justify-center text-uppercase text-h5"
+            >{{dialogType=='add'?'添加':'更新'}}banner</v-card-title>
             <v-card-text>
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-select v-model="tpModel.template" label="*选择模板" :items="htmls" required @input="$v.tpModel.template.$touch()" @blur="$v.tpModel.template.$touch()"></v-select>
+                  <v-select
+                    v-model="tpModel.template"
+                    label="*选择模板"
+                    :items="htmls"
+                    required
+                    @input="$v.tpModel.template.$touch()"
+                    @blur="$v.tpModel.template.$touch()"
+                  ></v-select>
                 </v-col>
                 <v-col cols="6">
                   <v-text-field label="前台路径" v-model="tpModel.front"></v-text-field>
@@ -37,8 +46,18 @@
               <p>1.前台路径与模板的名称相同</p>
             </v-card-subtitle>
             <v-card-actions class="justify-center">
-              <v-btn width="120" class="mx-2" @click="submit(dialogType)" :style="[theme.bg_p,theme.co]">{{dialogType=='add'?'提交':'更新BANNER'}}</v-btn>
-              <v-btn width="120" class="mx-2" @click="tpModelReset(1)" :style="[theme.bg_p,theme.co]">关闭</v-btn>
+              <v-btn
+                width="120"
+                class="mx-2"
+                @click="submit(dialogType)"
+                :style="[theme.bg_p,theme.co]"
+              >{{dialogType=='add'?'提交':'更新BANNER'}}</v-btn>
+              <v-btn
+                width="120"
+                class="mx-2"
+                @click="tpModelReset(1)"
+                :style="[theme.bg_p,theme.co]"
+              >关闭</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -50,7 +69,7 @@
 // 项目介绍
 import * as api from "@api";
 export default {
-  name: "tpconfig",
+  name: "tpConfig",
   data: () => ({
     headers: [
       { text: "ID", value: "id", align: "center" },

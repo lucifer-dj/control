@@ -29,7 +29,7 @@
   </v-container>
 </template>
 <script>
-import * as api from "@api";
+import { Api } from "@api";
 export default {
   inject: ["getSonColumn"],
   name: "about",
@@ -41,6 +41,7 @@ export default {
       description: "",
     },
     sonColumn: [],
+    api: new Api("page"),
   }),
   async mounted() {
     let that = this;
@@ -52,7 +53,7 @@ export default {
     async readPage() {
       let that = this;
       try {
-        let result = await api.readPage(
+        let result = await that.api.read(
           { where: { cid: that.pageModel.cid } },
           that
         );
@@ -72,7 +73,7 @@ export default {
       that.pageModel.start = new Date().valueOf();
       that.pageModel.show = true;
       try {
-        let result = await api.addPage(that.pageModel, that);
+        let result = await that.api.add(that.pageModel, that);
         that.$hint({ msg: "成功。。。" });
       } catch (e) {
         console.log(e);
@@ -84,7 +85,7 @@ export default {
         return that.$hint({ msg: "请输入内容" });
       that.pageModel.update = new Date().valueOf();
       try {
-        let result = await api.updatePage(that.pageModel, that);
+        let result = await that.api.update(that.pageModel, that);
         that.$hint({ msg: result.msg });
       } catch (e) {
         console.log(e);

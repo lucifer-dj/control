@@ -73,7 +73,7 @@
   </v-container>
 </template>
 <script>
-import * as api from "@api";
+import { Api, upload, deleteFile } from "@api";
 export default {
   inject: ["getSonColumn"],
   name: "faction",
@@ -94,6 +94,7 @@ export default {
     dialogType: "add",
     columnData: { cid: -1 },
     sonColumn: [],
+    api: new Api("realm"),
   }),
   async mounted() {
     let that = this;
@@ -116,7 +117,7 @@ export default {
     async realmQueryAll() {
       let that = this;
       try {
-        let result = await api.realmQueryAll(
+        let result = await that.api.queryAll(
           { where: { cid: that.columnData.cid }, offset: 0 },
           that
         );
@@ -132,12 +133,12 @@ export default {
       if (that.$u.checkObjectIsEmpty(that.imgFile))
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       try {
-        let result0 = await api.upload(that.imgFile, that);
+        let result0 = await upload(that.imgFile, that);
         that.realmModel.start = new Date().valueOf();
         that.realmModel.pic = result0.code === 200 ? result0.data : "";
         that.realmModel.cid = that.columnData.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
-        let result = await api.realmAdd(that.realmModel, that);
+        let result = await that.api.add(that.realmModel, that);
         that.$hint({ msg: result.msg });
         that.realmModelReset();
       } catch (e) {
@@ -147,13 +148,13 @@ export default {
     async realmUpdate() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        let res = await api.upload(that.imgFile, that, that.realmModel.pic);
+        let res = await upload(that.imgFile, that, that.realmModel.pic);
         that.realmModel.pic = res.code === 200 ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       that.realmModel.update = new Date().valueOf();
       try {
-        let result = await api.realmUpdate(that.realmModel, that);
+        let result = await that.api.update(that.realmModel, that);
         that.realmModelReset();
         that.$hint({ msg: "更新成功" });
       } catch (e) {
@@ -163,7 +164,7 @@ export default {
     async realmRead(id) {
       let that = this;
       try {
-        let result = await api.realmRead({ id }, that);
+        let result = await that.api.read({ id }, that);
         return result.data;
       } catch (e) {
         console.log(e);
@@ -185,10 +186,10 @@ export default {
       that.bus.$on("toastConfirm", async function () {
         let result = await that.realmRead(id);
         if (result.pic) {
-          let result0 = await api.deleteFile({ path: result.pic }, that);
+          let result0 = await deleteFile({ path: result.pic }, that);
         }
         try {
-          let result1 = await api.realmDelete({ id }, that);
+          let result1 = await that.api.delete({ id }, that);
           that.$hint({ msg: "删除成功" });
           that.realmQueryAll();
         } catch (e) {

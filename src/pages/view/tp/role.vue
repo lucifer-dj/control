@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import * as api from "@api";
+import { Api, upload, deleteFile } from "@api";
 export default {
   name: "role",
   inject: ["getSonColumn"],
@@ -118,6 +118,7 @@ export default {
     imgFile: {},
     columnData: { cid: -1 },
     sonColumn: [],
+    api: new Api("role"),
   }),
   async mounted() {
     let that = this;
@@ -144,7 +145,7 @@ export default {
     async roleQueryAll() {
       let that = this;
       try {
-        let result = await api.roleQueryAll(
+        let result = await that.api.queryAll(
           { where: { cid: that.columnData.cid }, offset: 0 },
           that
         );
@@ -167,11 +168,11 @@ export default {
       that.roleModel.start = new Date().valueOf();
       that.roleModel.avatar = "ceshi";
       try {
-        let result0 = await api.upload(that.imgFile);
+        let result0 = await upload(that.imgFile);
         that.roleModel.avatar = result0.code === 200 ? result0.data : "";
         that.roleModel.cid = that.columnData.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
-        let result = await api.roleAdd(that.roleModel, that);
+        let result = await that.api.add(that.roleModel, that);
         that.$hint({ msg: "添加成功" });
         that.roleModelReset();
       } catch (e) {
@@ -181,13 +182,13 @@ export default {
     async roleUpdate() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        let res = await api.upload(that.imgFile, that, that.roleModel.avatar);
+        let res = await upload(that.imgFile, that, that.roleModel.avatar);
         that.roleModel.avatar = res.code === 200 ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       try {
         that.roleModel.update = new Date().valueOf();
-        let result = await api.roleUpdate(that.roleModel, that);
+        let result = await that.api.update(that.roleModel, that);
         that.$hint({ msg: "修改成功" });
         that.roleModelReset();
       } catch (e) {
@@ -197,7 +198,7 @@ export default {
     async roleRead(id) {
       let that = this;
       try {
-        let result = await api.roleRead({ id }, that);
+        let result = await that.api.read({ id }, that);
         return result.data;
       } catch (e) {
         console.log(e);
@@ -215,10 +216,10 @@ export default {
       that.bus.$on("toastConfirm", async function () {
         let result = await that.roleRead(id);
         if (result.avatar) {
-          let result0 = await api.deleteFile({ path: result.avatar });
+          let result0 = await deleteFile({ path: result.avatar });
         }
         try {
-          let result1 = await api.roleDelete({ id }, that);
+          let result1 = await that.api.delete({ id }, that);
           that.$hint({ msg: "成功删除一条数据" });
           that.roleQueryAll();
         } catch (e) {

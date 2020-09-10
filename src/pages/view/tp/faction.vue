@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import * as api from "@api";
+import { Api, upload, deleteFile } from "@api";
 export default {
   name: "faction",
   inject: ["getSonColumn"],
@@ -134,7 +134,7 @@ export default {
     async factionQueryAll() {
       let that = this;
       try {
-        let result = await api.factionQueryAll(
+        let result = await that.api.queryAll(
           { where: { cid: that.columnData.cid }, offset: 0 },
           that
         );
@@ -149,12 +149,12 @@ export default {
       if (that.$u.checkObjectIsEmpty(that.imgFile))
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       try {
-        let result0 = await api.upload(that.imgFile, that);
+        let result0 = await upload(that.imgFile, that);
         that.factionModel.start = new Date().valueOf();
         that.factionModel.pic = result0 ? result0 : "";
         that.factionModel.cid = that.columnData.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
-        let result = await api.factionAdd(that.factionModel, that);
+        let result = await that.api.add(that.factionModel, that);
         that.$hint({ msg: result.msg });
         that.factionModelReset();
       } catch (e) {
@@ -164,13 +164,13 @@ export default {
     async factionUpdate() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        let res = await api.upload(that.imgFile, that, that.factionModel.pic);
+        let res = await upload(that.imgFile, that, that.factionModel.pic);
         that.factionModel.pic = res ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       that.factionModel.update = new Date().valueOf();
       try {
-        let result = await api.factionUpdate(that.factionModel, that);
+        let result = await that.api.update(that.factionModel, that);
         that.factionModelReset();
         that.$hint({ msg: "更新成功" });
       } catch (e) {
@@ -180,7 +180,7 @@ export default {
     async factionRead(id) {
       let that = this;
       try {
-        let result = await api.factionRead({ id }, that);
+        let result = await that.api.read({ id }, that);
         return result.data;
       } catch (e) {
         console.log(e);
@@ -199,10 +199,10 @@ export default {
       that.bus.$on("toastConfirm", async function () {
         let result = await that.factionRead(id);
         if (result.pic) {
-          let result0 = await api.deleteFile({ path: result.pic });
+          let result0 = await deleteFile({ path: result.pic });
         }
         try {
-          let result1 = await api.factionDelete({ id }, that);
+          let result1 = await that.api.delete({ id }, that);
           that.$hint({ msg: "删除成功" });
           that.factionQueryAll();
         } catch (e) {

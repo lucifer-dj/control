@@ -62,3 +62,15 @@ export const xz = {
     en: "year",
   },
 };
+
+export function getItemForStorage(name) {
+  return localStorage.getItem(name);
+}
+export function getItemObj(name) {
+  let obj = localStorage.getItem(name);
+  return JSON.parse(obj);
+}
+export function saveItemObj(name, obj) {
+  obj = JSON.stringify(obj);
+  localStorage.setItem(name, obj);
+}

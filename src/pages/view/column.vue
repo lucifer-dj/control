@@ -169,7 +169,7 @@
   </v-container>
 </template>
 <script>
-import * as api from "@api";
+import { Api, upload, deleteFile } from "@api";
 import { required } from "vuelidate/lib/validators";
 import cfg from "@/plugins/cfg.js";
 export default {
@@ -211,6 +211,7 @@ export default {
       icon: "",
     },
     icons: cfg.icons,
+    api: new Api("column"),
   }),
   async mounted() {
     let that = this;
@@ -248,14 +249,14 @@ export default {
       if (type != "add") return that.updateColumn();
       that.$v.columnModel.$touch();
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        let res = await api.upload(that.imgFile);
+        let res = await upload(that.imgFile);
         that.columnModel.pic = res ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       } else {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       }
       try {
-        let result = await api.addColumn(that.columnModel, that);
+        let result = await that.api.add(that.columnModel, that);
         that.$hint({ msg: result.msg });
         that.reload();
       } catch (e) {
@@ -265,7 +266,7 @@ export default {
     async columnQueryAll() {
       let that = this;
       try {
-        let result = await api.columnQueryAll({}, that);
+        let result = await that.api.queryAll({}, that);
         that.items = result.code === 200 ? result.data : [];
         that.items = that.disposeItem;
       } catch (e) {
@@ -281,7 +282,7 @@ export default {
     async readColumn(id) {
       let that = this;
       try {
-        let result = await api.readColumn({ id }, that);
+        let result = await that.api.read({ id }, that);
         console.log(result.data);
         return result.data;
       } catch (e) {
@@ -295,13 +296,13 @@ export default {
       //   return console.log('请填写必填项')
       // }
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        let res = await api.upload(that.imgFile, that, that.columnModel.pic);
+        let res = await upload(that.imgFile, that, that.columnModel.pic);
         that.columnModel.pic = res ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       try {
         console.log(that.columnModel.pic);
-        let result = await api.updateColumn(that.columnModel, that);
+        let result = await that.api.update(that.columnModel, that);
         that.$hint({ msg: "修改成功" });
         that.reload();
       } catch (e) {
@@ -314,10 +315,10 @@ export default {
       that.bus.$on("toastConfirm", async function () {
         let result = await that.readColumn(id);
         if (result.pic) {
-          let result0 = await api.deleteFile({ path: result.pic });
+          let result0 = await deleteFile({ path: result.pic });
         }
         try {
-          let result1 = await api.deleteColumn({ id });
+          let result1 = await that.api.delete({ id });
           that.$hint({ msg: "删除成功" });
           that.reload();
         } catch (e) {

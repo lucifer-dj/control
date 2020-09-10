@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import * as api from "@api";
+import { Api, upload, deleteFile } from "@api";
 export default {
   inject: ["getSonColumn"],
   name: "faction",
@@ -103,6 +103,7 @@ export default {
       cid: -1,
     },
     sonColumn: [],
+    api: new Api("year"),
   }),
   async mounted() {
     let that = this;
@@ -126,7 +127,7 @@ export default {
     async yearQueryAll() {
       let that = this;
       try {
-        let result = await api.yearQueryAll(
+        let result = await that.api.queryAll(
           { where: { cid: that.columnData.cid }, offset: 0 },
           that
         );
@@ -143,10 +144,10 @@ export default {
       //   return that.$hint({ msg: "请选择上传的图片", type: "error" });
       that.yearModel.start = new Date().valueOf();
       try {
-        // let result0 = await api.upload(that.imgFile);
+        // let result0 = await upload(that.imgFile);
         // that.yearModel.pic = result0 ? result0 : "";
         // if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
-        let result = await api.yearAdd(that.yearModel, that);
+        let result = await that.api.add(that.yearModel, that);
         that.$hint({ msg: result.msg });
         that.yearModelReset();
       } catch (e) {
@@ -155,14 +156,14 @@ export default {
     },
     async yearUpdate() {
       let that = this;
-      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        let res = await api.upload(that.imgFile, that, that.yearModel.pic);
-        that.yearModel.pic = res ? res : "";
-        if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
-      }
+      // if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+      //   let res = await that.api.upload(that.imgFile, that, that.yearModel.pic);
+      //   that.yearModel.pic = res ? res : "";
+      //   if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
+      // }
       that.yearModel.update = new Date().valueOf();
       try {
-        let result = await api.yearUpdate(that.yearModel, that);
+        let result = await that.api.update(that.yearModel, that);
         that.yearModelReset();
         that.$hint({ msg: "更新成功" });
       } catch (e) {
@@ -172,7 +173,7 @@ export default {
     async yearRead(id) {
       let that = this;
       try {
-        let result = await api.yearRead({ id }, that);
+        let result = await that.api.read({ id }, that);
         return result.data;
       } catch (e) {
         console.log(e);
@@ -193,11 +194,11 @@ export default {
       that.$toast({ msg: "确定要删除这方时间线吗？" });
       that.bus.$on("toastConfirm", async function () {
         let result = await that.yearRead(id);
-        if (result.pic) {
-          let result0 = await api.deleteFile({ path: result.pic }, that);
-        }
+        // if (result.pic) {
+        //   let result0 = await that.api.deleteFile({ path: result.pic }, that);
+        // }
         try {
-          let result1 = await api.yearDelete({ id }, that);
+          let result1 = await that.api.delete({ id }, that);
           that.$hint({ msg: "删除成功" });
           that.yearQueryAll();
         } catch (e) {

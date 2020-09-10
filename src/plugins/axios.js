@@ -22,6 +22,7 @@ Service.interceptors.request.use((config) => {
     // if (!token) return router.push({ path: "/login" });
     config.headers.Authorization = `Bearer ${token}`;
   }
+  console.log(config)
   return config;
 });
 // 添加响应拦截器

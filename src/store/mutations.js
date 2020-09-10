@@ -8,6 +8,9 @@ const mutations = {
       state.theme = _theme[theme];
     }
   },
+  getRouter(state, router) {
+    state.router = router;
+  },
 };
 
 export default mutations;

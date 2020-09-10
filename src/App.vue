@@ -52,9 +52,9 @@ export default {
     async getSonColumn(origin) {
       let that = this;
       try {
-        let result = await api.columnQueryAll({
-          where: { origin },
-        });
+        // let result = await api.columnQueryAll({
+        //   where: { origin },
+        // });
         result = result.code === 200 ? result.data : [];
         return result;
       } catch (e) {

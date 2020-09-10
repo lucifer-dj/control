@@ -92,7 +92,7 @@
   </v-container>
 </template>
 <script>
-import * as api from "@api";
+import { Api, upload, deleteFile } from "@api";
 export default {
   name: "banner",
   data: () => ({
@@ -115,6 +115,7 @@ export default {
     },
     columns: [],
     imgFile: {},
+    api: new Api("banner"),
   }),
   methods: {
     bannerModelReset(type = null) {
@@ -137,13 +138,13 @@ export default {
       if (that.$u.checkObjectIsEmpty(that.imgFile)) {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       }
-      let res = await api.upload(that.imgFile, that);
+      let res = await upload(that.imgFile, that);
       if (res.code !== 200)
         return that.$hint({ msg: "上传图片失败", type: "error" });
       that.bannerModel.pic = res.data;
       that.bannerModel.date = new Date().valueOf();
       try {
-        let result = await api.bannerAdd(that.bannerModel, that);
+        let result = await that.api.add(that.bannerModel, that);
         console.log(result);
         that.$hint({ msg: "添加成功" });
         that.bannerModelReset();
@@ -161,7 +162,7 @@ export default {
     async bannerRead(id) {
       let that = this;
       try {
-        let result = await api.bannerRead({ id });
+        let result = await that.api.read({ id });
         return result.data;
       } catch (e) {
         console.log(e);
@@ -171,14 +172,14 @@ export default {
     async bannerUpdate() {
       let that = this;
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        let result = await api.upload(that.imgFile, that, that.bannerModel.pic);
+        let result = await upload(that.imgFile, that, that.bannerModel.pic);
         that.bannerModel.pic =
           result.code === 200 ? result.data : that.bannerModel.pic;
         if (!result) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       that.bannerModel.date = new Date().valueOf();
       try {
-        let result0 = await api.bannerUpdate(that.bannerModel);
+        let result0 = await that.api.update(that.bannerModel);
         that.$hint({ msg: "更新成功" });
         that.bannerModelReset();
       } catch (e) {
@@ -188,7 +189,7 @@ export default {
     async bannerQueryAll() {
       let that = this;
       try {
-        let result = await api.bannerQueryAll();
+        let result = await that.api.queryAll();
         that.items = result.code === 200 ? result.data : [];
       } catch (e) {
         console.log(e);
@@ -200,13 +201,15 @@ export default {
       that.bus.$on("toastConfirm", async function () {
         if (that.bannerModel.pic.length > 0) {
           try {
-            let result = await api.deleteFile({ path: that.bannerModel.pic });
+            let result = await deleteFile({
+              path: that.bannerModel.pic,
+            });
           } catch (e) {
             console.error(e);
           }
         }
         try {
-          let result = await api.bannerDelete({ id });
+          let result = await that.api.delete({ id });
           if (result.code === 200) {
             return that.$hint({ msg: "删除成功" });
             that.bannerQueryAll();
@@ -218,34 +221,34 @@ export default {
         }
       });
     },
-    async columnQueryAll() {
-      let that = this;
-      try {
-        let result = await api.columnQueryAll({}, that);
-        that.columns.push({ name: "首页", id: "-1" });
-        let arr = result.code === 200 ? result.data : [];
-        that.columns = that.columns.concat(arr);
-      } catch (e) {
-        console.log(e);
-      }
-    },
+    // async columnQueryAll() {
+    //   let that = this;
+    //   try {
+    //     let result = await that.api.columnQueryAll({}, that);
+    //     that.columns.push({ name: "首页", id: "-1" });
+    //     let arr = result.code === 200 ? result.data : [];
+    //     that.columns = that.columns.concat(arr);
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // },
   },
   computed: {
-    columnByCid() {
-      let that = this;
-      let obj = {};
-      that.columns.forEach((item, idx) => {
-        obj[item.id] = item;
-      });
-      return obj;
-    },
+    // columnByCid() {
+    //   let that = this;
+    //   let obj = {};
+    //   that.columns.forEach((item, idx) => {
+    //     obj[item.id] = item;
+    //   });
+    //   return obj;
+    // },
     theme() {
       return this.$store.getters.getTheme;
     },
   },
   async mounted() {
     let that = this;
-    that.columnQueryAll();
+    // that.columnQueryAll();
     that.bannerQueryAll();
   },
   components: {
