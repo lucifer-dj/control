@@ -11,11 +11,8 @@ class ColumnController extends Controller {
     let { ctx, service, table } = this;
     let req = ctx.request.body;
     let result = await service.db.queryAll(table, { where: req.where });
-    if (result.length > 0) {
-      ctx.success("查询成功", result);
-    } else {
-      ctx.err("没有查询到数据"); //表里没有数据
-    }
+    if (result) return ctx.success('查询成功', result)
+    return ctx.err('没有取到数据')
   }
 
   async add() {
