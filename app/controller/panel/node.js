@@ -10,7 +10,7 @@ class NodeController extends Controller {
   async getRouter() {
     let { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.node.router();
+    let result = await service.node.router(req);
     if (result) return ctx.success('查询成功', result)
     return ctx.err('没有取到数据')
   }

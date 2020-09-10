@@ -3,9 +3,11 @@
 const Service = require("egg").Service;
 
 class NodeService extends Service {
-  async router() {
+  async router(auth) {
     let { app, service } = this;
     let routes = await service.db.queryAll("node");
+    if (auth.auth === 'user')
+      routes = routes.filter(r => r.auth === 'user')
     if (!(routes.length > 1)) return false;
     routes = this.mergeRouter(routes);
     return routes;
