@@ -14,7 +14,13 @@ class NodeController extends Controller {
     if (result) return ctx.success('查询成功', result)
     return ctx.err('没有取到数据')
   }
-
+  async getMenu() {
+    let { ctx, service, table } = this;
+    let req = ctx.request.body;
+    let result = await service.node.menu(req);
+    if (result) return ctx.success('查询成功', result)
+    return ctx.err('没有取到数据')
+  }
   async queryAll() {
     let { ctx, service } = this;
     let result = await service.node.getNodes();

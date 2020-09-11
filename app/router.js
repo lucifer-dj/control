@@ -49,8 +49,14 @@ module.exports = (app) => {
   router.post("/panel/year/delete", controller.panel.year.delete);
   router.post("/panel/year/read", controller.panel.year.read);
   router.post("/panel/year/update", controller.panel.year.update);
-  router.post("/panel/file/gettps", controller.panel.file.getTps);
+  router.post("/panel/file/getTps", controller.panel.file.getTps);
+  router.post("/panel/tmp/queryAll", controller.panel.tmp.queryAll);
+  router.post("/panel/tmp/add", controller.panel.tmp.add);
+  router.post("/panel/tmp/delete", controller.panel.tmp.delete);
+  router.post("/panel/tmp/read", controller.panel.tmp.read);
+  router.post("/panel/tmp/update", controller.panel.tmp.update);
   router.post("/panel/node/getRouter", controller.panel.node.getRouter);
+  router.post("/panel/node/getMenu", controller.panel.node.getMenu);
   router.post("/panel/node/queryAll", controller.panel.node.queryAll);
   router.post("/panel/node/add", controller.panel.node.add);
   router.post("/panel/node/delete", controller.panel.node.delete);

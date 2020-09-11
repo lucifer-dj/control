@@ -12,7 +12,22 @@ class NodeService extends Service {
     routes = this.mergeRouter(routes);
     return routes;
   }
-  mergeRouter(routes) {
+  async getNodes() {
+    let { app, service } = this;
+    let nodes = await service.db.queryAll("node");
+    if (!(nodes.length > 1)) return false;
+    nodes = nodes.filter(n => n.deep !== 0);
+    nodes = nodes.filter(n => n.call !== "节点管理");
+    return nodes;
+  }
+  async menu() {
+    let { app, service } = this;
+    let nodes = await service.db.queryAll("node");
+    if (!(nodes.length > 1)) return false;
+    nodes = this.mergeMenu(nodes)
+    return nodes;
+  }
+  mergeMenu(routes) {
     if (routes.length < 2) return routes;
 
     let deep = [];
@@ -48,7 +63,17 @@ class NodeService extends Service {
     })
     routes = routes.filter(r => r.cid === 1);
     layout[0].children = routes;
-    layout = this.disposeRouter(layout)
+    // layout = this.disposeRouter(layout)
+    return routes;
+  }
+
+  mergeRouter(routes) {
+    let layout = routes.filter(r => r.deep === 0);
+    // console.log(layout)
+    routes = routes.filter(r => r.deep !== 0)
+    layout[0].children = routes;
+    layout = this.disposeRouter(layout);
+    console.log(layout)
     return layout;
   }
   disposeRouter(routes) {
@@ -62,25 +87,20 @@ class NodeService extends Service {
           title: route.title,
           auth: route.auth,
           call: route.call,
-          icon: route.icon
+          icon: route.icon,
+          cid: route.cid
         },
-        name: route.name
+        name: route.name,
       }
       if (route.children) {
-        obj.children = this.disposeRouter(route.children);
+        obj.children = route.children
+        obj.children = this.disposeRouter(obj.children);
       }
       arr.push(obj)
     };
     return arr;
   }
-  async getNodes() {
-    let { app, service } = this;
-    let nodes = await service.db.queryAll("node");
-    if (!(nodes.length > 1)) return false;
-    nodes = nodes.filter(n => n.deep !== 0);
-    nodes = nodes.filter(n => n.call !== "节点管理");
-    return nodes;
-  }
+
 }
 
 module.exports = NodeService;
