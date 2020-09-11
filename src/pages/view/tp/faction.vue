@@ -106,17 +106,14 @@ export default {
     dialog: false,
     imgFile: {},
     dialogType: "add",
-    columnData: {
-      cid: -1,
-    },
     sonColumn: [],
     api: new Api("faction"),
   }),
   async mounted() {
     let that = this;
-    if (Number(that.$route.query) !== -1) that.columnData = that.$route.query;
+    that.factionModel.nid = that.$route.query.nid;
     that.factionQueryAll();
-    that.sonColumn = that.getSonColumn(that.columnData.id);
+    that.sonColumn = that.getSonColumn(that.factionModel.nid);
   },
   methods: {
     factionModelReset(type = null) {
@@ -136,7 +133,7 @@ export default {
       let that = this;
       try {
         let result = await that.api.queryAll(
-          { where: { cid: that.columnData.cid }, offset: 0 },
+          { where: { nid: that.factionModel.nid }, offset: 0 },
           that
         );
         that.items = result.code === 200 ? result.data : [];
@@ -153,7 +150,6 @@ export default {
         let result0 = await upload(that.imgFile, that);
         that.factionModel.start = new Date().valueOf();
         that.factionModel.pic = result0 ? result0 : "";
-        that.factionModel.cid = that.columnData.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await that.api.add(that.factionModel, that);
         that.$hint({ msg: result.msg });

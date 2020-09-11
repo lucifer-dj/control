@@ -6,14 +6,8 @@
         <v-btn text @click="dialog=true;" :style="[theme.bg_p,theme.co]" class="mr-2">+添加</v-btn>
         <v-btn text :style="[theme.bg_p,theme.co]">更新</v-btn>
       </v-toolbar>
-      <v-data-table
-        align="center"
-        :headers="headers"
-        disable-sort
-        :items="items"
-        v-if="!$u.checkObjectIsEmpty(columnByCid)"
-      >
-        <template v-slot:item.cid="{item}">{{columnByCid[item.cid].name}}</template>
+      <v-data-table align="center" :headers="headers" disable-sort :items="items">
+        <!-- <template v-slot:item.cid="{item}">{{columnByCid[item.cid].name}}</template> -->
         <template v-slot:item.oper="{item}">
           <v-btn
             fab
@@ -115,7 +109,13 @@ export default {
     columns: [],
     imgFile: {},
     api: new Api("banner"),
+    columnApi: new Api("column"),
   }),
+  async mounted() {
+    let that = this;
+    that.getColumn();
+    that.bannerQueryAll();
+  },
   methods: {
     bannerModelReset(type = null) {
       let that = this;
@@ -179,7 +179,8 @@ export default {
       that.bannerModel.date = new Date().valueOf();
       try {
         let result0 = await that.api.update(that.bannerModel);
-        that.$hint({ msg: "更新成功" });
+        if (result0.code === 200) that.$hint({ msg: "更新成功" });
+        else that.$hint({ msg: "更新失败", type: "error" });
         that.bannerModelReset();
       } catch (e) {
         console.log(e);
@@ -209,28 +210,27 @@ export default {
         }
         try {
           let result = await that.api.delete({ id });
-          if (result.code === 200) {
-            that.bannerQueryAll();
-            return that.$hint({ msg: "删除成功" });
-          }
-          that.$hint({ msg: "删除失败" });
+          that.$hint({
+            msg: result.msg,
+            type: result.code === 200 ? "success" : "error",
+          });
+          that.bannerQueryAll();
         } catch (e) {
           console.error(e);
-          that.$hint({ msg: "删除失败" });
+          that.$hint({ msg: "删除失败", type: "error" });
         }
       });
     },
-    // async columnQueryAll() {
-    //   let that = this;
-    //   try {
-    //     let result = await that.api.columnQueryAll({}, that);
-    //     that.columns.push({ name: "首页", id: "-1" });
-    //     let arr = result.code === 200 ? result.data : [];
-    //     that.columns = that.columns.concat(arr);
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // },
+    async getColumn() {
+      let that = this;
+      try {
+        let result = await that.columnApi.queryAll();
+        that.columns = result.code === 200 ? result.data : [];
+      } catch (e) {
+        console.error(e);
+        that.$hint({ msg: "获取所以模板失败", type: "error" });
+      }
+    },
   },
   computed: {
     // columnByCid() {
@@ -245,11 +245,7 @@ export default {
       return this.$store.getters.getTheme;
     },
   },
-  async mounted() {
-    let that = this;
-    // that.columnQueryAll();
-    that.bannerQueryAll();
-  },
+
   components: {
     upload: () => import("@components/upload.vue"),
   },

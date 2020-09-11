@@ -41,7 +41,7 @@
               <v-icon>{{n.icon}}</v-icon>
             </v-list-item-icon>-->
             <v-list-item-content>
-              <v-list-item-title>{{n.call}}</v-list-item-title>
+              <v-list-item-title class="text-center">{{n.call}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -119,17 +119,21 @@ export default {
       } else {
         that.listModel = type;
       }
-      let obj = {};
-      // if (data.origin) {
-      //   obj = { cid: -1, id: data.id };
-      //   if (Number(data.origin) !== -1) obj.cid = data.origin;
-      //   if (data.template === "page") obj.cid = data.id;
-      // }
-      that.viewKey++;
-      that.$router.push({
-        path: data.v_path,
-        query: { cid: data.cid, id: data.id },
-      });
+      try {
+        let a = require(`@/pages/view/${data.component}`).default;
+        console.log(a);
+        that.viewKey++;
+        that.$router.push({
+          path: data.v_path,
+          query: { nid: data.id },
+        });
+      } catch (e) {
+        console.log(e);
+        that.$hint({
+          msg: "组件路径不正确，请前往节点设置修改",
+          type: "error",
+        });
+      }
     },
     closeSide() {
       let that = this;

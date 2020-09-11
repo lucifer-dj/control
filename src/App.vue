@@ -61,9 +61,17 @@ export default {
       let that = this;
       try {
         let token = getItemForStorage("token");
+
         let result = await getUserInfo({ token });
         if (result.code === 200) {
           saveItemObj("user", result.data);
+          if (!getItemObj("router")) {
+            let _res = await fetchRouter({ auth: result.data.auth });
+            console.log(_res);
+            if (_res.code === 200) {
+              saveItemObj("router", _res.data);
+            }
+          }
           that.$hint({ msg: "自动登录成功" });
         } else {
           that.$hint({ msg: "tokan验证失败", type: "error" });

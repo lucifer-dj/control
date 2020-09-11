@@ -92,15 +92,14 @@ export default {
     dialog: false,
     imgFile: {},
     dialogType: "add",
-    columnData: { cid: -1 },
     sonColumn: [],
     api: new Api("realm"),
   }),
   async mounted() {
     let that = this;
-    that.columnData = that.$route.query;
+    that.realmModel.nid = that.$route.query.nid;
     that.realmQueryAll();
-    that.sonColumn = that.getSonColumn(that.columnData.id);
+    that.sonColumn = that.getSonColumn(that.realmModel.nid);
     console.log(that.sonColumn);
   },
   methods: {
@@ -119,7 +118,7 @@ export default {
       let that = this;
       try {
         let result = await that.api.queryAll(
-          { where: { cid: that.columnData.cid }, offset: 0 },
+          { where: { nid: that.realmModel.nid }, offset: 0 },
           that
         );
         that.items = result.code === 200 ? result.data : [];
@@ -137,7 +136,6 @@ export default {
         let result0 = await upload(that.imgFile, that);
         that.realmModel.start = new Date().valueOf();
         that.realmModel.pic = result0.code === 200 ? result0.data : "";
-        that.realmModel.cid = that.columnData.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await that.api.add(that.realmModel, that);
         that.$hint({ msg: result.msg });

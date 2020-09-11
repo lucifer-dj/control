@@ -45,18 +45,16 @@ export default {
   }),
   async mounted() {
     let that = this;
-    that.pageModel.cid = that.$route.query.cid;
+    that.pageModel.nid = that.$route.query.nid;
     that.readPage();
-    that.sonColumn = that.getSonColumn(that.$route.query.id);
+    that.sonColumn = that.getSonColumn(that.pageModel.nid);
   },
   methods: {
     async readPage() {
       let that = this;
+      console.log(that.pageModel.nid);
       try {
-        let result = await that.api.read(
-          { where: { cid: that.pageModel.cid } },
-          that
-        );
+        let result = await that.api.read({ nid: that.pageModel.nid }, that);
         if (!result.data) return;
         that.pageModel = result.code === 200 ? result.data : [];
         // console.log(that.pageModel);

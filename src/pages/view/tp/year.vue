@@ -99,17 +99,14 @@ export default {
     dialog: false,
     imgFile: {},
     dialogType: "add",
-    columnData: {
-      cid: -1,
-    },
     sonColumn: [],
     api: new Api("year"),
   }),
   async mounted() {
     let that = this;
-    if (Number(that.$route.query) !== -1) that.columnData = that.$route.query;
     that.yearQueryAll();
-    that.sonColumn = that.getSonColumn(that.columnData.id);
+    that.yearModel.nid = that.$route.query.nid;
+    that.sonColumn = that.getSonColumn(that.yearModel.nid);
   },
   methods: {
     yearModelReset(type = null) {
@@ -127,8 +124,9 @@ export default {
     async yearQueryAll() {
       let that = this;
       try {
+        //,
         let result = await that.api.queryAll(
-          { where: { cid: that.columnData.cid }, offset: 0 },
+          { where: { nid: that.columnData.cid }, offset: 0 },
           that
         );
         that.items = result.code === 200 ? result.data : [];

@@ -16,7 +16,7 @@
       >
         <!-- 名称 -->
         <template v-slot:item.name="{item}">
-          <span>{{item.origin===-1?item.name:'|—'+item.name}}</span>
+          <span>{{item.origin!==nid?item.name:'|—'+item.name}}</span>
         </template>
         <!-- 是否显示 -->
         <template v-slot:item.show="{item}">
@@ -86,12 +86,18 @@
                   label="所属栏目"
                   :items="origin"
                   item-text="name"
-                  item-value="id"
+                  item-value="nid"
                   v-model="columnModel.origin"
                 ></v-select>
               </v-col>
               <v-col cols="12" md="6">
-                <v-select v-model="columnModel.template" label="*选择模板" :items="tps"></v-select>
+                <v-select
+                  v-model="columnModel.template"
+                  label="*选择模板"
+                  :items="tps"
+                  item-text="call"
+                  item-value="self"
+                ></v-select>
               </v-col>
               <v-col cols="12" md="6" class="d-flex flex-row align-center">
                 <span>是否隐藏</span>
@@ -145,7 +151,7 @@
   </v-container>
 </template>
 <script>
-import { Api, upload, deleteFile, getTps } from "@api";
+import { Api, upload, deleteFile } from "@api";
 import { required } from "vuelidate/lib/validators";
 import cfg from "@/plugins/cfg.js";
 export default {
@@ -186,15 +192,14 @@ export default {
       link: "",
       icon: "",
     },
-    api: new Api("column"),
     tps: [],
-    columnData: {},
+    nid: null,
   }),
   async mounted() {
     let that = this;
-    that.columnData = that.$route.query;
+    that.nid = that.$route.query.nid;
     that.columnQueryAll();
-    that.getHtmlTps();
+    that.getTps();
   },
   methods: {
     c_addColumn() {
@@ -223,6 +228,7 @@ export default {
     },
     async submit(type) {
       let that = this;
+      // return console.log(that.columnModel);
       if (that.checkLink(that.columnModel))
         return that.$hint({ msg: "link重复", type: "error" });
       if (type != "add") return that.updateColumn();
@@ -234,18 +240,25 @@ export default {
       } else {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       }
-      try {
-        let result = await that.api.add(that.columnModel, that);
-        that.$hint({ msg: result.msg });
-        that.reload();
-      } catch (e) {
-        console.log(e);
+      let _res = await that.addNode();
+      if (_res) {
+        that.columnModel.nid = _res.insertId;
+        try {
+          let result = await that.api.column.add(that.columnModel, that);
+          that.$hint({
+            msg: result.msg,
+            type: result.code === 200 ? "success" : "error",
+          });
+          that.reload();
+        } catch (e) {
+          console.log(e);
+        }
       }
     },
     async columnQueryAll() {
       let that = this;
       try {
-        let result = await that.api.queryAll({}, that);
+        let result = await that.api.column.queryAll({}, that);
         that.items = result.code === 200 ? result.data : [];
         that.items = that.disposeItem;
       } catch (e) {
@@ -261,7 +274,7 @@ export default {
     async readColumn(id) {
       let that = this;
       try {
-        let result = await that.api.read({ id }, that);
+        let result = await that.api.column.read({ id }, that);
         // console.log(result.data);
         return result.data;
       } catch (e) {
@@ -279,13 +292,19 @@ export default {
         that.columnModel.pic = res ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
-      try {
-        console.log(that.columnModel.pic);
-        let result = await that.api.update(that.columnModel, that);
-        that.$hint({ msg: "修改成功" });
-        that.reload();
-      } catch (e) {
-        console.log(e);
+      let _res = await that.updateNode(that.columnModel);
+      if (_res) {
+        try {
+          console.log(that.columnModel.pic);
+          let result = await that.api.column.update(that.columnModel, that);
+          if (result.code === 200) {
+            that.reload();
+          } else {
+            that.$hint({ msg: "修改失败", type: "error" });
+          }
+        } catch (e) {
+          console.log(e);
+        }
       }
     },
     async deleteColumn(id) {
@@ -296,17 +315,24 @@ export default {
         if (result.pic) {
           let result0 = await deleteFile({ path: result.pic });
         }
-        try {
-          let result1 = await that.api.delete({ id });
-          that.$hint({ msg: "删除成功" });
-          that.reload();
-        } catch (e) {
-          console.log(e);
+        let _res = await that.deleteNode(result.nid);
+        if (_res) {
+          try {
+            let result1 = await that.api.column.delete({ id });
+            that.$hint({
+              msg: result1.msg,
+              type: result1.code === 200 ? "success" : "error",
+            });
+            that.reload();
+          } catch (e) {
+            console.log(e);
+          }
         }
       });
     },
     async editCol(id) {
       let that = this;
+      console.log(that.origin);
       that.columnModel = await that.readColumn(id);
       console.log(that.columnModel);
       that.dialogType = "edit";
@@ -319,37 +345,75 @@ export default {
       that.columnModel.origin = column.id;
       that.dialog = true;
     },
-    async getHtmlTps() {
-      let that = this;
-      try {
-        let result = await getTps();
-        that.tps = result.code === 200 ? result.data : [];
-      } catch (e) {
-        console.log(e);
-      }
-    },
     async addNode() {
       let that = this;
-      let _column = getItemObj("router");
-      _column = _column[0].children.filter((r) => r.component === "column");
-      _column = _column[0];
-      return;
+      let _node = JSON.parse(that.columnModel.template);
       let obj = {
-        deep: 2,
-        // cid: _column.id,
-        // call: that.tpModel.name,
-        // title: that.tpModel.name,
-        // v_path: that.tpModel.name,
-        // component: that.tpModel.template.split(".")[0],
-        // auth: "user",
+        deep: that.columnModel.origin == that.nid ? 2 : 3,
+        cid:
+          that.columnModel.origin == that.nid
+            ? that.nid
+            : that.columnModel.origin,
+        call: that.columnModel.name,
+        title: that.columnModel.name,
+        v_path: _node.v_path,
+        component: _node.component,
+        name: _node.name,
+        auth: "user",
       };
       try {
-        let result = await that.nodeApi.add(obj);
-        if (result.code === 200) return true;
+        let result = await that.api.node.add(obj);
+        if (result.code === 200) return result.data;
         return false;
       } catch (e) {
         console.log(e);
         that.$hint({ msg: "添加失败", type: "error" });
+        return false;
+      }
+    },
+    async getTps() {
+      let that = this;
+      try {
+        let result = await that.api.tmp.queryAll();
+        that.tps = result.code === 200 ? result.data : [];
+        that.tps.map((t) => (t.self = JSON.stringify(t)));
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async deleteNode(id) {
+      let that = this;
+      try {
+        let result = await that.api.node.delete({ id });
+        if (result.code === 200) return true;
+        return false;
+      } catch (e) {
+        console.log(e);
+        that.$hint({ msg: "删除失败", type: "error" });
+        return false;
+      }
+    },
+    async updateNode(model) {
+      let that = this;
+      try {
+        let _model = JSON.parse(model.template);
+        let obj = {
+          cid: model.origin == that.nid ? that.nid : model.origin,
+          v_path: _model.v_path,
+          component: _model.component,
+          name: _model.name,
+          // deep: model.origin == that.nid ? 2 : 3,
+          // auth: "user",
+          // call: model.name,
+          // title: model.name,
+          id: model.nid,
+        };
+        let result = await that.api.node.update(obj);
+        if (result.code === 200) return true;
+        return false;
+      } catch (e) {
+        console.log(e);
+        that.$hint({ msg: "删除失败", type: "error" });
         return false;
       }
     },
@@ -376,10 +440,17 @@ export default {
       }
       return arr;
     },
+    api() {
+      return {
+        column: new Api("column"),
+        node: new Api("node"),
+        tmp: new Api("tmp"),
+      };
+    },
     origin() {
       let that = this;
       let arr = [];
-      arr.push({ name: "顶级栏目", id: that.columnData.id });
+      arr.push({ name: "顶级栏目", nid: that.nid });
       that.items.forEach((item, idx) => {
         arr.push(item);
       });

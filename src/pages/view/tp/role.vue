@@ -117,14 +117,13 @@ export default {
     },
     imgFile: {},
     sonColumn: [],
-    columnData: { cid: -1 },
     api: new Api("role"),
   }),
   async mounted() {
     let that = this;
-    if (Number(that.$route.query) !== -1) that.columnData = that.$route.query;
+    that.roleModel.nid = that.$route.query.nid;
     that.roleQueryAll();
-    that.sonColumn = that.getSonColumn(that.columnData.id);
+    that.sonColumn = that.getSonColumn(that.roleModel.nid);
   },
   methods: {
     roleModelReset(type = null) {
@@ -145,7 +144,7 @@ export default {
       let that = this;
       try {
         let result = await that.api.queryAll(
-          { where: { cid: that.columnData.cid }, offset: 0 },
+          { where: { nid: that.roleModel.nid }, offset: 0 },
           that
         );
         that.items = result.code === 200 ? result.data : [];
@@ -169,7 +168,6 @@ export default {
       try {
         let result0 = await upload(that.imgFile);
         that.roleModel.avatar = result0.code === 200 ? result0.data : "";
-        that.roleModel.cid = that.columnData.cid;
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await that.api.add(that.roleModel, that);
         that.$hint({ msg: "添加成功" });

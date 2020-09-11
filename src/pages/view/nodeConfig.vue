@@ -7,6 +7,7 @@
         <v-btn text :style="[theme.bg_p,theme.co]">更新</v-btn>
       </v-toolbar>
       <v-data-table align="center" :headers="headers" disable-sort :items="items">
+        <template v-slot:item.cid="{item}">{{item.cid==1?'Layout':item.cid}}</template>
         <template v-slot:item.oper="{item}">
           <v-btn
             fab
@@ -16,6 +17,7 @@
             class="mx-1"
             @click="nodeDelete(item.id)"
             :style="[theme.bg_a,theme.co_p]"
+            v-if="item.canD!==1"
           >
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
@@ -26,6 +28,7 @@
             title="修改"
             class="mx-1"
             @click="editnode(item.id)"
+            v-if="item.canD!==1"
             :style="[theme.bg_a,theme.co_p]"
           >
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>
@@ -49,7 +52,12 @@
                   <v-text-field label="文档TIETLE" v-model="nodeModel.title"></v-text-field>
                 </v-col>
                 <v-col cols="6">
-                  <v-text-field label="组件路径" v-model="nodeModel.component"></v-text-field>
+                  <v-text-field
+                    label="import引入路径"
+                    persistent-hint
+                    hint="不要以/开头"
+                    v-model="nodeModel.component"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="6">
                   <v-select
@@ -61,10 +69,10 @@
                   ></v-select>
                 </v-col>
                 <v-col cols="4">
-                  <v-text-field label="Vue路径" v-model="nodeModel.v_path"></v-text-field>
+                  <v-text-field label="URL路径==>VUE" v-model="nodeModel.v_path"></v-text-field>
                 </v-col>
                 <v-col cols="4">
-                  <v-text-field label="Vue组件名称" v-model="nodeModel.name"></v-text-field>
+                  <v-text-field label="VUE组件name" v-model="nodeModel.name"></v-text-field>
                 </v-col>
                 <v-col cols="4" class="d-flex flex-row align-center">
                   <span>节点权限</span>
@@ -136,7 +144,7 @@ export default {
       { text: "节点名称", value: "call" },
       { text: "模板名称", value: "name" },
       { text: "父节点", value: "cid" },
-      { text: "路劲", value: "v_path" },
+      { text: "路径", value: "v_path" },
       { text: "操作", value: "oper" },
     ],
     items: [],
