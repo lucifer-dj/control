@@ -110,12 +110,13 @@ export default {
       cid: -1,
     },
     sonColumn: [],
+    api: new Api("faction"),
   }),
   async mounted() {
     let that = this;
     if (Number(that.$route.query) !== -1) that.columnData = that.$route.query;
     that.factionQueryAll();
-    that.sonColumn = await that.getSonColumn(that.columnData.id);
+    that.sonColumn = that.getSonColumn(that.columnData.id);
   },
   methods: {
     factionModelReset(type = null) {

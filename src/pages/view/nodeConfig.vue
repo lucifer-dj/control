@@ -245,7 +245,7 @@ export default {
           }
         });
         that.items.sort((a, b) => a.order - b.order);
-        console.log(that.items);
+        // console.log(that.items);
       } catch (e) {
         console.log(e);
       }

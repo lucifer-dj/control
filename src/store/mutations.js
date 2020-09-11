@@ -13,6 +13,9 @@ const mutations = {
     state.router = router;
     saveItemObj("router", router);
   },
+  setMenu(state, menu) {
+    state.menu = menu;
+  },
 };
 
 export default mutations;

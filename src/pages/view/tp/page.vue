@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <!-- <v-subheader>关于雪中</v-subheader> -->
-    <v-subheader>
+    <v-subheader v-if="sonColumn.length>0">
       <span>子栏目:</span>
       <v-btn small class="mx-2" text v-for="(item,idx) in sonColumn" :key="idx">{{item.name}}</v-btn>
     </v-subheader>
@@ -47,7 +47,7 @@ export default {
     let that = this;
     that.pageModel.cid = that.$route.query.cid;
     that.readPage();
-    that.sonColumn = await that.getSonColumn(that.pageModel.cid);
+    that.sonColumn = that.getSonColumn(that.$route.query.id);
   },
   methods: {
     async readPage() {

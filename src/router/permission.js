@@ -71,7 +71,7 @@ function routerGo(to, next) {
     next({ path: "/login" });
   } else {
     getRouter = filterAsyncRouter(getRouter);
-    router.matcher.addRoutes(getRouter);
+    router.addRoutes(getRouter);
     next({ ...to, replace: true });
   }
 }

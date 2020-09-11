@@ -74,3 +74,6 @@ export function saveItemObj(name, obj) {
   obj = JSON.stringify(obj);
   localStorage.setItem(name, obj);
 }
+export function importAll(){
+  
+}

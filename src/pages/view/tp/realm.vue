@@ -1,7 +1,7 @@
 <template>
   <v-container fiuld>
     <!-- <v-subheader>境界介绍</v-subheader> -->
-    <v-subheader>
+    <v-subheader v-if="sonColumn.length>0">
       <span>子栏目:</span>
       <v-btn small class="mx-2" text v-for="(item,idx) in sonColumn" :key="idx">{{item.name}}</v-btn>
     </v-subheader>
@@ -98,9 +98,10 @@ export default {
   }),
   async mounted() {
     let that = this;
-    if (Number(that.$route.query) !== -1) that.columnData = that.$route.query;
+    that.columnData = that.$route.query;
     that.realmQueryAll();
-    that.sonColumn = await that.getSonColumn(that.columnData.id);
+    that.sonColumn = that.getSonColumn(that.columnData.id);
+    console.log(that.sonColumn);
   },
   methods: {
     realmModelReset(type = null) {

@@ -91,16 +91,7 @@
                 ></v-select>
               </v-col>
               <v-col cols="12" md="6">
-                <v-select
-                  v-model="columnModel.template"
-                  label="*选择模板"
-                  :items="template"
-                  required
-                  @input="$v.columnModel.template.$touch()"
-                  @blur="$v.columnModel.template.$touch()"
-                  item-text="tp"
-                  item-value="en"
-                ></v-select>
+                <v-select v-model="columnModel.template" label="*选择模板" :items="tps"></v-select>
               </v-col>
               <v-col cols="12" md="6" class="d-flex flex-row align-center">
                 <span>是否隐藏</span>
@@ -154,7 +145,7 @@
   </v-container>
 </template>
 <script>
-import { Api, upload, deleteFile } from "@api";
+import { Api, upload, deleteFile, getTps } from "@api";
 import { required } from "vuelidate/lib/validators";
 import cfg from "@/plugins/cfg.js";
 export default {
@@ -196,10 +187,14 @@ export default {
       icon: "",
     },
     api: new Api("column"),
+    tps: [],
+    columnData: {},
   }),
   async mounted() {
     let that = this;
+    that.columnData = that.$route.query;
     that.columnQueryAll();
+    that.getHtmlTps();
   },
   methods: {
     c_addColumn() {
@@ -267,7 +262,7 @@ export default {
       let that = this;
       try {
         let result = await that.api.read({ id }, that);
-        console.log(result.data);
+        // console.log(result.data);
         return result.data;
       } catch (e) {
         console.log(e);
@@ -324,6 +319,40 @@ export default {
       that.columnModel.origin = column.id;
       that.dialog = true;
     },
+    async getHtmlTps() {
+      let that = this;
+      try {
+        let result = await getTps();
+        that.tps = result.code === 200 ? result.data : [];
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async addNode() {
+      let that = this;
+      let _column = getItemObj("router");
+      _column = _column[0].children.filter((r) => r.component === "column");
+      _column = _column[0];
+      return;
+      let obj = {
+        deep: 2,
+        // cid: _column.id,
+        // call: that.tpModel.name,
+        // title: that.tpModel.name,
+        // v_path: that.tpModel.name,
+        // component: that.tpModel.template.split(".")[0],
+        // auth: "user",
+      };
+      try {
+        let result = await that.nodeApi.add(obj);
+        if (result.code === 200) return true;
+        return false;
+      } catch (e) {
+        console.log(e);
+        that.$hint({ msg: "添加失败", type: "error" });
+        return false;
+      }
+    },
   },
   computed: {
     nameErrors() {
@@ -350,11 +379,9 @@ export default {
     origin() {
       let that = this;
       let arr = [];
-      arr.push({ name: "顶级栏目", id: -1 });
+      arr.push({ name: "顶级栏目", id: that.columnData.id });
       that.items.forEach((item, idx) => {
-        if (item.origin === -1) {
-          arr.push(item);
-        }
+        arr.push(item);
       });
       return arr;
     },

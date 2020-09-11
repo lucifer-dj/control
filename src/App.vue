@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { getItemForStorage, saveItemObj } from "@/plugins/util.js";
-import { getUserInfo } from "@api";
+import { getItemForStorage, saveItemObj, getItemObj } from "@/plugins/util.js";
+import { getUserInfo, fetchRouter } from "@api";
 export default {
   name: "App",
   provide() {
@@ -18,13 +18,15 @@ export default {
   data: () => ({
     isRouterAlive: true,
   }),
-  created() {},
+  created() {
+    this.getInfo();
+  },
   async mounted() {
     // this.$vue._theme.primary = "#222";
     //做一个进入时的验证
     let that = this;
-    let default_theme = localStorage.getItem("theme")
-      ? localStorage.getItem("theme")
+    let default_theme = getItemForStorage("theme")
+      ? getItemForStorage("theme")
       : "light";
     if (default_theme === "dark") {
       that.$store.commit("changeTheme", {
@@ -36,7 +38,6 @@ export default {
     } else that.$store.commit("changeTheme", default_theme);
     let temp_loading = document.querySelector("#temp_loading");
     temp_loading.style.display = "none";
-    that.getInfo();
   },
   watch: {
     $route(to, from) {
@@ -50,9 +51,11 @@ export default {
         this.isRouterAlive = true;
       });
     },
-    async getSonColumn(origin) {
+    getSonColumn(id) {
       let that = this;
-      console.log(this);
+      let _node = getItemObj("router")[0].children;
+      _node = _node.filter((_) => _.cid == id);
+      return _node;
     },
     async getInfo() {
       let that = this;

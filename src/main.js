@@ -16,6 +16,7 @@ import cfg from "./plugins/cfg";
 Vue.config.productionTip = false;
 import "./router/permission";
 
+
 Vue.use(less);
 Vue.use(vuelidate);
 Vue.prototype.indexPath = cfg.isdev

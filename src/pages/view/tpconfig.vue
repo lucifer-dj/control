@@ -18,17 +18,10 @@
             <v-card-text>
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-select
-                    v-model="tpModel.template"
-                    label="*选择模板"
-                    :items="htmls"
-                    required
-                    @input="$v.tpModel.template.$touch()"
-                    @blur="$v.tpModel.template.$touch()"
-                  ></v-select>
+                  <v-select v-model="tpModel.template" label="*选择模板" :items="htmls" required></v-select>
                 </v-col>
                 <v-col cols="6">
-                  <v-text-field label="前台路径" v-model="tpModel.front"></v-text-field>
+                  <v-text-field label="前台路径" v-model="tpModel.v_path"></v-text-field>
                 </v-col>
                 <v-col cols="6">
                   <v-text-field label="模板名称" v-model="tpModel.name"></v-text-field>
@@ -67,7 +60,8 @@
 </template>
 <script>
 // 项目介绍
-import * as api from "@api";
+import { Api, getTps } from "@api";
+import { getItemObj } from "@/plugins/util.js";
 export default {
   name: "tpConfig",
   data: () => ({
@@ -88,12 +82,14 @@ export default {
     dialog: false,
     dialogType: "add",
     htmls: [],
+    api: new Api("temp"),
+    nodeApi: new Api("node"),
   }),
   methods: {
     async getHtmlList() {
       let that = this;
       try {
-        let result = await api.getHtmlList({}, that);
+        let result = await getTps({}, that);
         that.htmls = result.code == 200 ? result.data : [];
       } catch (e) {
         console.log(e);
@@ -105,17 +101,21 @@ export default {
         template: "",
         name: "",
         ename: "",
-        front: "",
+        v_path: "",
         panel: "",
       };
       that.dialogType = "add";
       that.dialog = false;
       if (!type) that.getTps();
     },
+    async submit() {
+      let that = this;
+    },
   },
   mounted() {
     let that = this;
     that.getHtmlList();
+    // that.addNode();
   },
   computed: {
     theme() {

@@ -31,11 +31,14 @@ export function aboutUpdate(data, obj = {}) {
   return fetch("/panel/site/update", data, obj);
 }
 //查询所有的html
-export function getHtmlList(data, obj = {}) {
-  return fetch("/panel/file/getHtmlList", data, obj);
+export function getTps(data, obj = {}) {
+  return fetch("/panel/file/getTps", data, obj);
 }
 export function fetchRouter(data, obj = {}) {
   return fetch("/panel/node/getRouter", data, obj);
+}
+export function fetchMenu(data, obj = {}) {
+  return fetch("/panel/node/getMenu", data, obj);
 }
 export function getUserInfo(data, obj = {}) {
   return fetch("/panel/user/getInfo", data, obj);

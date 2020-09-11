@@ -23,10 +23,10 @@
         >
           <template v-slot:activator>
             <v-list-item-icon>
-              <v-icon :class="item.meta.icon"></v-icon>
+              <v-icon :class="item.icon"></v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>{{item.meta.call}}</v-list-item-title>
+              <v-list-item-title>{{item.call}}</v-list-item-title>
             </v-list-item-content>
           </template>
           <v-list-item
@@ -37,11 +37,11 @@
             :style="listModel===n.id&&!$vuetify.theme.dark?theme.bg_a:''"
             :class="listModel===n.id?'list_menu_active':''"
           >
-            <v-list-item-icon>
-              <v-icon>{{n.meta.icon}}</v-icon>
-            </v-list-item-icon>
+            <!-- <v-list-item-icon>
+              <v-icon>{{n.icon}}</v-icon>
+            </v-list-item-icon>-->
             <v-list-item-content>
-              <v-list-item-title>{{n.meta.call}}</v-list-item-title>
+              <v-list-item-title>{{n.call}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -86,6 +86,7 @@
 <script>
 import cfg from "@/plugins/cfg.js";
 import { getItemObj } from "@/plugins/util.js";
+import { fetchMenu } from "@api";
 export default {
   name: "layout",
   data: () => ({
@@ -97,6 +98,7 @@ export default {
     viewCols: 12,
     viewKey: 0,
     listModel: 0,
+    menu: [],
   }),
   methods: {
     commDrawer() {
@@ -112,20 +114,22 @@ export default {
     },
     replace(data, type) {
       let that = this;
-      let { path } = data;
       if (type === "n") {
         that.listModel = data.id;
       } else {
         that.listModel = type;
       }
       let obj = {};
-      if (data.origin) {
-        obj = { cid: -1, id: data.id };
-        if (Number(data.origin) !== -1) obj.cid = data.origin;
-        if (data.template === "page") obj.cid = data.id;
-      }
+      // if (data.origin) {
+      //   obj = { cid: -1, id: data.id };
+      //   if (Number(data.origin) !== -1) obj.cid = data.origin;
+      //   if (data.template === "page") obj.cid = data.id;
+      // }
       that.viewKey++;
-      that.$router.push({ path, query: obj });
+      that.$router.push({
+        path: data.v_path,
+        query: { cid: data.cid, id: data.id },
+      });
     },
     closeSide() {
       let that = this;
@@ -155,6 +159,19 @@ export default {
         }, 500);
       });
     },
+    async getMenu() {
+      let that = this;
+      let _user = getItemObj("user");
+      try {
+        let result = await fetchMenu({ auth: _user.auth });
+        that.menu = result.code == 200 ? result.data : [];
+        that.$store.commit("setMenu", result.data);
+        // console.log(that.menu);
+      } catch (e) {
+        console.log(e);
+        that.$hint({ msg: "获取菜单失败", type: "error" });
+      }
+    },
   },
   mounted() {
     let that = this;
@@ -165,14 +182,9 @@ export default {
     drawer_content.classList.add("drawer"); //chrome
     drawer_content.style.scrollbarWidth = "none"; //firefox
     drawer_content.style.msOverflowStyle = "none"; //edge
-    console.log(that.menu);
+    that.getMenu();
   },
   computed: {
-    menu() {
-      let _menu = getItemObj("router")[0].children;
-
-      return _menu;
-    },
     theme() {
       return this.$store.getters.getTheme;
     },

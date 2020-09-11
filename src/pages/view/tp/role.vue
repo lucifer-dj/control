@@ -92,8 +92,8 @@
 <script>
 import { Api, upload, deleteFile } from "@api";
 export default {
-  name: "role",
   inject: ["getSonColumn"],
+  name: "role",
   data: () => ({
     dialog: false,
     dialogType: "add",
@@ -116,16 +116,15 @@ export default {
       realm: "",
     },
     imgFile: {},
-    columnData: { cid: -1 },
     sonColumn: [],
+    columnData: { cid: -1 },
     api: new Api("role"),
   }),
   async mounted() {
     let that = this;
     if (Number(that.$route.query) !== -1) that.columnData = that.$route.query;
     that.roleQueryAll();
-    that.sonColumn = await that.getSonColumn(that.columnData.id);
-    console.log(that.sonColumn);
+    that.sonColumn = that.getSonColumn(that.columnData.id);
   },
   methods: {
     roleModelReset(type = null) {

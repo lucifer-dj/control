@@ -109,7 +109,7 @@ export default {
     let that = this;
     if (Number(that.$route.query) !== -1) that.columnData = that.$route.query;
     that.yearQueryAll();
-    that.sonColumn = await that.getSonColumn(that.columnData.id);
+    that.sonColumn = that.getSonColumn(that.columnData.id);
   },
   methods: {
     yearModelReset(type = null) {
