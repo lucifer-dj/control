@@ -9,11 +9,7 @@ class YearController extends Controller {
   async queryAll() {
     const { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.db.queryAll(table, {
-      where: req.where,
-      limit: 10,
-      offset: req.offset,
-    });
+    let result = await service.db.select(table, req);
     if (result) {
       ctx.success("成功", result);
     } else {

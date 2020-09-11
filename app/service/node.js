@@ -5,31 +5,31 @@ const Service = require("egg").Service;
 class NodeService extends Service {
   async router(auth) {
     let { app, service } = this;
-    let routes = await service.db.queryAll("node");
+    let routes = await service.db.select("node");
     if (auth.auth === 'user')
       routes = routes.filter(r => r.auth === 'user')
     if (!(routes.length > 1)) return false;
-    routes = this.mergeRouter(routes);
+    routes = await this.mergeRouter(routes);
     return routes;
   }
   async getNodes() {
     let { app, service } = this;
-    let nodes = await service.db.queryAll("node");
+    let nodes = await service.db.select("node");
     if (!(nodes.length > 1)) return false;
+    let column = nodes.find(r => r.name === "column");
     nodes = nodes.filter(n => n.deep !== 0);
-    nodes = nodes.filter(n => n.call !== "节点管理");
+    nodes = nodes.filter(n => n.cid !== column.id);
     return nodes;
   }
   async menu() {
     let { app, service } = this;
-    let nodes = await service.db.queryAll("node");
+    let nodes = await service.db.select("node");
     if (!(nodes.length > 1)) return false;
     nodes = this.mergeMenu(nodes)
     return nodes;
   }
   mergeMenu(routes) {
     if (routes.length < 2) return routes;
-
     let deep = [];
     for (let i = 0; i < routes.length; i++) {
       deep.push(routes[i].deep);
@@ -67,13 +67,15 @@ class NodeService extends Service {
     return routes;
   }
 
-  mergeRouter(routes) {
+  async mergeRouter(routes) {
+    let column = routes.find(r => r.name === "column")
     let layout = routes.filter(r => r.deep === 0);
-    // console.log(layout)
     routes = routes.filter(r => r.deep !== 0)
+    routes = routes.filter(r => r.cid !== column.id)
+    let tps = await this.getTps();
+    routes = routes.concat(tps);
     layout[0].children = routes;
     layout = this.disposeRouter(layout);
-    console.log(layout)
     return layout;
   }
   disposeRouter(routes) {
@@ -100,7 +102,21 @@ class NodeService extends Service {
     };
     return arr;
   }
-
+  async getTps() {
+    let { service } = this;
+    let tps = await service.db.select("tmp");
+    tps = tps.length > 0 ? tps : []
+    for (var i = 0; i < tps.length; i++) {
+      tps[i] = {
+        ...tps[i],
+        icon: "",
+        cid: '',
+        auth: "user",
+        title: tps[i].call,
+      }
+    }
+    return tps;
+  }
 }
 
 module.exports = NodeService;

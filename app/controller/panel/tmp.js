@@ -10,7 +10,7 @@ class TmpController extends Controller {
   async queryAll() {
     let { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.db.queryAll(table, { where: req.where });
+    let result = await service.db.select(table, req);
     if (result) return ctx.success('查询成功', result)
     return ctx.err('没有取到数据')
   }

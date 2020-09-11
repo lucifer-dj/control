@@ -52,8 +52,8 @@ class NodeController extends Controller {
     const { ctx, service, table } = this;
     let req = ctx.request.body;
     let result = await service.db.add(table, req);
-    if (result) ctx.success("成功添加一个节点");
-    else ctx.err("添加节点失败");
+    if (!result) ctx.err("添加节点失败");
+    else ctx.success("成功添加一个节点", result);
   }
 }
 
