@@ -14,8 +14,8 @@ module.exports = (options, app) => {
       ctx.err("请重新登录", 401);
     }
     let token = authorization.split(" ")[1];
+    // console.log(token)
     try {
-      // console.log(token)
       let info = app.jwt.verify(token, app.config.jwt.secret);
       let result = await ctx.service.login.valid(info);
       if (result) {
@@ -28,7 +28,7 @@ module.exports = (options, app) => {
         ctx.err("token 已过期! 请重新获取令牌", 401);
       } else {
         console.log(e);
-        ctx.err("其他错误");
+        ctx.err("其他错误", 401);
       }
     }
   };

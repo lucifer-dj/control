@@ -4,24 +4,24 @@ class FrameService extends Service {
   async index() {
     let that = this;
     let { app, service, config } = that;
-    let columnsModel = await service.db.queryAll("column");
-    let roles = await service.db.queryAll("role", {
+    let columnsModel = await service.db.select("column");
+    let roles = await service.db.select("role", {
       where: { cid: -1 },
       limit: 10,
     });
-    let factions = await service.db.queryAll("faction", {
+    let factions = await service.db.select("faction", {
       where: { cid: -1 },
       limit: 4,
     });
-    let years = await service.db.queryAll("year", {
+    let years = await service.db.select("year", {
       where: { cid: -1 },
       limit: 5,
     });
-    let banners = await service.db.queryAll("banner", {
+    let banners = await service.db.select("banner", {
       where: { cid: -1 },
       limit: 4,
     });
-    let realms = await service.db.queryAll("realm", {
+    let realms = await service.db.select("realm", {
       where: { cid: -1 },
       limit: 4,
     });
@@ -46,10 +46,10 @@ class FrameService extends Service {
   async role(id) {
     let that = this;
     let { service } = that;
-    let columnsModel = await service.db.queryAll("column");
+    let columnsModel = await service.db.select("column");
     let site = await service.file.read("site.config.json");
     let about = await service.file.read("about.config.json");
-    let roles = await service.db.queryAll("role", {
+    let roles = await service.db.select("role", {
       where: { cid: id },
       limit: 10,
     });
@@ -63,10 +63,10 @@ class FrameService extends Service {
   async faction(id) {
     let that = this;
     let { service } = that;
-    let columnsModel = await service.db.queryAll("column");
+    let columnsModel = await service.db.select("column");
     let site = await service.file.read("site.config.json");
     let about = await service.file.read("about.config.json");
-    let factions = await service.db.queryAll("faction", {
+    let factions = await service.db.select("faction", {
       where: { cid: id },
       limit: 10,
     });
@@ -80,10 +80,10 @@ class FrameService extends Service {
   async realm(id) {
     let that = this;
     let { service } = that;
-    let columnsModel = await service.db.queryAll("column");
+    let columnsModel = await service.db.select("column");
     let site = await service.file.read("site.config.json");
     let about = await service.file.read("about.config.json");
-    let realms = await service.db.queryAll("realm", {
+    let realms = await service.db.select("realm", {
       where: { cid: id },
       limit: 10,
     });

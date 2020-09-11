@@ -5,7 +5,7 @@ const Controller = require("egg").Controller;
 class HomeController extends Controller {
   async index() {
     const { ctx } = this;
-    await ctx.render('control/panel') 
+    await ctx.render("control/panel");
     // ctx.body = "<h1>hello world!</h1>"
   }
   async postTest() {

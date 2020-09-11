@@ -2,10 +2,10 @@
 
 const Controller = require("egg").Controller;
 
-class ColumnController extends Controller {
+class TmpController extends Controller {
   constructor(ctx) {
     super(ctx);
-    this.table = "column";
+    this.table = "tmp";
   }
   async queryAll() {
     let { ctx, service, table } = this;
@@ -59,4 +59,4 @@ class ColumnController extends Controller {
   }
 }
 
-module.exports = ColumnController;
+module.exports = TmpController;

@@ -2,7 +2,7 @@ const Service = require("egg").Service;
 
 class DbService extends Service {
   //查询多条数据
-  async queryAll(table, obj = {}) {
+  async select(table, obj = {}) {
     let { app } = this;
     let result = await app.mysql.select(table, obj);
     if (result.length > 0) return result;
@@ -12,7 +12,7 @@ class DbService extends Service {
   async add(table, data) {
     let { app } = this;
     let result = await app.mysql.insert(table, data);
-    if (result.affectedRows === 1) return true;
+    if (result.affectedRows === 1) return { insertId: result.insertId };
     return false;
   }
   //读取一条数据
