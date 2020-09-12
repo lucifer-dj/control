@@ -9,8 +9,7 @@ class LoginController extends Controller {
     let _info = await service.login.valid(data);
     if (_info) {
       //生辰token
-      const token = app.jwt.sign(
-        {
+      const token = app.jwt.sign({
           account: data.account,
           pass: data.pass,
         },

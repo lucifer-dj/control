@@ -15,8 +15,16 @@ module.exports = (options, app) => {
     }
     let token = authorization.split(" ")[1];
     // console.log(token)
+    // let info = app.jwt.verify(token, app.config.jwt.secret);
+    // let result = await ctx.service.login.valid(info);
+    // if (result) {
+    //   await next();
+    // } else {
+    //   ctx.err("token 不正确，请重新获取", 401);
+    // }
     try {
       let info = app.jwt.verify(token, app.config.jwt.secret);
+      // console.log(info, 1)
       let result = await ctx.service.login.valid(info);
       if (result) {
         await next();
