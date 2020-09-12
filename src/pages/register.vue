@@ -1,7 +1,7 @@
 <template>
   <main class="main">
     <v-card width="600" class="d-flex align-center flex-column pa-5">
-      <v-card-title >welcome</v-card-title>
+      <v-card-title>welcome</v-card-title>
       <v-card-text class="px-12">
         <v-text-field label="邮箱"></v-text-field>
         <v-text-field label="密码"></v-text-field>
@@ -14,12 +14,12 @@
 </template>
 <script>
 export default {
-  name:'register',
-  data:()=>({})
-}
+  name: "register",
+  data: () => ({}),
+};
 </script>
-<style lang="less" scoped>
-.main{
+<style lang="scss" scoped>
+.main {
   width: 100%;
   height: 100%;
   display: flex;

@@ -69,7 +69,9 @@
       <span v-if="temp_temp"></span>
       <v-row align="stretch" height="100%">
         <v-col :cols="viewCols" class="v-col9">
-          <router-view :key="viewKey" />
+          <keep-alive>
+            <router-view :key="viewKey" />
+          </keep-alive>
         </v-col>
         <v-col :cols="sideCols" class="v-col3 pa-0 ma-0">
           <the-side :type="sideType" @close="closeSide"></the-side>
@@ -198,7 +200,7 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .box {
   position: relative;
   width: 100%;

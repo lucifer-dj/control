@@ -7,11 +7,9 @@
 </template>
 <script>
 export default {
-  name:'other',
-  data:()=>({
-  })
-}
+  name: "other",
+  data: () => ({}),
+};
 </script>
-<style lang="less" scoped>
-  
+<style lang="scss" scoped>
 </style>

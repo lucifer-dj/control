@@ -3,7 +3,7 @@
 import Vue from "vue";
 import App from "./App";
 import router from "./router/router.js";
-import less from "less";
+// import sass from "sass";
 import vuetify from "./plugins/vuetify";
 import store from "./store/index";
 import md5 from "js-md5";
@@ -16,8 +16,7 @@ import cfg from "./plugins/cfg";
 Vue.config.productionTip = false;
 import "./router/permission";
 
-
-Vue.use(less);
+// Vue.use(sass);
 Vue.use(vuelidate);
 Vue.prototype.indexPath = cfg.isdev
   ? "http://127.0.0.1:7001"

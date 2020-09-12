@@ -121,7 +121,7 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .box {
   position: absolute;
   width: 100%;

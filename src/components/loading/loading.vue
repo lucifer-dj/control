@@ -23,7 +23,7 @@ export default {
   computed: {},
 };
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .v-card-text {
   width: 80px;
   height: 50px;

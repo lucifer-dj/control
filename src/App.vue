@@ -61,7 +61,6 @@ export default {
       let that = this;
       try {
         let token = getItemForStorage("token");
-
         let result = await getUserInfo({ token });
         if (result.code === 200) {
           saveItemObj("user", result.data);
@@ -86,7 +85,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss">
 * {
   margin: 0;
   padding: 0;

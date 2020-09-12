@@ -478,7 +478,7 @@ export default {
   },
 };
 </script>
-<style lang="less">
+<style lang="scss">
 tbody > tr {
   cursor: pointer;
 }

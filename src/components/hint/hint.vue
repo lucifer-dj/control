@@ -5,35 +5,31 @@
 </template>
 <script>
 export default {
-  name:'hint',
-  data:()=>({
-    msg:"这是一个3s的提示狂",
+  name: "hint",
+  data: () => ({
+    msg: "这是一个3s的提示狂",
     bool: true,
-    time:3000,
-    type:'success'
+    time: 3000,
+    type: "success",
   }),
-  methods:{
-  },
-  mounted(){
-  },
-  computed:{
- 
-    theme(){
+  methods: {},
+  mounted() {},
+  computed: {
+    theme() {
       let obj = {
-        success:{
-          color:'#e1f3d8',
-          font: 'success--text'
+        success: {
+          color: "#e1f3d8",
+          font: "success--text",
         },
         error: {
-          color: '#fef0f0',
-          font: 'red--text'
-        }
-      }
-      return obj[this.type]
-    }
-  }
-}
+          color: "#fef0f0",
+          font: "red--text",
+        },
+      };
+      return obj[this.type];
+    },
+  },
+};
 </script>
-<style lang="less" scoped>
-  
+<style lang="scss" scoped>
 </style>

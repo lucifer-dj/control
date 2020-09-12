@@ -223,7 +223,7 @@ export default {
   },
 };
 </script>
-<style lang="less">
+<style lang="scss">
 .v-dialog--active {
   box-shadow: none !important;
 }

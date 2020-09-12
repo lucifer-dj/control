@@ -108,7 +108,7 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .sheet {
   border: 1px dashed #c0ccda;
   border-radius: 6px;

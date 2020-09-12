@@ -1,6 +1,6 @@
 export default {
-  // isdev: ["development"].includes(process.env.NODE_ENV),
-  isdev: true,
+  isdev: ["development"].includes(process.env.NODE_ENV),
+  // isdev: true,
   icons: [
     "iconfont iconfont-tuandui",
     "iconfont iconfont-dizhi",

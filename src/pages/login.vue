@@ -119,6 +119,7 @@ export default {
       try {
         that.$loading({ msg: "登录" });
         let result = await api.login(that.userModel, that);
+        console.log(result);
         if (result.code === 200) {
           localStorage.setItem("token", result.data.token);
           that.userModelReset();
@@ -143,7 +144,7 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .main {
   width: 100%;
   height: 100%;
