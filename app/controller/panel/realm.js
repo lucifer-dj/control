@@ -1,4 +1,5 @@
 //境界划分
+"use strict";
 const Controller = require("egg").Controller;
 
 class RealmController extends Controller {

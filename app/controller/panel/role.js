@@ -1,5 +1,5 @@
 // 角色管理
-
+"use strict";
 const Controller = require("egg").Controller;
 
 class CaseController extends Controller {

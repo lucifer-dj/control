@@ -1,4 +1,2 @@
 // let column = Symbol();
-module.exports = {
-
-};
+module.exports = {};

@@ -1,5 +1,5 @@
 const Controller = require("egg").Controller;
-let path = require("path");
+
 class IndexController extends Controller {
   constructor(ctx) {
     super(ctx);
@@ -9,34 +9,29 @@ class IndexController extends Controller {
       static: "public/frame",
     };
   }
-
+  /**
+   * 这里是每个会拿到list目录下的所有文件
+   */
   async index() {
     let that = this;
-    let { ctx, service, config } = that;
-    let columns = await service.db.queryAll("column");
+    let { ctx, service } = that;
     let params = ctx.params.column;
-    let src = path.resolve(__dirname, "../../view/frame/list/");
-    let files = await service.file.readFiles(src);
-    flies = files.map(a => a.split(".")[0])
-    // console.log(files);
-    let isLink = files.indexOf(params);
-    // let isLink = columns.some((item) => ctx.url.startsWith("/" + item.link));
-    if (isLink == -1) return (ctx.body = "<h1>没有找到当前页面</h1>");
-
-    // let arr = fs.readdirSync(path.resolve(__dirname,'../../view/frame/list/'))
-    // console.log(arr)
-    // let p = columns.find((ele) => ele.link === params); //如果有子栏目需要修改成递归
-    await that[params](params);
+    let query = ctx.query;
+    let res = await service.frame.checkLink(params, query);
+    if (!res) return (ctx.body = "<h1>没有找到当前页面</h1>");
+    await that[res.tmp](res);
   }
+  /**
+   * 检查当前路由对应的模板是否存在
+   */
   async role(params) {
     let that = this;
     let { ctx, service, config } = that;
-    let data = await service.frame.role(params.origin);
+    let data = await service.frame.role();
     let tempData = {
       static: config.publicPath,
       test: new Date().valueOf(),
       tempArr: new Array(4).fill(1),
-      column: params,
     };
     Object.assign(data, tempData);
     await ctx.render("frame/list/role", data);
@@ -44,7 +39,7 @@ class IndexController extends Controller {
   async faction(params) {
     let that = this;
     let { ctx, service, config } = that;
-    let data = await service.frame.faction(params.origin);
+    let data = await service.frame.faction();
     let tempData = {
       static: config.publicPath,
       test: new Date().valueOf(),
@@ -57,7 +52,7 @@ class IndexController extends Controller {
   async realm(params) {
     let that = this;
     let { ctx, service, config } = that;
-    let data = await service.frame.realm(params.origin);
+    let data = await service.frame.realm();
     let tempData = {
       static: config.publicPath,
       test: new Date().valueOf(),
@@ -71,11 +66,6 @@ class IndexController extends Controller {
     let that = this;
     let { ctx } = that;
     ctx.body = ctx;
-  }
-  async about() {
-    let that = this;
-    let { ctx } = that;
-    await ctx.render("frame/list/about", that.tempData);
   }
   async contact() {
     let that = this;

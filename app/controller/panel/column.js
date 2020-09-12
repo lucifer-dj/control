@@ -14,7 +14,6 @@ class ColumnController extends Controller {
     if (result) return ctx.success("查询成功", result);
     return ctx.err("没有取到数据");
   }
-
   async add() {
     let { ctx, service, table } = this;
     let req = ctx.request.body;
@@ -36,9 +35,10 @@ class ColumnController extends Controller {
     }
   }
 
-  async update(data) {
+  async update() {
     let { ctx, service, table } = this;
     let req = ctx.request.body;
+    console.log(req)
     let result = await service.db.update(table, req);
     if (result) {
       ctx.success("成功更新一条数据", result);

@@ -5,11 +5,17 @@
     </a>
     <ul id="nav">
       <li>
-        <a href="{{page.home}}" title="{{page.name}}" class="header_li_active">首页</a>
+        <a href="{{page.home}}" title="{{page.name}}" class="header_li_active"
+          >首页</a
+        >
       </li>
       {% for item in headers %}
       <li>
-        <a href="{{item.link}}" title="{{item.name}}">{{item.name}}</a>
+        <a
+          href="{{item.link}}?id={{item.id}}&nid={{item.nid}}"
+          title="{{item.name}}"
+          >{{item.name}}</a
+        >
       </li>
       {% endfor %}
     </ul>

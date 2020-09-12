@@ -1,4 +1,5 @@
 // 时间线介绍
+"use strict";
 const Controller = require("egg").Controller;
 
 class YearController extends Controller {

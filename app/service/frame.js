@@ -1,3 +1,5 @@
+"use strict";
+let path = require("path");
 let Service = require("egg").Service;
 
 class FrameService extends Service {
@@ -5,24 +7,11 @@ class FrameService extends Service {
     let that = this;
     let { app, service, config } = that;
     let columnsModel = await service.db.select("column");
-    let roles = await service.db.select("role", {
-      where: { cid: -1 },
-      limit: 10,
-    });
-    let factions = await service.db.select("faction", {
-      where: { cid: -1 },
-      limit: 4,
-    });
-    let years = await service.db.select("year", {
-      where: { cid: -1 },
-      limit: 5,
-    });
-    let banners = await service.db.select("banner", {
-      where: { cid: -1 },
-      limit: 4,
-    });
+    let roles = await service.db.select("role");
+    let factions = await service.db.select("faction");
+    let years = await service.db.select("year");
+    let banners = await service.db.select("banner");
     let realms = await service.db.select("realm", {
-      where: { cid: -1 },
       limit: 4,
     });
     let site = await service.file.read("site.config.json");
@@ -43,14 +32,13 @@ class FrameService extends Service {
       realms,
     };
   }
-  async role(id) {
+  async role() {
     let that = this;
     let { service } = that;
     let columnsModel = await service.db.select("column");
     let site = await service.file.read("site.config.json");
     let about = await service.file.read("about.config.json");
     let roles = await service.db.select("role", {
-      where: { cid: id },
       limit: 10,
     });
     return {
@@ -60,14 +48,30 @@ class FrameService extends Service {
       about,
     };
   }
-  async faction(id) {
+  /**
+   * 检查通过id获取到的栏目然后通过栏目获取到的模板存不存在
+   */
+  async checkLink(params, query) {
+    let { service } = this;
+    let columns = await service.db.select("column");
+    let tmps = await service.db.select("tmp");
+    let _target = columns.find((c) => Number(c.id) === Number(query.id));
+    if (!_target || params !== _target.link) return false;
+    let _tmp = tmps.find((t) => Number(_target.template) === Number(t.id));
+    if (_tmp)
+      return {
+        ...query,
+        tmp: _tmp.template.split(".")[0],
+      };
+    return false;
+  }
+  async faction() {
     let that = this;
     let { service } = that;
     let columnsModel = await service.db.select("column");
     let site = await service.file.read("site.config.json");
     let about = await service.file.read("about.config.json");
     let factions = await service.db.select("faction", {
-      where: { cid: id },
       limit: 10,
     });
     return {
@@ -77,14 +81,13 @@ class FrameService extends Service {
       about,
     };
   }
-  async realm(id) {
+  async realm() {
     let that = this;
     let { service } = that;
     let columnsModel = await service.db.select("column");
     let site = await service.file.read("site.config.json");
     let about = await service.file.read("about.config.json");
     let realms = await service.db.select("realm", {
-      where: { cid: id },
       limit: 10,
     });
     return {
