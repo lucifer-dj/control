@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid class="px-12">
     <v-card flat>
       <v-card-title>其他dd设置</v-card-title>
       <v-card-text>

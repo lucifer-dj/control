@@ -3,9 +3,9 @@ import router from "./router";
 import layout from "@/pages/layout.vue";
 const whiteList = ["/login", "/home", "/register"];
 import { getItemForStorage, getItemObj, saveItemObj } from "@/plugins/util.js";
-import store from "@/store/index";
 let getRouter;
 router.beforeEach(async (to, from, next) => {
+  document.title = to.meta.title;
   let inWhiteList = (s) => whiteList.some((w) => w === s);
   if (inWhiteList(to.path)) {
     next();

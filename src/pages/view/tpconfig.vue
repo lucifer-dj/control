@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid class="px-12">
     <v-subheader>模板设置</v-subheader>
     <v-card class="px-6">
       <v-toolbar flat>

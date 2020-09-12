@@ -1,5 +1,5 @@
 <template>
-  <v-container fiuld>
+  <v-container fiuld class="px-12">
     <!-- <v-subheader>时间线</v-subheader> -->
     <v-subheader>
       <span>子栏目:</span>

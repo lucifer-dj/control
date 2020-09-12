@@ -1,5 +1,5 @@
 <template>
-  <v-container fiuld class="v-container">
+  <v-container fluid class="px-12 v-container">
     <v-subheader>角色管理</v-subheader>
     <v-subheader v-if="sonColumn.length>0">
       <span>子栏目:</span>

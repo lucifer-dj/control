@@ -14,9 +14,8 @@ import vuelidate from "vuelidate";
 import * as util from "./plugins/util";
 import cfg from "./plugins/cfg";
 Vue.config.productionTip = false;
-import "./router/permission";
+import "@/router/permission.js";
 
-// Vue.use(sass);
 Vue.use(vuelidate);
 Vue.prototype.indexPath = cfg.isdev
   ? "http://127.0.0.1:7001"

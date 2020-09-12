@@ -1,5 +1,5 @@
 <template>
-  <v-container fiuld>
+  <v-container fluid class="px-12">
     <!-- <v-subheader>境界介绍</v-subheader> -->
     <v-subheader v-if="sonColumn.length>0">
       <span>子栏目:</span>

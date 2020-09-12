@@ -15,33 +15,47 @@
         <v-list-group
           v-for="(item,idx) in menu"
           :key="idx"
-          :append-icon="item.child?'iconfont-expand_more':''"
           no-action
-          @click="replace(item,idx)"
-          :style="listModel===idx&&!$vuetify.theme.dark?theme.bg_a:''"
-          :class="listModel===idx?'list_menu_active':''"
+          :append-icon="item.children?'iconfont-expand_more':''"
+          @click="replace(item)"
+          :class="mid==item.id?'my-v-list-group-append-icon':''"
+          class="my-v-list-group"
         >
           <template v-slot:activator>
-            <v-list-item-icon>
-              <v-icon :class="item.icon"></v-icon>
+            <v-list-item-icon class="my-list-item-group-icon">
+              <v-icon :class="item.icon" :style="mid==item.id?theme.wcolor:''"></v-icon>
             </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{item.call}}</v-list-item-title>
+            <v-list-item-content class="my-v-list-group-content">
+              <v-list-item-title :style="mid==item.id?theme.wcolor:''">{{item.call}}</v-list-item-title>
             </v-list-item-content>
+            <!-- <v-list-item-action class="my-v-list-group-action ma-0" v-if="item.children">
+              <v-icon>iconfont iconfont-xitongguanli</v-icon>
+            </v-list-item-action>-->
+            <div
+              class="my-v-list-group-box"
+              :style="`backgroundColor:${mid==item.id?theme.bg_p.background:''};color:#fff;`"
+            ></div>
           </template>
           <v-list-item
             v-for="(n,i) in item.children"
             :key="i"
-            @click="replace(n,'n')"
+            @click="replace(n)"
             class="pl-10"
-            :style="listModel===n.id&&!$vuetify.theme.dark?theme.bg_a:''"
-            :class="listModel===n.id?'list_menu_active':''"
+            :data-theme="theme.bg_a.background"
+            v-hover:[theme]
           >
+            <div
+              class="list_item_box"
+              :style="`backgroundColor:${mid==n.id?theme.bg_p.background:''};color:#fff;`"
+            ></div>
             <!-- <v-list-item-icon>
               <v-icon>{{n.icon}}</v-icon>
             </v-list-item-icon>-->
-            <v-list-item-content>
-              <v-list-item-title class="text-center">{{n.call}}</v-list-item-title>
+            <v-list-item-content class="my-v-list-item-content">
+              <v-list-item-title
+                class="text-left pl-12"
+                :style="mid==n.id?theme.wcolor:''"
+              >{{n.call}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -69,9 +83,9 @@
       <span v-if="temp_temp"></span>
       <v-row align="stretch" height="100%">
         <v-col :cols="viewCols" class="v-col9">
-          <keep-alive>
+          <transition name="slide">
             <router-view :key="viewKey" />
-          </keep-alive>
+          </transition>
         </v-col>
         <v-col :cols="sideCols" class="v-col3 pa-0 ma-0">
           <the-side :type="sideType" @close="closeSide"></the-side>
@@ -114,16 +128,12 @@ export default {
       that.drawer = true;
       that.menuState = !that.menuState;
     },
-    replace(data, type) {
+    replace(data) {
       let that = this;
-      if (type === "n") {
-        that.listModel = data.id;
-      } else {
-        that.listModel = type;
-      }
       try {
-        let a = require(`@/pages/view/${data.component}`).default;
-        console.log(a);
+        require(`@/pages/view/${data.component}`).default;
+        // console.log(data);
+        that.$store.commit("setMid", data.id);
         that.viewKey++;
         that.$router.push({
           path: data.v_path,
@@ -172,7 +182,7 @@ export default {
         let result = await fetchMenu({ auth: _user.auth });
         that.menu = result.code == 200 ? result.data : [];
         that.$store.commit("setMenu", result.data);
-        // console.log(that.menu);
+        that.$store.commit("setMid", result.data[0].id);
       } catch (e) {
         console.log(e);
         that.$hint({ msg: "获取菜单失败", type: "error" });
@@ -184,7 +194,7 @@ export default {
     //人物 势力 关于雪中
     //主页 境界划分
     // :style="`{backgroundColor:${_theme.primary}}`"
-    let drawer_content = this.$(".v-navigation-drawer__content");
+    let drawer_content = that.$(".v-navigation-drawer__content");
     drawer_content.classList.add("drawer"); //chrome
     drawer_content.style.scrollbarWidth = "none"; //firefox
     drawer_content.style.msOverflowStyle = "none"; //edge
@@ -192,14 +202,43 @@ export default {
   },
   computed: {
     theme() {
-      return this.$store.getters.getTheme;
+      let that = this;
+      return that.$store.getters.getTheme;
+    },
+    mid() {
+      let that = this;
+      return that.$store.state.mid;
     },
   },
   components: {
     theSide: () => import("@components/theSide.vue"),
   },
+  directives: {
+    hover: {
+      bind: (el, binding) => {
+        el.addEventListener("mouseover", function (e) {
+          el.style.backgroundColor = binding.arg.bg_a.background;
+        });
+        el.addEventListener("mouseout", function (e) {
+          el.style.backgroundColor = "transparent";
+        });
+      },
+    },
+  },
 };
 </script>
+<style lang="scss">
+.my-v-list-group-append-icon {
+  position: relative;
+  & .v-list-group__header__append-icon {
+    position: relative;
+    z-index: 2;
+    & > i {
+      color: #fff !important;
+    }
+  }
+}
+</style>
 <style lang="scss" scoped>
 .box {
   position: relative;
@@ -224,5 +263,56 @@ export default {
 }
 .list_child_item {
   background-color: #f3f2f1;
+}
+.slide-enter-active,
+.slide-leave-active {
+  will-change: transform;
+  transition: all 500ms;
+  position: absolute;
+}
+.slide-enter {
+  opacity: 0;
+  transform: translate3d(-40%, 0, 0);
+}
+.slide-leave-active {
+  opacity: 0;
+  transform: translate3d(20%, 0, 0);
+}
+.my-v-list-group {
+  position: relative;
+  & .v-list-group__header__append-icon {
+    position: relative;
+    z-index: 2;
+    & > i {
+      color: #fff;
+    }
+  }
+}
+.my-v-list-group-box,
+.list_item_box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.my-v-list-item-content,
+.my-v-list-group-content,
+.my-list-item-group-icon,
+.my-v-list-group-action {
+  position: relative;
+  z-index: 2;
+}
+.my-v-list-group-action {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  z-index: 2;
+  transform: translateY(-50%);
+  color: #fff;
+  & > i {
+    color: #fff;
+  }
 }
 </style>

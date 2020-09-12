@@ -16,6 +16,9 @@ const mutations = {
   setMenu(state, menu) {
     state.menu = menu;
   },
+  setMid(state, mid) {
+    state.mid = mid;
+  },
 };
 
 export default mutations;

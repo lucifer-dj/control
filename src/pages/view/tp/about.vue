@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid class="px-12">
     <v-subheader>关于雪中</v-subheader>
     <v-subheader v-if="sonColumn.length>0">
       <span>子栏目:</span>

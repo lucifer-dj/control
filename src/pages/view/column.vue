@@ -1,5 +1,5 @@
 <template>
-  <v-container ref="container">
+  <v-container ref="container" fluid class="px-12">
     <v-card class="px-6 pb-3" elevation="1">
       <v-toolbar flat>
         <v-card-title>栏目管理</v-card-title>
@@ -22,7 +22,6 @@
         <template v-slot:item.show="{item}">
           <span>{{item.show?'显示':'隐藏'}}</span>
         </template>
-
         <!-- 操作 -->
         <template v-slot:item.oper="{item}">
           <v-btn
@@ -61,7 +60,6 @@
         </template>
       </v-data-table>
     </v-card>
-
     <!-- 添加栏目 -->
     <v-dialog v-model="dialog" fullscreen persistent hide-overlay>
       <v-card class="d-flex align-center flex-column" v-if="dialog">
@@ -169,18 +167,38 @@ export default {
   },
   data: () => ({
     headers: [
-      { text: "ID", value: "id", align: "center" },
-      { text: "名称", value: "name", align: "left" },
-      { text: "显示", value: "show", align: "center" },
-      { text: "排序", value: "order", align: "center" },
-      { text: "操作", value: "oper", align: "center" },
+      {
+        text: "ID",
+        value: "id",
+        align: "center",
+      },
+      {
+        text: "名称",
+        value: "name",
+        align: "left",
+      },
+      {
+        text: "显示",
+        value: "show",
+        align: "center",
+      },
+      {
+        text: "排序",
+        value: "order",
+        align: "center",
+      },
+      {
+        text: "操作",
+        value: "oper",
+        align: "center",
+      },
     ],
     items: [],
     dialog: false,
     dialogType: "add",
     imgFile: {},
     columnModel: {
-      origin: "顶级栏目",
+      origin: "1",
       name: "",
       show: "1",
       description: "",
@@ -209,7 +227,7 @@ export default {
     columnModelReset(type = null) {
       let that = this;
       that.columnModel = {
-        origin: "顶级栏目",
+        origin: "1",
         name: "",
         show: "1",
         description: "",
@@ -226,23 +244,52 @@ export default {
       that.dialog = false;
       that.dialogType = "add";
     },
+    checkLink(params) {
+      let that = this;
+      let { link } = params;
+      if (that.columnModel.link === link) return false;
+      return Boolean(that.items.find((ele) => ele.link === link));
+    },
+    async columnQueryAll() {
+      let that = this;
+      try {
+        let result = await that.api.column.queryAll({}, that);
+        that.items = result.code === 200 ? result.data : [];
+        that.items = that.disposeItem;
+      } catch (e) {
+        console.log(e);
+      }
+    },
     async submit(type) {
       let that = this;
+      that.columnModel.template = JSON.parse(that.columnModel.template);
       // return console.log(that.columnModel);
       if (that.checkLink(that.columnModel))
-        return that.$hint({ msg: "link重复", type: "error" });
+        return that.$hint({
+          msg: "link重复",
+          type: "error",
+        });
       if (type != "add") return that.updateColumn();
       that.$v.columnModel.$touch();
       if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
         let res = await upload(that.imgFile);
         that.columnModel.pic = res ? res.data : "";
-        if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
+        if (!res)
+          return that.$hint({
+            msg: "上传图片失败",
+            type: "error",
+          });
       } else {
-        return that.$hint({ msg: "请选择上传的图片", type: "error" });
+        return that.$hint({
+          msg: "请选择上传的图片",
+          type: "error",
+        });
       }
       let _res = await that.addNode();
       if (_res) {
         that.columnModel.nid = _res.insertId;
+        that.columnModel.template = that.columnModel.template.id;
+        return console.log(that.columnModel);
         try {
           let result = await that.api.column.add(that.columnModel, that);
           that.$hint({
@@ -255,99 +302,9 @@ export default {
         }
       }
     },
-    async columnQueryAll() {
-      let that = this;
-      try {
-        let result = await that.api.column.queryAll({}, that);
-        that.items = result.code === 200 ? result.data : [];
-        that.items = that.disposeItem;
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    checkLink(params) {
-      let that = this;
-      let { link } = params;
-      if (that.columnModel.link === link) return false;
-      return Boolean(that.items.find((ele) => ele.link === link));
-    },
-    async readColumn(id) {
-      let that = this;
-      try {
-        let result = await that.api.column.read({ id }, that);
-        // console.log(result.data);
-        return result.data;
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    async updateColumn() {
-      let that = this;
-      // that.$v.columnModel.$touch();
-      // if(that.$v.columnModel.$invalid){
-      //   return console.log('请填写必填项')
-      // }
-      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
-        let res = await upload(that.imgFile, that, that.columnModel.pic);
-        that.columnModel.pic = res ? res.data : "";
-        if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
-      }
-      let _res = await that.updateNode(that.columnModel);
-      if (_res) {
-        try {
-          console.log(that.columnModel.pic);
-          let result = await that.api.column.update(that.columnModel, that);
-          if (result.code === 200) {
-            that.reload();
-          } else {
-            that.$hint({ msg: "修改失败", type: "error" });
-          }
-        } catch (e) {
-          console.log(e);
-        }
-      }
-    },
-    async deleteColumn(id) {
-      let that = this;
-      that.$toast({ msg: "确认要删除这个栏目吗？" });
-      that.bus.$on("toastConfirm", async function () {
-        let result = await that.readColumn(id);
-        if (result.pic) {
-          let result0 = await deleteFile({ path: result.pic });
-        }
-        let _res = await that.deleteNode(result.nid);
-        if (_res) {
-          try {
-            let result1 = await that.api.column.delete({ id });
-            that.$hint({
-              msg: result1.msg,
-              type: result1.code === 200 ? "success" : "error",
-            });
-            that.reload();
-          } catch (e) {
-            console.log(e);
-          }
-        }
-      });
-    },
-    async editCol(id) {
-      let that = this;
-      console.log(that.origin);
-      that.columnModel = await that.readColumn(id);
-      console.log(that.columnModel);
-      that.dialogType = "edit";
-      that.dialog = true;
-    },
-    async addSonCol(column) {
-      let that = this;
-      if (column.origin !== -1)
-        return that.$hint({ msg: "不支持对子栏目添加栏目", type: "error" });
-      that.columnModel.origin = column.id;
-      that.dialog = true;
-    },
     async addNode() {
       let that = this;
-      let _node = JSON.parse(that.columnModel.template);
+      let _node = that.columnModel.template;
       let obj = {
         deep: that.columnModel.origin == that.nid ? 2 : 3,
         cid:
@@ -362,15 +319,163 @@ export default {
         auth: "user",
       };
       try {
-        let result = await that.api.node.add(obj);
+        let result = await that.api.node.add(obj, that);
         if (result.code === 200) return result.data;
         return false;
       } catch (e) {
         console.log(e);
-        that.$hint({ msg: "添加失败", type: "error" });
+        that.$hint({
+          msg: "添加失败",
+          type: "error",
+        });
         return false;
       }
     },
+    async readColumn(id) {
+      let that = this;
+      try {
+        let result = await that.api.column.read(
+          {
+            id,
+          },
+          that
+        );
+        return result.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async editCol(id) {
+      let that = this;
+      that.columnModel = await that.readColumn(id);
+      // console.log(that.columnModel )
+      let _tmp = that.tps.find(
+        (t) => Number(t.id) === Number(that.columnModel.template)
+      );
+      that.columnModel.template = _tmp.self;
+      that.columnModel.origin = that.columnModel.origin.toString();
+      that.dialogType = "edit";
+      that.dialog = true;
+    },
+    async updateColumn() {
+      let that = this;
+      // that.$v.columnModel.$touch();
+      // if(that.$v.columnModel.$invalid){
+      //   return console.log('请填写必填项')
+      // }
+      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+        let res = await upload(that.imgFile, that, that.columnModel.pic);
+        that.columnModel.pic = res ? res.data : "";
+        if (!res)
+          return that.$hint({
+            msg: "上传图片失败",
+            type: "error",
+          });
+      }
+      let _res = await that.updateNode(that.columnModel);
+      if (_res) {
+        try {
+          that.columnModel.template = that.columnModel.template.id;
+          let result = await that.api.column.update(that.columnModel, that);
+          if (result.code === 200) {
+            that.reload();
+          } else {
+            that.$hint({
+              msg: "修改失败",
+              type: "error",
+            });
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    },
+    async updateNode(model) {
+      let that = this;
+      try {
+        let template = model.template;
+        let obj = {
+          cid: model.origin == that.nid ? that.nid : model.origin,
+          v_path: template.v_path,
+          component: template.component,
+          name: template.name,
+          deep: model.origin == that.nid ? 2 : 3,
+          auth: "user",
+          call: model.name,
+          title: model.name,
+          id: model.nid,
+        };
+        // return console.log(obj);
+        let result = await that.api.node.update(obj, that);
+        if (result.code === 200) return true;
+        return false;
+      } catch (e) {
+        console.log(e);
+        that.$hint({
+          msg: "删除失败",
+          type: "error",
+        });
+        return false;
+      }
+    },
+    async deleteColumn(id) {
+      let that = this;
+      that.$toast({
+        msg: "确认要删除这个栏目吗？",
+      });
+      that.bus.$on("toastConfirm", async function () {
+        let result = await that.readColumn(id);
+        if (result.pic) {
+          let result0 = await deleteFile({
+            path: result.pic,
+          });
+        }
+        let _res = await that.deleteNode(result.nid);
+        if (_res) {
+          try {
+            let result1 = await that.api.column.delete({
+              id,
+            });
+            that.$hint({
+              msg: result1.msg,
+              type: result1.code === 200 ? "success" : "error",
+            });
+            that.reload();
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      });
+    },
+    async deleteNode(id) {
+      let that = this;
+      try {
+        let result = await that.api.node.delete({
+          id,
+        });
+        if (result.code === 200) return true;
+        return false;
+      } catch (e) {
+        console.log(e);
+        that.$hint({
+          msg: "删除失败",
+          type: "error",
+        });
+        return false;
+      }
+    },
+
+    async addSonCol(column) {
+      let that = this;
+      if (column.origin !== -1)
+        return that.$hint({
+          msg: "不支持对子栏目添加栏目",
+          type: "error",
+        });
+      that.columnModel.origin = column.id;
+      that.dialog = true;
+    },
+
     async getTps() {
       let that = this;
       try {
@@ -379,42 +484,6 @@ export default {
         that.tps.map((t) => (t.self = JSON.stringify(t)));
       } catch (e) {
         console.log(e);
-      }
-    },
-    async deleteNode(id) {
-      let that = this;
-      try {
-        let result = await that.api.node.delete({ id });
-        if (result.code === 200) return true;
-        return false;
-      } catch (e) {
-        console.log(e);
-        that.$hint({ msg: "删除失败", type: "error" });
-        return false;
-      }
-    },
-    async updateNode(model) {
-      let that = this;
-      try {
-        let _model = JSON.parse(model.template);
-        let obj = {
-          cid: model.origin == that.nid ? that.nid : model.origin,
-          v_path: _model.v_path,
-          component: _model.component,
-          name: _model.name,
-          // deep: model.origin == that.nid ? 2 : 3,
-          // auth: "user",
-          // call: model.name,
-          // title: model.name,
-          id: model.nid,
-        };
-        let result = await that.api.node.update(obj);
-        if (result.code === 200) return true;
-        return false;
-      } catch (e) {
-        console.log(e);
-        that.$hint({ msg: "删除失败", type: "error" });
-        return false;
       }
     },
   },
@@ -431,15 +500,6 @@ export default {
       !this.$v.userModel.template.required && errors.push("必填");
       return errors;
     },
-    template() {
-      let that = this;
-      let arr = [];
-      let obj = cfg.tp;
-      for (let item in obj) {
-        arr.push(obj[item]);
-      }
-      return arr;
-    },
     api() {
       return {
         column: new Api("column"),
@@ -450,7 +510,10 @@ export default {
     origin() {
       let that = this;
       let arr = [];
-      arr.push({ name: "顶级栏目", nid: that.nid });
+      arr.push({
+        name: "顶级栏目",
+        nid: that.nid,
+      });
       that.items.forEach((item, idx) => {
         arr.push(item);
       });
@@ -483,4 +546,3 @@ tbody > tr {
   cursor: pointer;
 }
 </style>
-

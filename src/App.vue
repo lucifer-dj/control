@@ -66,11 +66,12 @@ export default {
           saveItemObj("user", result.data);
           if (!getItemObj("router")) {
             let _res = await fetchRouter({ auth: result.data.auth });
-            console.log(_res);
             if (_res.code === 200) {
               saveItemObj("router", _res.data);
             }
           }
+          that.$router.replace("/");
+
           that.$hint({ msg: "自动登录成功" });
         } else {
           that.$hint({ msg: "tokan验证失败", type: "error" });

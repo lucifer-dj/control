@@ -10,6 +10,7 @@ const store = new Vuex.Store({
     theme: {},
     routes: [],
     menu: [],
+    mid: "", //第几个菜单被激活
   },
   mutations,
   getters,
