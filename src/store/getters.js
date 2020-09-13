@@ -17,9 +17,6 @@ const getters = {
       co: {
         color: state.theme.primary === "#fff" ? "#222" : state.theme.color,
       },
-      wcolor: {
-        color: "#fff",
-      },
     };
   },
   getMenu(state) {

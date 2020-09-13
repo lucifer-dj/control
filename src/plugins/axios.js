@@ -1,29 +1,47 @@
 import axios from "axios";
-import cfg from "./cfg.js";
+const isdev = require("./cfg.js").isdev;
 import router from "@/router/router.js";
 import Vue from "vue";
 let token = localStorage.getItem("token");
 /**
  * code为402没有查到数据
  */
+const whiteList = ["/panel/login", "/panel/register"];
 const Service = axios.create({
   timeout: 20000,
-  baseURL: cfg.isdev ? "http://127.0.0.1:7001" : "http://119.45.57.238",
+  baseURL: isdev ? "http://127.0.0.1:7001" : "http://119.45.57.238",
   method: "post",
   // headers: {
   //   "Authorization": `Bearer ${token}`
   // }
 });
-Service.interceptors.request.use((config) => {
-  if (config.method === "post") {
-    config.data = JSON.stringify(config.data);
+Service.interceptors.request.use(
+  (config) => {
+    if (config.method === "post") {
+      config.data = JSON.stringify(config.data);
+    }
+    // console.log(config);
+    // console.log(token);
+    let isInWhiteList = (s) => whiteList.some((w) => w === s);
+    if (!!!isInWhiteList(config.url)) {
+      if (!token) {
+        router.push({ path: "/login" });
+        return;
+      }
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    console.log(error);
+    new Vue().bus.$hint({
+      msg: "出现错误啦。。。",
+      type: "error",
+    });
+    console.log(error);
+    return Promise.reject(error);
   }
-  if (config.url !== "panel/login" || config.url !== "panel/register") {
-    // if (!token) return router.push({ path: "/login" });
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+);
 // 添加响应拦截器
 Service.interceptors.response.use(
   (response) => {
@@ -49,7 +67,7 @@ Service.interceptors.response.use(
       msg: "出现错误啦。。。",
       type: "error",
     });
-    console.log("TCL: error", error);
+    console.log(error);
     return Promise.reject(error);
   }
 );

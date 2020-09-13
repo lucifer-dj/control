@@ -35,6 +35,7 @@ export function getTps(data, obj = {}) {
   return fetch("/panel/file/getTps", data, obj);
 }
 export function fetchRouter(data, obj = {}) {
+  // console.log(data);
   return fetch("/panel/node/getRouter", data, obj);
 }
 export function fetchMenu(data, obj = {}) {
@@ -42,6 +43,12 @@ export function fetchMenu(data, obj = {}) {
 }
 export function getUserInfo(data, obj = {}) {
   return fetch("/panel/user/getInfo", data, obj);
+}
+export function getAllColumnCount(data = {}, obj = {}) {
+  return fetch("/panel/column/columnCount", data, obj);
+}
+export function readPageByNid(data, obj = {}) {
+  return fetch("/panel/page/byNid", data, obj);
 }
 
 export class Api {

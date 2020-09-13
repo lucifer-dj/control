@@ -4,7 +4,6 @@ export function checkObjectIsEmpty(obj) {
   }
   return true;
 }
-
 // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
 // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
 export function format(fmt) {
@@ -44,25 +43,6 @@ export function arrayAsObjectFlat(array, str = "child") {
     return total;
   }, []);
 }
-export const xz = {
-  role: {
-    name: "角色管理",
-    en: "role",
-  },
-  faction: {
-    name: "势力介绍",
-    en: "faction",
-  },
-  realm: {
-    name: "境界划分",
-    en: "realm",
-  },
-  year: {
-    name: "时间线",
-    en: "year",
-  },
-};
-
 export function getItemForStorage(name) {
   return localStorage.getItem(name);
 }
@@ -73,7 +53,4 @@ export function getItemObj(name) {
 export function saveItemObj(name, obj) {
   obj = JSON.stringify(obj);
   localStorage.setItem(name, obj);
-}
-export function importAll(){
-  
 }

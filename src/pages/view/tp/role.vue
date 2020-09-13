@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import { checkObjectIsEmpty } from "@/plugins/util.js";
 import { Api, upload, deleteFile } from "@api";
 export default {
   inject: ["getSonColumn"],
@@ -160,7 +161,7 @@ export default {
       let that = this;
       if (type === "edit") return that.roleUpdate();
       //假设验证通过了
-      if (that.$u.checkObjectIsEmpty(that.imgFile)) {
+      if (checkObjectIsEmpty(that.imgFile)) {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       }
       that.roleModel.start = new Date().valueOf();
@@ -178,7 +179,7 @@ export default {
     },
     async roleUpdate() {
       let that = this;
-      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+      if (!checkObjectIsEmpty(that.imgFile)) {
         let res = await upload(that.imgFile, that, that.roleModel.avatar);
         that.roleModel.avatar = res.code === 200 ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });

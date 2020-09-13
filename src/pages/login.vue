@@ -7,7 +7,7 @@
       elevation="2"
       class="d-flex align-center justify-center"
     >
-      <v-card flat class="d-inline">
+      <v-card flat class="d-inline" light>
         <span class="text-h5">雪中悍刀行</span>
       </v-card>
     </v-sheet>
@@ -17,7 +17,7 @@
           <v-img src="@assets/images/HDJ454548.png"></v-img>
         </v-sheet>
         <v-sheet color="#fff" width="600" style="display:grid;place-items: center;">
-          <v-card flat min-width="350">
+          <v-card flat min-width="350" light>
             <v-card-title class="justify-center">
               <span class="text-uppercase text-h4">welcome 登录</span>
             </v-card-title>
@@ -65,6 +65,7 @@
 </template>
 <script>
 import * as api from "@api";
+import { saveItemObj } from "@/plugins/util.js";
 import { required } from "vuelidate/lib/validators";
 export default {
   name: "login",
@@ -119,12 +120,15 @@ export default {
       try {
         that.$loading({ msg: "登录" });
         let result = await api.login(that.userModel, that);
-        console.log(result);
         if (result.code === 200) {
+          console.log(result);
           localStorage.setItem("token", result.data.token);
+          saveItemObj("user", result.data);
           that.userModelReset();
           that.$hint({ msg: result.msg });
-          that.$router.replace("/");
+          setTimeout(() => {
+            that.$router.replace("/");
+          }, 500);
         } else {
           that.$hint({ msg: "登录失败请检查账号密码", type: "error" });
           that.userModelReset();

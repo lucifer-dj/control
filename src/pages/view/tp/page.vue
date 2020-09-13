@@ -5,7 +5,7 @@
       <span>子栏目:</span>
       <v-btn small class="mx-2" text v-for="(item,idx) in sonColumn" :key="idx">{{item.name}}</v-btn>
     </v-subheader>
-    <v-card flat>
+    <v-card flat color="transparent">
       <v-card-text>
         <v-row>
           <v-col cols="12">
@@ -29,32 +29,32 @@
   </v-container>
 </template>
 <script>
-import { Api } from "@api";
+import { Api, readPageByNid } from "@api";
 export default {
   inject: ["getSonColumn"],
   name: "page",
   data: () => ({
     pageType: "add",
     pageModel: {
-      cid: null,
+      pid: null,
       content: "",
       description: "",
     },
     sonColumn: [],
     api: new Api("page"),
+    nid: null,
   }),
   async mounted() {
     let that = this;
-    that.pageModel.nid = that.$route.query.nid;
+    that.nid = that.$route.query.nid; //节点id 通过节点id获得栏目信息 通过栏目信息获得文章
     that.readPage();
-    that.sonColumn = that.getSonColumn(that.pageModel.nid);
+    that.sonColumn = that.getSonColumn(that.$route.query.nid);
   },
   methods: {
     async readPage() {
       let that = this;
-      console.log(that.pageModel.nid);
       try {
-        let result = await that.api.read({ nid: that.pageModel.nid }, that);
+        let result = await readPageByNid({ nid: that.nid }, that);
         if (!result.data) return;
         that.pageModel = result.code === 200 ? result.data : [];
         // console.log(that.pageModel);

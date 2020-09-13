@@ -1,6 +1,6 @@
 //同步修改state的状态
-import _theme from "@/plugins/theme.js";
 import { saveItemObj } from "@/plugins/util.js";
+import { theme as _theme } from "@/plugins/static.js";
 const mutations = {
   changeTheme(state, theme) {
     if (typeof theme === "object") {

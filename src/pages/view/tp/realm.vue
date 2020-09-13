@@ -74,6 +74,7 @@
 </template>
 <script>
 import { Api, upload, deleteFile } from "@api";
+import { checkObjectIsEmpty } from "@/plugins/util.js";
 export default {
   inject: ["getSonColumn"],
   name: "faction",
@@ -130,7 +131,7 @@ export default {
       let that = this;
       if (that.dialogType !== "add") return that.realmUpdate();
       console.log(that.imgFile);
-      if (that.$u.checkObjectIsEmpty(that.imgFile))
+      if (checkObjectIsEmpty(that.imgFile))
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       try {
         let result0 = await upload(that.imgFile, that);
@@ -146,7 +147,7 @@ export default {
     },
     async realmUpdate() {
       let that = this;
-      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+      if (!checkObjectIsEmpty(that.imgFile)) {
         let res = await upload(that.imgFile, that, that.realmModel.pic);
         that.realmModel.pic = res.code === 200 ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });

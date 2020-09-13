@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import { checkObjectIsEmpty } from "@/plugins/util.js";
 import { Api, upload, deleteFile } from "@api";
 export default {
   name: "faction",
@@ -144,7 +145,7 @@ export default {
     async submit(type) {
       let that = this;
       if (that.dialogType !== "add") return that.factionUpdate();
-      if (that.$u.checkObjectIsEmpty(that.imgFile))
+      if (checkObjectIsEmpty(that.imgFile))
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       try {
         let result0 = await upload(that.imgFile, that);
@@ -160,7 +161,7 @@ export default {
     },
     async factionUpdate() {
       let that = this;
-      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+      if (!checkObjectIsEmpty(that.imgFile)) {
         let res = await upload(that.imgFile, that, that.factionModel.pic);
         that.factionModel.pic = res ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });

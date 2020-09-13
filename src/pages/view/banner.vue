@@ -86,6 +86,7 @@
 </template>
 <script>
 import { Api, upload, deleteFile } from "@api";
+import { checkObjectIsEmpty } from "@/plugins/util.js";
 export default {
   name: "banner",
   data: () => ({
@@ -134,7 +135,7 @@ export default {
     async submit(type) {
       let that = this;
       if (type !== "add") return that.bannerUpdate();
-      if (that.$u.checkObjectIsEmpty(that.imgFile)) {
+      if (checkObjectIsEmpty(that.imgFile)) {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       }
       let res = await upload(that.imgFile, that);
@@ -170,7 +171,7 @@ export default {
     },
     async bannerUpdate() {
       let that = this;
-      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+      if (!checkObjectIsEmpty(that.imgFile)) {
         let result = await upload(that.imgFile, that, that.bannerModel.pic);
         that.bannerModel.pic =
           result.code === 200 ? result.data : that.bannerModel.pic;

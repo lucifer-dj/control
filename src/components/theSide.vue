@@ -66,7 +66,7 @@
   </div>
 </template>
 <script>
-import _theme from "@/plugins/theme.js";
+import { theme as _theme } from "@/plugins/static.js";
 export default {
   name: "theSide",
   data: () => ({

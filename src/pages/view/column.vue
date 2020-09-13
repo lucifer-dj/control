@@ -151,6 +151,7 @@
 <script>
 import { Api, upload, deleteFile } from "@api";
 import { required } from "vuelidate/lib/validators";
+import { checkObjectIsEmpty } from "@/plugins/util.js";
 import cfg from "@/plugins/cfg.js";
 export default {
   inject: ["reload"],
@@ -271,7 +272,7 @@ export default {
         });
       if (type != "add") return that.updateColumn();
       that.$v.columnModel.$touch();
-      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+      if (!checkObjectIsEmpty(that.imgFile)) {
         let res = await upload(that.imgFile);
         that.columnModel.pic = res ? res.data : "";
         if (!res)
@@ -363,7 +364,7 @@ export default {
       // if(that.$v.columnModel.$invalid){
       //   return console.log('请填写必填项')
       // }
-      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+      if (!checkObjectIsEmpty(that.imgFile)) {
         let res = await upload(that.imgFile, that, that.columnModel.pic);
         that.columnModel.pic = res ? res.data : "";
         if (!res)

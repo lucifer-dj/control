@@ -5,12 +5,13 @@ const whiteList = ["/login", "/home", "/register"];
 import { getItemForStorage, getItemObj, saveItemObj } from "@/plugins/util.js";
 let getRouter;
 router.beforeEach(async (to, from, next) => {
-  document.title = to.meta.title;
+  let token = getItemForStorage("token");
+  document.title = to.meta.title ? to.meta.title : from.meta.title;
   let inWhiteList = (s) => whiteList.some((w) => w === s);
   if (inWhiteList(to.path)) {
     next();
   } else {
-    if (!getItemForStorage("token")) {
+    if (!token) {
       next({ path: "/login" });
     } else {
       if (!getRouter) {

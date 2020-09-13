@@ -1,13 +1,13 @@
 const path = require("path");
 const resolve = (dir) => path.join(__dirname, dir);
-const IS_PROD = ["production", "prod"].includes(process.env.NODE_ENV);
+const IS_DEV = require("./src/plugins/cfg.js").isdev;
 const TerserPlugin = require("terser-webpack-plugin");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const productionGzipExtensions = ["js", "css"];
-// const HtmlWebpackPlugin = require("html-webpack-plugin");
+// const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 module.exports = {
   //部署应用包时的基本 URL， 用法和 webpack 本身的 output.publicPath 一致。
-  publicPath: IS_PROD ? "./" : "/",
+  publicPath: IS_DEV ? "/" : "./",
   transpileDependencies: ["vuetify"],
   //输出文件目录，当运行 vue-cli-service build 时生成的生产环境构建文件的目录。
   outputDir: "dist",
@@ -30,7 +30,7 @@ module.exports = {
       // page 的入口
       entry: "src/main.js",
       // 模板来源
-      template: IS_PROD ? "public/index.html" : "public/index.dev.html",
+      template: IS_DEV ? "public/index.dev.html" : "public/index.html",
       // 在 dist/index.html 的输出
       filename: "index.html",
       // 当使用 title 选项时，
@@ -128,15 +128,17 @@ module.exports = {
         minRatio: 0.8,
         deleteOriginalAssets: false,
       }),
+      // new VuetifyLoaderPlugin(),
     ],
-    externals: IS_PROD
-      ? {
+    externals: IS_DEV
+      ? {}
+      : {
           vue: "Vue",
           "vue-router": "VueRouter",
           vuex: "Vuex",
           axios: "axios",
           vuetify: "Vuetify",
-        }
-      : {},
+          "@ckeditor/ckeditor5-build-classic": "ClassicEditor",
+        },
   },
 };

@@ -3,7 +3,7 @@
 </template>
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import CKEditor from "@ckeditor/ckeditor5-vue";
+import { component as CkeditorComponent } from "@ckeditor/ckeditor5-vue";
 import "@ckeditor/ckeditor5-build-classic/build/translations/zh-cn.js";
 // import * as api from "@api";
 export default {
@@ -45,7 +45,7 @@ export default {
     let that = this;
   },
   components: {
-    "ck-editor": CKEditor.component,
+    "ck-editor": CkeditorComponent,
   },
   created() {
     let that = this;

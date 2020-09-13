@@ -45,7 +45,8 @@
   </v-container>
 </template>
 <script>
-import * as api from "@api";
+import { siteGet, deleteFile, upload, siteUpdate } from "@api";
+import { checkObjectIsEmpty } from "@/plugins/util.js";
 // 站点配置
 export default {
   name: "config",
@@ -61,7 +62,7 @@ export default {
     async siteGet() {
       let that = this;
       try {
-        let result = await api.siteGet({}, that);
+        let result = await siteGet({}, that);
         if (result.code === 200 && result.data) return result.data;
         return {
           name: "",
@@ -82,16 +83,16 @@ export default {
     },
     async siteUpdate() {
       let that = this;
-      if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+      if (!checkObjectIsEmpty(that.imgFile)) {
         if (that.siteModel.logo !== "") {
-          let result0 = await api.deleteFile({ path: that.siteModel.logo });
+          let result0 = await deleteFile({ path: that.siteModel.logo });
           console.log(result0);
         }
-        let result1 = await api.upload(that.imgFile);
+        let result1 = await upload(that.imgFile);
         that.siteModel.logo = result1.code === 200 ? result1.data : "";
       }
       try {
-        let result = await api.siteUpdate(that.siteModel, that);
+        let result = await siteUpdate(that.siteModel, that);
         that.$hint({ msg: "修改成功" });
       } catch (e) {
         console.log(e);

@@ -80,6 +80,7 @@
 
 <script>
 import { Api, upload, deleteFile } from "@api";
+import { checkObjectIsEmpty } from "@/plugins/util.js";
 export default {
   inject: ["getSonColumn"],
   name: "faction",
@@ -138,7 +139,7 @@ export default {
       let that = this;
       if (that.dialogType !== "add") return that.yearUpdate();
       // console.log(that.imgFile);
-      // if (that.$u.checkObjectIsEmpty(that.imgFile))
+      // if (checkObjectIsEmpty(that.imgFile))
       //   return that.$hint({ msg: "请选择上传的图片", type: "error" });
       that.yearModel.start = new Date().valueOf();
       try {
@@ -154,7 +155,7 @@ export default {
     },
     async yearUpdate() {
       let that = this;
-      // if (!that.$u.checkObjectIsEmpty(that.imgFile)) {
+      // if (!checkObjectIsEmpty(that.imgFile)) {
       //   let res = await that.api.upload(that.imgFile, that, that.yearModel.pic);
       //   that.yearModel.pic = res ? res : "";
       //   if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });

@@ -7,11 +7,11 @@
       class="drawer"
       :color="$vuetify.theme.dark?'#121212':'#f3f2f1'"
     >
-      <v-sheet height="48" width="100%" :color="$vuetify.theme.dark?'#1E1E1E':'#f3f2f1'">
-        <!-- <v-img></v-img> -->
-        <v-subheader class="justify-center text-uppercase" width="100%">雪中</v-subheader>
+      <v-sheet height="60" width="100%" :color="$vuetify.theme.dark?'#1E1E1E':'#f3f2f1'">
+        <img src="@assets/images/logo.png" v-if="!menuState" class="logo" />
+        <v-subheader class="justify-center text-uppercase" width="100%" v-if="menuState">雪中</v-subheader>
       </v-sheet>
-      <v-list>
+      <v-list class="pt-0">
         <v-list-group
           v-for="(item,idx) in menu"
           :key="idx"
@@ -23,17 +23,14 @@
         >
           <template v-slot:activator>
             <v-list-item-icon class="my-list-item-group-icon">
-              <v-icon :class="item.icon" :style="mid==item.id?theme.wcolor:''"></v-icon>
+              <v-icon :class="item.icon" :style="mid==item.id?theme.co:''"></v-icon>
             </v-list-item-icon>
             <v-list-item-content class="my-v-list-group-content">
-              <v-list-item-title :style="mid==item.id?theme.wcolor:''">{{item.call}}</v-list-item-title>
+              <v-list-item-title :style="mid==item.id?theme.co:''">{{item.call}}</v-list-item-title>
             </v-list-item-content>
-            <!-- <v-list-item-action class="my-v-list-group-action ma-0" v-if="item.children">
-              <v-icon>iconfont iconfont-xitongguanli</v-icon>
-            </v-list-item-action>-->
             <div
               class="my-v-list-group-box"
-              :style="`backgroundColor:${mid==item.id?theme.bg_p.background:''};color:#fff;`"
+              :style="`backgroundColor:${mid==item.id?theme.bg_p.background:''};`"
             ></div>
           </template>
           <v-list-item
@@ -41,8 +38,8 @@
             :key="i"
             @click="replace(n)"
             class="pl-10"
-            :data-theme="theme.bg_a.background"
-            v-hover:[theme]
+            :data-theme="$vuetify.theme.isDark?'#555':theme.bg_a.background"
+            v-hover
           >
             <div
               class="list_item_box"
@@ -52,10 +49,7 @@
               <v-icon>{{n.icon}}</v-icon>
             </v-list-item-icon>-->
             <v-list-item-content class="my-v-list-item-content">
-              <v-list-item-title
-                class="text-left pl-12"
-                :style="mid==n.id?theme.wcolor:''"
-              >{{n.call}}</v-list-item-title>
+              <v-list-item-title class="text-left pl-12" :style="mid==n.id?theme.co:''">{{n.call}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -91,11 +85,6 @@
           <the-side :type="sideType" @close="closeSide"></the-side>
         </v-col>
       </v-row>
-      <!-- <v-footer fixed pedless >
-        <v-spacer></v-spacer>
-        &copy; {{new Date().getFullYear()}}
-        <v-sheet tag="a" title="gitee" class="ml-5 text-decoration-none" color="rgba(0,0,0,0)" target="_blank" href="https://gitee.com/luciferdj/xzhdx">lucifer-dj</v-sheet>
-      </v-footer>-->
     </v-main>
   </div>
 </template>
@@ -152,6 +141,12 @@ export default {
       that.$nextTick(() => {
         that.sideCols = 0;
         that.viewCols = 12;
+        let lastHerf = window.location.href.charAt(
+          window.location.href.length - 1
+        );
+        if (lastHerf === "/") {
+          that.viewKey++;
+        }
       });
     },
     showSide(type) {
@@ -160,6 +155,12 @@ export default {
         that.sideCols = 3;
         that.viewCols = 9;
         that.sideType = type;
+        let lastHerf = window.location.href.charAt(
+          window.location.href.length - 1
+        );
+        if (lastHerf === "/") {
+          that.viewKey++;
+        }
       });
     },
     logout() {
@@ -168,8 +169,8 @@ export default {
       that.bus.$on("toastConfirm", function () {
         localStorage.removeItem("token");
         localStorage.removeItem("router");
-        that.$store.commit("setUser", {});
-        that.$hint({ msg: "已完成退出" });
+        localStorage.removeItem("user");
+        that.$hint({ msg: "已完成退出", type: "error" });
         setTimeout(() => {
           that.$router.replace("/login");
         }, 500);
@@ -215,9 +216,11 @@ export default {
   },
   directives: {
     hover: {
-      bind: (el, binding) => {
+      bind: (el) => {
         el.addEventListener("mouseover", function (e) {
-          el.style.backgroundColor = binding.arg.bg_a.background;
+          let _theme = e.currentTarget.dataset.theme;
+          // console.log(_theme);
+          el.style.backgroundColor = _theme;
         });
         el.addEventListener("mouseout", function (e) {
           el.style.backgroundColor = "transparent";
@@ -244,6 +247,11 @@ export default {
   position: relative;
   width: 100%;
   height: calc(100% - 48px);
+}
+.logo {
+  height: 100%;
+  display: block;
+  margin: 0 auto;
 }
 .v-main {
   height: 100%;

@@ -59,8 +59,9 @@ export default {
     },
     async getInfo() {
       let that = this;
+      let token = getItemForStorage("token");
+      if (!token) return;
       try {
-        let token = getItemForStorage("token");
         let result = await getUserInfo({ token });
         if (result.code === 200) {
           saveItemObj("user", result.data);
@@ -71,7 +72,6 @@ export default {
             }
           }
           that.$router.replace("/");
-
           that.$hint({ msg: "自动登录成功" });
         } else {
           that.$hint({ msg: "tokan验证失败", type: "error" });
@@ -98,6 +98,7 @@ export default {
   box-sizing: border-box;
   width: 100%;
   height: 100vh;
+  background-color: #f4f6f9;
 }
 .v-navigation-drawer__content::-webkit-scrollbar {
   display: none !important;
