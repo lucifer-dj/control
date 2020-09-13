@@ -17,7 +17,7 @@ class DbService extends Service {
     return false;
   }
   //读取一条数据
-  async readSingle(table, data) {
+  async get(table, data) {
     let { app } = this;
     let result = await app.mysql.get(table, data);
     if (result) return result;

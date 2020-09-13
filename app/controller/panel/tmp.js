@@ -28,7 +28,7 @@ class TmpController extends Controller {
   async read() {
     let { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.db.readSingle(table, req);
+    let result = await service.db.get(table, req);
     if (result) {
       ctx.success("成功查询到一条数据", result);
     } else {

@@ -1,8 +1,6 @@
 {% extends "../public/layout.html" %} {% block main %}
 <main class="main_list">
-  <div class="banner_list">
-    <img src="{{static}}/images/1499147946347.jpg" alt="" />
-  </div>
+  {% include "../public/center.html"%}
   <section class="news">
     <article>
       <div class="head_list">
@@ -42,10 +40,10 @@
         </li>
         {% endfor %}
       </ul>
-
       <div class="srrot">
-        <a href="" class="left"><</a>
-        <a href="" class="num">1</a>
+        <a href="" class="left">
+          <</a> <a href="" class="num">1
+        </a>
         <a href="" class="num">2</a>
         <a href="" class="right">></a>
       </div>

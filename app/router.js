@@ -16,6 +16,7 @@ module.exports = (app) => {
   router.post("/panel/column/read", controller.panel.column.read);
   router.post("/panel/column/update", controller.panel.column.update);
   router.post("/panel/column/delete", controller.panel.column.delete);
+  router.post("/panel/column/columnCount", controller.panel.column.columnCount);
   router.put("/file/upload/oss", controller.upload.uploadOss);
   router.put("/file/upload/serve", controller.upload.uploadServe);
   router.post("/file/delete", controller.upload.delete);
@@ -27,6 +28,7 @@ module.exports = (app) => {
   router.post("/panel/page/read", controller.panel.page.read);
   router.post("/panel/page/add", controller.panel.page.add);
   router.post("/panel/page/update", controller.panel.page.update);
+  router.post("/panel/page/byNid", controller.panel.page.readPageByNid);
   router.post("/panel/realm/queryAll", controller.panel.realm.queryAll);
   router.post("/panel/realm/add", controller.panel.realm.add);
   router.post("/panel/realm/delete", controller.panel.realm.delete);

@@ -5,14 +5,9 @@ class IndexController extends Controller {
   }
   async index() {
     let { ctx, service, config } = this;
-    let indexObj = await service.frame.index();
-    let frame = {
-      static: config.publicPath,
-      test: new Date().valueOf(),
-      tempArr: new Array(4).fill(1),
-    };
-    Object.assign(frame, indexObj);
-    await ctx.render("frame/index/index", frame);
+    let res = await service.frame.index();
+    // console.log(res)
+    await ctx.render("frame/index/index", res);
   }
 }
 

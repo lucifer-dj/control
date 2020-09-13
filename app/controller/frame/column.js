@@ -3,15 +3,11 @@ const Controller = require("egg").Controller;
 class IndexController extends Controller {
   constructor(ctx) {
     super(ctx);
-    this.tempData = {
-      test: new Date().valueOf(),
-      tempArr: new Array(4).fill(1),
-      static: "public/frame",
-    };
   }
   /**
    * 这里是每个会拿到list目录下的所有文件
    */
+     // <!-- class="{{head_active==0?'header_li_active':''}}" -->
   async index() {
     let that = this;
     let { ctx, service } = that;
@@ -28,74 +24,59 @@ class IndexController extends Controller {
     let that = this;
     let { ctx, service, config } = that;
     let data = await service.frame.role();
-    let tempData = {
-      static: config.publicPath,
-      test: new Date().valueOf(),
-      tempArr: new Array(4).fill(1),
-    };
-    Object.assign(data, tempData);
+    data.head_active = params.id
     await ctx.render("frame/list/role", data);
   }
   async faction(params) {
     let that = this;
     let { ctx, service, config } = that;
     let data = await service.frame.faction();
-    let tempData = {
-      static: config.publicPath,
-      test: new Date().valueOf(),
-      tempArr: new Array(4).fill(1),
-      column: params,
-    };
-    Object.assign(data, tempData);
+    data.head_active = params.id
     await ctx.render("frame/list/faction", data);
   }
   async realm(params) {
     let that = this;
     let { ctx, service, config } = that;
     let data = await service.frame.realm();
-    let tempData = {
-      static: config.publicPath,
-      test: new Date().valueOf(),
-      tempArr: new Array(4).fill(1),
-      column: params,
-    };
-    Object.assign(data, tempData);
+    data.head_active = params.id
     await ctx.render("frame/list/realm", data);
   }
-  async year() {
+  async year(params) {
     let that = this;
     let { ctx } = that;
     ctx.body = ctx;
   }
-  async contact() {
+  async contact(params) {
     let that = this;
     let { ctx } = that;
     await ctx.render("frame/list/contact", that.tempData);
   }
-  async faction2() {
+  async faction2(params) {
     let that = this;
     let { ctx } = that;
     await ctx.render("frame/list/faction2", that.tempData);
   }
-  async product() {
+  async product(params) {
     let that = this;
     let { ctx } = that;
     await ctx.render("frame/list/product", that.tempData);
   }
-  async scope() {
+  async scope(params) {
     let that = this;
     let { ctx } = that;
     await ctx.render("frame/list/scope", that.tempData);
   }
-  async video() {
+  async video(params) {
     let that = this;
     let { ctx } = that;
     await ctx.render("frame/list/video", that.tempData);
   }
-  async page() {
+  async page(params) {
     let that = this;
-    let { ctx } = that;
-    await ctx.render("frame/list/page", that.tempData);
+    let { ctx, service } = that;
+    let data = await service.frame.page(params.id)
+    data.head_active = params.id
+    await ctx.render("frame/list/page", data);
   }
 }
 

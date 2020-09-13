@@ -15,13 +15,18 @@ body {
 }
 
 @primary: #233876;
+
 @box: {
   box-sizing: border-box;
-};
+}
+
+;
 
 @border: {
   border: 1px solid @primary;
-};
+}
+
+;
 
 .overflow(@num) {
   display: -webkit-box;
@@ -61,49 +66,55 @@ header {
   left: 0;
   background-color: #fff;
   z-index: 10;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 
-  & > nav {
+  &>nav {
     width: 1170px;
     margin: 0 auto;
     height: 100%;
+    position: relative;
 
-    & > a {
+    & .logo {
       display: block;
       float: left;
       height: 100%;
       display: grid;
       place-items: center;
+
+      &>img {
+        height: 82px;
+      }
     }
 
-    & > ul {
+    &>ul {
       float: left;
       height: 82px;
       margin-left: 20px;
 
-      & > li {
+      &>li {
         height: 82px;
         float: left;
-        // text-align: center;
         line-height: 82px;
         @box();
 
-        & > a {
+        &>a {
           color: #666666;
           font-size: 16px;
           display: block;
-          width: 100%;
+          // width: 100%;
           height: 100%;
-          // text-align: center;
           line-height: 82px;
           padding: 0 26px;
-          display: block;
-          height: 100%;
-          line-height: 82px;
+
+          &:hover {
+            color: #D45930;
+          }
         }
+
       }
 
       & .nav_line {
-        background-color: #355ca1;
+        background-color: #D45930;
       }
     }
   }
@@ -117,21 +128,22 @@ header {
   align-items: flex-start;
 
   & .head_l {
+
     // width: 100px;
-    & > h2 {
+    &>h2 {
       font-size: 24px;
       font-weight: 400;
       color: #333;
       height: 35px;
     }
 
-    & > span {
+    &>span {
       font-size: 13px;
     }
   }
 
   & .head_r {
-    & > a {
+    &>a {
       padding: 8px 15px;
       margin: 0 4px;
       font-size: 14px;
@@ -144,7 +156,7 @@ header {
 
     & .more:hover {
       background-color: transparent !important;
-      color: @primary !important;
+      color: @primary  !important;
     }
   }
 }
@@ -155,15 +167,15 @@ header {
   display: grid;
   place-items: center;
 
-  & > .content {
+  &>.content {
     width: 100%;
     height: 32px;
 
-    & > .left {
+    &>.left {
       float: left;
       height: 100%;
 
-      & > a {
+      &>a {
         display: block;
         height: 100%;
         float: left;
@@ -179,16 +191,16 @@ header {
       }
     }
 
-    & > .right {
+    &>.right {
       height: 32px;
       line-height: 32px;
       float: right;
 
-      & > a:hover {
+      &>a:hover {
         color: @primary;
       }
 
-      & > span {
+      &>span {
         padding: 0 10px;
       }
     }
@@ -199,12 +211,13 @@ header {
   width: 100%;
   position: relative;
   padding-top: 80px;
-  & > section {
+
+  &>section {
     width: 100%;
     position: relative;
     z-index: 5;
 
-    & > article {
+    &>article {
       width: 1200px;
       margin: 0 auto;
     }
@@ -213,20 +226,20 @@ header {
   & .banner {
     position: fixed !important;
     width: 100%;
-    height: 780px;
+    height: calc(100vh - 82px);
     overflow: hidden;
 
-    & > ul {
+    &>ul {
       // position: absolute;
       width: 100%;
       height: 100%;
 
-      & > li {
+      &>li {
         width: 100%;
         height: 100%;
 
         // float: left;
-        & > a {
+        &>a {
           width: 100%;
           height: 100%;
 
@@ -237,22 +250,30 @@ header {
             background-size: 100% 100%;
             position: relative;
             min-width: 1200px;
+
             & .banner_msg {
               position: absolute;
-              top: 20%;
-              left: 20%;
-              & > h2 {
+              left: 5%;
+              bottom: 10%;
+              padding: 20px;
+              background-color: rgba(0, 0, 0, 0.3);
+              transition: background-color 0.3s;
+
+              &>h2 {
                 font-size: 30px;
                 font-weight: 500;
-                color: #fff;
+                color: #eee;
                 line-height: 40px;
               }
+
               & .msg1 {
-                font-size: 26px;
+                font-size: 16px;
                 font-weight: 200;
                 color: #fff;
                 line-height: 40px;
+                // text-align: right;
               }
+
               & .more_b {
                 margin-top: 20px;
                 width: 120px;
@@ -262,6 +283,10 @@ header {
                 line-height: 30px;
                 border: 1px solid #fff;
                 color: #fff;
+              }
+
+              &:hover {
+                background-color: rgba(255, 255, 255, 0.3);
               }
             }
           }
@@ -312,14 +337,14 @@ header {
       place-items: center;
       z-index: 10;
 
-      & > svg {
+      &>svg {
         fill: rgba(255, 255, 255, 0.3);
       }
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.2);
 
-        & > svg {
+        &>svg {
           fill: #fff;
         }
       }
@@ -343,7 +368,7 @@ header {
     background-color: #fff;
     padding-top: 100px;
 
-    & > article {
+    &>article {
       width: 1200px;
       margin: 0 auto;
       height: 510px;
@@ -362,7 +387,7 @@ header {
             margin-bottom: 5px;
           }
 
-          & > span {
+          &>span {
             font-size: 14px;
             color: #222;
           }
@@ -432,11 +457,11 @@ header {
           & .peo_ul {
             width: 100%;
 
-            & > li {
+            &>li {
               width: 350px;
               height: 410px;
 
-              & > a {
+              &>a {
                 display: block;
                 width: 320px;
                 position: relative;
@@ -445,7 +470,7 @@ header {
                 height: 430px;
                 margin: 0 auto;
 
-                & > .img {
+                &>.img {
                   position: basolute;
                   width: 100%;
                   height: 100%;
@@ -453,7 +478,7 @@ header {
                   left: 0;
                   overflow: hidden;
 
-                  & > img {
+                  &>img {
                     width: 100%;
                     height: 100%;
                     transition: transform 0.3s;
@@ -512,7 +537,7 @@ header {
                 &:hover {
                   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 
-                  & .img > img {
+                  & .img>img {
                     transform: scale(1.1, 1.1);
                   }
 
@@ -535,7 +560,7 @@ header {
     position: relative;
     z-index: 6;
 
-    & > article {
+    &>article {
       padding-top: 90px;
 
       & .about_content {
@@ -547,7 +572,7 @@ header {
           height: 260px;
           float: left;
 
-          & > h2 {
+          &>h2 {
             height: 78px;
             line-height: 78px;
             font-weight: 300;
@@ -579,7 +604,7 @@ header {
           height: 260px;
           float: right;
 
-          & > img {
+          &>img {
             width: 100%;
             height: 100%;
           }
@@ -616,7 +641,7 @@ header {
             font-size: 50px;
             color: #444;
 
-            & > span {
+            &>span {
               vertical-align: top;
               font-size: 12px;
               color: #999;
@@ -648,7 +673,7 @@ header {
     background-color: #fff;
     padding-top: 215px;
 
-    & > article {
+    &>article {
       & .news_content {
         & .news_l {
           padding: 44px 60px;
@@ -694,7 +719,7 @@ header {
             height: 160px;
             overflow: hidden;
 
-            & > img {
+            &>img {
               transition: transform 0.3s;
             }
           }
@@ -743,7 +768,7 @@ header {
               }
             }
 
-            & .image > img {
+            & .image>img {
               transform: scale(1.1, 1.1);
             }
 
@@ -768,12 +793,12 @@ header {
           height: 510px;
           float: right;
 
-          & > li {
+          &>li {
             width: 550px;
             border-top: 1px solid rgba(0, 0, 0, 0.05);
             transition: box-shadow 0.5s;
 
-            & > a {
+            &>a {
               display: block;
               width: 550px;
               height: 170px;
@@ -829,7 +854,7 @@ header {
                   display: grid;
                   place-items: center;
 
-                  & > svg {
+                  &>svg {
                     transform: translateX(-5px);
                     width: 50px;
                     height: 20px;
@@ -843,11 +868,11 @@ header {
             &:hover {
               box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
 
-              & > a .li_l {
+              &>a .li_l {
                 transform: translateX(20px);
               }
 
-              & > a .li_r .arrow > svg {
+              &>a .li_r .arrow>svg {
                 transform: translateX(5px);
               }
             }
@@ -860,7 +885,7 @@ header {
   & .scope {
     background-color: #f8f8f8;
 
-    & > article {
+    &>article {
       padding: 100px 0;
       position: relative;
 
@@ -875,9 +900,9 @@ header {
         & .box {
           padding: 10px 0;
 
-          & > ul {
-            & > li {
-              & > a {
+          &>ul {
+            &>li {
+              &>a {
                 width: calc(100% - 20px);
                 height: 390px;
                 display: block;
@@ -892,7 +917,7 @@ header {
                   overflow: hidden;
                   margin-left: 10px;
 
-                  & > img {
+                  &>img {
                     width: 100%;
                     height: 100%;
                     transition: transform 0.3s;
@@ -906,7 +931,7 @@ header {
                   transition: transform 0.3s;
                   text-align: center;
 
-                  & > h2 {
+                  &>h2 {
                     height: 25px;
                     font-size: 16px;
                     font-weight: 400;
@@ -946,7 +971,7 @@ header {
                     opacity: 0;
                     transition: all 0.3s;
 
-                    & > svg {
+                    &>svg {
                       width: 100%;
                       height: 100%;
                       fill: #aaa;
@@ -957,7 +982,7 @@ header {
                 &:hover {
                   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 
-                  & .img > img {
+                  & .img>img {
                     transform: scale(1.1, 1.1);
                   }
 
@@ -993,7 +1018,7 @@ header {
           z-index: 10;
           cursor: pointer;
 
-          & > svg {
+          &>svg {
             fill: #fff;
           }
         }
@@ -1009,6 +1034,7 @@ header {
         }
 
         &:hover {
+
           & .left,
           & .right {
             transform: translateX(0);
@@ -1047,7 +1073,7 @@ header {
     background-size: initial;
     background-position: center center;
 
-    & > article {
+    &>article {
       padding: 20px;
       padding-top: 213px;
 
@@ -1056,7 +1082,7 @@ header {
         height: 720px;
         position: relative;
 
-        & > a {
+        &>a {
           display: block;
         }
 
@@ -1065,7 +1091,7 @@ header {
           @box();
           padding-left: 60px;
 
-          & > h2 {
+          &>h2 {
             font-weight: 300;
             color: #fff;
             font-size: 18px;
@@ -1079,8 +1105,8 @@ header {
           width: 100%;
           height: 100%;
 
-          & > li {
-            & > a {
+          &>li {
+            &>a {
               width: 490px;
               height: 100%;
               font-size: 0;
@@ -1123,7 +1149,7 @@ header {
                 overflow: hidden;
                 vertical-align: top;
 
-                & > img {
+                &>img {
                   width: 100%;
                   height: 100%;
                   transition: transform 0.3s;
@@ -1136,7 +1162,7 @@ header {
               height: 480px;
               float: left;
 
-              & > a {
+              &>a {
                 width: 340px;
                 height: 240px !important;
                 font-size: 0;
@@ -1174,7 +1200,7 @@ header {
                 overflow: hidden;
                 vertical-align: top;
 
-                & > img {
+                &>img {
                   width: 100%;
                   height: 100%;
                   transition: transform 0.3s;
@@ -1187,7 +1213,7 @@ header {
               width: 830px;
               height: 240px;
 
-              & > a {
+              &>a {
                 width: 335px !important;
               }
 
@@ -1199,7 +1225,7 @@ header {
                 height: 240px;
                 overflow: hidden;
 
-                & > img {
+                &>img {
                   width: 100%;
                   height: 100%;
                   transition: transform 0.3s;
@@ -1212,7 +1238,7 @@ header {
               width: 830px;
               height: 240px;
 
-              & > a {
+              &>a {
                 width: 490px;
                 height: 100%;
                 font-size: 0;
@@ -1250,7 +1276,7 @@ header {
                 overflow: hidden;
                 vertical-align: top;
 
-                & > img {
+                &>img {
                   width: 100%;
                   height: 100%;
                   transition: transform 0.3s;
@@ -1263,7 +1289,7 @@ header {
             }
 
             &:hover {
-              & > .img > img {
+              &>.img>img {
                 transform: scale(1.1, 1.1);
               }
 
@@ -1273,7 +1299,7 @@ header {
         }
 
         & .img {
-          & > img {
+          &>img {
             width: 100%;
             height: 100%;
           }
@@ -1289,19 +1315,19 @@ header {
     position: relative;
     padding-top: 120px;
 
-    & > article {
+    &>article {
       height: 240px;
 
-      & > ul {
+      &>ul {
         width: 1200px;
         height: 100%;
 
-        & > li {
+        &>li {
           width: 300px;
           height: 100%;
           float: left;
 
-          & > a {
+          &>a {
             display: block;
             width: 100%;
             height: 100%;
@@ -1411,25 +1437,25 @@ header {
     height: 220px;
     background-color: #f8f8f8;
 
-    & > article {
+    &>article {
       & .left {
         float: left;
         width: 338px;
         padding-top: 58px;
 
-        & > h2 {
+        &>h2 {
           font-size: 24px;
           font-weight: 400;
           color: @primary;
           height: 35px;
         }
 
-        & > span {
+        &>span {
           font-size: 13px;
         }
       }
 
-      & > img {
+      &>img {
         float: right;
       }
     }
@@ -1451,26 +1477,26 @@ header {
     display: grid;
     place-items: center;
 
-    & > article {
+    &>article {
       height: 130px;
 
-      & > ul {
+      &>ul {
         width: 100%;
         height: 100%;
 
-        & > li {
+        &>li {
           width: 280px;
           height: 130px;
           float: left;
           margin-left: 15px;
           border: 1px solid rgba(0, 0, 0, 0.1);
 
-          & > a {
+          &>a {
             display: block;
             width: 100%;
             height: 100%;
 
-            & > img {
+            &>img {
               width: 100%;
               height: 100%;
             }
@@ -1491,31 +1517,31 @@ header {
       padding-top: 60px;
       @box();
 
-      & > div {
+      &>div {
         width: 295px;
         height: 200px;
         display: inline-block;
         vertical-align: top;
 
-        & > h3 {
+        &>h3 {
           height: 80px;
           color: #666;
           font-weight: 400;
           font-size: 16px;
         }
 
-        & > p {
+        &>p {
           height: 24px;
         }
       }
 
       & .first {
-        & > h3 {
+        &>h3 {
           font-size: 26px;
           height: 36px;
         }
 
-        & > span {
+        &>span {
           font-size: 13px;
           font-family: HELVETICANEUELTPRO-THEX, "微软雅黑";
         }
@@ -1527,7 +1553,7 @@ header {
 .main_list {
   width: 100%;
 
-  & > .banner_list {
+  &>.banner_list {
     position: fixed;
     top: 82px;
     left: 0;
@@ -1535,20 +1561,28 @@ header {
     height: 300px;
     z-index: 1;
 
-    & > img {
+    &>img {
       width: 100%;
       height: 100%;
     }
+
+    & .img {
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position:center center;
+    }
   }
 
-  & > section {
+  &>section {
     width: 100%;
     background-color: #fff;
     position: relative;
     z-index: 5;
     margin-top: 382px;
 
-    & > article {
+    &>article {
       width: 1200px;
       margin: 0 auto;
       min-height: 600px;
@@ -1578,7 +1612,7 @@ header {
           border-bottom: 1px solid #dcdee1;
           margin-bottom: 20px;
 
-          & > span {
+          &>span {
             display: block;
             float: left;
             margin-right: 10px;
@@ -1600,7 +1634,7 @@ header {
         }
       }
 
-      & > .page_footer {
+      &>.page_footer {
         margin-top: 20px;
         width: 100%;
         padding: 15px 35px;
@@ -1611,12 +1645,12 @@ header {
         & .prev {
           float: left;
 
-          & > span {
+          &>span {
             display: block;
             padding-bottom: 15px;
           }
 
-          & > a:hover {
+          &>a:hover {
             color: @primary;
           }
         }
@@ -1624,12 +1658,12 @@ header {
         & .next {
           float: right;
 
-          & > span {
+          &>span {
             display: block;
             padding-bottom: 15px;
           }
 
-          & > a:hover {
+          &>a:hover {
             color: @primary;
           }
         }
@@ -1637,50 +1671,50 @@ header {
     }
   }
 
-  & > .project {
-    & > article {
-      & > .pro {
+  &>.project {
+    &>article {
+      &>.pro {
         width: 100%;
 
-        & > ul {
+        &>ul {
           width: 100%;
           // position: absolute;
           top: 0;
           left: 0;
 
-          & > li {
+          &>li {
             float: left;
             width: 385px;
             height: 350px;
             margin-right: 15px;
             margin-bottom: 20px;
 
-            & > a {
+            &>a {
               width: 380px;
               height: 350px;
               display: block;
               position: relative;
               transition: box-shadow 0.3s;
 
-              & > .img {
+              &>.img {
                 width: 380px;
                 height: 260px;
                 overflow: hidden;
 
-                & > img {
+                &>img {
                   width: 100%;
                   height: 100%;
                 }
               }
 
-              & > .detail {
+              &>.detail {
                 width: 100%;
                 height: 90px;
                 @box();
                 padding: 20px 10px;
                 transition: transform 0.3s;
 
-                & > h2 {
+                &>h2 {
                   height: 30px;
                   font-size: 16px;
                   font-weight: 400;
@@ -1690,7 +1724,7 @@ header {
                   overflow: hidden;
                 }
 
-                & > .text {
+                &>.text {
                   font-size: 14px;
                   white-space: nowrap;
                   text-overflow: ellipsis;
@@ -1698,7 +1732,7 @@ header {
                 }
               }
 
-              & > .circle {
+              &>.circle {
                 position: absolute;
                 top: 20%;
                 left: 50%;
@@ -1750,7 +1784,7 @@ header {
               &:hover {
                 box-shadow: 5px 3px 8px rgba(0, 0, 0, 0.1);
 
-                & > .detail {
+                &>.detail {
                   transform: translateX(10px);
                 }
 
@@ -1758,7 +1792,7 @@ header {
                   transform: scaleX(1);
                 }
 
-                & > .circle {
+                &>.circle {
                   top: 30%;
                   opacity: 1;
                 }
@@ -1770,49 +1804,49 @@ header {
     }
   }
 
-  & > .scope {
-    & > article {
-      & > .sco {
+  &>.scope {
+    &>article {
+      &>.sco {
         width: 100%;
 
-        & > ul {
+        &>ul {
           width: 100%;
           height: 100%;
 
-          & > li {
+          &>li {
             float: left;
             width: 385px;
             height: 100%;
             margin-right: 15px;
             margin-bottom: 20px;
 
-            & > a {
+            &>a {
               width: 380px;
               height: 100%;
               display: block;
               position: relative;
               transition: box-shadow 0.3s;
 
-              & > .img {
+              &>.img {
                 width: 380px;
                 height: 160px;
                 overflow: hidden;
 
-                & > img {
+                &>img {
                   width: 100%;
                   height: 100%;
                   transition: transform 0.3s;
                 }
               }
 
-              & > .detail {
+              &>.detail {
                 width: 100%;
                 @box();
                 padding: 26px 23px;
                 transition: transform 0.3s;
                 text-align: center;
 
-                & > h2 {
+                &>h2 {
                   height: 25px;
                   font-size: 16px;
                   font-weight: 400;
@@ -1837,7 +1871,7 @@ header {
                   }
                 }
 
-                & > .text {
+                &>.text {
                   padding-top: 15px;
                   font-size: 14px;
                   text-align: center;
@@ -1848,7 +1882,7 @@ header {
                   overflow: hidden;
                 }
 
-                & > .more {
+                &>.more {
                   display: inline-block;
                   width: 40px;
                   height: 20px;
@@ -1863,14 +1897,14 @@ header {
               &:hover {
                 box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 
-                & > .img > img {
+                &>.img>img {
                   transform: scale(1.1, 1.1);
                 }
 
-                & > .detail {
+                &>.detail {
                   transform: translateY(-10px);
 
-                  & > .more {
+                  &>.more {
                     transform: translateX(0);
                     opacity: 1;
                   }
@@ -1881,11 +1915,11 @@ header {
         }
       }
 
-      & > .srrot {
+      &>.srrot {
         width: 100%;
         padding: 30px 0 60px;
 
-        & > a {
+        &>a {
           padding: 0 10px;
 
           &:hover {
@@ -1896,48 +1930,48 @@ header {
     }
   }
 
-  & > .news {
-    & > article {
-      & > .news_content {
+  &>.news {
+    &>article {
+      &>.news_content {
         width: 100%;
 
-        & > li {
+        &>li {
           width: 100%;
           padding: 30px 0;
           border-bottom: 1px solid rgba(0, 0, 0, 0.1);
           transition: box-shadow 0.3s;
 
-          & > a {
+          &>a {
             width: 100%;
             height: 140px;
             display: block;
 
-            & > .img {
+            &>.img {
               width: 340px;
               height: 140px;
               float: left;
               margin-right: 40px;
               transition: transform 0.3s;
 
-              & > img {
+              &>img {
                 width: 100%;
                 height: 100%;
               }
             }
 
-            & > .detail {
+            &>.detail {
               width: 600px;
               height: 140px;
               float: left;
               transition: transform 0.3s;
 
-              & > .title {
+              &>.title {
                 padding: 23px 0;
                 color: #303030;
                 font-size: 16px;
               }
 
-              & > .text {
+              &>.text {
                 line-height: 26px;
                 font-size: 13px;
                 .overflow(2);
@@ -1945,20 +1979,20 @@ header {
               }
             }
 
-            & > .date {
+            &>.date {
               width: 100px;
               height: 140px;
               float: right;
               padding-top: 23px;
               @box();
 
-              & > .day {
+              &>.day {
                 display: block;
                 font-size: 22px;
                 font-weight: 100;
               }
 
-              & > .arrow {
+              &>.arrow {
                 display: block;
                 margin-top: 40px;
                 width: 50px;
@@ -1972,21 +2006,21 @@ header {
           &:hover {
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
 
-            & > a {
-              & > .img {
+            &>a {
+              &>.img {
                 transform: translateX(20px);
               }
 
-              & > .detail {
+              &>.detail {
                 transform: translateX(20px);
 
-                & > .title {
+                &>.title {
                   color: @primary;
                 }
               }
 
-              & > .date {
-                & > .arrow {
+              &>.date {
+                &>.arrow {
                   transform: translateX(20px);
                 }
               }
@@ -1995,11 +2029,11 @@ header {
         }
       }
 
-      & > .srrot {
+      &>.srrot {
         width: 100%;
         padding: 30px 0 60px;
 
-        & > a {
+        &>a {
           padding: 0 10px;
 
           &:hover {
@@ -2010,104 +2044,104 @@ header {
     }
   }
 
-  & > .about {
-    & > article {
+  &>.about {
+    &>article {
       padding-right: 30px;
 
-      & > .about_head {
+      &>.about_head {
         padding: 60px 0;
 
-        & > h2 {
+        &>h2 {
           color: @primary;
           font-size: 22px;
           font-weight: 400;
           text-align: center;
         }
 
-        & > .en {
+        &>.en {
           font-size: 14px;
           color: #aaa;
           text-align: center;
         }
       }
 
-      & > .about1 {
+      &>.about1 {
         height: 395px;
         padding-bottom: 20px;
         border-bottom: 1px dotted #d3d3d3;
 
-        & > .left {
+        &>.left {
           width: 450px;
           float: left;
           height: 100%;
 
-          & > img {
+          &>img {
             width: 100%;
             height: 100%;
           }
         }
 
-        & > .right {
+        &>.right {
           width: 600px;
           float: right;
           height: 100%;
 
-          & > p {
+          &>p {
             font-size: 13px;
             line-height: 24px;
             padding-bottom: 30px;
 
-            & > .title {
+            &>.title {
               display: block;
               padding-bottom: 20px;
               font-size: 16px;
             }
           }
 
-          & > .p1,
-          & > .p2 {
+          &>.p1,
+          &>.p2 {
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
           }
 
-          & > .p2,
-          & > .p3 {
+          &>.p2,
+          &>.p3 {
             padding-top: 35px;
           }
         }
       }
 
-      & > .about2 {
+      &>.about2 {
         padding: 24px 0;
         margin-bottom: 50px;
 
-        & > .title {
+        &>.title {
           padding: 20px 0;
           font-size: 20px;
           color: #333;
         }
 
-        & > .text {
+        &>.text {
           font-size: 13px;
           padding: 20px 0 30px;
         }
 
-        & > ul {
+        &>ul {
           width: 1200px;
           height: 358px;
 
-          & > li > a {
+          &>li>a {
             width: 400px;
             height: 358px;
             display: block;
             float: left;
 
-            & > img {
+            &>img {
               width: 380px;
               padding-right: 20px;
               height: 233px;
             }
 
-            & > p {
+            &>p {
               padding: 20px 20px 20px 0;
               line-height: 24px;
               font-size: 13px;
@@ -2118,41 +2152,41 @@ header {
     }
   }
 
-  & > .video {
-    & > article {
+  &>.video {
+    &>article {
       margin-bottom: 50px;
 
-      & > .vid {
+      &>.vid {
         width: 100%;
 
-        & > ul {
-          & > li {
+        &>ul {
+          &>li {
             float: left;
             width: 385px;
             height: 350px;
             margin-right: 15px;
             margin-bottom: 20px;
 
-            & > a {
+            &>a {
               width: 380px;
               height: 350px;
               display: block;
               position: relative;
               transition: box-shadow 0.3s;
 
-              & > .img {
+              &>.img {
                 width: 380px;
                 height: 260px;
                 overflow: hidden;
 
-                & > img {
+                &>img {
                   width: 100%;
                   height: 100%;
                   transition: transform 0.3s;
                 }
               }
 
-              & > .detail {
+              &>.detail {
                 width: 100%;
                 height: 90px;
                 @box();
@@ -2160,7 +2194,7 @@ header {
                 transition: transform 0.3s;
                 transition: all 0.3s;
 
-                & > h2 {
+                &>h2 {
                   height: 30px;
                   font-size: 16px;
                   font-weight: 400;
@@ -2170,7 +2204,7 @@ header {
                   overflow: hidden;
                 }
 
-                & > .text {
+                &>.text {
                   font-size: 14px;
                   white-space: nowrap;
                   text-overflow: ellipsis;
@@ -2179,7 +2213,7 @@ header {
                 }
               }
 
-              & > .circle {
+              &>.circle {
                 position: absolute;
                 top: 20%;
                 left: 50%;
@@ -2216,26 +2250,26 @@ header {
               }
 
               &:hover {
-                & > .img {
-                  & > img {
+                &>.img {
+                  &>img {
                     transform: scale(1.1, 1.1);
                   }
                 }
 
-                & > .detail {
+                &>.detail {
                   background-color: @primary;
                   padding-left: 30px;
 
-                  & > .text {
+                  &>.text {
                     color: #a7afc8;
                   }
 
-                  & > h2 {
+                  &>h2 {
                     color: #fff;
                   }
                 }
 
-                & > .circle {
+                &>.circle {
                   top: 30%;
                   opacity: 1;
                 }
@@ -2247,50 +2281,50 @@ header {
     }
   }
 
-  & > .contact {
-    & > article {
+  &>.contact {
+    &>article {
       min-height: 480px;
 
-      & > .contact_head {
+      &>.contact_head {
         padding: 60px 0 80px;
         text-align: center;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
-        & > h1 {
+        &>h1 {
           text-align: center;
           color: @primary;
           font-size: 22px;
           font-weight: normal;
         }
 
-        & > span {
+        &>span {
           font-size: 14px;
         }
       }
 
-      & > .contact_body {
+      &>.contact_body {
         padding-top: 30px;
 
-        & > .item {
+        &>.item {
           width: 390px;
           min-height: 250px;
           float: left;
 
-          & > .title {
+          &>.title {
             color: #7f7f7f;
             font-size: 16px;
             line-height: 24px;
             font-weight: bold;
           }
 
-          & > .en {
+          &>.en {
             font-size: 12px;
             color: #8f8f8f;
             line-height: 40px;
             margin-bottom: 20px;
           }
 
-          & > .column {
+          &>.column {
             font-size: 13px;
             line-height: 24px;
             color: #999;
@@ -2300,22 +2334,22 @@ header {
     }
   }
 
-  & > .role {
-    & > article {
+  &>.role {
+    &>article {
       margin-bottom: 50px;
 
-      & > .role_ul {
+      &>.role_ul {
         width: 100%;
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
 
-        & > li {
+        &>li {
           flex-basis: 48%;
           height: 261px;
           margin-bottom: 30px;
 
-          & > a {
+          &>a {
             display: block;
             width: 100%;
             height: 100%;
@@ -2328,7 +2362,7 @@ header {
               overflow: hidden;
               font-size: 0;
 
-              & > img {
+              &>img {
                 width: 100%;
                 height: 100%;
                 transition: transform 0.3s;
@@ -2397,7 +2431,7 @@ header {
             &:hover {
               box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 
-              & .img > img {
+              & .img>img {
                 transform: scale(1.1, 1.1);
               }
 
@@ -2419,21 +2453,21 @@ header {
     }
   }
 
-  & > .project1 {
-    & > article {
+  &>.project1 {
+    &>article {
       margin-bottom: 50px;
 
-      & > .project1_ul {
+      &>.project1_ul {
         width: 100%;
         display: flex;
         justify-content: space-between;
 
-        & > li {
+        &>li {
           flex-basis: 374px;
           height: 396px;
           margin-bottom: 50px;
 
-          & > .item {
+          &>.item {
             width: 100%;
             height: 100%;
             display: block;
@@ -2441,20 +2475,20 @@ header {
             padding-top: 7px;
             transition: box-shadow, transform 0.3s;
 
-            & > .img_box {
+            &>.img_box {
               padding: 0 7px;
 
-              & > img {
+              &>img {
                 height: 200px;
                 margin-bottom: 24px;
               }
             }
 
-            & > .serve_info {
+            &>.serve_info {
               padding-top: 5%;
               position: relative;
 
-              & > .title {
+              &>.title {
                 font-size: 18px;
                 color: #595959;
                 height: 40px;
@@ -2474,7 +2508,7 @@ header {
                 }
               }
 
-              & > .subtitle {
+              &>.subtitle {
                 margin-top: 15px;
                 padding: 0 40px;
                 text-align: center;
@@ -2503,7 +2537,7 @@ header {
               box-shadow: 1px 5px 10px rgba(0, 0, 0, 0.1);
               transform: translateY(-10px);
 
-              & > .serve_info::after {
+              &>.serve_info::after {
                 transform: scale(1.05, 1.05);
               }
             }
@@ -2521,13 +2555,13 @@ footer {
   position: relative;
   z-index: 5;
 
-  & > div {
+  &>div {
     width: 1200px;
     margin: 0 auto;
     height: 44px;
     line-height: 44px;
 
-    & > span {
+    &>span {
       padding-left: 50px;
     }
   }
@@ -2549,7 +2583,7 @@ footer {
 
 .industry_dot_active {
   background-color: #fff !important;
-  border-color: @primary !important;
+  border-color: @primary  !important;
 }
 
 .case_pagination {

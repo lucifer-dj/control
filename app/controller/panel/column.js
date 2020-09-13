@@ -27,7 +27,7 @@ class ColumnController extends Controller {
   async read() {
     let { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.db.readSingle(table, req);
+    let result = await service.db.get(table, req);
     if (result) {
       ctx.success("成功查询到一条数据", result);
     } else {
@@ -56,6 +56,12 @@ class ColumnController extends Controller {
     } else {
       ctx.err("添加失败");
     }
+  }
+  async columnCount() {
+    let { ctx, service, table } = this;
+    let req = ctx.request.body;
+    let result = await service.column.getAllColumnCount();
+    ctx.success("查询成功", result);
   }
 }
 

@@ -13,7 +13,7 @@ class LoginService extends Service {
   }
   async getUserByAccount(info) {
     let { service, app } = this;
-    let _info = await service.db.readSingle("user", { account: info.account });
+    let _info = await service.db.get("user", { account: info.account });
     if (_info) return _info;
     return false;
   }

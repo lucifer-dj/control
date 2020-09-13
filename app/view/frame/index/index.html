@@ -5,10 +5,10 @@
       {% for item in banners %}
       <li class="swiper-slide">
         <a href="{{item.url}}" title="{{item.title}}">
-          <div class="a-img" style="background-image:url('{{static}}/images/1498375879733.jpg')">
+          <div class="a-img" style="background-image:url('{{static}}/images/50979.png')">
             <div class="banner_msg">
-              <h2>小二，上酒。</h2>
-              <p class="msg1">月从今夜白</p>
+              <h2>世间文字八万个，唯有情字最杀人</h2>
+              <p class="msg1">情不知所起，一往而深</p>
               <div class="more_b">查看更多</div>
             </div>
           </div>
@@ -136,7 +136,6 @@
           <a href="" class="more">更多</a>
         </div>
       </div>
-
       <div class="news_content">
         <a href="" class="news_l">
           <div class="date">07-02</div>
@@ -190,7 +189,6 @@
           <a href="" class="more">更多</a>
         </div>
       </div>
-
       <div class="swiper">
         <div class="box scope-container">
           <ul class="swiper-wrapper">
@@ -216,7 +214,6 @@
           </ul>
           <div class="swiper-pagination case_pagination"></div>
         </div>
-
         <div class="left scope_swiper_left">
           <i class="iconfont iconfont-zou-5"></i>
         </div>
@@ -347,7 +344,6 @@
     </div>
   </section>
 </main>
-
 <footer>
   <div>
     COPYRIGHT (©) lucifer-dj@outlook.com - 雪中悍刀行网站个人学习爱好.
@@ -355,42 +351,42 @@
   </div>
 </footer>
 <script>
-  (function () {
-    var mySwiper = new Swiper(".banner-container", {
-      direction: "horizontal", // 垂直切换选项
-      navigation: {
-        nextEl: ".swiper-banner-left",
-        prevEl: ".swiper-banner-right",
-      },
-    });
-    new Swiper(".case-container", {
-      direction: "horizontal", // 垂直切换选项
-      slidesPerView: 3,
-      navigation: {
-        nextEl: ".case_swiper_left",
-        prevEl: ".case_swiper_right",
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-    });
-    new Swiper(".scope-container", {
-      direction: "horizontal", // 垂直切换选项
-      slidesPerView: 3,
-      navigation: {
-        nextEl: ".scope_swiper_left",
-        prevEl: ".scope_swiper_right",
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-    });
-    new Swiper(".peo-container", {
-      direction: "horizontal",
-      slidesPerView: 2,
-    });
-  })();
+(function() {
+  var mySwiper = new Swiper(".banner-container", {
+    direction: "horizontal", // 垂直切换选项
+    navigation: {
+      nextEl: ".swiper-banner-left",
+      prevEl: ".swiper-banner-right",
+    },
+  });
+  new Swiper(".case-container", {
+    direction: "horizontal", // 垂直切换选项
+    slidesPerView: 3,
+    navigation: {
+      nextEl: ".case_swiper_left",
+      prevEl: ".case_swiper_right",
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+  new Swiper(".scope-container", {
+    direction: "horizontal", // 垂直切换选项
+    slidesPerView: 3,
+    navigation: {
+      nextEl: ".scope_swiper_left",
+      prevEl: ".scope_swiper_right",
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+  new Swiper(".peo-container", {
+    direction: "horizontal",
+    slidesPerView: 2,
+  });
+})();
 </script>
 {% endblock %}

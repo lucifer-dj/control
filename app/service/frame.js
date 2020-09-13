@@ -6,7 +6,6 @@ class FrameService extends Service {
   async index() {
     let that = this;
     let { app, service, config } = that;
-    let columnsModel = await service.db.select("column");
     let roles = await service.db.select("role");
     let factions = await service.db.select("faction");
     let years = await service.db.select("year");
@@ -14,38 +13,50 @@ class FrameService extends Service {
     let realms = await service.db.select("realm", {
       limit: 4,
     });
-    let site = await service.file.read("site.config.json");
-    let about = await service.file.read("about.config.json");
-    let columns = {};
-    columnsModel.forEach((item, idx) => {
-      columns[item.template] = item;
+    let about = await service.db.get('page', {
+      pid: 4
     });
+    let res = await that.shareMsg();
     return {
-      headers: columnsModel,
-      columns,
       roles,
-      site: site.data,
-      about: about.data,
       factions,
       years,
       banners,
       realms,
+      about,
+      ...res,
+      head_active: 0
     };
+  }
+  //共享的数据
+  async shareMsg() {
+    let that = this;
+    let { app, service, config } = that;
+    let site = await service.file.read("site.config.json");
+    let columnsModel = await service.db.select("column");
+    let columns = {};
+    columnsModel.forEach((item, idx) => {
+      columns[item.ename] = item;
+    });
+    return {
+      headers: columnsModel,
+      test: new Date().valueOf(),
+      tempArr: new Array(4).fill(1),
+      static: "public/frame",
+      site,
+      columns
+    }
   }
   async role() {
     let that = this;
     let { service } = that;
-    let columnsModel = await service.db.select("column");
-    let site = await service.file.read("site.config.json");
-    let about = await service.file.read("about.config.json");
     let roles = await service.db.select("role", {
       limit: 10,
     });
+    let res = await that.shareMsg();
     return {
-      headers: columnsModel,
       roles,
-      site,
-      about,
+      ...res,
     };
   }
   /**
@@ -68,33 +79,35 @@ class FrameService extends Service {
   async faction() {
     let that = this;
     let { service } = that;
-    let columnsModel = await service.db.select("column");
-    let site = await service.file.read("site.config.json");
-    let about = await service.file.read("about.config.json");
     let factions = await service.db.select("faction", {
       limit: 10,
     });
+    let res = await that.shareMsg();
     return {
-      headers: columnsModel,
       factions,
-      site,
-      about,
+      ...res
     };
   }
   async realm() {
     let that = this;
     let { service } = that;
-    let columnsModel = await service.db.select("column");
-    let site = await service.file.read("site.config.json");
-    let about = await service.file.read("about.config.json");
     let realms = await service.db.select("realm", {
       limit: 10,
     });
+    let res = await that.shareMsg();
     return {
-      headers: columnsModel,
       realms,
-      site,
-      about,
+      ...res
+    };
+  }
+  async page(id) {
+    let that = this;
+    let { service } = that;
+    let page = await service.db.get("page", { pid: id });
+    let res = await that.shareMsg();
+    return {
+      page,
+      ...res
     };
   }
 }

@@ -19,7 +19,7 @@ class FileService extends Service {
     }
   ) {
     return new Promise((resolve, reject) => {
-      fs.mkdir(path, opts, function (err) {
+      fs.mkdir(path, opts, function(err) {
         if (err) return reject(err);
         resolve({
           state: true,
@@ -30,7 +30,7 @@ class FileService extends Service {
   }
   writeFile(src, data, opts = { encoding: "utf8", mode: "0666", flag: "w" }) {
     return new Promise((resolve, reject) => {
-      fs.writeFile(src, data, opts, function (err) {
+      fs.writeFile(src, data, opts, function(err) {
         if (err) {
           reject(err);
           console.log("写入文件失败");
@@ -42,7 +42,7 @@ class FileService extends Service {
   }
   unlink(src) {
     return new Promise((resolve, reject) => {
-      fs.unlink(src, function (err) {
+      fs.unlink(src, function(err) {
         if (err) return reject(err);
         resolve(true);
       });
@@ -50,7 +50,7 @@ class FileService extends Service {
   }
   putFile(obj) {
     return new Promise((resolve, reject) => {
-      cos.putObject(obj, function (err, data) {
+      cos.putObject(obj, function(err, data) {
         if (err) return reject(err);
         resolve(data);
       });
@@ -67,7 +67,7 @@ class FileService extends Service {
         Region: "ap-nanjing",
         Key: filename,
         Body: stream,
-        onProgress: function (progressData) {
+        onProgress: function(progressData) {
           console.log("progress", progressData); //返回信息，包括路径
         },
       });
@@ -124,23 +124,22 @@ class FileService extends Service {
     src = path.join(config.staticPath, src);
     return new Promise(async (resolve, reject) => {
       if (!fs.existsSync(src)) {
-        resolve({ data: "", state: true });
-        return;
+        return false;
       }
       let data = "";
       let stream = fs.createReadStream(src);
       stream.setEncoding("UTF8");
-      stream.on("data", function (chunk) {
+      stream.on("data", function(chunk) {
         data += chunk;
       });
-      stream.on("end", async function () {
+      stream.on("end", async function() {
         if (data.length > 0) {
           data = JSON.parse(data);
         }
-        resolve({ data, state: true });
+        resolve(data);
         await sendToWormhole(stream);
       });
-      stream.on("error", function (e) {
+      stream.on("error", function(e) {
         reject(e);
       });
       // fs.create
@@ -157,7 +156,7 @@ class FileService extends Service {
   }
   readFiles(src) {
     return new Promise((resolve, reject) => {
-      fs.readdir(src, "utf8", function (err, files) {
+      fs.readdir(src, "utf8", function(err, files) {
         if (err) return reject(err);
         resolve(files);
       });
