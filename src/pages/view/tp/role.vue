@@ -19,9 +19,6 @@
 
       <v-data-table disable-sort :items="items" :headers="headers" show-select>
         <!-- <template v-slot:item.id="{item}">{{item-key}}</template> -->
-        <template
-          v-slot:item.date="{item}"
-        >{{$u.format.call(new Date(Number(item.date)), "yyyy-MM-dd")}}</template>
         <template v-slot:item.oper="{item}">
           <v-btn
             fab
@@ -29,7 +26,7 @@
             depressed
             title="删除"
             class="mx-1"
-            @click="deleteCase(item.id)"
+            @click="roleDelete(item.id)"
             :style="[theme.bg_a,theme.co_p]"
           >
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
@@ -90,7 +87,7 @@
 </template>
 
 <script>
-import { checkObjectIsEmpty } from "@/plugins/util.js";
+import { checkObjectIsEmpty, format } from "@/plugins/util.js";
 import { Api, upload, deleteFile } from "@api";
 export default {
   inject: ["getSonColumn"],
@@ -151,6 +148,7 @@ export default {
         that.items = result.code === 200 ? result.data : [];
         that.items.forEach((item, idx) => {
           item.date = item.update ? item.update : item.start;
+          item.date = format.call(new Date(Number(item.date)), "yyyy-MM-dd");
         });
         console.log(result);
       } catch (e) {

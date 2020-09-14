@@ -11,6 +11,7 @@ const store = new Vuex.Store({
     routes: [],
     menu: [],
     mid: "", //第几个菜单被激活
+    side: false,
   },
   mutations,
   getters,

@@ -55,7 +55,7 @@
                   <v-text-field
                     label="import引入路径"
                     persistent-hint
-                    hint="不要以/开头"
+                    hint="请以/开头"
                     v-model="tpModel.component"
                   ></v-text-field>
                 </v-col>

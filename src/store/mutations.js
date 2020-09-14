@@ -19,6 +19,9 @@ const mutations = {
   setMid(state, mid) {
     state.mid = mid;
   },
+  setSide(state, bool) {
+    state.side = bool;
+  },
 };
 
 export default mutations;
