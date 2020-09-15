@@ -17,13 +17,16 @@ const Service = axios.create({
 });
 Service.interceptors.request.use(
   (config) => {
+    if (config.data.token) {
+      token = config.data.token;
+      config.headers.Authorization = `Bearer ${config.data.token}`;
+    }
     if (config.method === "post") {
       config.data = JSON.stringify(config.data);
     }
-    // console.log(config);
-    // console.log(token);
     let isInWhiteList = (s) => whiteList.some((w) => w === s);
     if (!!!isInWhiteList(config.url)) {
+      //将判断转为boolean
       if (!token) {
         router.push({ path: "/login" });
         return;

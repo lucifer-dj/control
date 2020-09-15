@@ -27,6 +27,7 @@
         </v-card>
       </v-col>
     </v-row>
+    <!-- <v-btn @click="render">test</v-btn> -->
   </v-container>
 </template>
 <script>
@@ -39,21 +40,30 @@ export default {
   data: () => ({
     columnData: [],
     loading: true,
+    chart1: null,
+    chart2: null,
+    chart3: null,
   }),
-  mounted() {
+  async mounted() {
     let that = this;
-    that.getColumnCount();
+    await that.getColumnCount();
   },
   methods: {
+    render() {
+      let that = this;
+      // that.chart1.render();
+    },
     async getColumnCount() {
       let that = this;
       try {
         let res = await getAllColumnCount();
         that.columnData = res.data;
-        that.initLineChart();
-        that.initPillarChart();
-        that.words();
-        that.loading = false;
+        setTimeout(() => {
+          that.initLineChart();
+          that.initPillarChart();
+          that.words();
+          that.loading = false;
+        }, 500);
       } catch (e) {
         console.log(e);
         return that.$hint({
@@ -65,12 +75,12 @@ export default {
     initLineChart() {
       let that = this;
       console.log(that.columnData);
-      const chart = new Chart({
+      const chart = (that.chart1 = new Chart({
         container: "chart1",
         autoFit: true,
         height: 150,
         appendPadding: 20,
-      });
+      }));
 
       chart.data(that.columnData);
       chart.scale({
@@ -94,7 +104,6 @@ export default {
           },
         },
       });
-
       chart.area().position("name*num").shape("smooth");
       chart.line().position("name*num").shape("smooth");
       chart.point().position("name*num").color("#0094ff").shape("circle");
@@ -102,12 +111,12 @@ export default {
     },
     initPillarChart() {
       let that = this;
-      const chart = new Chart({
+      const chart = (that.chart2 = new Chart({
         container: "chart2",
         autoFit: true,
         height: 150,
         appendPadding: 20,
-      });
+      }));
       chart.data(that.columnData);
       chart.scale("num", {
         nice: true,
@@ -171,7 +180,7 @@ export default {
           if (random === 2) {
             random = 0;
           }
-          return random * 90; // 0, 90, 270
+          return random * 90;
         },
         fontSize(d) {
           if (d.value) {
@@ -180,13 +189,13 @@ export default {
           return 0;
         },
       });
-      const chart = new Chart({
+      const chart = (that.chart3 = new Chart({
         container: "chart3",
         autoFit: true,
         width: _w,
         height: 150,
         padding: 0,
-      });
+      }));
       chart.data(dv.rows);
       chart.scale({
         x: { nice: false },

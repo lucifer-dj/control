@@ -18,7 +18,7 @@ router.beforeEach(async (to, from, next) => {
         if (!getItemObj("router")) {
           let _user = getItemObj("user");
           if (!_user) return next({ path: "/login" });
-          fetchRouter({ auth: _user.auth }).then((res) => {
+          fetchRouter({ auth: _user.auth, token }).then((res) => {
             if (res.code > 350) {
               next({ path: "/login" });
             } else {
@@ -41,10 +41,11 @@ router.beforeEach(async (to, from, next) => {
 function filterAsyncRouter(routes) {
   let res = routes.filter((route) => {
     if (route.component) {
+      // console.log(route.component)
       try {
         if (route.component === "Layout") route.component = layout;
         else
-          route.component = require(`@/pages/view/${route.component}`).default;
+          route.component = require(`@/pages/view${route.component}`).default;
       } catch (e) {
         let hint = document.querySelector("#temp_hint_panel");
         hint.innerHTML =

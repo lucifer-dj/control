@@ -11,14 +11,10 @@ import toast from "@components/toast/toast.js";
 import hint from "@components/hint/hint.js";
 import loading from "@components/loading/loading.js";
 import vuelidate from "vuelidate";
-import cfg from "./plugins/cfg";
 import "@/router/permission.js";
 
 Vue.use(vuelidate);
 
-Vue.prototype.indexPath = cfg.isdev
-  ? "http://127.0.0.1:7001"
-  : "http://119.45.57.238";
 Vue.prototype.bus = new Vue();
 Vue.prototype.$toast = toast;
 Vue.prototype.$hint = hint;

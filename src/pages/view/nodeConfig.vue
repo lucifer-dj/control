@@ -55,7 +55,7 @@
                   <v-text-field
                     label="import引入路径"
                     persistent-hint
-                    hint="不要以/开头"
+                    hint="请以/开头"
                     v-model="nodeModel.component"
                   ></v-text-field>
                 </v-col>
@@ -97,7 +97,7 @@
                   <v-sheet>
                     <v-btn
                       icon
-                      v-for="(icon,idx) in _icons"
+                      v-for="(icon,idx) in icons"
                       :key="idx"
                       class="mx-1"
                       :color="nodeModel.icon===icon?theme.bg_p.background:''"
@@ -179,6 +179,7 @@ export default {
       v_path: "",
       auth: "user",
     },
+    icons: _icons,
     columns: [],
     api: new Api("node"),
   }),

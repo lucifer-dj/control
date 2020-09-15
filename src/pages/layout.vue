@@ -92,6 +92,8 @@
 import cfg from "@/plugins/cfg.js";
 import { getItemObj } from "@/plugins/util.js";
 import { fetchMenu } from "@api";
+const IS_DEV = require("@/plugins/cfg").isdev;
+const indexPath = IS_DEV ? "http://127.0.0.1:7001" : "http://119.45.57.238";
 export default {
   name: "layout",
   data: () => ({
@@ -105,6 +107,17 @@ export default {
     listModel: 0,
     menu: [],
   }),
+  mounted() {
+    let that = this;
+    //人物 势力 关于雪中
+    //主页 境界划分
+    // :style="`{backgroundColor:${_theme.primary}}`"
+    let drawer_content = that.$(".v-navigation-drawer__content");
+    drawer_content.classList.add("drawer"); //chrome
+    drawer_content.style.scrollbarWidth = "none"; //firefox
+    drawer_content.style.msOverflowStyle = "none"; //edge
+    that.getMenu();
+  },
   methods: {
     commDrawer() {
       let that = this;
@@ -120,7 +133,7 @@ export default {
     replace(data) {
       let that = this;
       try {
-        require(`@/pages/view/${data.component}`).default;
+        require(`@/pages/view${data.component}`).default;
         // console.log(data);
         that.$store.commit("setMid", data.id);
         that.viewKey++;
@@ -138,29 +151,29 @@ export default {
     },
     closeSide() {
       let that = this;
+      let lastHerf = window.location.href.charAt(
+        window.location.href.length - 1
+      );
+      if (lastHerf === "/") {
+        that.viewKey++;
+      }
       that.$nextTick(() => {
         that.sideCols = 0;
         that.viewCols = 12;
-        let lastHerf = window.location.href.charAt(
-          window.location.href.length - 1
-        );
-        if (lastHerf === "/") {
-          that.viewKey++;
-        }
       });
     },
     showSide(type) {
       let that = this;
+      let lastHerf = window.location.href.charAt(
+        window.location.href.length - 1
+      );
+      if (lastHerf === "/") {
+        that.viewKey++;
+      }
       that.$nextTick(() => {
         that.sideCols = 3;
         that.viewCols = 9;
         that.sideType = type;
-        let lastHerf = window.location.href.charAt(
-          window.location.href.length - 1
-        );
-        if (lastHerf === "/") {
-          that.viewKey++;
-        }
       });
     },
     logout() {
@@ -190,17 +203,6 @@ export default {
       }
     },
   },
-  mounted() {
-    let that = this;
-    //人物 势力 关于雪中
-    //主页 境界划分
-    // :style="`{backgroundColor:${_theme.primary}}`"
-    let drawer_content = that.$(".v-navigation-drawer__content");
-    drawer_content.classList.add("drawer"); //chrome
-    drawer_content.style.scrollbarWidth = "none"; //firefox
-    drawer_content.style.msOverflowStyle = "none"; //edge
-    that.getMenu();
-  },
   computed: {
     theme() {
       let that = this;
@@ -209,6 +211,9 @@ export default {
     mid() {
       let that = this;
       return that.$store.state.mid;
+    },
+    indexPath() {
+      return indexPath;
     },
   },
   components: {

@@ -10,15 +10,6 @@ const actions = {
       }
     });
   },
-  // setMenu({ commit }, auth) {
-  //   fetchMenu(auth).then((res) => {
-  //     if (res.code == 200) {
-  //       commit("setMenu", res.data);
-  //     } else {
-  //       commit("setMenu", []);
-  //     }
-  //   });
-  // },
 };
 
 export default actions;
