@@ -5,6 +5,7 @@
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
+const fs = require('fs');
 const path = require("path");
 module.exports = (appInfo) => {
   const config = (exports = {});
@@ -25,7 +26,9 @@ module.exports = (appInfo) => {
     origin: "*",
     allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH",
   };
-
+  config.siteFile = {
+    '/favicon.ico': fs.readFileSync(path.resolve('favicon.ico'))
+  }
   // add your middleware config here
   config.middleware = ["checkJwt"];
   config.checkJwt = {
