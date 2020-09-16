@@ -70,7 +70,7 @@ module.exports = (appInfo) => {
   config.publicPath = "public/frame";
   config.staticPath = path.resolve(__dirname, "../app/static/");
   config.site =
-    appInfo.env === "prod" ? "http://119.45.57.238" : "http://127.0.0.1:7001";
+    appInfo.env === "prod" ? "http://luciferdj.cn" : "http://127.0.0.1:7001"; //上传资源的保存路劲
   return {
     ...config,
     ...userConfig,

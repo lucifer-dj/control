@@ -8,7 +8,8 @@ class PageService extends Service {
     let column = await service.db.get("column", { nid: data.nid });
     if (!column) return false;
     let page = await service.db.get("page", { pid: column.id });
-    if (!page) return false;
+    if (!page) return { pid: column.id };
+    page.pid = column.id
     return page;
   }
 }
