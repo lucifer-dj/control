@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <v-card
-      v-if="type==='setting'"
+      v-if="type=='setting'"
       flat
       :color="$vuetify.theme.dark?'#1E1E1E':'#f8f8f8'"
       class="v-card"
@@ -36,7 +36,7 @@
       </v-card>
     </v-card>
 
-    <v-card v-if="type==='user'" flat color="#f8f8f8" class="v-card">
+    <v-card v-if="type=='user'" flat color="#f8f8f8" class="v-card">
       <v-card flat color="#f8f8f8">
         <v-card-title>
           <span>我的信息</span>

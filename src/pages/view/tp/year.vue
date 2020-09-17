@@ -117,6 +117,7 @@ export default {
         introduce: "",
         yearend: "",
         yearstart: "",
+        nid: that.$route.query.nid,
       };
       that.dialog = false;
       that.dialogType = "add";
@@ -127,7 +128,7 @@ export default {
       try {
         //,
         let result = await that.api.queryAll(
-          { where: { nid: that.columnData.cid }, offset: 0 },
+          { where: { nid: that.yearModel.nid }, offset: 0 },
           that
         );
         that.items = result.code === 200 ? result.data : [];
@@ -141,7 +142,7 @@ export default {
       // console.log(that.imgFile);
       // if (checkObjectIsEmpty(that.imgFile))
       //   return that.$hint({ msg: "请选择上传的图片", type: "error" });
-      that.yearModel.start = new Date().valueOf();
+      that.yearModel.date = new Date().valueOf();
       try {
         // let result0 = await upload(that.imgFile);
         // that.yearModel.pic = result0 ? result0 : "";
@@ -160,7 +161,7 @@ export default {
       //   that.yearModel.pic = res ? res : "";
       //   if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       // }
-      that.yearModel.update = new Date().valueOf();
+      that.yearModel.date = new Date().valueOf();
       try {
         let result = await that.api.update(that.yearModel, that);
         that.yearModelReset();

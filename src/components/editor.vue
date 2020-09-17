@@ -5,7 +5,6 @@
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { component as CkeditorComponent } from "@ckeditor/ckeditor5-vue";
 import "@ckeditor/ckeditor5-build-classic/build/translations/zh-cn.js";
-// import * as api from "@api";
 export default {
   name: "editor",
   model: {
@@ -53,5 +52,8 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
+.ck-editor__editable {
+  min-height: 200px;
+}
 </style>

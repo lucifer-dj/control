@@ -59,6 +59,8 @@
               </v-col>
               <v-col cols="6" height="100" class="px-10">
                 <v-text-field label="角色境界" v-model="roleModel.realm"></v-text-field>
+              </v-col>
+              <v-col cols="6" height="100" class="px-10">
                 <v-select label="势力划分" v-model="roleModel.faction" :items="['北凉','江南']"></v-select>
               </v-col>
               <v-col cols="12">
@@ -133,6 +135,7 @@ export default {
         sex: "",
         place: "",
         realm: "",
+        nid: that.$route.query.nid,
       };
       that.dialogType = "add";
       that.dialog = false;
@@ -147,7 +150,6 @@ export default {
         );
         that.items = result.code === 200 ? result.data : [];
         that.items.forEach((item, idx) => {
-          item.date = item.update ? item.update : item.start;
           item.date = format.call(new Date(Number(item.date)), "yyyy-MM-dd");
         });
         console.log(result);
@@ -162,8 +164,7 @@ export default {
       if (checkObjectIsEmpty(that.imgFile)) {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       }
-      that.roleModel.start = new Date().valueOf();
-      that.roleModel.avatar = "ceshi";
+      that.roleModel.date = new Date().valueOf();
       try {
         let result0 = await upload(that.imgFile);
         that.roleModel.avatar = result0.code === 200 ? result0.data : "";
@@ -183,7 +184,7 @@ export default {
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
       try {
-        that.roleModel.update = new Date().valueOf();
+        that.roleModel.date = new Date().valueOf();
         let result = await that.api.update(that.roleModel, that);
         that.$hint({ msg: "修改成功" });
         that.roleModelReset();

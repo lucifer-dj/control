@@ -110,6 +110,7 @@ export default {
         name: "",
         introduce: "",
         pic: "",
+        nid: that.$route.query.nid,
       };
       that.dialog = false;
       that.dialogType = "add";
@@ -122,6 +123,7 @@ export default {
           { where: { nid: that.realmModel.nid }, offset: 0 },
           that
         );
+        console.log(result);
         that.items = result.code === 200 ? result.data : [];
       } catch (e) {
         console.log(e);
@@ -135,7 +137,7 @@ export default {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       try {
         let result0 = await upload(that.imgFile, that);
-        that.realmModel.start = new Date().valueOf();
+        that.realmModel.date = new Date().valueOf();
         that.realmModel.pic = result0.code === 200 ? result0.data : "";
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await that.api.add(that.realmModel, that);
@@ -152,7 +154,7 @@ export default {
         that.realmModel.pic = res.code === 200 ? res.data : "";
         if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
       }
-      that.realmModel.update = new Date().valueOf();
+      that.realmModel.date = new Date().valueOf();
       try {
         let result = await that.api.update(that.realmModel, that);
         that.realmModelReset();

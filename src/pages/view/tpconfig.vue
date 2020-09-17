@@ -55,7 +55,7 @@
                   <v-text-field
                     label="import引入路径"
                     persistent-hint
-                    hint="请以/开头"
+                    hint="请以/开头 添加tp目录下的组件 会自动加上tp"
                     v-model="tpModel.component"
                   ></v-text-field>
                 </v-col>
@@ -155,12 +155,13 @@ export default {
     },
     async submit() {
       let that = this;
-      that.tpModel.component = "tp/" + that.tpModel.component;
+      that.tpModel.component = "/tp" + that.tpModel.component;
       if (that.dialogType !== "add") return that.tpUpdate();
       try {
         let result = await that.api.add(that.tpModel);
         if (result.code === 200) {
           that.$hint({ msg: "添加成功" });
+          localStorage.removeItem("router");
           that.tpModelReset();
         }
       } catch (e) {
@@ -190,8 +191,10 @@ export default {
       let that = this;
       try {
         let result = await that.api.update(that.tpModel);
-        if (result.code === 200) that.$hint({ msg: "更新成功" });
-        else that.$hint({ msg: "更新失败", type: "error" });
+        if (result.code === 200) {
+          localStorage.removeItem("router");
+          that.$hint({ msg: "更新成功" });
+        } else that.$hint({ msg: "更新失败", type: "error" });
         that.tpModelReset();
       } catch (e) {
         console.log(e);

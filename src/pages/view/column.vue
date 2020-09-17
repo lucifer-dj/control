@@ -209,7 +209,6 @@ export default {
       template: "",
       ename: "",
       link: "",
-      icon: "",
     },
     tps: [],
     nid: null,
@@ -236,9 +235,8 @@ export default {
         pic: "",
         order: "",
         template: "",
-        en: "",
+        ename: "",
         link: "",
-        icon: "",
       };
       that.imgFile = {};
       // that.reload();
@@ -290,7 +288,6 @@ export default {
       if (_res) {
         that.columnModel.nid = _res.insertId;
         that.columnModel.template = that.columnModel.template.id;
-        return console.log(that.columnModel);
         try {
           let result = await that.api.column.add(that.columnModel, that);
           that.$hint({

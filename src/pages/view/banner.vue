@@ -226,6 +226,7 @@ export default {
       let that = this;
       try {
         let result = await that.columnApi.queryAll();
+        console.log(result);
         that.columns = result.code === 200 ? result.data : [];
       } catch (e) {
         console.error(e);

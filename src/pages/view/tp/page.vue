@@ -55,10 +55,13 @@ export default {
       let that = this;
       try {
         let result = await readPageByNid({ nid: that.nid }, that);
-        if (!result.data) return;
-        that.pageModel = result.code === 200 ? result.data : [];
-        // console.log(that.pageModel);
+        if (result.data.pid) {
+          that.pageModel.pid = result.data.pid;
+        }
+        if (!result.data.id) return (that.pageType = "add");
+        that.pageModel = result.code === 200 ? result.data : {};
         that.pageType = "edit";
+        that.pageModel.pid = result.data.pid;
       } catch (e) {
         console.log(e);
       }
@@ -68,7 +71,7 @@ export default {
       if (that.pageType !== "add") return that.updatePage();
       if (that.pageModel.content === "")
         return that.$hint({ msg: "请输入内容" });
-      that.pageModel.start = new Date().valueOf();
+      that.pageModel.date = new Date().valueOf();
       that.pageModel.show = true;
       try {
         let result = await that.api.add(that.pageModel, that);
@@ -81,7 +84,7 @@ export default {
       let that = this;
       if (that.pageModel.content === "")
         return that.$hint({ msg: "请输入内容" });
-      that.pageModel.update = new Date().valueOf();
+      that.pageModel.date = new Date().valueOf();
       try {
         let result = await that.api.update(that.pageModel, that);
         that.$hint({ msg: result.msg });

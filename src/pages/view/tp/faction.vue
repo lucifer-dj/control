@@ -125,6 +125,7 @@ export default {
         introduce: "",
         years: "",
         lead: "",
+        nid: that.$route.query.nid,
       };
       that.dialog = false;
       that.dialogType = "add";
@@ -149,8 +150,8 @@ export default {
         return that.$hint({ msg: "请选择上传的图片", type: "error" });
       try {
         let result0 = await upload(that.imgFile, that);
-        that.factionModel.start = new Date().valueOf();
-        that.factionModel.pic = result0 ? result0 : "";
+        that.factionModel.date = new Date().valueOf();
+        that.factionModel.pic = result0.code === 200 ? result0.data : "";
         if (!result0) return that.$hint({ msg: "上传图片失败", type: "error" });
         let result = await that.api.add(that.factionModel, that);
         that.$hint({ msg: result.msg });
@@ -163,10 +164,12 @@ export default {
       let that = this;
       if (!checkObjectIsEmpty(that.imgFile)) {
         let res = await upload(that.imgFile, that, that.factionModel.pic);
-        that.factionModel.pic = res ? res.data : "";
-        if (!res) return that.$hint({ msg: "上传图片失败", type: "error" });
+        if (res.code != 200)
+          return that.$hint({ msg: "上传图片失败", type: "error" });
+        that.factionModel.pic = res.code === 200 ? res.data : "";
       }
-      that.factionModel.update = new Date().valueOf();
+      that.factionModel.date = new Date().valueOf();
+      console.log(that.factionModel);
       try {
         let result = await that.api.update(that.factionModel, that);
         that.factionModelReset();

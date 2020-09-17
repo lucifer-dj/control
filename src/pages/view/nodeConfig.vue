@@ -17,7 +17,7 @@
             class="mx-1"
             @click="nodeDelete(item.id)"
             :style="[theme.bg_a,theme.co_p]"
-            v-if="item.canD!==1"
+            v-if="item.canD==1"
           >
             <v-icon>iconfont iconfont-customerarchivesrecycleBin</v-icon>
           </v-btn>
@@ -28,7 +28,7 @@
             title="修改"
             class="mx-1"
             @click="editnode(item.id)"
-            v-if="item.canD!==1"
+            v-if="item.canD==1"
             :style="[theme.bg_a,theme.co_p]"
           >
             <v-icon>iconfont iconfont-basepermissionapproveApply</v-icon>

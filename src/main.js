@@ -12,7 +12,6 @@ import hint from "@components/hint/hint.js";
 import loading from "@components/loading/loading.js";
 import vuelidate from "vuelidate";
 import "@/router/permission.js";
-
 Vue.use(vuelidate);
 
 Vue.prototype.bus = new Vue();
