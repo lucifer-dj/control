@@ -4,6 +4,7 @@ const IS_DEV = require("./src/plugins/cfg.js").isdev;
 const TerserPlugin = require("terser-webpack-plugin");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const productionGzipExtensions = ["js", "css"];
+const proxy = require('http-proxy-middleware');
 // const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 module.exports = {
   //部署应用包时的基本 URL， 用法和 webpack 本身的 output.publicPath 一致。
@@ -77,29 +78,18 @@ module.exports = {
     }
   },
   devServer: {
-    overlay: {
-      // 让浏览器 overlay 同时显示警告和错误
-      warnings: true,
-      errors: true,
-    },
-    host: "localhost",
-    port: 8080, // 端口号
-    https: false, // https:{type:Boolean}
-    open: false, //配置自动启动浏览器
-    hotOnly: true, // 热更新
-    // proxy: 'http://localhost:8080'  // 配置跨域处理,只有一个代理
+    host: 'localhost',//target host
+    port: 8080,
     proxy: {
-      //配置多个跨域
-      "/api": {
-        target: "http://192.168.8.101:7001",
-        changeOrigin: true,
-        // ws: true,//websocket支持
-        secure: false,
-        pathRewrite: {
-          "^/api": "/",
-        },
-      },
-    },
+      '/api': {
+          target: 'http://127.0.0.1:7001',
+          changeOrigin: true,
+          ws: true,
+          pathRewrite: {
+            '^/api': '/'
+          }
+      }
+    }
   },
   configureWebpack: {
     optimization: {
@@ -111,7 +101,7 @@ module.exports = {
             warnings: false,
             parse: {},
             compress: {
-              drop_console: true,
+              drop_console: false,
               drop_debugger: true,
               pure_funcs: ["console.log"], // 移除console
             },
@@ -130,15 +120,15 @@ module.exports = {
       }),
       // new VuetifyLoaderPlugin(),
     ],
-    // externals: IS_DEV
-    //   ? {}
-    //   : {
-    //       vue: "Vue",
-    //       "vue-router": "VueRouter",
-    //       vuex: "Vuex",
-    //       axios: "axios",
-    //       vuetify: "Vuetify",
-    //       "@ckeditor/ckeditor5-build-classic": "ClassicEditor",
-    //     },
+    externals: IS_DEV
+      ? {}
+      : {
+          vue: "Vue",
+          "vue-router": "VueRouter",
+          vuex: "Vuex",
+          axios: "axios",
+          vuetify: "Vuetify",
+          "@ckeditor/ckeditor5-build-classic": "ClassicEditor",
+        },
   },
 };

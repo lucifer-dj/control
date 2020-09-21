@@ -9,14 +9,16 @@ let token = localStorage.getItem("token");
 const whiteList = ["/panel/login", "/panel/register"];
 const Service = axios.create({
 	timeout: 20000,
-	baseURL: isdev ? "http://119.45.57.238" : "http://119.45.57.238",
+	baseURL: isdev?"/api":'',
 	method: "post",
+	withCredentials: true,
 	// headers: {
 	//   "Authorization": `Bearer ${token}`
 	// }
 });
 Service.interceptors.request.use(
 	(config) => {
+		console.log(config)
 		if (config.data.token) {
 			token = config.data.token;
 			config.headers.Authorization = `Bearer ${config.data.token}`;
