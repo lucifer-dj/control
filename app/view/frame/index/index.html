@@ -1,0 +1,393 @@
+{% extends "../public/layout.html" %} {% block main %}
+<main class="main_wrap">
+  <section class="banner banner-container">
+    <ul class="swiper-wrapper">
+      {% for item in banners %}
+      <li class="swiper-slide">
+        <a href="{{item.url}}" title="{{item.title}}">
+          <div class="img" style="background-image:url('{{static}}/images/50979.png')">
+            <!--             <img src="" /> -->
+            <div class="banner_msg">
+              <h2>世间文字八万个，唯有情字最杀人</h2>
+              <p class="msg1">情不知所起，一往而深</p>
+              <div class="more_b">查看更多</div>
+            </div>
+          </div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="left swiper-banner-left">
+      <i class="iconfont iconfont-zuo-5"></i>
+    </div>
+    <div class="right swiper-banner-right">
+      <i class="iconfont iconfont-you-5"></i>
+      </svg>
+    </div>
+    <div class="dots">
+      <div class="dot banner_dot_active"></div>
+      <div class="dot"></div>
+    </div>
+  </section>
+  <div class="white_temp_space"></div>
+  <section class="role">
+    <article>
+      <div class="peo_left">
+        <div class="peo_head">
+          <p class="en">{{columns.role.en}}</p>
+          <span>{{columns.role.name}}</span>
+        </div>
+        <p class="text">
+          公司践行追求卓越造福人类的宗旨，始终秉承执行力与人性化的管理理念遵循员工与企业
+        </p>
+        <div class="btns">
+          <div class="left_btn"></div>
+          <div class="space"></div>
+          <div class="right_btn"></div>
+        </div>
+      </div>
+      <div class="peo_right">
+        <div class="peo_swiper peo-container">
+          <ul class="peo_ul swiper-wrapper">
+            {% for item in roles %}
+            <li class="swiper-slide">
+              <a href="" class="">
+                <div class="img">
+                  <img src="{{ static }}/images/1499169822486.png" alt="" />
+                </div>
+                <div class="detail">
+                  <div class="peo_head">
+                    <div class="peo_head_left">
+                      <p class="name">{{item.name}}</p>
+                      <p class="zhiwei">抚远大将军</p>
+                    </div>
+                    <div class="more"></div>
+                  </div>
+                  <p class="text">
+                    {{item.introduce}}
+                  </p>
+                </div>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </article>
+  </section>
+  <!-- 关于雪中 -->
+  <section class="about">
+    <article>
+      <div class="head">
+        <div class="head_l">
+          <h2 style="color: #233876;">{{columns.about.name}}</h2>
+          <span>{{columns.about.en}}</span>
+        </div>
+      </div>
+      <div class="about_content">
+        <div class="a_left">
+          <h2>{{site.name}}</h2>
+          <div class="text">
+            {{about.description}}
+          </div>
+          <a href="" class="more">more</a>
+        </div>
+        <a href="" class="a_right">
+          <img src="{{ static }}/images/1499261624385.jpg" alt="" />
+        </a>
+        <div class="clear"></div>
+      </div>
+    </article>
+    <div class="counterBgdx">
+      <div class="module">
+        <div class="item">
+          <div class="date">1,992 <span>年</span></div>
+          <div class="zh">成立中泰高科</div>
+        </div>
+        <div class="item">
+          <div class="date">58 <span>+</span></div>
+          <div class="zh">产业覆盖范围</div>
+        </div>
+        <div class="item">
+          <div class="date">36 <span>+</span></div>
+          <div class="zh">覆盖全国多个省市</div>
+        </div>
+        <div class="item">
+          <div class="date">470 <span>+</span></div>
+          <div class="zh">项目研究成果</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 势力介绍 -->
+  <section class="faction">
+    <div class="top_space"></div>
+    <article>
+      <div class="head">
+        <div class="head_l">
+          <h2 style="color: #233876;">{{columns.faction.name}}</h2>
+          <span>{{columns.faction.en}}</span>
+        </div>
+        <div class="space"></div>
+        <div class="head_r">
+          <a href="" class="head_a_active">全部</a>
+          <a href="">行业资讯</a>
+          <a href="">媒体报道</a>
+          <a href="" class="more">更多</a>
+        </div>
+      </div>
+      <div class="news_content">
+        <a href="" class="news_l">
+          <div class="date">07-02</div>
+          <p class="title">
+            {{factions[factions.length-1].name}} -
+            {{factions[factions.length-1].lead}}
+          </p>
+          <p class="text">
+            {{factions[factions.length-1].introduce}}
+          </p>
+          <div class="image">
+            <img src="{{ static }}/images/1498476780341.jpg" alt="" />
+          </div>
+          <div class="more"></div>
+        </a>
+        <ul class="news_r">
+          {% for item in factions.slice(0,3) %}
+          <li>
+            <a href="">
+              <div class="li_l">
+                <p class="title">{{item.name}} - {{item.lead}}</p>
+                <p class="text">{{item.introduce}}</p>
+              </div>
+              <div class="li_r">
+                <div class="date">{{item.year}}</div>
+                <div class="arrow">
+                  <i class="iconfont iconfont-ic_arrow_right"></i>
+                </div>
+              </div>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="clear"></div>
+      </div>
+    </article>
+  </section>
+  <!-- 暂无 -->
+  <section class="scope">
+    <article>
+      <div class="head">
+        <div class="head_l">
+          <h2>业务范围</h2>
+          <span>Scope of business</span>
+        </div>
+        <div class="space"></div>
+        <div class="head_r">
+          <a href="" class="head_a_active">全部</a>
+          <a href="">科技创新</a>
+          <a href="">国际贸易</a>
+          <a href="" class="more">更多</a>
+        </div>
+      </div>
+      <div class="swiper">
+        <div class="box scope-container">
+          <ul class="swiper-wrapper">
+            {% for item in tempArr %}
+            <li class="swiper-slide">
+              <a href="">
+                <div class="img">
+                  <img src="{{static}}/images/1499154353589.jpg" alt="" />
+                </div>
+                <div class="detail">
+                  <h2>能源产业优化链条进展</h2>
+                  <div class="text">
+                    在中国国内，由合资公司湖南株洲时菱交通设备有限公司
+                    进行这类机电产品的组装和试验
+                  </div>
+                  <div class="more">
+                    <i class="iconfont iconfont-ic_arrow_right"></i>
+                  </div>
+                </div>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <div class="swiper-pagination case_pagination"></div>
+        </div>
+        <div class="left scope_swiper_left">
+          <i class="iconfont iconfont-zou-5"></i>
+        </div>
+        <div class="right scope_swiper_right">
+          <i class="iconfont iconfont-you-5"></i>
+        </div>
+      </div>
+    </article>
+  </section>
+  <!-- 境界划分 -->
+  <section class="realm">
+    <article>
+      <div class="content">
+        <div class="first">
+          <h2>特殊板块演示</h2>
+        </div>
+        <ul class="story_ul">
+          <li>
+            <a href="">
+              <p class="title">我们的价值观</p>
+              <p class="text">
+                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+                ...
+              </p>
+              <div class="more">more</div>
+            </a>
+            <div class="img">
+              <img src="{{static}}/images/1498546516300.jpg" alt="" />
+            </div>
+          </li>
+          <li>
+            <a href="">
+              <p class="title">我们的价值观</p>
+              <p class="text">
+                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+                ...
+              </p>
+              <div class="more">more</div>
+            </a>
+            <div class="img">
+              <img src="{{static}}/images/1498546516300.jpg" alt="" />
+            </div>
+          </li>
+          <li>
+            <a href="">
+              <p class="title">我们的价值观</p>
+              <p class="text">
+                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+                ...
+              </p>
+              <div class="more"></div>
+            </a>
+            <div class="img">
+              <img src="{{static}}/images/1498546516300.jpg" alt="" />
+            </div>
+          </li>
+          <li>
+            <a href="">
+              <p class="title">我们的价值观</p>
+              <p class="text">
+                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
+                ...
+              </p>
+              <div class="more"></div>
+            </a>
+            <div class="img">
+              <img src="{{static}}/images/1498546516300.jpg" alt="" />
+            </div>
+          </li>
+        </ul>
+      </div>
+    </article>
+  </section>
+  <!-- 时间线 -->
+  <section class="year">
+    <article>
+      <ul>
+        {% for item in years %}
+        <li>
+          <a href="">
+            <div class="date">{{item.yearstart}}-{{item.yearend}}</div>
+            <div class="text">
+              {{item.title}}
+            </div>
+          </a>
+        </li>
+        {% endfor %}
+        <div class="clear"></div>
+      </ul>
+    </article>
+  </section>
+  <section class="links">
+    <article>
+      <ul>
+        {% for item in tempArr %}
+        <li>
+          <a href="">
+            <img src="{{ static }}/images/1499235512677.png" />
+          </a>
+        </li>
+        {% endfor %}
+        <div class="clear"></div>
+      </ul>
+    </article>
+  </section>
+  <!-- 其他 -->
+  <section class="foot">
+    <div class="wrap">
+      <div class="first">
+        <h3>联系</h3>
+        <span>Contact</span>
+      </div>
+      <div class="second">
+        <h3>关注</h3>
+      </div>
+      <div class="third">
+        <h3>联系方式</h3>
+        <p>地址：{{site.git}}</p>
+        <p>座机：{{site.tel}}</p>
+        <p>手机：{{site.phone}}</p>
+      </div>
+      <div class="fourth">
+        <h3></h3>
+        <p>微信：{{site.wx}}</p>
+        <p>QQ：{{site.qq}}</p>
+        <p>邮箱：{{site.email}}</p>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div>
+    COPYRIGHT (©) lucifer-dj@outlook.com - 雪中悍刀行网站个人学习爱好.
+    <span>技术支持：</span><a href="https://gitee.com/luciferdj" target="_blank">lucifer-DJ</a>
+  </div>
+</footer>
+<script>
+(function() {
+  var mySwiper = new Swiper(".banner-container", {
+    direction: "horizontal", // 垂直切换选项
+    navigation: {
+      nextEl: ".swiper-banner-left",
+      prevEl: ".swiper-banner-right",
+    },
+  });
+  new Swiper(".case-container", {
+    direction: "horizontal", // 垂直切换选项
+    slidesPerView: 3,
+    navigation: {
+      nextEl: ".case_swiper_left",
+      prevEl: ".case_swiper_right",
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+  new Swiper(".scope-container", {
+    direction: "horizontal", // 垂直切换选项
+    slidesPerView: 3,
+    navigation: {
+      nextEl: ".scope_swiper_left",
+      prevEl: ".scope_swiper_right",
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+  new Swiper(".peo-container", {
+    direction: "horizontal",
+    slidesPerView: 2,
+  });
+})();
+</script>
+{% endblock %}

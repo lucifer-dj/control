@@ -1,0 +1,48 @@
+{% extends "../public/layout.html" %} {% block main %}
+<main class="main_list">
+  {% include "../public/center.html"%}
+  <section class="project">
+    <article>
+      <div class="head_list">
+        <div class="content">
+          <div class="left">
+            <a href="" class="head_active">全部</a>
+            <a href="">全产业链业务</a>
+            <a href="">新资源开发</a>
+          </div>
+          <div class="right">
+            您的位置：<a href="">首页</a> <span>></span> <a href="">产品中心</a>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <div class="pro">
+        <ul>
+          {% for item in tempArr %}
+          <li>
+            <a href="">
+              <div class="img">
+                <img src="{{static}}images/1499083067928.jpg" alt="">
+              </div>
+              <div class="detail">
+                <h2>能源产业优化链条进展</h2>
+                <div class="text">HARVEST STATES</div>
+              </div>
+              <div class="circle"></div>
+            </a>
+          </li>
+          {% endfor %}
+          <div class="clear"></div>
+        </ul>
+      </div>
+      <div class="srrot">
+        <a href="" class="left">
+          <</a> <a href="" class="num">1
+        </a>
+        <a href="" class="num">2</a>
+        <a href="" class="right">></a>
+      </div>
+    </article>
+  </section>
+</main>
+{% endblock %}

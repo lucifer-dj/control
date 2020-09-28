@@ -1,0 +1,47 @@
+{% extends "../public/layout.html" %} {% block main %}
+<main class="main_list">
+  {% include "../public/center.html"%}
+  <section class="role">
+    <article>
+      <div class="head_list">
+        <div class="content">
+          <div class="right">
+            您的位置：<a href="">首页</a> <span>></span>
+            <a href="">视频展示</a>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <ul class="role_ul">
+        {% for item in tempArr %}
+        <li>
+          <a href="">
+            <div class="img">
+              <img src="{{static}}/images/1499169822486.png" alt="" />
+            </div>
+            <div class="detail">
+              <span class="name">徐凤年</span>
+              <p class="title">内阁大总统</p>
+              <p class="line"></p>
+              <p class="text">
+                核心能力集中在医药保健和农业领域/为创新产品和解决方案研发新分子
+              </p>
+              <div class="more">
+                查看更多
+              </div>
+            </div>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="srrot">
+        <a href="" class="left">
+          <</a> <a href="" class="num srrot_active">1
+        </a>
+        <a href="" class="num">2</a>
+        <a href="" class="right">></a>
+      </div>
+    </article>
+  </section>
+</main>
+{% endblock %}
