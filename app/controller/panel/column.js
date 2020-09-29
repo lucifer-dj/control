@@ -8,16 +8,16 @@ class ColumnController extends Controller {
     this.table = "column";
   }
   async queryAll() {
-    let { ctx, service, table } = this;
+    let { ctx, service} = this;
     let req = ctx.request.body;
-    let result = await service.db.select(table, req);
+    let result = await service.column.queryAll();
     if (result) return ctx.success("查询成功", result);
     return ctx.err("没有取到数据");
   }
   async add() {
-    let { ctx, service, table } = this;
+    let { ctx, service} = this;
     let req = ctx.request.body;
-    let result = await service.db.add(table, req);
+    let result = await service.column.add(req);
     if (result) {
       ctx.success("成功添加一条数据", result);
     } else {
@@ -25,7 +25,7 @@ class ColumnController extends Controller {
     }
   }
   async read() {
-    let { ctx, service, table } = this;
+    let { ctx, service, table} = this;
     let req = ctx.request.body;
     let result = await service.db.get(table, req);
     if (result) {
@@ -36,10 +36,10 @@ class ColumnController extends Controller {
   }
 
   async update() {
-    let { ctx, service, table } = this;
+    let { ctx, service} = this;
     let req = ctx.request.body;
     console.log(req)
-    let result = await service.db.update(table, req);
+    let result = await service.column.update(req);
     if (result) {
       ctx.success("成功更新一条数据", result);
     } else {
@@ -48,9 +48,9 @@ class ColumnController extends Controller {
   }
 
   async delete() {
-    let { ctx, service, table } = this;
+    let { ctx, service} = this;
     let req = ctx.request.body;
-    let result = await service.db.deleteSingle(table, req);
+    let result = await service.column.delete(req);
     if (result) {
       ctx.success("删除成功", result);
     } else {
@@ -58,7 +58,7 @@ class ColumnController extends Controller {
     }
   }
   async columnCount() {
-    let { ctx, service, table } = this;
+    let { ctx, service} = this;
     let req = ctx.request.body;
     let result = await service.column.getAllColumnCount();
     ctx.success("查询成功", result);

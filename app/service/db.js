@@ -51,8 +51,15 @@ class DbService extends Service {
       if (result.affectedRows === 1) return true;
       return false;
     } catch (e) { return false }
-
   }
+	async count(table){
+		let { app } = this;
+		console.log(2);
+		let result = await app.mysql.query('SELECT COUNT(*) FROM '+table+';');
+		let str = "COUNT(*)";
+		result = result[0][str];
+		return result;
+	}
 }
 
 module.exports = DbService;

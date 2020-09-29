@@ -22,7 +22,7 @@ class SiteController extends Controller {
     if (result) return ctx.success("修改成功");
     ctx.err("修改失败");
   }
-  async getTps() {
+  async getHtmlList() {
     let that = this;
     let { ctx, service } = that;
     let req = ctx.request.body;
