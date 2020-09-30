@@ -10,7 +10,6 @@ class HomeController extends Controller {
   }
   async postTest() {
     const { ctx, app } = this;
-    console.log("t")
     let req = ctx.request.body;
     ctx.body = {
       msg: "测试",

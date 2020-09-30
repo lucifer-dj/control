@@ -1,5 +1,9 @@
 module.exports = (options, app) => {
   return async function checkJwt(ctx, next) {
+<<<<<<< HEAD
+=======
+		return await next();
+>>>>>>> dev
     for (let i of options.methods) {
       if (ctx.request.method === i.toUpperCase()) return await next();
     }

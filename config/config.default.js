@@ -22,10 +22,6 @@ module.exports = (appInfo) => {
   config.bodyParser = {
     formLimit: "10mb",
   };
-  config.cors = {
-    origin: "*",
-    allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH",
-  };
   config.siteFile = {
     '/favicon.ico': fs.readFileSync(path.resolve('favicon.ico'))
   }
@@ -57,9 +53,9 @@ module.exports = (appInfo) => {
     client: {
       host: "119.45.57.238",
       port: "3306",
-      user: "xzhdx",
+      user: "nuxt",
       password: "123123",
-      database: "xzhdx",
+      database: "nuxt",
     },
     // 是否加载到 app 上，默认开启
     app: true,
@@ -72,6 +68,7 @@ module.exports = (appInfo) => {
   };
   config.publicPath = "public/frame";
   config.staticPath = path.resolve(__dirname, "../app/static/");
+  config.columnId = 1;
   config.site =
     appInfo.env === "prod" ? "http://luciferdj.cn" : "http://127.0.0.1:7001"; //上传资源的保存路劲
   return {

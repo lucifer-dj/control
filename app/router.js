@@ -51,7 +51,7 @@ module.exports = (app) => {
   router.post("/panel/year/delete", controller.panel.year.delete);
   router.post("/panel/year/read", controller.panel.year.read);
   router.post("/panel/year/update", controller.panel.year.update);
-  router.post("/panel/file/getTps", controller.panel.file.getTps);
+  router.post("/panel/file/getHtmlList", controller.panel.file.getHtmlList);
   router.post("/panel/tmp/queryAll", controller.panel.tmp.queryAll);
   router.post("/panel/tmp/add", controller.panel.tmp.add);
   router.post("/panel/tmp/delete", controller.panel.tmp.delete);

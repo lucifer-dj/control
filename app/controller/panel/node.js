@@ -14,15 +14,15 @@ class NodeController extends Controller {
     return ctx.err("没有取到数据");
   }
   async getMenu() {
-    let { ctx, service, table } = this;
+    let { ctx, service } = this;
     let req = ctx.request.body;
-    let result = await service.node.menu(req);
+    let result = await service.node.getMenu(req.auth);
     if (result) return ctx.success("查询成功", result);
     return ctx.err("没有取到数据");
   }
   async queryAll() {
     let { ctx, service } = this;
-    let result = await service.node.getNodes();
+    let result = await service.node.queryAll();
     if (result) return ctx.success("查询成功", result);
     return ctx.err("没有取到数据");
   }
@@ -50,6 +50,7 @@ class NodeController extends Controller {
   async add() {
     const { ctx, service, table } = this;
     let req = ctx.request.body;
+		console.log(req);
     let result = await service.db.add(table, req);
     if (!result) ctx.err("添加节点失败");
     else ctx.success("成功添加一个节点", result);
