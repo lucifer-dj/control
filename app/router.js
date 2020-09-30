@@ -9,6 +9,7 @@ module.exports = (app) => {
   router.post("/t", controller.panel.home.postTest);
   router.get("/t", controller.panel.home.getTest);
   router.get("/panel", controller.panel.home.index);
+  router.get("/panel/getUserByToken", controller.panel.login.getUserByToken);
   router.post("/panel/login", controller.panel.login.index);
   router.post("/panel/user/getInfo", controller.panel.login.getInfo);
   router.post("/panel/column/queryAll", controller.panel.column.queryAll);

@@ -45,6 +45,17 @@ class LoginController extends Controller {
       ctx.err("验证token失败请重新登录", 500);
     }
   }
+  async getUserByToken(){
+    let { ctx, service, app } = this;
+    let token = ctx.request.header.authorization.split(' ')[1];
+    let info = app.jwt.decode(token, app.config.jwt.secret);
+    let result = await service.login.getUser(info.account);
+    if(result) return ctx.success("自动登陆成功", {
+      account: result.account,
+      auth: result.auth
+    });
+    ctx.err("自动登陆失败", 500);
+  }
 }
 
 module.exports = LoginController;
