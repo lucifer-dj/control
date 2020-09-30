@@ -36,7 +36,7 @@ class LoginController extends Controller {
       _info.token = token;
       ctx.success("自动登录成功", _info);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       ctx.err("验证token失败请重新登录", 500);
     }
   }

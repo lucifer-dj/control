@@ -68,6 +68,7 @@ module.exports = (appInfo) => {
   };
   config.publicPath = "public/frame";
   config.staticPath = path.resolve(__dirname, "../app/static/");
+  config.columnId = 1;
   config.site =
     appInfo.env === "prod" ? "http://luciferdj.cn" : "http://127.0.0.1:7001"; //上传资源的保存路劲
   return {

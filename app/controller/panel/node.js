@@ -22,7 +22,7 @@ class NodeController extends Controller {
   }
   async queryAll() {
     let { ctx, service } = this;
-    let result = await service.db.select('node');
+    let result = await service.node.queryAll();
     if (result) return ctx.success("查询成功", result);
     return ctx.err("没有取到数据");
   }

@@ -21,7 +21,6 @@ class PageService extends Service {
 	async add(params){
 		let { app } = this;
 		const conn = await app.mysql.beginTransaction();
-		console.log(params);
 		try{
 			let nodeResult = await conn.insert('node', params.node);
 			params.column.nid = nodeResult.insertId;

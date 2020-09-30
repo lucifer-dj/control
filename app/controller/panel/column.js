@@ -38,7 +38,6 @@ class ColumnController extends Controller {
   async update() {
     let { ctx, service} = this;
     let req = ctx.request.body;
-    console.log(req)
     let result = await service.column.update(req);
     if (result) {
       ctx.success("成功更新一条数据", result);
