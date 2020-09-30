@@ -1,7 +1,8 @@
 {
   "name": "control",
   "version": "1.0.0",
-  "description": "",
+  "description": "《雪中悍刀行》服务端",
+  "author": "look-dj <look-dj@outlook.com>",
   "private": true,
   "egg": {
     "declarations": true
@@ -44,6 +45,5 @@
     "type": "git",
     "url": ""
   },
-  "author": "lucifer-dj",
   "license": "MIT"
 }
