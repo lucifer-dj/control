@@ -6,14 +6,16 @@ class LoginController extends Controller {
   async index() {
     const { ctx, app, service } = this;
     let data = ctx.request.body;
-    let _info = await service.login.valid(data);
+    let _info = await service.login.validUser(data);
     if (_info) {
       //生辰token
       const token = app.jwt.sign({
           account: data.account,
-          pass: data.pass,
+          pass: data.pass
         },
-        app.config.jwt.secret
+        app.config.jwt.secret, {
+          expiresIn: "30m"
+        }
       );
       ctx.set({ authorization: token });
       _info.token = token;
@@ -32,9 +34,12 @@ class LoginController extends Controller {
     let token = ctx.request.body.token;
     try {
       let info = app.jwt.verify(token, app.config.jwt.secret);
-      let _info = await service.login.valid(info);
-      _info.token = token;
-      ctx.success("自动登录成功", _info);
+      let _info = await service.login.validToken(info.account);
+      if(_info){
+        _info.token = token;
+        ctx.success("验证token成功", _info);
+      }
+     
     } catch (e) {
       // console.log(e);
       ctx.err("验证token失败请重新登录", 500);

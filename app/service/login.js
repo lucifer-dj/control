@@ -2,18 +2,19 @@
 const Service = require("egg").Service;
 
 class LoginService extends Service {
-  async valid(user) {
-    let result = await this.getUserByAccount(user);
-    if (result && user.pass.toString() === result.pass.toString())
-      return {
-        auth: result.auth,
-        account: result.account,
-      };
-    else return false;
+  async validUser(user) {
+   let info = await this.getUser(user.account);
+   if(info && String(user.pass) === String(info.pass)){
+     return {
+       account: info.account,
+       auth: info.auth
+     };
+   }
+   return false;
   }
-  async getUserByAccount(info) {
-    let { service, app } = this;
-    let _info = await service.db.get("user", { account: info.account });
+  async getUser(account){
+    let { service } = this;
+    let _info = await service.db.get("user", { account });
     if (_info) return _info;
     return false;
   }
