@@ -5,7 +5,7 @@
  */
 module.exports = (app) => {
   const { router, controller } = app;
-  //后台
+  //后台请求全部都是post 前台全是get <=不需要token验证
   router.post("/t", controller.panel.home.postTest);
   router.get("/t", controller.panel.home.getTest);
   router.get("/panel", controller.panel.home.index);
@@ -67,6 +67,6 @@ module.exports = (app) => {
   router.post("/panel/node/update", controller.panel.node.update);
   //前台
   router.get("/", controller.frame.index.index);
-  router.get("/:column", controller.frame.column.index);
-  router.get("/:column/:id", controller.frame.part.index);
+  router.get("/frame/:column", controller.frame.column.index);
+  router.get("/frame/:column/:id", controller.frame.part.index);
 };
