@@ -100,12 +100,11 @@ class FileService extends Service {
     let writeStream = fs.createWriteStream(target);
     try {
       await awaitWriteStream(stream.pipe(writeStream));
-      let fn = `${config.site}/public/uploads/${filename}`;
+      let fn = `${config.uploadPath}/public/uploads/${filename}`;
       return fn;
     } catch (e) {
       console.log(e);
       await sendToWormhole(stream);
-      throw e;
       return false;
     }
   }

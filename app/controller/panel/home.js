@@ -4,8 +4,9 @@ const Controller = require("egg").Controller;
 
 class HomeController extends Controller {
   async index() {
-    const { ctx } = this;
-    await ctx.render("control/panel");
+    const { ctx, config } = this;
+    // await ctx.render("control/panel");
+    ctx.redirect(config.webPath);
     // ctx.body = "<h1>hello world!</h1>"
   }
   async postTest() {

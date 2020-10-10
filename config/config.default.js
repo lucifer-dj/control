@@ -67,10 +67,10 @@ module.exports = (appInfo) => {
     mode: "stream",
   };
   config.publicPath = "public/frame";
-  config.staticPath = path.resolve(__dirname, "../app/static/");
-  config.columnId = 1;
-  config.site =
+  config.staticPath = path.resolve(__dirname, "../app/static/"); // static目录
+  config.uploadPath =
     appInfo.env === "prod" ? "http://luciferdj.cn" : "http://127.0.0.1:9017"; //上传资源的保存路劲
+  config.webPath = appInfo.env === "prod" ? "http://p.luciferdj.cn" : "http://127.0.0.1:9017"; // 前台路劲
   return {
     ...config,
     ...userConfig,
