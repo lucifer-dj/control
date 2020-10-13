@@ -53,9 +53,9 @@ module.exports = (appInfo) => {
     client: {
       host: "119.45.57.238",
       port: "3306",
-      user: "nuxt",
+      user: "xzhdx-nuxt",
       password: "123123",
-      database: "nuxt",
+      database: "xzhdx-nuxt",
     },
     // 是否加载到 app 上，默认开启
     app: true,

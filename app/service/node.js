@@ -36,9 +36,11 @@ class NodeService extends Service {
 		this.disposeMenu(menu, deep);
   }
   async queryAll(){
-    let { app, config } = this;
-    let sql = 'SELECT * FROM node WHERE cid != ?;'
-    let result = await app.mysql.query(sql, [config.columnId]);
+		// 节点管理不应该能管理column 栏目管理的节点id
+		let columnId = 1;
+		let {service} = this;
+    let result = await service.db.select("node");
+		result = result.filter(n => n.cid !== columnId);
     return result;
   }
 }
