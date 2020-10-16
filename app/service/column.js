@@ -16,6 +16,7 @@ class PageService extends Service {
 		let { app } = this;
     let sql = 'SELECT c.*, n.deep, n.path,n.cid FROM `column` AS c LEFT OUTER JOIN node  AS n ON c.nid = n.id;';
 		let result = await app.mysql.query(sql);
+		// console.log(result);
 		return result;
 	}
 	async add(params){
@@ -36,7 +37,7 @@ class PageService extends Service {
   async update(params){
 		let { app } = this;
 		const conn = await app.mysql.beginTransaction();
-		 console.log(params);
+		//  console.log(params);
 		try{
 			await conn.update('node', params.node);
 			await conn.update('column', params.column);

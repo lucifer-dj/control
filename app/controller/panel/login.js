@@ -26,7 +26,7 @@ class LoginController extends Controller {
         data: _info,
       };
     } else {
-      ctx.err("登陆失败", 401);
+      ctx.err("登陆失败", 222);
     }
   }
   async getInfo() {
