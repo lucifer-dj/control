@@ -6,8 +6,8 @@
 module.exports = (app) => {
   const { router, controller } = app;
   //后台请求全部都是post 前台全是get <=不需要token验证
-  router.post("/t", controller.panel.home.postTest);
-  router.get("/t", controller.panel.home.getTest);
+  router.post("/panel/t", controller.panel.home.postTest);
+  router.get("/panel/t", controller.panel.home.getTest);
   router.get("/panel", controller.panel.home.index);
   router.get("/panel/getUserByToken", controller.panel.login.getUserByToken);
   router.post("/panel/login", controller.panel.login.index);
@@ -18,9 +18,9 @@ module.exports = (app) => {
   router.post("/panel/column/update", controller.panel.column.update);
   router.post("/panel/column/delete", controller.panel.column.delete);
   router.post("/panel/column/columnCount", controller.panel.column.columnCount);
-  router.put("/file/upload/oss", controller.upload.uploadOss);
-  router.put("/file/upload/serve", controller.upload.uploadServe);
-  router.post("/file/delete", controller.upload.delete);
+  router.put("/panel/file/upload/oss", controller.upload.uploadOss);
+  router.put("/panel/file/upload/serve", controller.upload.uploadServe);
+  router.post("/panel/file/delete", controller.upload.delete);
   router.post("/panel/role/queryAll", controller.panel.role.queryAll);
   router.post("/panel/role/add", controller.panel.role.add);
   router.post("/panel/role/delete", controller.panel.role.delete);
