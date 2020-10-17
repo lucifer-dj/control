@@ -5,11 +5,11 @@ class PageService extends Service {
   //通过nid拿到对应的column然后拿到page
   async getAllColumnCount() {
     let { service } = this;
-    let role = await service.db.count('role');
-    let page = await service.db.count('page');
-    let faction = await service.db.count('faction');
-    let realm = await service.db.count('realm');
-    let year = await service.db.count('year');
+    let role = await service.ssr.db.count('role');
+    let page = await service.ssr.db.count('page');
+    let faction = await service.ssr.db.count('faction');
+    let realm = await service.ssr.db.count('realm');
+    let year = await service.ssr.db.count('year');
     return [{ name: '角色', num: role  }, { name: '单页', num: page  }, { name: '地域', num: faction }, { name: '境界', num: realm }, { name: '时间线', num: year }, ];
   }
 	async queryAll(){

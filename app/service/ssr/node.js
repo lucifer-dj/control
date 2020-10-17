@@ -39,7 +39,7 @@ class NodeService extends Service {
 		// 节点管理不应该能管理column 栏目管理的节点id
 		let columnId = 1;
 		let {service} = this;
-    let result = await service.db.select("node");
+    let result = await service.ssr.db.select("node");
 		result = result.filter(n => n.cid !== columnId);
     return result;
   }

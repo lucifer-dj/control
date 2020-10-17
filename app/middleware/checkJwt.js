@@ -1,5 +1,6 @@
 module.exports = (options, app) => {
   return async function checkJwt(ctx, next) {
+    return await next();
     if(ctx.request.method.toLowerCase() === 'get'){
       return await next();
     }

@@ -14,7 +14,7 @@ class LoginService extends Service {
   }
   async getUser(account){
     let { service } = this;
-    let _info = await service.db.get("user", { account });
+    let _info = await service.ssr.db.get("user", { account });
     if (_info) return _info;
     return false;
   }

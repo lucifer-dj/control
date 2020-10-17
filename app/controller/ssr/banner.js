@@ -1,16 +1,15 @@
-//境界划分
 "use strict";
 const Controller = require("egg").Controller;
 
-class RealmController extends Controller {
+class BannerController extends Controller {
   constructor(ctx) {
     super(ctx);
-    this.table = "realm";
+    this.table = "banner";
   }
   async queryAll() {
     const { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.db.select(table, req);
+    let result = await service.ssr.db.select(table);
     if (result) {
       ctx.success("成功", result);
     } else {
@@ -20,31 +19,31 @@ class RealmController extends Controller {
   async add() {
     const { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.db.add(table, req);
-    if (result) ctx.success("成功添加一方势力");
-    else ctx.err("添加势力失败");
+    let result = await service.ssr.db.add(table, req);
+    if (result) ctx.success("成功添加一个benner");
+    else ctx.err("添加banner失败");
   }
   async read() {
     const { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.db.get(table, req);
+    let result = await service.ssr.db.get(table, req);
     if (result) ctx.success("查询成功", result);
     else ctx.err("查询失败");
   }
   async delete() {
     const { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.db.deleteSingle(table, req);
-    if (result) ctx.success("成功删除一方势力");
+    let result = await service.ssr.db.deleteSingle(table, req);
+    if (result) ctx.success("成功删除一个banner");
     else ctx.err("删除失败");
   }
   async update() {
     const { ctx, service, table } = this;
     let req = ctx.request.body;
-    let result = await service.db.update(table, req);
-    if (result) ctx.success("成功更新一条数据");
+    let result = await service.ssr.db.update(table, req);
+    if (result) ctx.success("成功更新一个banner");
     else ctx.err("更新失败");
   }
 }
 
-module.exports = RealmController;
+module.exports = BannerController;
