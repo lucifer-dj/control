@@ -19,9 +19,6 @@ module.exports = (app) => {
 	router.post("/spa/column/update", controller.spa.column.update);
 	router.post("/spa/column/delete", controller.spa.column.delete);
 	router.post("/spa/column/columnCount", controller.spa.column.columnCount);
-	router.put("/spa/file/upload/oss", controller.upload.uploadOss);
-	router.put("/spa/file/upload/serve", controller.upload.uploadServe);
-	router.post("/spa/file/delete", controller.upload.delete);
 	router.post("/spa/role/queryAll", controller.spa.role.queryAll);
 	router.post("/spa/role/add", controller.spa.role.add);
 	router.post("/spa/role/delete", controller.spa.role.delete);

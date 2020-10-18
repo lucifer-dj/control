@@ -37,14 +37,14 @@ class NodeController extends Controller {
     const { ctx, service, table } = this;
     let req = ctx.request.body;
     let result = await service.spa.db.deleteSingle(table, req);
-    if (result) ctx.success("成功删除一个banner");
+    if (result) ctx.success("成功删除一个节点");
     else ctx.err("删除失败");
   }
   async update() {
     const { ctx, service, table } = this;
     let req = ctx.request.body;
     let result = await service.spa.db.update(table, req);
-    if (result) ctx.success("成功更新一个banner");
+    if (result) ctx.success("成功更新一个节点");
     else ctx.err("更新失败");
   }
   async add() {
