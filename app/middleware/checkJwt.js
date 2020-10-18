@@ -12,7 +12,7 @@ module.exports = (options, app) => {
     }
     let authorization = ctx.request.header.authorization;
     if (!(authorization.length > 0)) {
-      ctx.err("没有token请重新登录", 401);
+    return  ctx.err("没有token请重新登录", 401);
     }
     let token = authorization.split(" ")[1];
     // console.log(token);
@@ -23,7 +23,7 @@ module.exports = (options, app) => {
         await next();
       } else {
         console.log('token 解密后与数据库里的信息不符');
-        ctx.err("token 不正确，请重新获取", 401);
+        return ctx.err("token 不正确，请重新获取", 401);
       }
     } catch (e) {
       if (e.name === "TokenExpiredError") {
