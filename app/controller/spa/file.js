@@ -22,15 +22,6 @@ class SiteController extends Controller {
     if (result) return ctx.success("修改成功");
     ctx.err("修改失败");
   }
-  async getTps() {
-    let that = this;
-    let { ctx, service } = that;
-    let req = ctx.request.body;
-    let src = path.resolve(__dirname, "../../view/frame/list/");
-    let files = await service.spa.file.readFiles(src);
-    if (files) return ctx.success("查询成功", files);
-    ctx.err("修改失败");
-  }
 }
 
 module.exports = SiteController;

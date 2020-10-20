@@ -2,140 +2,108 @@
 const Service = require("egg").Service;
 
 class NodeService extends Service {
-  async router(auth) {
-    let {
-      app,
-      service
-    } = this;
-    let routes = await service.spa.db.select("node");
-    if (auth.auth === "user") routes = routes.filter((r) => r.auth === "user");
-    if (!(routes.length > 1)) return false;
-    routes = await this.mergeRouter(routes);
-    return routes;
-  }
-  async getNodes() {
-    let {
-      app,
-      service
-    } = this;
-    let nodes = await service.spa.db.select("node");
-    if (!(nodes.length > 1)) return false;
-    let column = nodes.find((r) => r.name === "column");
-    nodes = nodes.filter((n) => n.deep !== 0);
-    nodes = nodes.filter((n) => n.cid !== column.id);
-    return nodes;
-  }
-  async menu() {
-    let {
-      app,
-      service
-    } = this;
-    let nodes = await service.spa.db.select("node");
-    if (!(nodes.length > 1)) return false;
-    nodes = this.mergeMenu(nodes);
-    return nodes;
-  }
-  mergeMenu(routes) {
-    if (routes.length < 2) return routes;
-    let deep = [];
-    for (let i = 0; i < routes.length; i++) {
-      deep.push(routes[i].deep);
-    }
-    deep = [...new Set(deep)].sort((a, b) => a - b);
-    deep.shift();
-    deep.shift();
-    let layout = [];
-    let temp = [];
-    routes.forEach((route, idx) => {
-      if (route.cid === 0) layout.push(route);
-      else temp.push(route);
-    });
-    routes = temp;
-    let obj = {};
-    for (let i = 0; i < deep.length; i++) {
-      obj[deep[i]] = routes.filter((r) => r.deep === deep[i]);
-    }
-    routes.forEach((route) => {
-      deep.forEach((item) => {
-        let r = obj[item];
-        for (let i = 0; i < r.length; i++) {
-          if (route.id === r[i].cid) {
-            if (!("children" in route)) {
-              route.children = [];
-            }
-            route.children.push(r[i]);
-          }
-        }
-      });
-    });
-    routes = routes.filter((r) => r.cid === 1);
-    layout[0].children = routes;
-    // layout = this.disposeRouter(layout)
-    return routes;
-  }
+	async getRouter() {
+		let { service } = this;
+		let routes = await service.spa.db.select("node");
+		if (!(routes.length > 1)) return false;
+		console.log(routes);
+		routes = this.disposeRouter(routes);
+		return routes;
+	}
+	async queryAll() {
+		let { app } = this;
+		let db = await app.mysql.get("spa");
+		let sql =
+			"SELECT * FROM `node` AS n WHERE n.component_name != 'column' AND  n.component_name != 'index' AND n.deep != 0;";
+		let nodes = await db.query(sql);
+		if (!(nodes.length > 1)) return false;
+		return nodes;
+	}
+	async getMenu({ auth }) {
+		let { app } = this;
+		let db = await app.mysql.get("spa");
+		let sql =
+			"SELECT * FROM `node` AS n WHERE n.component_name != 'index' AND n.auth = 'user';";
+		if (auth == "root")
+			sql =
+				"SELECT * FROM `node` AS n WHERE n.component_name != 'index';";
+		let nodes = await db.query(sql);
+		if (!(nodes.length > 1)) return false;
+		nodes = this.disposeMenu(nodes);
+		return nodes;
+	}
+	disposeMenu(menus) {
+		let deeps = [];
+		menus.forEach((m) => deeps.push(m.deep));
+		deeps = [...new Set(deeps)].sort((a, b) => a - b);
+		deeps.shift();
+		let translator = (menus, deeps) => {
+			let lastdeep = deeps.pop();
+			menus.forEach((item) => {
+				if (item.deep === lastdeep) {
+					let target = menus.find((m) => item.pid === m.id);
+					if ("children" in target) {
+						target.children.push(item);
+					} else {
+						target.children = [];
+						target.children.push(item);
+					}
+				}
+			});
+			// menus = menus.filter((m) => m.deep != lastdeep);
+			if (deeps.length != 0) translator(menus, deeps);
+		};
+		translator(menus, deeps);
+		menus = menus.filter((m) => m.deep == 1);
+		return menus;
+	}
 
-  async mergeRouter(routes) {
-    let column = routes.find((r) => r.name === "column");
-    let layout = routes.filter((r) => r.deep === 0);
-    routes = routes.filter((r) => r.deep !== 0);
-    routes = routes.filter((r) => r.cid !== column.id);
-    let tps = await this.getTps();
-    routes = routes.concat(tps);
-    routes.push({
-      v_path: '/',
-      title: '首页',
-      auth: "",
-      icon: "",
-      cid: 1,
-      component: "/index",
-      name: "index"
-    })
-    delete layout[0].name;
-    layout[0].children = routes;
-    layout = this.disposeRouter(layout);
-    return layout;
-  }
-  disposeRouter(routes) {
-    let arr = [];
-    for (let i = 0; i < routes.length; i++) {
-      let route = routes[i];
-      let obj = {
-        path: route.v_path,
-        component: route.component,
-        meta: {
-          title: route.title,
-          auth: route.auth,
-          call: route.call,
-          icon: route.icon,
-          cid: route.cid,
-        },
-        name: route.name,
-      };
-      if (route.children) {
-        obj.children = route.children;
-        obj.children = this.disposeRouter(obj.children);
-      }
-      arr.push(obj);
-    }
-    return arr;
-  }
-  async getTps() {
-    let {
-      service
-    } = this;
-    let tps = await service.spa.db.select("tmp");
-    tps = tps.length > 0 ? tps : [];
-    for (var i = 0; i < tps.length; i++) {
-      tps[i] = {
-        ...tps[i],
-        icon: "",
-        cid: "",
-        auth: "user",
-        title: tps[i].call,
-      };
-    }
-    return tps;
-  }
+	disposeRouter(routes) {
+    // 去重
+		let res = [];
+		let map = new Map();
+		routes.forEach((item) => {
+			if (map.has(item.component_name)) return;
+			map.set(item.component_name, true);
+			res.push(item);
+		});
+		routes = res;
+		routes = routes.map((item) => {
+			return {
+				name: item.component_name,
+				path: item.component_path,
+				component: item.component,
+				meta: {
+					title: item.title,
+					auth: item.auth,
+					call: item.call,
+					icon: item.icon,
+					cid: item.cid,
+				},
+			};
+		});
+		// console.log(routes)
+    let Layout = routes.filter((r) => r.name === "Layout");
+		let children = routes.filter((r) => r.name !== "Layout");
+    Layout[0].children = children;
+    delete Layout[0].name; // 有默认路由的时候父组件不需要名字
+		return Layout;
+	}
+	async getTps() {
+		let { service } = this;
+		let tps = await service.spa.db.select("tmp");
+		tps = tps.length > 0 ? tps : [];
+		for (var i = 0; i < tps.length; i++) {
+			tps[i] = {
+				...tps[i],
+				icon: "",
+				cid: "",
+				auth: "user",
+				title: tps[i].call,
+			};
+		}
+		return tps;
+	}
 }
 
 module.exports = NodeService;

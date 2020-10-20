@@ -18,7 +18,8 @@ module.exports = (app) => {
 	router.post("/spa/column/read", controller.spa.column.read);
 	router.post("/spa/column/update", controller.spa.column.update);
 	router.post("/spa/column/delete", controller.spa.column.delete);
-	router.post("/spa/column/columnCount", controller.spa.column.columnCount);
+  router.post("/spa/column/columnCount", controller.spa.column.columnCount);
+  router.post("/spa/column/getHtmlList", controller.spa.column.getHtmlList);
 	router.post("/spa/role/queryAll", controller.spa.role.queryAll);
 	router.post("/spa/role/add", controller.spa.role.add);
 	router.post("/spa/role/delete", controller.spa.role.delete);
@@ -50,7 +51,6 @@ module.exports = (app) => {
 	router.post("/spa/year/delete", controller.spa.year.delete);
 	router.post("/spa/year/read", controller.spa.year.read);
 	router.post("/spa/year/update", controller.spa.year.update);
-	router.post("/spa/file/getHtmlList", controller.spa.file.getTps);
 	router.post("/spa/tmp/queryAll", controller.spa.tmp.queryAll);
 	router.post("/spa/tmp/add", controller.spa.tmp.add);
 	router.post("/spa/tmp/delete", controller.spa.tmp.delete);
