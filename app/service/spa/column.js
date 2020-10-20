@@ -22,7 +22,7 @@ class PageService extends Service {
 	async queryAll() {
 		let { app } = this;
 		let sql =
-			"SELECT c.*, n.deep FROM `column` AS c LEFT OUTER JOIN node  AS n ON c.nid = n.id";
+			"SELECT c.*, n.deep,n.component FROM `column` AS c LEFT OUTER JOIN node  AS n ON c.nid = n.id";
 		let result = await app.mysql.get("spa").query(sql);
 		if (result) return result;
 		return false;

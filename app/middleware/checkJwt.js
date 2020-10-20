@@ -35,7 +35,7 @@ module.exports = (options, app) => {
           account: _info.account,
           pass: _info.pass
         }, app.config.jwt.secret, {
-          expiresIn: "30m"
+          expiresIn: 60 * 60
         })
         ctx.newToken = newtoken;
         await next();
