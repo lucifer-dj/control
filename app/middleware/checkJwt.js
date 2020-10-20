@@ -1,13 +1,13 @@
 module.exports = (options, app) => {
   return async function checkJwt(ctx, next) {
-    return await next();
+    // return await next();
     if(ctx.request.method.toLowerCase() === 'get'){
       return await next();
     }
-    let whiteList = options.whiteList || [];
+    let whiteList =["/t", "/spa/login", "/spa/register","/ssr/login", "/ssr/register"];
     let whiteUrl = whiteList.some((item) => ctx.url.startsWith(item));
     if (whiteUrl) {
-      // console.log("再白名单");
+      console.log(`当前路由${  ctx.url }===>在白名单`);
       return await next();
     }
     let authorization = ctx.request.header.authorization;

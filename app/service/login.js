@@ -13,8 +13,9 @@ class LoginService extends Service {
    return false;
   }
   async getUser(account){
-    let { service } = this;
-    let _info = await service.ssr.db.get("user", { account });
+    let { app } = this;
+    let db = app.mysql.get('spa');
+    let _info = await db.get("user", { account });
     if (_info) return _info;
     return false;
   }

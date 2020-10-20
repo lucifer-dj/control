@@ -9,22 +9,22 @@ class ColumnController extends Controller {
 	}
 	async queryAll() {
 		let { ctx, service } = this;
-		// let req = ctx.request.body;
+		// let params = ctx.request.body;
 		let result = await service.spa.column.queryAll();
 		if (result) return ctx.success("查询成功", result);
 		ctx.err("没有取到数据");
 	}
 	async add() {
 		let { ctx, service } = this;
-		let req = ctx.request.body;
-		let result = await service.spa.column.add(req);
+		let params = ctx.request.body;
+		let result = await service.spa.column.add(params);
 		if (result) return ctx.success("成功添加一条数据");
 		ctx.err("添加栏目失败");
 	}
 	async read() {
 		let { ctx, service, table } = this;
-		let req = ctx.request.body;
-		let result = await service.spa.db.get(table, req);
+		let params = ctx.request.body;
+		let result = await service.spa.db.get(table, params);
 		if (result) {
 			ctx.success("成功查询到一条数据", result);
 		} else {

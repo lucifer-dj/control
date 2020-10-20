@@ -9,10 +9,8 @@ module.exports = (app) => {
 	router.post("/t", controller.test.home.postTest);
 	router.get("/t", controller.test.home.getTest);
 	// 单页面
-  // router.get("/spa/getUserByToken", controller.spa.login.getUserByToken);
-  router.get("/spa", controller.spa.home.index);
-	router.post("/spa/login", controller.spa.login.index);
-	router.post("/spa/user/getInfo", controller.spa.login.getInfo);
+	router.post("/spa/getUserInfo", controller.login.getUserInfo);
+	router.post("/spa/login", controller.login.index);
 	router.post("/spa/column/queryAll", controller.spa.column.queryAll);
 	router.post("/spa/column/add", controller.spa.column.add);
 	router.post("/spa/column/read", controller.spa.column.read);
@@ -65,9 +63,8 @@ module.exports = (app) => {
 	router.post("/spa/node/update", controller.spa.node.update);
 
 	//服务端渲染
-	router.get("/ssr/getUserByToken", controller.ssr.login.getUserByToken);
-	router.post("/ssr/login", controller.ssr.login.index);
-	router.post("/ssr/user/getInfo", controller.ssr.login.getInfo);
+	router.get("/ssr/getUserInfo", controller.login.getUserInfo);
+	router.post("/ssr/login", controller.login.index);
 	router.post("/ssr/column/queryAll", controller.ssr.column.queryAll);
 	router.post("/ssr/column/add", controller.ssr.column.add);
 	router.post("/ssr/column/read", controller.ssr.column.read);

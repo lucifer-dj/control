@@ -68,6 +68,14 @@ class DbService extends Service {
       console.log(e);
 			return false;
 		}
+  }
+  async count(table){
+    let { app } = this;
+    let db = app.mysql.get("spa");
+		let result = await db.query('SELECT COUNT(*) FROM ?;',[table]);
+		let str = "COUNT(*)";
+		result = result[0][str];
+		return result;
 	}
 }
 

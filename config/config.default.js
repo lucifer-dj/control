@@ -28,7 +28,6 @@ module.exports = (appInfo) => {
   // add your middleware config here
   config.middleware = ["checkJwt"];
   config.checkJwt = {
-    whiteList: ["/t", "/panel/login", "/panel/register"],
     methods: ["get"],
   };
   // add your user config here
