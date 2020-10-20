@@ -6,7 +6,6 @@ class NodeService extends Service {
 		let { service } = this;
 		let routes = await service.spa.db.select("node");
 		if (!(routes.length > 1)) return false;
-		console.log(routes);
 		routes = this.disposeRouter(routes);
 		return routes;
 	}

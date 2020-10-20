@@ -8,9 +8,10 @@ module.exports = (app) => {
 	//后台请求全部都是post 前台全是get <=不需要token验证
 	router.post("/t", controller.test.home.postTest);
 	router.get("/t", controller.test.home.getTest);
-	// 单页面
+  // 单页面
+  router.get("/spa", controller.spa.home.index);
+  router.post("/spa/login", controller.login.index);
 	router.post("/spa/getUserInfo", controller.login.getUserInfo);
-	router.post("/spa/login", controller.login.index);
 	router.post("/spa/column/queryAll", controller.spa.column.queryAll);
 	router.post("/spa/column/add", controller.spa.column.add);
 	router.post("/spa/column/read", controller.spa.column.read);
