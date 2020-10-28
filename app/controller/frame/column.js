@@ -11,33 +11,34 @@ class IndexController extends Controller {
 	async index() {
 		let that = this;
 		let { ctx, service } = that;
-		let params = ctx.params.column;
-		let query = ctx.query;
-		let res = await service.frame.checkLink(params, query);
+    let params = ctx.params.column;
+    let query = ctx.query;
+    let res = await service.frame.index.checkLink(params, query);
 		if (!res) return (ctx.body = "<h1>没有找到当前页面</h1>");
-		await that[res.tmp](res);
+		await that[res.html_template](res);
 	}
 	/**
 	 * 检查当前路由对应的模板是否存在
 	 */
 	async role(params) {
 		let that = this;
-		let { ctx, service, config } = that;
-		let data = await service.frame.role();
+		let { ctx, service } = that;
+    let data = await service.frame.index.role();
+    console.log(data)
 		data.head_active = params.id;
 		await ctx.render("frame/list/role", data);
 	}
 	async faction(params) {
 		let that = this;
-		let { ctx, service, config } = that;
-		let data = await service.frame.faction();
+		let { ctx, service } = that;
+		let data = await service.frame.index.faction();
 		data.head_active = params.id;
 		await ctx.render("frame/list/faction", data);
 	}
 	async realm(params) {
 		let that = this;
-		let { ctx, service, config } = that;
-		let data = await service.frame.realm();
+		let { ctx, service } = that;
+		let data = await service.frame.index.realm();
 		data.head_active = params.id;
 		await ctx.render("frame/list/realm", data);
 	}
