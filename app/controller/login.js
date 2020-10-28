@@ -14,7 +14,7 @@ class LoginController extends Controller {
           pass: data.pass
         },
         app.config.jwt.secret, {
-          expiresIn: 60 * 60
+          expiresIn: '2h'
         }
       );
       ctx.set({ authorization: token });
