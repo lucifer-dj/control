@@ -7,25 +7,23 @@
         <div class="content">
           <div class="right">
             您的位置：<a href="">首页</a> <span>></span>
-            <a href="">视频展示</a>
+            <a href="">{{columns.role.name}}</a>
           </div>
           <div class="clear"></div>
         </div>
       </div>
       <ul class="role_ul">
-        {% for item in tempArr %}
+        {% for item in roles %}
         <li>
           <a href="">
             <div class="img">
-              <img src="{{static}}/images/1499169822486.png" alt="" />
+              <img src="{{static}}/images/role.jpg" alt="" />
             </div>
             <div class="detail">
-              <span class="name">徐凤年</span>
-              <p class="title">内阁大总统</p>
+              <span class="name">{{item.name}}</span>
+              <p class="title">{{item.realm}}</p>
               <p class="line"></p>
-              <p class="text">
-                核心能力集中在医药保健和农业领域/为创新产品和解决方案研发新分子
-              </p>
+              <p class="text">{{item.introduce}}</p>
               <div class="more">
                 查看更多
               </div>

@@ -610,6 +610,7 @@ header > nav > ul .nav_line {
   overflow: hidden;
 }
 .main_wrap .faction > article .news_content .news_l .image > img {
+  height: 100%;
   transition: transform 0.3s;
 }
 .main_wrap .faction > article .news_content .news_l .more {
@@ -1641,43 +1642,43 @@ header > nav > ul .nav_line {
 .main_list > .scope > article > .srrot > a:hover {
   color: #233876;
 }
-.main_list > .news > article > .news_content {
+.main_list > .faction > article > .news_content {
   width: 100%;
 }
-.main_list > .news > article > .news_content > li {
+.main_list > .faction > article > .news_content > li {
   width: 100%;
   padding: 30px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s;
 }
-.main_list > .news > article > .news_content > li > a {
+.main_list > .faction > article > .news_content > li > a {
   width: 100%;
   height: 140px;
   display: block;
 }
-.main_list > .news > article > .news_content > li > a > .img {
+.main_list > .faction > article > .news_content > li > a > .img {
   width: 340px;
   height: 140px;
   float: left;
   margin-right: 40px;
   transition: transform 0.3s;
 }
-.main_list > .news > article > .news_content > li > a > .img > img {
+.main_list > .faction > article > .news_content > li > a > .img > img {
   width: 100%;
   height: 100%;
 }
-.main_list > .news > article > .news_content > li > a > .detail {
+.main_list > .faction > article > .news_content > li > a > .detail {
   width: 600px;
   height: 140px;
   float: left;
   transition: transform 0.3s;
 }
-.main_list > .news > article > .news_content > li > a > .detail > .title {
+.main_list > .faction > article > .news_content > li > a > .detail > .title {
   padding: 23px 0;
   color: #303030;
   font-size: 16px;
 }
-.main_list > .news > article > .news_content > li > a > .detail > .text {
+.main_list > .faction > article > .news_content > li > a > .detail > .text {
   line-height: 26px;
   font-size: 13px;
   display: -webkit-box;
@@ -1686,49 +1687,48 @@ header > nav > ul .nav_line {
   overflow: hidden;
   color: #888;
 }
-.main_list > .news > article > .news_content > li > a > .date {
+.main_list > .faction > article > .news_content > li > a > .date {
   width: 100px;
   height: 140px;
   float: right;
   padding-top: 23px;
   box-sizing: border-box;
 }
-.main_list > .news > article > .news_content > li > a > .date > .day {
+.main_list > .faction > article > .news_content > li > a > .date > .day {
   display: block;
   font-size: 22px;
   font-weight: 100;
 }
-.main_list > .news > article > .news_content > li > a > .date > .arrow {
+.main_list > .faction > article > .news_content > li > a > .date > .arrow {
   display: block;
   margin-top: 40px;
   width: 50px;
   height: 30px;
-  border: 1px solid #233876;
   transition: transform 0.3s;
 }
-.main_list > .news > article > .news_content > li:hover {
+.main_list > .faction > article > .news_content > li:hover {
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
 }
-.main_list > .news > article > .news_content > li:hover > a > .img {
+.main_list > .faction > article > .news_content > li:hover > a > .img {
   transform: translateX(20px);
 }
-.main_list > .news > article > .news_content > li:hover > a > .detail {
+.main_list > .faction > article > .news_content > li:hover > a > .detail {
   transform: translateX(20px);
 }
-.main_list > .news > article > .news_content > li:hover > a > .detail > .title {
+.main_list > .faction > article > .news_content > li:hover > a > .detail > .title {
   color: #233876;
 }
-.main_list > .news > article > .news_content > li:hover > a > .date > .arrow {
+.main_list > .faction > article > .news_content > li:hover > a > .date > .arrow {
   transform: translateX(20px);
 }
-.main_list > .news > article > .srrot {
+.main_list > .faction > article > .srrot {
   width: 100%;
   padding: 30px 0 60px;
 }
-.main_list > .news > article > .srrot > a {
+.main_list > .faction > article > .srrot > a {
   padding: 0 10px;
 }
-.main_list > .news > article > .srrot > a:hover {
+.main_list > .faction > article > .srrot > a:hover {
   color: #233876;
 }
 .main_list > .about > article {

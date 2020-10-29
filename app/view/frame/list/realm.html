@@ -7,26 +7,26 @@
         <div class="content">
           <div class="left">
             <a href="" class="head_active">全部</a>
-            <a href="">全产业链业务</a>
-            <a href="">新资源开发</a>
+            <a href="">陆地神仙</a>
+            <a href="">九品下</a>
           </div>
           <div class="right">
-            您的位置：<a href="">首页</a> <span>></span> <a href="">产品中心</a>
+            您的位置：<a href="">首页</a> <span>></span> <a href="">{{columns.realm.name}}</a>
           </div>
           <div class="clear"></div>
         </div>
       </div>
       <div class="pro">
         <ul>
-          {% for item in tempArr %}
+          {% for item in realms %}
           <li>
             <a href="">
               <div class="img">
-                <img src="{{static}}/images/1499083067928.jpg" alt="" />
+                <img src="{{static}}/images/548464846.png" alt="" />
               </div>
               <div class="detail">
-                <h2>能源产业优化链条进展</h2>
-                <div class="text">HARVEST STATES</div>
+                <h2>{{item.name}}</h2>
+                <div class="text">{{item.introduce}}</div>
               </div>
               <div class="circle"></div>
             </a>

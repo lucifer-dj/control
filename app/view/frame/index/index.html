@@ -39,7 +39,7 @@
           <span>{{columns.role.name}}</span>
         </div>
         <p class="text">
-          公司践行追求卓越造福人类的宗旨，始终秉承执行力与人性化的管理理念遵循员工与企业
+          江湖是一张珠帘。大人物小人物，是珠子，大故事小故事，是串线。情义二字，则是那些珠子的精气神。
         </p>
         <div class="btns">
           <div class="left_btn"></div>
@@ -54,13 +54,13 @@
             <li class="swiper-slide">
               <a href="" class="">
                 <div class="img">
-                  <img src="{{ static }}/images/1499169822486.png" alt="" />
+                  <img src="{{ static }}/images/role.jpg" alt="" />
                 </div>
                 <div class="detail">
                   <div class="peo_head">
                     <div class="peo_head_left">
                       <p class="name">{{item.name}}</p>
-                      <p class="zhiwei">抚远大将军</p>
+                      <p class="zhiwei">{{item.realm}}</p>
                     </div>
                     <div class="more"></div>
                   </div>
@@ -133,8 +133,8 @@
         <div class="space"></div>
         <div class="head_r">
           <a href="" class="head_a_active">全部</a>
-          <a href="">行业资讯</a>
-          <a href="">媒体报道</a>
+          <a href="">朝廷势力</a>
+          <a href="">江湖势力</a>
           <a href="" class="more">更多</a>
         </div>
       </div>
@@ -149,7 +149,7 @@
             {{factions[factions.length-1].introduce}}
           </p>
           <div class="image">
-            <img src="{{ static }}/images/1498476780341.jpg" alt="" />
+            <img src="{{ static }}/images/45646864.png" alt="" />
           </div>
           <div class="more"></div>
         </a>
@@ -198,7 +198,7 @@
             <li class="swiper-slide">
               <a href="">
                 <div class="img">
-                  <img src="{{static}}/images/1499154353589.jpg" alt="" />
+                  <img src="{{static}}/images/548464846.png" alt="" />
                 </div>
                 <div class="detail">
                   <h2>能源产业优化链条进展</h2>
@@ -230,61 +230,24 @@
     <article>
       <div class="content">
         <div class="first">
-          <h2>特殊板块演示</h2>
+          <h2>{{columns.realm.name}}</h2>
         </div>
         <ul class="story_ul">
+          {% for item in realms %}
           <li>
             <a href="">
-              <p class="title">我们的价值观</p>
+              <p class="title">{{item.name}}</p>
               <p class="text">
-                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
-                ...
+               {{item.introduce}}
               </p>
               <div class="more">more</div>
             </a>
             <div class="img">
-              <img src="{{static}}/images/1498546516300.jpg" alt="" />
+              <!-- <img src="{{item.pic}}" alt="{{item.name}}" /> -->
+              <img src="{{static}}/images/1498546516300.jpg" alt="{{item.name}}" />
             </div>
           </li>
-          <li>
-            <a href="">
-              <p class="title">我们的价值观</p>
-              <p class="text">
-                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
-                ...
-              </p>
-              <div class="more">more</div>
-            </a>
-            <div class="img">
-              <img src="{{static}}/images/1498546516300.jpg" alt="" />
-            </div>
-          </li>
-          <li>
-            <a href="">
-              <p class="title">我们的价值观</p>
-              <p class="text">
-                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
-                ...
-              </p>
-              <div class="more"></div>
-            </a>
-            <div class="img">
-              <img src="{{static}}/images/1498546516300.jpg" alt="" />
-            </div>
-          </li>
-          <li>
-            <a href="">
-              <p class="title">我们的价值观</p>
-              <p class="text">
-                许多价值观可以追溯至公司创始人罗伯特•博世先生，其他的价值观
-                ...
-              </p>
-              <div class="more"></div>
-            </a>
-            <div class="img">
-              <img src="{{static}}/images/1498546516300.jpg" alt="" />
-            </div>
-          </li>
+          {% endfor %}
         </ul>
       </div>
     </article>
@@ -348,7 +311,7 @@
 </main>
 <footer>
   <div>
-    COPYRIGHT (©) look-dj@outlook.com - 雪中悍刀行网站个人学习爱好.
+    COPYRIGHT (©) {{site.email}} - 雪中悍刀行网站个人学习爱好.
     <span>技术支持：</span><a href="https://gitee.com/luciferdj" target="_blank">look-dj</a>
   </div>
 </footer>

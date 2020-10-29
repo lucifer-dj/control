@@ -11,9 +11,9 @@ class IndexController extends Controller {
 	async index() {
 		let that = this;
 		let { ctx, service } = that;
-    let params = ctx.params.column;
-    let query = ctx.query;
-    let res = await service.frame.index.checkLink(params, query);
+		let params = ctx.params.column;
+		let query = ctx.query;
+		let res = await service.frame.index.checkLink(params, query);
 		if (!res) return (ctx.body = "<h1>没有找到当前页面</h1>");
 		await that[res.html_template](res);
 	}
@@ -23,8 +23,8 @@ class IndexController extends Controller {
 	async role(params) {
 		let that = this;
 		let { ctx, service } = that;
-    let data = await service.frame.index.role();
-    console.log(data)
+		let data = await service.frame.index.role();
+		console.log(data);
 		data.head_active = params.id;
 		await ctx.render("frame/list/role", data);
 	}
@@ -45,7 +45,7 @@ class IndexController extends Controller {
 	async year(params) {
 		let that = this;
 		let { ctx } = that;
-		ctx.body = ctx;
+		ctx.body = "<h1>当前页面正在制作中。。。</h1>"
 	}
 	async contact(params) {
 		let that = this;
@@ -75,7 +75,7 @@ class IndexController extends Controller {
 	async page(params) {
 		let that = this;
 		let { ctx, service } = that;
-		let data = await service.frame.page(params.id);
+		let data = await service.frame.index.page(params.id);
 		data.head_active = params.id;
 		await ctx.render("frame/list/page", data);
 	}

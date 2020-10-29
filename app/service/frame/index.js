@@ -13,7 +13,7 @@ class IndexService extends Service {
 		let banners = await db.select("banner", { limit: 4 });
 		let realms = await db.select("realm", { limit: 4 });
 		let about = await db.get("page", {
-			pid: 4,
+			pid: 5,
 		});
 		let res = await that.shareData();
 		return {
@@ -103,7 +103,7 @@ class IndexService extends Service {
 		let { app } = that;
 		let db = app.mysql.get("spa");
 		let page = await db.get("page", { pid: id });
-		let res = await that.shareMsg();
+		let res = await that.shareData();
 		return {
 			page,
 			...res,

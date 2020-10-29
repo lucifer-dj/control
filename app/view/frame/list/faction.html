@@ -1,40 +1,41 @@
 {% extends "../public/layout.html" %} {% block main %}
 <main class="main_list">
   {% include "../public/center.html"%}
-  <section class="news">
+  <section class="faction">
     <article>
       <div class="head_list">
         <div class="content">
           <div class="left">
             <a href="" class="head_active">全部</a>
-            <a href="">全产业链业务</a>
-            <a href="">新资源开发</a>
+            <a href="">朝廷势力</a>
+            <a href="">江湖势力</a>
           </div>
           <div class="right">
-            您的位置：<a href="">首页</a> <span>></span> <a href="">产品中心</a>
+            您的位置：<a href="">首页</a> <span>></span> <a href="">{{columns.faction.name}}</a>
           </div>
           <div class="clear"></div>
         </div>
       </div>
       <ul class="news_content">
-        {% for item in tempArr %}
+        {% for item in factions %}
         <li>
           <a href="">
             <div class="img">
-              <img src="{{static}}/images/1498476780341.jpg" alt="" />
+              <img src="{{static}}/images/45646864.png" alt="" />
             </div>
             <div class="detail">
               <p class="title">
-                李克强对“华龙一号”福清核电5号机组建设工作 作出重要批示
+                {{item.name}}
               </p>
               <p class="text">
-                中共中央政治局常委、国务院总理李克强日前对“华龙一号”福清核电5号机组建设工作作出重要批示。批示指出：我国自主研发的三代核电“华龙一号”是推进实施中国制造2025的标志性工程
-                ...
+                {{item.introduce}}
               </p>
             </div>
             <div class="date">
-              <span class="day">07-03</span>
-              <span class="arrow"></span>
+              <span class="day">{{item.years}}</span>
+              <span class="arrow">
+                <svg t="1603964365956" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2793" width="100%" height="100%"><path d="M189.568 534.485333h591.552l-192.725333 192.725334a28.16 28.16 0 0 0 39.808 39.808l240.768-240.768c2.602667-2.602667 4.693333-5.738667 6.122666-9.194667l0.128-0.426667c1.258667-3.178667 2.005333-6.634667 2.005334-10.261333a27.946667 27.946667 0 0 0-2.005334-10.282667c-0.042667-0.128-0.064-0.277333-0.128-0.405333a28.16 28.16 0 0 0-6.165333-9.258667L628.181333 245.674667a28.16 28.16 0 0 0-39.808 39.808l192.725334 192.725333H189.568a28.138667 28.138667 0 1 0 0 56.277333z" fill="#333333" p-id="2794"></path></svg>
+              </span>
             </div>
           </a>
         </li>
