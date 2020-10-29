@@ -24,7 +24,6 @@ class IndexController extends Controller {
 		let that = this;
 		let { ctx, service } = that;
 		let data = await service.frame.index.role();
-		console.log(data);
 		data.head_active = params.id;
 		await ctx.render("frame/list/role", data);
 	}
