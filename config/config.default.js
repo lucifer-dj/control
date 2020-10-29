@@ -74,7 +74,7 @@ module.exports = (appInfo) => {
   config.multipart = {
     mode: "stream",
   };
-  config.publicPath = "public/frame";
+  config.publicPath = "/public/frame";
   config.staticPath = path.resolve(__dirname, "../app/static/"); // static目录
   config.uploadPath =
     appInfo.env === "prod" ? "http://luciferdj.cn" : "http://127.0.0.1:9017"; //上传资源的保存路劲

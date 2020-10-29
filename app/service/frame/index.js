@@ -1,6 +1,7 @@
 "use strict";
-let path = require("path");
-let Service = require("egg").Service;
+const path = require("path");
+const fs = require("fs");
+const Service = require("egg").Service;
 
 class IndexService extends Service {
 	async index() {
@@ -8,7 +9,9 @@ class IndexService extends Service {
 		let { app } = that;
 		let db = app.mysql.get("spa");
 		let roles = await db.select("role", { limit: 4 });
+		// await that.disposeImage('role',roles);
 		let factions = await db.select("faction", { limit: 4 });
+		console.log(factions);
 		let years = await db.select("year", { limit: 4 });
 		let banners = await db.select("banner", { limit: 4 });
 		let realms = await db.select("realm", { limit: 4 });
@@ -108,6 +111,31 @@ class IndexService extends Service {
 			page,
 			...res,
 		};
+  }
+  // 使用随机临时的图片
+  async	disposeImage(part,data) {
+    let images = await this.getImages(part);
+		data.forEach((item) => {
+      let num = Math.floor(Math.random() * images.length);
+      item.src = images[num];
+    });
+	}
+	getImages(s) {
+		let { config } = this;
+		return new Promise((resolve, reject) => {
+			let src = path.resolve(__dirname, "../../public/frame/"+s);
+			fs.readdir(src, function (err, files) {
+				if (err) {
+					console.log(err);
+					reject(err);
+					return;
+				}
+				files = files.map((f) => {
+					return config.publicPath + "/"+s +"/"+ f;
+        });
+				resolve(files);
+			});
+		});
 	}
 }
 
