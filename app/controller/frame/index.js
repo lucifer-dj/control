@@ -4,8 +4,8 @@ class IndexController extends Controller {
     super(ctx);
   }
   async index() {
-    let { ctx, service, config } = this;
-    let res = await service.frame.frame.index();
+    let { ctx, service } = this;
+    let res = await service.frame.index.index();
     // console.log(res)
     await ctx.render("frame/index/index", res);
   }
