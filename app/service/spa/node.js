@@ -13,7 +13,7 @@ class NodeService extends Service {
 		let { app } = this;
 		let db = await app.mysql.get("spa");
 		let sql =
-			"SELECT * FROM `node` AS n WHERE n.component_name != 'column' AND  n.component_name != 'index' AND n.deep != 0;";
+			"SELECT * FROM `node` AS n WHERE n.component_name != 'column' AND n.pid!=3 AND  n.component_name != 'index' AND n.deep != 0;";
 		let nodes = await db.query(sql);
 		if (!(nodes.length > 1)) return false;
 		return nodes;
