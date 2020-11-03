@@ -42,9 +42,9 @@
           江湖是一张珠帘。大人物小人物，是珠子，大故事小故事，是串线。情义二字，则是那些珠子的精气神。
         </p>
         <div class="btns">
-          <div class="left_btn"></div>
+          <div class="left_btn peo_left_btn"></div>
           <div class="space"></div>
-          <div class="right_btn"></div>
+          <div class="right_btn peo_right_btn"></div>
         </div>
       </div>
       <div class="peo_right">
@@ -63,7 +63,9 @@
                       <p class="name">{{item.name}}</p>
                       <p class="zhiwei">{{item.realm}}</p>
                     </div>
-                    <div class="more"></div>
+                    <div class="more">
+                      <i class="iconfont iconfont-right"></i>
+                    </div>
                   </div>
                   <p class="text">
                     {{item.introduce}}
@@ -93,10 +95,14 @@
           <div class="text">
             {{about.description}}
           </div>
-          <a href="" class="more">more</a>
+          <a href="" class="more">
+            <span>more</span>
+          </a>
         </div>
         <a href="" class="a_right">
-          <img src="{{ static }}/images/1499261624385.jpg" alt="" />
+          <div class="img_box">
+            <img src="{{ static }}/images/1499261624385.jpg" alt="" />
+          </div>
         </a>
         <div class="clear"></div>
       </div>
@@ -104,20 +110,20 @@
     <div class="counterBgdx">
       <div class="module">
         <div class="item">
-          <div class="date">1,992 <span>年</span></div>
-          <div class="zh">成立中泰高科</div>
+          <div class="date">30<span>多</span></div>
+          <div class="zh">位各色人物</div>
         </div>
         <div class="item">
-          <div class="date">58 <span>+</span></div>
-          <div class="zh">产业覆盖范围</div>
+          <div class="date">58 <span>方</span></div>
+          <div class="zh">国家势力</div>
         </div>
         <div class="item">
-          <div class="date">36 <span>+</span></div>
-          <div class="zh">覆盖全国多个省市</div>
+          <div class="date">1000000<span>+</span></div>
+          <div class="zh">资深读者</div>
         </div>
         <div class="item">
-          <div class="date">470 <span>+</span></div>
-          <div class="zh">项目研究成果</div>
+          <div class="date">500<span>以上</span></div>
+          <div class="zh">注册用户</div>
         </div>
       </div>
     </div>
@@ -352,6 +358,10 @@
   new Swiper(".peo-container", {
     direction: "horizontal",
     slidesPerView: 2,
+    navigation: {
+      nextEl: ".peo_left_btn",
+      prevEl: ".peo_right_btn",
+    },
   });
 })();
 </script>
