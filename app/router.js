@@ -63,7 +63,7 @@ module.exports = (app) => {
 	router.post("/spa/node/read", controller.spa.node.read);
 	router.post("/spa/node/update", controller.spa.node.update);
 
-	//服务端渲染
+	//服务端渲染 
 	router.get("/ssr/getUserInfo", controller.login.getUserInfo);
 	router.post("/ssr/login", controller.login.index);
 	router.post("/ssr/column/queryAll", controller.ssr.column.queryAll);
