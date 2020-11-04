@@ -292,6 +292,8 @@
     </article>
   </section>
   <!-- 其他 -->
+</main>
+<footer>
   <section class="foot">
     <div class="wrap">
       <div class="first">
@@ -315,14 +317,78 @@
       </div>
     </div>
   </section>
-</main>
-<footer>
-  <div>
+  <div class="bottom_foot">
     COPYRIGHT (©) {{site.email}} - 雪中悍刀行网站个人学习爱好.
     <span>技术支持：</span><a href="https://gitee.com/luciferdj" target="_blank">look-dj</a>
   </div>
+  <div class="svg_box">
+    <div id="svg_frame"></div>
+  </div>
 </footer>
 <script>
+    (function(){
+      //波浪动画
+    let config = {
+    h: document.querySelector("#svg_frame").offsetHeight,
+    w: document.querySelector("#svg_frame").offsetWidth,
+    p1Color: "orange",
+    p2Color: "#f3f3f3",
+  };
+  let svg = d3
+    .select("#svg_frame")
+    .append("svg")
+    .attr("width", config.w + "px")
+    .attr("height", config.h + "px");
+  let wave_data = [[], [],[]];
+  let area = d3.area().y0(config.h).curve(d3.curveBasis); //curve会进行平滑处理
+  var max = 100; //控制速度
+  for (var i = 0; i < max; i++) {
+    var r = (i / max) * 2;
+    wave_data[0].push(r); //波浪一
+    wave_data[1].push(r + 1); //波浪二（+1代表偏移π）
+    wave_data[2].push(r + 2);
+  }
+  var d = config.w / (wave_data[0].length - 1);
+  let svg_paths = []
+    .concat([
+      svg
+        .append("path")
+        .attr("id", "p1")
+        .attr("fill", config.p1Color),
+    ])
+    .concat([
+      svg
+        .append("path")
+        .attr("id", "p2")
+        .attr("fill", config.p2Color),
+    ]);
+  function area_generator(data) {
+    var wave_height = 0.15; //波浪高度
+    var area_data = data.map(function (y, i) {
+      return [
+        i * d,
+        config.h *
+          (1 - (wave_height * Math.sin(y * Math.PI) + 2) / 3),
+      ]; //+2将范围[-1,1]转成[1,3]
+    });
+    return function () {
+      return area(area_data);
+    };
+  }
+  function renderWave() {
+    svg_paths.forEach(function (svg_path, i) {
+      svg_path.attr("d", area_generator(wave_data[i]));
+      wave_data[i] = getNextData(wave_data[i]);
+    });
+    requestAnimationFrame(renderWave);
+  }
+  function getNextData(data) {
+    var r = data.slice(1);
+    r.push(data[0]);
+    return r;
+  }
+  requestAnimationFrame(renderWave);
+  })();
 (function() {
   var mySwiper = new Swiper(".banner-container", {
     direction: "horizontal", // 垂直切换选项
