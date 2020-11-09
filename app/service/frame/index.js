@@ -11,23 +11,22 @@ class IndexService extends Service {
 		let roles = await db.select("role", { limit: 4 });
 		// await that.disposeImage('role',roles);
 		let factions = await db.select("faction", { limit: 4 });
-		console.log(factions);
-		let years = await db.select("year", { limit: 4 });
+		let weapons = await db.select("weapon", { limit: 4 });
 		let banners = await db.select("banner", { limit: 4 });
 		let realms = await db.select("realm", { limit: 4 });
 		let about = await db.get("page", {
 			pid: 5,
 		});
-		let res = await that.shareData();
+		let shareDataResult = await that.shareData();
 		return {
 			roles,
 			factions,
-			years,
+			weapons,
 			banners,
 			realms,
 			about,
-			...res,
-			head_active: 0,
+			...shareDataResult,
+			head_active: 1,
 		};
 	}
 	/**
@@ -48,7 +47,9 @@ class IndexService extends Service {
 		let { app, service } = that;
 		let db = app.mysql.get("spa");
 		let site = await service.frame.file.read("site.config.json");
-		let columnsModel = await db.select("column");
+		let columnsModel = await db.select("column",{
+      orders: ['order']
+    });
 		let columns = {};
 		columnsModel.forEach((item, idx) => {
 			columns[item.ename] = item;

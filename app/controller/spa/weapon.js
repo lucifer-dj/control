@@ -2,10 +2,10 @@
 "use strict";
 const Controller = require("egg").Controller;
 
-class YearController extends Controller {
+class WeaponController extends Controller {
   constructor(ctx) {
     super(ctx);
-    this.table = "year";
+    this.table = "weapon";
   }
   async queryAll() {
     const { ctx, service, table } = this;
@@ -47,4 +47,4 @@ class YearController extends Controller {
   }
 }
 
-module.exports = YearController;
+module.exports = WeaponController;

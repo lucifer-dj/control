@@ -1373,7 +1373,7 @@ header {
 		}
 	}
 
-	& .year {
+	& .weapon {
 		background: #fff url(../images/1499245706604.png) no-repeat;
 		background-position: bottom;
 		height: 571px;
@@ -1693,7 +1693,7 @@ header {
 		}
 	}
 
-	& > .project {
+	& > .realm {
 		& > article {
 			& > .pro {
 				width: 100%;
@@ -1725,7 +1725,8 @@ header {
 
 								& > img {
 									width: 100%;
-									height: 100%;
+                  height: 100%;
+                  transition: all 0.3s;
 								}
 							}
 
@@ -1805,7 +1806,9 @@ header {
 
 							&:hover {
 								box-shadow: 5px 3px 8px rgba(0, 0, 0, 0.1);
-
+								& .img>img{
+									transform: scale(1.1,1.1);
+								}
 								& > .detail {
 									transform: translateX(10px);
 								}

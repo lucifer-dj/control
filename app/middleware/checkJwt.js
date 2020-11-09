@@ -1,3 +1,4 @@
+
 module.exports = (options, app) => {
   return async function checkJwt(ctx, next) {
     // return await next();
@@ -12,7 +13,7 @@ module.exports = (options, app) => {
     }
     let authorization = ctx.request.header.authorization;
     if (!(authorization.length > 0)) {
-    return  ctx.err("没有token请重新登录", 401);
+      return  ctx.err("没有token请重新登录", 401);
     }
     let token = authorization.split(" ")[1];
     // console.log(token);
@@ -20,27 +21,28 @@ module.exports = (options, app) => {
       let info = app.jwt.verify(token, app.config.jwt.secret);
       let result = await ctx.service.login.validUser(info);
       if (result) {
+				let diffVal = new Date().valueOf() - info.time;
+				if(diffVal > 43200000  / 2){ // 时间大于过期时间的一般自动更新token
+					console.log('无操作时间大于过期时间的一半，无感更新TOKEN');
+					let newtoken = app.jwt.sign({
+					  account: info.account,
+					  pass: info.pass,
+						time: new Date().valueOf()
+					}, app.config.jwt.secret, {
+					  expiresIn: '12h'
+					})
+					ctx.newToken = newtoken;
+				}
         await next();
       } else {
         console.log('token 解密后与数据库里的信息不符');
         return ctx.err("token 不正确，请重新获取", 401);
       }
     } catch (e) {
+			console.log(e);
       if (e.name === "TokenExpiredError") {
-        // ctx.err("token 已过期! 请重新获取令牌", 401);
-        // TODO 当一次性来多个请求的时候还需要优化解决方案
-        console.log('token 已过期! 正在获取令牌');
-        let _info = app.jwt.decode(token,app.config.jwt.secret);
-        let newtoken = app.jwt.sign({
-          account: _info.account,
-          pass: _info.pass
-        }, app.config.jwt.secret, {
-          expiresIn: '2h'
-        })
-        ctx.newToken = newtoken;
-        await next();
+				 ctx.err("令牌TOKEN已过期请，登录重新获取", 401);
       } else {
-        console.log(e);
         ctx.err("其他错误", 401);
       }
     }

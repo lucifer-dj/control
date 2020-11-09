@@ -260,15 +260,15 @@
     </article>
   </section>
   <!-- 时间线 -->
-  <section class="year">
+  <section class="weapon">
     <article>
       <ul>
-        {% for item in years %}
+        {% for item in weapons %}
         <li>
           <a href="">
-            <div class="date">{{item.yearstart}}-{{item.yearend}}</div>
+            <div class="date">{{item.name}}</div>
             <div class="text">
-              {{item.title}}
+              {{item.introduce.substring(0,30)}}...
             </div>
           </a>
         </li>
@@ -331,7 +331,7 @@
     let config = {
     h: document.querySelector("#svg_frame").offsetHeight,
     w: document.querySelector("#svg_frame").offsetWidth,
-    p1Color: "orange",
+    p1Color: "#2BA245",
     p2Color: "#f3f3f3",
   };
   let svg = d3

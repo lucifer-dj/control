@@ -45,11 +45,11 @@ module.exports = (app) => {
 	router.post("/spa/faction/delete", controller.spa.faction.delete);
 	router.post("/spa/faction/read", controller.spa.faction.read);
 	router.post("/spa/faction/update", controller.spa.faction.update);
-	router.post("/spa/year/queryAll", controller.spa.year.queryAll);
-	router.post("/spa/year/add", controller.spa.year.add);
-	router.post("/spa/year/delete", controller.spa.year.delete);
-	router.post("/spa/year/read", controller.spa.year.read);
-	router.post("/spa/year/update", controller.spa.year.update);
+	router.post("/spa/weapon/queryAll", controller.spa.weapon.queryAll);
+	router.post("/spa/weapon/add", controller.spa.weapon.add);
+	router.post("/spa/weapon/delete", controller.spa.weapon.delete);
+	router.post("/spa/weapon/read", controller.spa.weapon.read);
+	router.post("/spa/weapon/update", controller.spa.weapon.update);
 	router.post("/spa/tmp/queryAll", controller.spa.tmp.queryAll);
 	router.post("/spa/tmp/add", controller.spa.tmp.add);
 	router.post("/spa/tmp/delete", controller.spa.tmp.delete);
