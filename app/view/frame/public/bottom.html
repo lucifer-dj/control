@@ -1,5 +1,23 @@
+<button id="to_top" title="返回顶部">
+	<i class="iconfont iconfont-top"></i>
+</button>
 <script>
+  // 高频事件 只执行一次
+	function debounce(fn, wait) {
+		let timer = null; //使用闭包保存定时的引用
+		return function () {
+			let self = this;
+			let args = arguments;
+			if (timer) {
+				clearTimeout(timer);
+			}
+			timer = setTimeout(() => {
+				fn.apply(this, args); //使用apply将时间对象传给传进来的回调函数
+			}, wait);
+		};
+	}
 	(function () {
+		// 导航栏js
 		let ul = $("#nav");
 		let active = $("#nav>li>.header_li_active").closest("li");
 		let line = null;
@@ -43,5 +61,26 @@
 				300
 			);
 		});
+		// 自动回顶部js
+		$("#to_top").on("click", function (e) {
+			let frameId = null;
+			function scrollToTop() {
+				let h = $(window).scrollTop();
+				let speed = h / 20;
+				$(window).scrollTop(h - speed);
+				frameId = requestAnimationFrame(scrollToTop);
+				if (h < 30) {
+					cancelAnimationFrame(frameId);
+					$(window).scrollTop(0);
+				}
+			}
+			frameId = requestAnimationFrame(scrollToTop);
+		});
+		$(window).on("scroll", debounce(toTopScrollFn, 50));
+		function toTopScrollFn() {
+			let h = $(window).scrollTop();
+			if (h > 500) $("#to_top").addClass("to_top_active");
+			else $("#to_top").removeClass("to_top_active");
+		}
 	})();
 </script>
