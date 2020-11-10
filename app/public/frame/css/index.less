@@ -201,7 +201,7 @@ header {
 	}
 }
 
-.main_wrap {
+& .main_wrap {
 	width: 100%;
 	position: relative;
 	padding-top: 80px;
@@ -216,17 +216,19 @@ header {
 			margin: 0 auto;
 		}
 	}
-
 	& .banner {
 		position: fixed !important;
 		width: 100%;
 		height: calc(100vh - 82px);
 		overflow: hidden;
+		top: 82px;
 		& .auth_hint {
 			position: absolute;
 			bottom: 10px;
 			right: 10px;
-			z-index: 2;
+      z-index: 2;
+      color: #0094ff;
+      font-size: 18px;
 		}
 		& > ul {
 			// position: absolute;
@@ -367,7 +369,6 @@ header {
 			left: 0;
 		}
 	}
-
 	& .white_temp_space {
 		width: 100%;
 		height: 780px;
@@ -609,8 +610,8 @@ header {
 						line-height: 40px;
 						text-transform: uppercase;
 						position: relative;
-            transition: all 0.3s;
-            overflow: hidden;
+						transition: all 0.3s;
+						overflow: hidden;
 						&::after {
 							content: "";
 							position: absolute;
@@ -1707,30 +1708,33 @@ header {
 					& > li {
 						float: left;
 						width: 385px;
-						height: 350px;
+						height: 300px;
 						margin-right: 15px;
-						margin-bottom: 20px;
+						margin-bottom: 30px;
 
 						& > a {
 							width: 380px;
-							height: 350px;
+							height: 300px;
 							display: block;
 							position: relative;
 							transition: box-shadow 0.3s;
+							overflow-x: hidden;
 
 							& > .img {
 								width: 380px;
-								height: 260px;
+								height: 210px;
 								overflow: hidden;
 
 								& > img {
 									width: 100%;
-                  height: 100%;
-                  transition: all 0.3s;
+									height: 100%;
+									transition: all 0.3s 0.2s;
 								}
 							}
 
 							& > .detail {
+								position: relative;
+								z-index: 2;
 								width: 100%;
 								height: 90px;
 								@box();
@@ -1739,8 +1743,8 @@ header {
 
 								& > h2 {
 									height: 30px;
-									font-size: 16px;
-									font-weight: 400;
+									font-size: 18px;
+									font-weight: 500;
 									color: #333;
 									white-space: nowrap;
 									text-overflow: ellipsis;
@@ -1763,7 +1767,7 @@ header {
 								width: 50px;
 								height: 50px;
 								border-radius: 50%;
-								border: 1px solid #fff;
+								border: 2px solid #fff;
 								z-index: 2;
 								opacity: 0;
 								transition: all 0.3s;
@@ -1772,7 +1776,7 @@ header {
 									content: "";
 									position: absolute;
 									width: 20px;
-									height: 1px;
+									height: 2px;
 									background-color: #fff;
 									top: 50%;
 									left: 50%;
@@ -1782,7 +1786,7 @@ header {
 								&::after {
 									content: "";
 									position: absolute;
-									width: 1px;
+									width: 2px;
 									height: 20px;
 									background-color: #fff;
 									top: 50%;
@@ -1794,27 +1798,35 @@ header {
 							&::after {
 								content: "";
 								position: absolute;
+								z-index: 1;
 								bottom: 0;
 								left: 0;
 								width: 380px;
-								height: 2px;
-								background-color: @primary;
-								transform-origin: center center;
-								transform: scaleX(0);
-								transition: transform 0.3s;
+								height: 90px;
+								background-color: orange;
+								transform: scaleX(0) skewX(45deg)
+									translateX(-15%);
+								transition: transform 0.3s 0.1s;
+								// opacity: 0.8;
+								transform-origin: left;
 							}
 
 							&:hover {
 								box-shadow: 5px 3px 8px rgba(0, 0, 0, 0.1);
-								& .img>img{
-									transform: scale(1.1,1.1);
+								& .img > img {
+									transform: scale(1.1, 1.1);
 								}
 								& > .detail {
 									transform: translateX(10px);
+									& > h2,
+									& .text {
+										color: #fff;
+									}
 								}
 
 								&::after {
-									transform: scaleX(1);
+									transform: scaleX(1.5) skewX(45deg)
+										translateX(-15%);
 								}
 
 								& > .circle {
@@ -1829,7 +1841,7 @@ header {
 		}
 	}
 
-	& > .scope {
+	& > .weapon {
 		& > article {
 			& > .sco {
 				width: 100%;
@@ -1843,7 +1855,7 @@ header {
 						width: 385px;
 						height: 100%;
 						margin-right: 15px;
-						margin-bottom: 20px;
+						margin-bottom: 30px;
 
 						& > a {
 							width: 380px;
@@ -1911,16 +1923,28 @@ header {
 									display: inline-block;
 									width: 40px;
 									height: 20px;
-									@border();
+									// @border();
 									margin-top: 20px;
 									transform: translateX(-10px);
 									opacity: 0;
 									transition: all 0.3s;
+									line-height: 20px;
+									text-align: center;
 								}
 							}
-
+							&::after {
+								content: "";
+								position: absolute;
+								bottom: 0;
+								left: 0;
+								width: 100%;
+								height: 2px;
+								background-color: #0094ff;
+								transform: scaleX(0);
+								transition: transform 0.3s 0.2s;
+							}
 							&:hover {
-								box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+								box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
 
 								& > .img > img {
 									transform: scale(1.1, 1.1);
@@ -1933,6 +1957,9 @@ header {
 										transform: translateX(0);
 										opacity: 1;
 									}
+								}
+								&::after {
+									transform: scaleX(1);
 								}
 							}
 						}
@@ -2096,9 +2123,9 @@ header {
 				border-bottom: 1px dotted #d3d3d3;
 
 				& > .left {
-					width: 450px;
+					width: 550px;
 					float: left;
-					height: 100%;
+					height: 85%;
 
 					& > img {
 						width: 100%;

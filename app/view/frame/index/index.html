@@ -1,219 +1,176 @@
 {% extends "../public/layout.html" %} {% block main %}
-<main class="main_wrap">
-  <section class="banner banner-container">
-    <p class="auth_hint">所有图片和其他资源来自网络，侵权请联系删除</p>
-    <ul class="swiper-wrapper">
-      {% for item in banners %}
-      <li class="swiper-slide">
-        <a href="{{item.url}}" title="{{item.title}}">
-          <div class="img" style="background-image:url('{{static}}/images/50979.png')">
-            <!--             <img src="" /> -->
-            <div class="banner_msg">
-              <h2>世间文字八万个，唯有情字最杀人</h2>
-              <p class="msg1">情不知所起，一往而深</p>
-              <div class="more_b">查看更多</div>
+  <main class="main_wrap">
+    <div class="white_temp_space"></div>
+    <section class="banner banner-container">
+      <p class="auth_hint">所有图片和其他资源来自网络，侵权请联系删除</p>
+      <ul class="swiper-wrapper">
+        {% for item in banners %}
+        <li class="swiper-slide">
+          <a href="{{item.url}}" title="{{item.title}}">
+            <div class="img" style="background-image:url('{{static}}/images/50979.png')">
+              <!--             <img src="" /> -->
+              <div class="banner_msg">
+                <h2>世间文字八万个，唯有情字最杀人</h2>
+                <p class="msg1">情不知所起，一往而深</p>
+                <div class="more_b">查看更多</div>
+              </div>
             </div>
-          </div>
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-    <div class="left swiper-banner-left">
-      <i class="iconfont iconfont-zuo-5"></i>
-    </div>
-    <div class="right swiper-banner-right">
-      <i class="iconfont iconfont-you-5"></i>
-      </svg>
-    </div>
-    <div class="dots">
-      <div class="dot banner_dot_active"></div>
-      <div class="dot"></div>
-    </div>
-  </section>
-  <div class="white_temp_space"></div>
-  <section class="role">
-    <article>
-      <div class="peo_left">
-        <div class="peo_head">
-          <p class="en">{{columns.role.en}}</p>
-          <span>{{columns.role.name}}</span>
-        </div>
-        <p class="text">
-          江湖是一张珠帘。大人物小人物，是珠子，大故事小故事，是串线。情义二字，则是那些珠子的精气神。
-        </p>
-        <div class="btns">
-          <div class="left_btn peo_left_btn"></div>
-          <div class="space"></div>
-          <div class="right_btn peo_right_btn"></div>
-        </div>
-      </div>
-      <div class="peo_right">
-        <div class="peo_swiper peo-container">
-          <ul class="peo_ul swiper-wrapper">
-            {% for item in roles %}
-            <li class="swiper-slide">
-              <a href="" class="">
-                <div class="img">
-                  <!-- <img src="{{item.src}}" alt="{{item.name}}" /> -->
-                  <img src="{{ static }}/images/role.jpg" alt="{{item.name}}" />
-                </div>
-                <div class="detail">
-                  <div class="peo_head">
-                    <div class="peo_head_left">
-                      <p class="name">{{item.name}}</p>
-                      <p class="zhiwei">{{item.realm}}</p>
-                    </div>
-                    <div class="more">
-                      <i class="iconfont iconfont-right"></i>
-                    </div>
-                  </div>
-                  <p class="text">
-                    {{item.introduce}}
-                  </p>
-                </div>
-              </a>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-      <div class="clear"></div>
-    </article>
-  </section>
-  <!-- 关于雪中 -->
-  <section class="about">
-    <article>
-      <div class="head">
-        <div class="head_l">
-          <h2 style="color: #233876;">{{columns.about.name}}</h2>
-          <span>{{columns.about.en}}</span>
-        </div>
-      </div>
-      <div class="about_content">
-        <div class="a_left">
-          <h2>{{site.name}}</h2>
-          <div class="text">
-            {{about.description}}
-          </div>
-          <a href="" class="more">
-            <span>more</span>
           </a>
-        </div>
-        <a href="" class="a_right">
-          <div class="img_box">
-            <img src="{{ static }}/images/1499261624385.jpg" alt="" />
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="left swiper-banner-left">
+        <i class="iconfont iconfont-zuo-5"></i>
+      </div>
+      <div class="right swiper-banner-right">
+        <i class="iconfont iconfont-you-5"></i>
+        </svg>
+      </div>
+      <div class="dots">
+        <div class="dot banner_dot_active"></div>
+        <div class="dot"></div>
+      </div>
+    </section>
+    <section class="role">
+      <article>
+        <div class="peo_left">
+          <div class="peo_head">
+            <p class="en">{{columns.role.en}}</p>
+            <span>{{columns.role.name}}</span>
           </div>
-        </a>
-        <div class="clear"></div>
-      </div>
-    </article>
-    <div class="counterBgdx">
-      <div class="module">
-        <div class="item">
-          <div class="date">30<span>多</span></div>
-          <div class="zh">位各色人物</div>
-        </div>
-        <div class="item">
-          <div class="date">58 <span>方</span></div>
-          <div class="zh">国家势力</div>
-        </div>
-        <div class="item">
-          <div class="date">1000000<span>+</span></div>
-          <div class="zh">资深读者</div>
-        </div>
-        <div class="item">
-          <div class="date">500<span>以上</span></div>
-          <div class="zh">注册用户</div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- 势力介绍 -->
-  <section class="faction">
-    <div class="top_space"></div>
-    <article>
-      <div class="head">
-        <div class="head_l">
-          <h2 style="color: #233876;">{{columns.faction.name}}</h2>
-          <span>{{columns.faction.en}}</span>
-        </div>
-        <div class="space"></div>
-        <div class="head_r">
-          <a href="" class="head_a_active">全部</a>
-          <a href="">朝廷势力</a>
-          <a href="">江湖势力</a>
-          <a href="" class="more">更多</a>
-        </div>
-      </div>
-      <div class="news_content">
-        <a href="" class="news_l">
-          <div class="date">07-02</div>
-          <p class="title">
-            {{factions[factions.length-1].name}} -
-            {{factions[factions.length-1].lead}}
-          </p>
           <p class="text">
-            {{factions[factions.length-1].introduce}}
+            江湖是一张珠帘。大人物小人物，是珠子，大故事小故事，是串线。情义二字，则是那些珠子的精气神。
           </p>
-          <div class="image">
-            <img src="{{ static }}/images/45646864.png" alt="" />
+          <div class="btns">
+            <div class="left_btn peo_left_btn"></div>
+            <div class="space"></div>
+            <div class="right_btn peo_right_btn"></div>
           </div>
-          <div class="more"></div>
-        </a>
-        <ul class="news_r">
-          {% for item in factions.slice(0,3) %}
-          <li>
-            <a href="">
-              <div class="li_l">
-                <p class="title">{{item.name}} - {{item.lead}}</p>
-                <p class="text">{{item.introduce}}</p>
-              </div>
-              <div class="li_r">
-                <div class="date">{{item.year}}</div>
-                <div class="arrow">
-                  <i class="iconfont iconfont-ic_arrow_right"></i>
-                </div>
-              </div>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-        <div class="clear"></div>
-      </div>
-    </article>
-  </section>
-  <!-- 暂无 -->
-  <section class="scope">
-    <article>
-      <div class="head">
-        <div class="head_l">
-          <h2>业务范围</h2>
-          <span>Scope of business</span>
         </div>
-        <div class="space"></div>
-        <div class="head_r">
-          <a href="" class="head_a_active">全部</a>
-          <a href="">科技创新</a>
-          <a href="">国际贸易</a>
-          <a href="" class="more">更多</a>
-        </div>
-      </div>
-      <div class="swiper">
-        <div class="box scope-container">
-          <ul class="swiper-wrapper">
-            {% for item in tempArr %}
-            <li class="swiper-slide">
-              <a href="">
-                <div class="img">
-                  <img src="{{static}}/images/548464846.png" alt="" />
-                </div>
-                <div class="detail">
-                  <h2>能源产业优化链条进展</h2>
-                  <div class="text">
-                    在中国国内，由合资公司湖南株洲时菱交通设备有限公司
-                    进行这类机电产品的组装和试验
+        <div class="peo_right">
+          <div class="peo_swiper peo-container">
+            <ul class="peo_ul swiper-wrapper">
+              {% for item in roles %}
+              <li class="swiper-slide">
+                <a href="" class="">
+                  <div class="img">
+                    <!-- <img src="{{item.src}}" alt="{{item.name}}" /> -->
+                    <img src="{{ static }}/images/role.jpg" alt="{{item.name}}" />
                   </div>
-                  <div class="more">
+                  <div class="detail">
+                    <div class="peo_head">
+                      <div class="peo_head_left">
+                        <p class="name">{{item.name}}</p>
+                        <p class="zhiwei">{{item.realm}}</p>
+                      </div>
+                      <div class="more">
+                        <i class="iconfont iconfont-right"></i>
+                      </div>
+                    </div>
+                    <p class="text">
+                      {{item.introduce}}
+                    </p>
+                  </div>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </article>
+    </section>
+    <!-- 关于雪中 -->
+    <section class="about">
+      <article>
+        <div class="head">
+          <div class="head_l">
+            <h2 style="color: #233876;">{{columns.about.name}}</h2>
+            <span>{{columns.about.en}}</span>
+          </div>
+        </div>
+        <div class="about_content">
+          <div class="a_left">
+            <h2>{{site.name}}</h2>
+            <div class="text">
+              {{about.description}}
+            </div>
+            <a href="" class="more">
+              <span>more</span>
+            </a>
+          </div>
+          <a href="" class="a_right">
+            <div class="img_box">
+              <img src="{{ static }}/images/1499261624385.jpg" alt="" />
+            </div>
+          </a>
+          <div class="clear"></div>
+        </div>
+      </article>
+      <div class="counterBgdx">
+        <div class="module">
+          <div class="item">
+            <div class="date">30<span>多</span></div>
+            <div class="zh">位各色人物</div>
+          </div>
+          <div class="item">
+            <div class="date">58 <span>方</span></div>
+            <div class="zh">国家势力</div>
+          </div>
+          <div class="item">
+            <div class="date">1000000<span>+</span></div>
+            <div class="zh">资深读者</div>
+          </div>
+          <div class="item">
+            <div class="date">500<span>以上</span></div>
+            <div class="zh">注册用户</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 势力介绍 -->
+    <section class="faction">
+      <div class="top_space"></div>
+      <article>
+        <div class="head">
+          <div class="head_l">
+            <h2 style="color: #233876;">{{columns.faction.name}}</h2>
+            <span>{{columns.faction.en}}</span>
+          </div>
+          <div class="space"></div>
+          <div class="head_r">
+            <a href="" class="head_a_active">全部</a>
+            <a href="">朝廷势力</a>
+            <a href="">江湖势力</a>
+            <a href="" class="more">更多</a>
+          </div>
+        </div>
+        <div class="news_content">
+          <a href="" class="news_l">
+            <div class="date">07-02</div>
+            <p class="title">
+              {{factions[factions.length-1].name}} -
+              {{factions[factions.length-1].lead}}
+            </p>
+            <p class="text">
+              {{factions[factions.length-1].introduce}}
+            </p>
+            <div class="image">
+              <img src="{{ static }}/images/45646864.png" alt="" />
+            </div>
+            <div class="more"></div>
+          </a>
+          <ul class="news_r">
+            {% for item in factions.slice(0,3) %}
+            <li>
+              <a href="">
+                <div class="li_l">
+                  <p class="title">{{item.name}} - {{item.lead}}</p>
+                  <p class="text">{{item.introduce}}</p>
+                </div>
+                <div class="li_r">
+                  <div class="date">{{item.year}}</div>
+                  <div class="arrow">
                     <i class="iconfont iconfont-ic_arrow_right"></i>
                   </div>
                 </div>
@@ -221,112 +178,153 @@
             </li>
             {% endfor %}
           </ul>
-          <div class="swiper-pagination case_pagination"></div>
+          <div class="clear"></div>
         </div>
-        <div class="left scope_swiper_left">
-          <i class="iconfont iconfont-zou-5"></i>
+      </article>
+    </section>
+    <!-- 暂无 -->
+    <section class="scope">
+      <article>
+        <div class="head">
+          <div class="head_l">
+            <h2>春秋十三甲</h2>
+            <span>Scope of business</span>
+          </div>
+          <div class="space"></div>
+          <div class="head_r">
+            <a href="" class="head_a_active">全部</a>
+            <a href="">道甲</a>
+            <a href="">刀甲</a>
+            <a href="" class="more">更多</a>
+          </div>
         </div>
-        <div class="right scope_swiper_right">
-          <i class="iconfont iconfont-you-5"></i>
+        <div class="swiper">
+          <div class="box scope-container">
+            <ul class="swiper-wrapper">
+              {% for item in tempArr %}
+              <li class="swiper-slide">
+                <a href="">
+                  <div class="img">
+                    <img src="{{static}}/images/548464846.png" alt="" />
+                  </div>
+                  <div class="detail">
+                    <h2>剑甲--李淳罡</h2>
+                    <div class="text">天不生我李淳罡，剑道万古如长夜。是当之无愧的甲子剑道第一与甲子前的天下第一。</div>
+                    <div class="more">
+                      <i class="iconfont iconfont-ic_arrow_right"></i>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+            <div class="swiper-pagination case_pagination"></div>
+          </div>
+          <div class="left scope_swiper_left">
+            <i class="iconfont iconfont-zou-5"></i>
+          </div>
+          <div class="right scope_swiper_right">
+            <i class="iconfont iconfont-you-5"></i>
+          </div>
         </div>
-      </div>
-    </article>
-  </section>
-  <!-- 境界划分 -->
-  <section class="realm">
-    <article>
-      <div class="content">
-        <div class="first">
-          <h2>{{columns.realm.name}}</h2>
+      </article>
+    </section>
+    <!-- 境界划分 -->
+    <section class="realm">
+      <article>
+        <div class="content">
+          <div class="first">
+            <h2>{{columns.realm.name}}</h2>
+          </div>
+          <ul class="story_ul">
+            {% for item in realms %}
+            <li>
+              <a href="">
+                <p class="title">{{item.name}}</p>
+                <p class="text">
+                 {{item.introduce}}
+                </p>
+                <div class="more">more</div>
+              </a>
+              <div class="img">
+                <!-- <img src="{{item.pic}}" alt="{{item.name}}" /> -->
+                <img src="{{static}}/images/1498546516300.jpg" alt="{{item.name}}" />
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
         </div>
-        <ul class="story_ul">
-          {% for item in realms %}
+      </article>
+    </section>
+    <!-- 时间线 -->
+    <section class="weapon">
+      <article>
+        <ul>
+          {% for item in weapons %}
           <li>
             <a href="">
-              <p class="title">{{item.name}}</p>
-              <p class="text">
-               {{item.introduce}}
-              </p>
-              <div class="more">more</div>
+              <div class="date">{{item.name}}</div>
+              <div class="text">
+                {{item.introduce.substring(0,30)}}...
+              </div>
             </a>
-            <div class="img">
-              <!-- <img src="{{item.pic}}" alt="{{item.name}}" /> -->
-              <img src="{{static}}/images/1498546516300.jpg" alt="{{item.name}}" />
-            </div>
           </li>
           {% endfor %}
+          <div class="clear"></div>
         </ul>
+      </article>
+    </section>
+    <section class="links">
+      <article>
+        <ul>
+          {% for item in tempArr %}
+          <li>
+            <a href="">
+              <img src="{{ static }}/images/1499235512677.png" />
+            </a>
+          </li>
+          {% endfor %}
+          <div class="clear"></div>
+        </ul>
+      </article>
+    </section>
+    <!-- 其他 -->
+  </main>
+  <footer>
+    <section class="foot">
+      <div class="wrap">
+        <div class="first">
+          <h3>联系</h3>
+          <span>Contact</span>
+        </div>
+        <div class="second">
+          <h3>关注</h3>
+        </div>
+        <div class="third">
+          <h3>联系方式</h3>
+          <p>地址：{{site.git}}</p>
+          <p>座机：{{site.tel}}</p>
+          <p>手机：{{site.phone}}</p>
+        </div>
+        <div class="fourth">
+          <h3></h3>
+          <p>微信：{{site.wx}}</p>
+          <p>QQ：{{site.qq}}</p>
+          <p>邮箱：{{site.email}}</p>
+        </div>
       </div>
-    </article>
-  </section>
-  <!-- 时间线 -->
-  <section class="weapon">
-    <article>
-      <ul>
-        {% for item in weapons %}
-        <li>
-          <a href="">
-            <div class="date">{{item.name}}</div>
-            <div class="text">
-              {{item.introduce.substring(0,30)}}...
-            </div>
-          </a>
-        </li>
-        {% endfor %}
-        <div class="clear"></div>
-      </ul>
-    </article>
-  </section>
-  <section class="links">
-    <article>
-      <ul>
-        {% for item in tempArr %}
-        <li>
-          <a href="">
-            <img src="{{ static }}/images/1499235512677.png" />
-          </a>
-        </li>
-        {% endfor %}
-        <div class="clear"></div>
-      </ul>
-    </article>
-  </section>
-  <!-- 其他 -->
-</main>
-<footer>
-  <section class="foot">
-    <div class="wrap">
-      <div class="first">
-        <h3>联系</h3>
-        <span>Contact</span>
-      </div>
-      <div class="second">
-        <h3>关注</h3>
-      </div>
-      <div class="third">
-        <h3>联系方式</h3>
-        <p>地址：{{site.git}}</p>
-        <p>座机：{{site.tel}}</p>
-        <p>手机：{{site.phone}}</p>
-      </div>
-      <div class="fourth">
-        <h3></h3>
-        <p>微信：{{site.wx}}</p>
-        <p>QQ：{{site.qq}}</p>
-        <p>邮箱：{{site.email}}</p>
-      </div>
+    </section>
+    <div class="bottom_foot">
+      COPYRIGHT (©) {{site.email}} - 雪中悍刀行网站个人学习爱好.
+      <span>技术支持：</span><a href="https://gitee.com/luciferdj" target="_blank">look-dj</a>
     </div>
-  </section>
-  <div class="bottom_foot">
-    COPYRIGHT (©) {{site.email}} - 雪中悍刀行网站个人学习爱好.
-    <span>技术支持：</span><a href="https://gitee.com/luciferdj" target="_blank">look-dj</a>
-  </div>
-  <div class="svg_box">
-    <div id="svg_frame"></div>
-  </div>
-</footer>
+    <div class="svg_box">
+      <div id="svg_frame"></div>
+    </div>
+  </footer>
+
 <script>
-    (function(){
+ (function(){
       //波浪动画
     let config = {
     h: document.querySelector("#svg_frame").offsetHeight,

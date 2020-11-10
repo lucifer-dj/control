@@ -1,0 +1,47 @@
+<script>
+	(function () {
+		let ul = $("#nav");
+		let active = $("#nav>li>.header_li_active").closest("li");
+		let line = null;
+
+		function getWidth(e) {
+			return $(e).width();
+		}
+
+		function getPos(e) {
+			return $(e).position();
+		}
+		(function createMoveEl() {
+			if (!ul) return;
+			line = $("<div class='nav_line'><span></span></div>").appendTo(ul);
+			let span = line.find("span");
+			line.css({
+				position: "absolute",
+				left: getPos(active).left,
+				bottom: "0",
+				width: getWidth(active),
+				height: "2px",
+				"z-index": -1,
+			});
+		})();
+		$("#nav>li").on("mouseenter", function () {
+			let that = this;
+			line.stop().animate(
+				{
+					width: getWidth(that),
+					left: getPos(that).left,
+				},
+				300
+			);
+		});
+		$(ul).on("mouseleave", function () {
+			line.stop().animate(
+				{
+					width: getWidth(active),
+					left: getPos(active).left,
+				},
+				300
+			);
+		});
+	})();
+</script>

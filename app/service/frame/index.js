@@ -26,7 +26,7 @@ class IndexService extends Service {
 			realms,
 			about,
 			...shareDataResult,
-			head_active: 1,
+			head_active: 0,
 		};
 	}
 	/**
@@ -34,7 +34,7 @@ class IndexService extends Service {
 	 */
 	async checkLink(params, query) {
 		let { app } = this;
-		let db = app.mysql.get("spa");
+    let db = app.mysql.get("spa");
 		let columns = await db.select("column");
 		let _target = columns.find((c) => Number(c.id) === Number(query.id));
 		if (!_target || params !== _target.link) return false;
@@ -110,6 +110,19 @@ class IndexService extends Service {
 		let res = await that.shareData();
 		return {
 			page,
+			...res,
+		};
+  }
+  async weapon(){
+    let that = this;
+		let { app } = that;
+		let db = app.mysql.get("spa");
+		let weapons = await db.select("weapon", {
+			limit: 10,
+		});
+		let res = await that.shareData();
+		return {
+			weapons,
 			...res,
 		};
   }

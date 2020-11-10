@@ -41,11 +41,6 @@ class IndexController extends Controller {
 		data.head_active = params.id;
 		await ctx.render("frame/list/realm", data);
 	}
-	async year(params) {
-		let that = this;
-		let { ctx } = that;
-		ctx.body = "<h1>当前页面正在制作中。。。</h1>"
-	}
 	async contact(params) {
 		let that = this;
 		let { ctx } = that;
@@ -61,10 +56,12 @@ class IndexController extends Controller {
 		let { ctx } = that;
 		await ctx.render("frame/list/product", that.tempData);
 	}
-	async scope(params) {
+	async weapon(params) {
 		let that = this;
-		let { ctx } = that;
-		await ctx.render("frame/list/scope", that.tempData);
+    let { ctx,service } = that;
+    let data = await service.frame.index.weapon();
+    data.head_active = params.id;
+		await ctx.render("frame/list/weapon", data);
 	}
 	async video(params) {
 		let that = this;

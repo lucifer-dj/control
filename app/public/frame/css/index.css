@@ -157,12 +157,15 @@ header > nav > ul .nav_line {
   width: 100%;
   height: calc(100vh - 82px);
   overflow: hidden;
+  top: 82px;
 }
 .main_wrap .banner .auth_hint {
   position: absolute;
   bottom: 10px;
   right: 10px;
   z-index: 2;
+  color: #0094ff;
+  font-size: 18px;
 }
 .main_wrap .banner > ul {
   width: 100%;
@@ -1453,28 +1456,31 @@ header > nav > ul .nav_line {
 .main_list > .realm > article > .pro > ul > li {
   float: left;
   width: 385px;
-  height: 350px;
+  height: 300px;
   margin-right: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 .main_list > .realm > article > .pro > ul > li > a {
   width: 380px;
-  height: 350px;
+  height: 300px;
   display: block;
   position: relative;
   transition: box-shadow 0.3s;
+  overflow-x: hidden;
 }
 .main_list > .realm > article > .pro > ul > li > a > .img {
   width: 380px;
-  height: 260px;
+  height: 210px;
   overflow: hidden;
 }
 .main_list > .realm > article > .pro > ul > li > a > .img > img {
   width: 100%;
   height: 100%;
-  transition: all 0.3s;
+  transition: all 0.3s 0.2s;
 }
 .main_list > .realm > article > .pro > ul > li > a > .detail {
+  position: relative;
+  z-index: 2;
   width: 100%;
   height: 90px;
   box-sizing: border-box;
@@ -1483,8 +1489,8 @@ header > nav > ul .nav_line {
 }
 .main_list > .realm > article > .pro > ul > li > a > .detail > h2 {
   height: 30px;
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 18px;
+  font-weight: 500;
   color: #333;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -1504,7 +1510,7 @@ header > nav > ul .nav_line {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   z-index: 2;
   opacity: 0;
   transition: all 0.3s;
@@ -1513,7 +1519,7 @@ header > nav > ul .nav_line {
   content: "";
   position: absolute;
   width: 20px;
-  height: 1px;
+  height: 2px;
   background-color: #fff;
   top: 50%;
   left: 50%;
@@ -1522,7 +1528,7 @@ header > nav > ul .nav_line {
 .main_list > .realm > article > .pro > ul > li > a > .circle::after {
   content: "";
   position: absolute;
-  width: 1px;
+  width: 2px;
   height: 20px;
   background-color: #fff;
   top: 50%;
@@ -1532,14 +1538,15 @@ header > nav > ul .nav_line {
 .main_list > .realm > article > .pro > ul > li > a::after {
   content: "";
   position: absolute;
+  z-index: 1;
   bottom: 0;
   left: 0;
   width: 380px;
-  height: 2px;
-  background-color: #233876;
-  transform-origin: center center;
-  transform: scaleX(0);
-  transition: transform 0.3s;
+  height: 90px;
+  background-color: orange;
+  transform: scaleX(0) skewX(45deg) translateX(-15%);
+  transition: transform 0.3s 0.1s;
+  transform-origin: left;
 }
 .main_list > .realm > article > .pro > ul > li > a:hover {
   box-shadow: 5px 3px 8px rgba(0, 0, 0, 0.1);
@@ -1550,52 +1557,56 @@ header > nav > ul .nav_line {
 .main_list > .realm > article > .pro > ul > li > a:hover > .detail {
   transform: translateX(10px);
 }
+.main_list > .realm > article > .pro > ul > li > a:hover > .detail > h2,
+.main_list > .realm > article > .pro > ul > li > a:hover > .detail .text {
+  color: #fff;
+}
 .main_list > .realm > article > .pro > ul > li > a:hover::after {
-  transform: scaleX(1);
+  transform: scaleX(1.5) skewX(45deg) translateX(-15%);
 }
 .main_list > .realm > article > .pro > ul > li > a:hover > .circle {
   top: 30%;
   opacity: 1;
 }
-.main_list > .scope > article > .sco {
+.main_list > .weapon > article > .sco {
   width: 100%;
 }
-.main_list > .scope > article > .sco > ul {
+.main_list > .weapon > article > .sco > ul {
   width: 100%;
   height: 100%;
 }
-.main_list > .scope > article > .sco > ul > li {
+.main_list > .weapon > article > .sco > ul > li {
   float: left;
   width: 385px;
   height: 100%;
   margin-right: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
-.main_list > .scope > article > .sco > ul > li > a {
+.main_list > .weapon > article > .sco > ul > li > a {
   width: 380px;
   height: 100%;
   display: block;
   position: relative;
   transition: box-shadow 0.3s;
 }
-.main_list > .scope > article > .sco > ul > li > a > .img {
+.main_list > .weapon > article > .sco > ul > li > a > .img {
   width: 380px;
   height: 160px;
   overflow: hidden;
 }
-.main_list > .scope > article > .sco > ul > li > a > .img > img {
+.main_list > .weapon > article > .sco > ul > li > a > .img > img {
   width: 100%;
   height: 100%;
   transition: transform 0.3s;
 }
-.main_list > .scope > article > .sco > ul > li > a > .detail {
+.main_list > .weapon > article > .sco > ul > li > a > .detail {
   width: 100%;
   box-sizing: border-box;
   padding: 26px 23px;
   transition: transform 0.3s;
   text-align: center;
 }
-.main_list > .scope > article > .sco > ul > li > a > .detail > h2 {
+.main_list > .weapon > article > .sco > ul > li > a > .detail > h2 {
   height: 25px;
   font-size: 16px;
   font-weight: 400;
@@ -1608,7 +1619,7 @@ header > nav > ul .nav_line {
   padding-bottom: 15px;
   position: relative;
 }
-.main_list > .scope > article > .sco > ul > li > a > .detail > h2::after {
+.main_list > .weapon > article > .sco > ul > li > a > .detail > h2::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -1618,7 +1629,7 @@ header > nav > ul .nav_line {
   height: 1px;
   background-color: rgba(0, 0, 0, 0.2);
 }
-.main_list > .scope > article > .sco > ul > li > a > .detail > .text {
+.main_list > .weapon > article > .sco > ul > li > a > .detail > .text {
   padding-top: 15px;
   font-size: 14px;
   text-align: center;
@@ -1628,37 +1639,52 @@ header > nav > ul .nav_line {
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
-.main_list > .scope > article > .sco > ul > li > a > .detail > .more {
+.main_list > .weapon > article > .sco > ul > li > a > .detail > .more {
   display: inline-block;
   width: 40px;
   height: 20px;
-  border: 1px solid #233876;
   margin-top: 20px;
   transform: translateX(-10px);
   opacity: 0;
   transition: all 0.3s;
+  line-height: 20px;
+  text-align: center;
 }
-.main_list > .scope > article > .sco > ul > li > a:hover {
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+.main_list > .weapon > article > .sco > ul > li > a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #0094ff;
+  transform: scaleX(0);
+  transition: transform 0.3s 0.2s;
 }
-.main_list > .scope > article > .sco > ul > li > a:hover > .img > img {
+.main_list > .weapon > article > .sco > ul > li > a:hover {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+.main_list > .weapon > article > .sco > ul > li > a:hover > .img > img {
   transform: scale(1.1, 1.1);
 }
-.main_list > .scope > article > .sco > ul > li > a:hover > .detail {
+.main_list > .weapon > article > .sco > ul > li > a:hover > .detail {
   transform: translateY(-10px);
 }
-.main_list > .scope > article > .sco > ul > li > a:hover > .detail > .more {
+.main_list > .weapon > article > .sco > ul > li > a:hover > .detail > .more {
   transform: translateX(0);
   opacity: 1;
 }
-.main_list > .scope > article > .srrot {
+.main_list > .weapon > article > .sco > ul > li > a:hover::after {
+  transform: scaleX(1);
+}
+.main_list > .weapon > article > .srrot {
   width: 100%;
   padding: 30px 0 60px;
 }
-.main_list > .scope > article > .srrot > a {
+.main_list > .weapon > article > .srrot > a {
   padding: 0 10px;
 }
-.main_list > .scope > article > .srrot > a:hover {
+.main_list > .weapon > article > .srrot > a:hover {
   color: #233876;
 }
 .main_list > .faction > article > .news_content {
@@ -1773,9 +1799,9 @@ header > nav > ul .nav_line {
   border-bottom: 1px dotted #d3d3d3;
 }
 .main_list > .about > article > .about1 > .left {
-  width: 450px;
+  width: 550px;
   float: left;
-  height: 100%;
+  height: 85%;
 }
 .main_list > .about > article > .about1 > .left > img {
   width: 100%;

@@ -1,7 +1,7 @@
 {% extends "../public/layout.html" %} {% block main %}
 <main class="main_list">
   {% include "../public/center.html"%}
-  <section class="project">
+  <section class="weapon">
     <article>
       <div class="head_list">
         <div class="content">
@@ -16,19 +16,23 @@
           <div class="clear"></div>
         </div>
       </div>
-      <div class="pro">
+      <div class="sco">
         <ul>
-          {% for item in tempArr %}
+          {%for item in weapons %}
           <li>
             <a href="">
               <div class="img">
-                <img src="{{static}}/images/1499083067928.jpg" alt="" />
+                <img src="{{static}}/images/1499154353589.jpg" alt="" />
               </div>
               <div class="detail">
-                <h2>能源产业优化链条进展</h2>
-                <div class="text">HARVEST STATES</div>
+                <h2>{{item.name}}</h2>
+                <div class="text">
+                  {{item.introduce}}
+                </div>
+                <div class="more">
+                  <svg t="1604971941254" class="icon" viewBox="0 0 1536 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1029" width="40" height="20"><path d="M1439.295645 575.718258H63.968695a63.968695 63.968695 0 1 1 0-127.937391h1290.248585l-383.812172-335.83565a63.968695 63.968695 0 0 1 84.438678-95.953043l447.780867 391.488415A95.953043 95.953043 0 0 1 1439.295645 575.718258z m-21.10967-71.644939z m-363.342189 504.073319l255.874781-223.890433a63.968695 63.968695 0 0 0-84.438678-96.59273l-255.874781 223.890433a63.968695 63.968695 0 0 0 84.438678 96.59273z" fill="#333333" p-id="1030"></path></svg>
+                </div>
               </div>
-              <div class="circle"></div>
             </a>
           </li>
           {% endfor %}
